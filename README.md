@@ -708,3 +708,4 @@ This topic is extracted into our new [Awesome ML Model Governace repository](htt
 </details>
 
 ![Twitter Follow](https://img.shields.io/twitter/follow/visenger?style=social)
+[![Twitter URL](https://img.shields.io/twitter/follow/?style=social)](https://twitter.com/angadsandhuwork)
