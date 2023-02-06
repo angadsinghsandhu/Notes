@@ -61,4 +61,3 @@ For more information: [CLICK HERE](https://www.linuxfoundation.org/blog/blog/cla
 - [Naigating the File System](https://www.skysilk.com/blog/2019/navigating-linux-file-system/)
 - [Manipulating FIles and Directories](https://linuxcommand.org/lc3_lts0050.php)
 - [Editing and Viewing files](https://www.hivelocity.net/kb/how-to-open-edit-move-and-copy-a-file-in-linux/)
-- []()
