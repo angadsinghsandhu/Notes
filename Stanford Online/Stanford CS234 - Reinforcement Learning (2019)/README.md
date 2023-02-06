@@ -7,6 +7,7 @@ all the important information can be accessed on their official webpage [HERE](h
 
 1. Algebra
 2. Monte Carlo
+3. Markov Chains
 
 ## Some more important links
 
@@ -20,7 +21,7 @@ all the important information can be accessed on their official webpage [HERE](h
 - [Sutton and Bart problems: Set 2](https://github.com/ShangtongZhang/reinforcement-learning-an-introduction/)
 - [David Silver’s Course:](http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html)
 - [Sutton Coursework and Lectures](https://drive.google.com/open?id=1SnRnS_LKiAsDbFUlWMabcEVrLD7V69pb)
-[UCB Deep Reinforcement Learning Fall 2017](https://www.youtube.com/playlist?- list=PLkFD6_40KJIznC9CDbVTjAF2oyt8_VAe3)
+- [UCB Deep Reinforcement Learning Fall 2021](https://www.youtube.com/playlist?list=PL_iWQOsE6TfXxKgI1GgyV1B_Xa0DxE5eH)
 - [Sutton and Bart book](http://incompleteideas.net/book/the-book-2nd.html)
 - [Dimitri P. Bertsekas(MIT) lectures/book](http://web.mit.edu/dimitrib/www/RLbook.html)
 - [David Silver google group](https://groups.google.com/forum/#!forum/csml-advanced-topics)
