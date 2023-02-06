@@ -79,10 +79,12 @@ $$ R(s, a, s') = E[ r_t \mid s_t=s, a_t=a, s_{t+1}=s' ] $$
 we often represent this as:
 
 $$ \Rightarrow R(s, a) = E[ r_t \mid s_t=s, a_t=a ] $$
+
 $$ OR $$
+
 $$ \Rightarrow R(s) = E[ r_t \mid s_t=s ] $$
 
-It will also often be the case that $ (r_t | s_t = s) $ is **degenerate**, that is, $ r_t $ has a fixed value, given $ s_t = s $.
+It will also often be the case that $(r_t | s_t = s)$ is **degenerate**, that is, $r_t$ has a fixed value, given $s_t = s$.
 
 ## Components of a RL Agent
 
