@@ -88,11 +88,11 @@ It will also often be the case that $(r_t | s_t = s)$ is **degenerate**, that is
 
 ## Components of a RL Agent
 
-The **agent state** (current state of the agent) be a function of the history, $ s^a_t = g(h_t) $. A reinforcement learning agent typically has an explicit representation of one or more of the following three things:
+The **agent state** (current state of the agent) be a function of the history, $s^a_t = g(h_t)$. A reinforcement learning agent typically has an explicit representation of one or more of the following three things:
 
-1. ***Policy*** [$\pi$]: it is a mapping from the agent state $s_t$ to an action $a_t$.
+1. ***Policy*** [ $\pi$ ]: it is a mapping from the agent state $s_t$ to an action $a_t$.
 
-    - **In Deterministic Distribution:** the policy takes a specific step w.r.t to a state. Hence, $\pi \left( s^a_t \right) \in A$ (state at time "$t$" on action "$a$" under the policy "$\pi$", returns an action belonging to the set of all actions "$A$" in our enviornment).
+    - **In Deterministic Distribution:** the policy takes a specific step w.r.t to a state. Hence, $\pi \left( s^a_t \right) \in A$ (state at time "$t$" on action "$a$" under the policy " $\pi$ ", returns an action belonging to the set of all actions "$A$" in our enviornment).
 
     - **In Stochastic Distribution:** the agent picks an action $a \in A$ (set of all actions), with the Transition Probability $ P(a_t=a) = \pi(a|s^a_t) $ (i.e. the probability of action "$a$" given the state "$s^a_t$" at time "$t$")
 
