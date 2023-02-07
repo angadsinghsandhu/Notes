@@ -94,11 +94,14 @@ The **agent state** (current state of the agent) be a function of the history, $
 
     - **In Deterministic Distribution:** the policy takes a specific step w.r.t to a state. Hence, $\pi \left( s^a_t \right) \in A$ (state at time " $t$ " on action " $a$ " under the policy " $\pi$ ", returns an action belonging to the set of all actions " $A$ " in our enviornment).
 
-    - **In Stochastic Distribution:** the agent picks an action $a \in A$ (set of all actions), with the Transition Probability $P(a_t=a) = \pi(a|s^a_t)$ (i.e. the probability of action "$a$" given the state " $s^a_t$ " at time " $t$ ")
+    - **In Stochastic Distribution:** the agent picks an action $a \in A$ (set of all actions), with the Transition Probability $P(a_t=a) = \pi(a|s^a_t)$ (i.e. the probability of action " $a$ " given the state " $s^a_t$ " at time " $t$ ")
 
-2. ***Value Function*** [$ V^\pi $]: is an expected sum of discounted rewards. Where $\gamma$ is he Disount Factor and has a value between [0, 1], it is used to weigh immediate rewards (when $\gamma = 0$) versus delayed rewards (when $\gamma = 1$). The Value Func is given as: $$ V^\pi(s) = E_\pi[r_t + \gamma^1r_{t+1} + \gamma^2r_{t+1} + ... | s_t=s] $$
-   Where "$E_\pi[...]$" denotes that the expectation is taken over states encountered by following the policy "$\pi$"
-3. ***Model*** [$ M $]: A **model** consists of the above Transition Dynamics $P(...)$ and Reward Function $R(...)$.  If the agent has a model, we would call it a **model-based agent**, and if it doesn't incorporate a model, we would call it a **model-free agent**. An illustration of a RL model:
+2. ***Value Function*** [ $V^\pi$ ]: is an expected sum of discounted rewards. Where $\gamma$ is the **Disount Factor** and has a value between [0, 1], it is used to weigh immediate rewards (when $\gamma = 0$) versus delayed rewards (when $\gamma = 1$). The Value Func is given as: 
+
+$$ V^\pi(s) = E_\pi[r_t + \gamma^1r_{t+1} + \gamma^2r_{t+1} + ... | s_t=s] $$
+
+   Where " $E_\pi[...]$ " denotes that the expectation is taken over states encountered by following the policy " $\pi$ "
+3. ***Model*** [ $M$ ]: A **model** consists of the above Transition Dynamics $P(...)$ and Reward Function $R(...)$.  If the agent has a model, we would call it a **model-based agent**, and if it doesn't incorporate a model, we would call it a **model-free agent**. An illustration of a RL model:
 
 ![RL Model 2](https://ekababisong.org/assets/rl_theory_practice/rl-framework-2.png)
 
