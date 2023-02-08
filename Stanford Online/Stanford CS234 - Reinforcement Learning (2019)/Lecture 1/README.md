@@ -110,7 +110,7 @@ The **agent state** (current state of the agent) is a function of the history, $
 
 2. ***Value Function*** [ $V^\pi$ ]: is an expected sum of discounted rewards. Where $\gamma$ is the **Disount Factor** and has a value between [0, 1], it is used to weigh immediate rewards (when $\gamma = 0$) versus delayed rewards (when $\gamma = 1$). Where " $E_\pi[...]$ " denotes that the expectation is taken over states encountered by following the policy " $\pi$ ". The Value Func is given as:
 
-$$ V^\pi(s) = E_\pi[r_t + \gamma^1r_{t+1} + \gamma^2r_{t+1} + ... | s_t=s] $$
+   $$ V^\pi(s) = E_\pi[r_t + \gamma^1r_{t+1} + \gamma^2r_{t+1} + ... | s_t=s] $$
 
 3. ***Model*** [ $M$ ]: A **model** consists of the above Transition Dynamics $P(...)$ and Reward Function $R(...)$.  If the agent has a model, we would call it a **model-based agent**, and if it doesn't incorporate a model, we would call it a **model-free agent**. An illustration of a RL model:
 
@@ -134,8 +134,8 @@ We call the case where $o_t \ne s_t$ ***partially observable***, and it is commo
 | Model Based | ⬜ | ⬜ | ✅ |
 | Model Free | ⬜ | ⬜ | ❌ |
 
-✅ $\Rightarrow Yes$
-⬜ $\Rightarrow Maybe$
+✅ $\Rightarrow Yes$,
+⬜ $\Rightarrow Maybe$,
 ❌ $\Rightarrow No$
 
 ![RL algo Venn Diagram](./imgs/rl-venn.png)
