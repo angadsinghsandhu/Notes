@@ -4,4 +4,112 @@
 
 ChatGPT allows us to interface with an AI using a prompt that return us some very accurate NLP responses. `Example: Write a Haiku about birds`. This AI generares words sequentially from left to right. It is a probabalistic system that can give us different answers for the same prompt.
 
-This <ins>is</ins> ::what:: we __call__ a **language system** beca
+This is what we call a ==**language system**== as it models the sequence of words (or characters, tokens) using its inherent semantic knowledge of coherent sentence format (it knows how words follow each other in a sentence). From the perspective of the model, we give it the start of the sequence (i.e. the prompt) and it completes the sequence as it response.
+
+### Under the Hood
+
+the underlying technology that makes ChatGPT possible is a ==**transformer**==. First described in 2017 in the paper [Attention Is All You Need](../papers/1706.03762.pdf) by Google. GPT stands for *Generatively Pre-trainded Transformer* thus the transformer is the inherent neural network that does all the heavy lifting of the chatbot.
+
+The transformer model was initially built for machine translation, but in the half-decade after its release, it has taken over AI with minor changes to its Architecture. To understand the model better we need to look at the model architecture itself.
+
+Initial model Architecture : ![Transformer Architecture](../imgs/transformer%20architecture.png)
+
+### Working of the Model
+
+ChatGPT is trained on billions of parameters, here we are goining to create a simple character-level transformer-based language system, trained on the much smaller toy dataset called the [Tiny Shakespeare Dataset](https://huggingface.co/datasets/tiny_shakespeare). This is text dataset containing all the works of Shakespear in a 1MB file.
+
+The inherent working of the model is that for a prose given as : `As thou art to thyself: Such was the very armour he had on When he the ambitious Norway combated;` (a part of hamlet) the model should return something like (i.e. character sequences in the form of Shakespear) : `So frown'd he once, when, in an angry parle, He smote the sledded Polacks on the ice. 'Tis strange.` (rest of the prose).
+
+The entire code for training such a transformer is given as : [NanoGPT](https://github.com/karpathy/nanoGPT) by Andrej Karpathy. All the code from this repo has been written by me while following alng with andrej karpathy's lecture.
+
+## *Building the Model*
+
+first we use the `wget` library to get the shakespear text data.
+
+then we load the data into a variable called text, which is then sampled to see our data ![initial data processing](./../imgs/initial.png)
+
+following this we construt a set of all possible characters that we might scan.
+
+The next step involves ==**tokenization**== where the string inputs are converted into corresponding integer symbols using a mapping, as machines are trained to numerical data. Any text data used during training or evaluation is converted to a numerical sequence and process. Similarly, the output is converted from a numerical sequence to a character sequence to be shon to user finally. ![tokenization](./../imgs/tokenization.png)
+
+We are building a charater-level language model hence the tokenization will be done on each charater rather than a word or sentence. Most real-world implemenataions (such as [Google's SentencePiece](https://github.com/google/sentencepiece) and [PyTorch's tiktoken (used in GPT)](https://github.com/openai/tiktoken)) use a sub-word tokenization process. Where each word in not tokenized, rater it is broken into smaller parts that is tokenized, these parts still being larger than individual charaters. ![tiktoken tokenization](../imgs/tiktoken.png)
+
+This process depends on the tradeoff between the size of our encoding / decoding mappings and the length of tokenized sentences. We can either have a long sequence of integers with a small library (mappings) or vica-vera. Various tokenizers offer different properties w.r.t. this tradoff.
+
+To keep the current model simple we are only keeping character level encoding. Now that we have the tokenizer, we encode our entire text data and store the integer values in a `PyTorch Tensor`.
+
+### Spliting the data
+
+Now that we have our data in a tensor, we can split the data up into different sets. 90% of our data goes into the `Train Set`, the rest 10% makes the `Validation Set` (to check on overfitting).
+
+In reality, due to computational limitations. We do not feed our entire dataset into the transformer in one go. Hence, we break up and sample our training data into little chunk and train on them one at a time. The maximum size of these chunks is called `block_size` and these chunks are called ==**Blocks**==.
+
+Each integer token in our sampled block is used to train the next output in a cascading manner, as a langauage model predicts the next word the output of the model needs to be the most likely integer, given the previous integer array (of maximum size : block_size). Hence if our block size is 8, we sample a block of 9 tokens that are consecutive. This is because from 9 tokens, we get 8 examples. Instead of taking inputs as arrays of `block_size + 1`, we create a separate array with the output integer at position `n` given the input to be the first `n` integers of the sequence.![block samples](../imgs/samples.png)
+
+The transformer is given these examples to help it understand the context from as little as a single word (or in our case a single character) to the entire sentence. This is helpful later in inference during execution.
+
+In a transformer, we would have multiple baches of sentences such as these, stacked up in a single Tensor which are independent of each other. This is done to leverge the paralleization power of GPUs.
+
+Whereas, a ==**Batch**== is a set of such independent sequences that are processed in parallel by the model. So the training input of the transformer will be a matrix of `rows = batch_size` and each row being an `integer array of len = block_size`. An example for batch_size = 4 and block_size = 8 is given below: ![batch and block size representation in data](../imgs/batch-block.png)
+
+The above examples gives us the compact representation of in total 32 examples `(4 * 8 = 32)`.
+
+### Constructing the Bigram Neural Network Model
+
+The first thing we are going to do is to create a baseline model to build the transformer on. Hence, we first build a `Bigram Model`. For an in-depth into this model see this **makemore** series by Andrej Karpathy, the first episode is here : [building makemore](https://www.youtube.com/watch?v=PaCmpygFfXo&list=PLAqhIrjkxbuWI23v9cThsA9GvCAUhRvKZ&index=2).
+
+In the video Andrej explains the creation of the `BigramLanguageModel` Class which is a subclass of `torch.nn.Module`. In the constructor we create an embedding table of size `(vocab_size, vocab_size)` i.e. if our vocab_size = 65, then the embedding table will be a matrix with 65 rows and 65 columns.
+
+In the `forward` step we are predicting what comes next using a probability distribution, for each character in our vocabulary the embedding table has a corresponding array with the probabity of each charater in our vocabulary being the next in the sequence.
+
+As no tokens talk to each other for this model. We have an individual representation for each unique character. Example: for token 5, we get the array at index 4 (index starts from 0) in the embeddings table. Which is a probabity distribution of the possible next word in the sequence i.e. 3: 50% prob, 27: 6% prob, 31: 2% prob, and so on...
+
+This prediction distribution is called the ==**logits**== (also called `scores`) and is returned in the feed-forward step. The shape of logits is : `(B, T, C)` a.k.a. `(batch, time, channel)` a.k.a. `(batch_size, block_size, vocab_size)` i.e. for our example : `(4, 8, 65)`.
+
+After making the predictions we evaluate our ==**loss function**==, this is only done if the **targets** are provided otherwise the loss is set to *None*. A good function to evalue our model is the `Negative Log Likelyhood` a.k.a. `Cross Entropy`. To use this we reshape our logits and targets as (BxT, C) & (BxT, 1) respectively. ![Bigram Class with init and forward functions](../imgs/bigram-class.png)
+
+Now to generate outputs from our model we make a `generate` function. The job of this function is to extend the input `idx` of size (B, T) into outputs arrays of size (B, T+1)..(B, T+2)..(B, T+3)..and so on. Simply put, this function extends the input by generating the new sequence. In the function we loop till the maximum number of new generations we want this paramerter is stored in the `max_new_tokens` variable.
+
+Inside each loop we get the predictions (from embeddings table) of our indicies i.e. logits and loss (not used here), this is done by executing the `forward` step in our class. From the logits we pluck out the last prediction beacause that is the prediction of what comes next. We convert the next prediction into prababilities using the `softmax` function. We sample a probability generated from the softmax function which then becomes the index of the generated character. This generation is finally appended into our indices and the next step of the loop is started to conduct all the above steps again till we generate a sequence of the sixe of `max_new_tokens`. Finally our indicies are returned which are decoded to get back the generated sequence.
+
+![Bigram Class with genarate functions](../imgs/bigram-gen.png)
+
+### Training the model
+
+The above model generates grabage values as we have not trained this, also in terms of the biram model at each step of the loop we input the entire character sequence which is not needed in a Bigram Model as it produces predictions by only seeing the last character in our indicies. But we make this general function for he future when we exten this model to a transformer that taken in the history of the sequence to produce coherent sequences.
+
+To trin or model construct a basic training loop. Choosing to use the `AdamW Optimizer` we set our batch size to 32. Then in s loop: zero-out all the gradients from the previous step, conduct the backward step on our loss and conducting the optimizer step function. To finally get our loss at the end of training. ![Training Loop]()
+
+Now we age going to extend this model so that the previous context (history) of the sequence plays a vital role in prdicting the next character, not ONLY the last character.
+
+### COnverting model to a script
+
+Now we take all our code from the python notebook to a runnable script where most of our code remains the same with some minor changes. 
+
+We introduce some global variabes such as `device`, `eval_iters`. `device` to help run the model on GPU devices, if GPU device is available then we have to move the data to these devices on loading similarly we want to move the model parameters to the device as well when we create the model (example: moving the `nn.Embeding().weight` table to the device which stores the lookup table). This is done so that all the calculation be done on the GPU in a higly optimized manner.
+
+We also want a less noisy version of esuring the loss, rather than just printing it every time, we want to stimate it using a `estimate_loss()` function which averages out the loss over multiple batches to give us a better idea of where the model is headed. This averaging out is done over a number of iterations which is stored in the `eval_iters` variable. Hence estimate_loss() averages the loss by multiple batches over the `train` and `validation` sets. ![All variables used]()
+
+NOTE: The `@torch.no_grad()` context manager decorator over the `estimate_loss()` function tells PyTorch that `.backward()` does not need to be called on anything inside the function.
+
+NOTE: it is a good idea to switch the model model from `training` to `inference` where necessary as the training layers (example: `BatchNorm`, `Dropout`) behave differently in such different modes. This can be done by calling the `model.eval()` and `model.train()` methods. 
+
+![Estimate Loss Function]()
+
+### Example: Mathematical Trick in Self-Attention
+
+To get an idea of creating optimaized attention operations in neural networks we are goinf to take a Toy Example. Where we define a random tensor of shape (B, T, C) where B=4, T=8, C=2. Currently all these 3 dimentions are not sharing information between each other. 
+
+To couple them in a particular way where the token at a position should not communicate with any future (next) token that is a Token at position 4 should not be connected to tokens 5 6, 7 etc (as these are future tokens in the sequence). Hence, the information flows only from the previous context to the current timestep.
+
+The simplest way to do this is to take an average of all the previous steps that becomes a feature vector that summarizes the current context summary. This conversion (summation or averaging more precicely) is a very lossy conversion where all the spactial data is lost. We will explain how to brin this information back later.
+
+Thus, what we are going to do is for every sequence in the B dimention we are going to calculate the average of the previous T tokens for each T^th^ token. ![avg attention example]()
+
+In the above example every row in the *orignal tensor* corresponds to a row in the averaged out tensor. The first rows in bot tensors are the same as they have no values behind them. In the second row `(0.1 + 0.2) / 2 = 0.15` as seen in the 2^nd^ row of the 1^st^ column of the average tensor. Similarly, the 3^rd^ row of the 1^st^ column of the average tensor would be `(0.1 + 0.2 + 0.3) / 3 = 0.2` and so on...
+
+But the above process is extremly inefficient. The trick to do the above process efficently is to use matrix mutiplication. More specifically, if we multiply an array of size (T, T) where the array is a lower triangle as well as all the rows sum upto 1, then the resultanat matrix will be our average matrix. Because this ooperation is done using matrixes, we can leverage the power of parellization through GPUs. Hence, using Batch Matrix multiply we can do this weighted aggregation using the (T, T) array.
+
+### Code Cleanup
+
+### Extending the Bigram Model
