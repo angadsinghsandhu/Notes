@@ -20,7 +20,7 @@ all the important information can be accessed on their official webpage [HERE](h
 |-------------------|--------------------------------------------------------------|
 | Name              | Docker Tutorial for Beginners                                |
 | Instructor        | [Mosh Hamedani](https://codewithmosh.com/)                   |
-| Link              | <https://www.youtube.com/watch?v=pTFZFxd4hOI>                  |
+| Link              | <https://www.youtube.com/watch?v=pTFZFxd4hOI>                |
 | Tags              | DevOps, Docker, Go                                           |
 | Difficulty        | Beginner                                                     |
 | Course Created At | 2021-03-30                                                   |

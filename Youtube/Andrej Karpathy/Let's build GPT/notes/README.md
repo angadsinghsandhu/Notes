@@ -82,7 +82,7 @@ To trin or model construct a basic training loop. Choosing to use the `AdamW Opt
 
 Now we age going to extend this model so that the previous context (history) of the sequence plays a vital role in prdicting the next character, not ONLY the last character.
 
-### COnverting model to a script
+### Converting model to a script
 
 Now we take all our code from the python notebook to a runnable script where most of our code remains the same with some minor changes. 
 
@@ -96,7 +96,7 @@ NOTE: it is a good idea to switch the model model from `training` to `inference`
 
 ![Estimate Loss Function]()
 
-### Example: Mathematical Trick in Self-Attention
+## Example: Mathematical Trick in Self-Attention
 
 To get an idea of creating optimaized attention operations in neural networks we are goinf to take a Toy Example. Where we define a random tensor of shape (B, T, C) where B=4, T=8, C=2. Currently all these 3 dimentions are not sharing information between each other. 
 
@@ -110,6 +110,30 @@ In the above example every row in the *orignal tensor* corresponds to a row in t
 
 But the above process is extremly inefficient. The trick to do the above process efficently is to use matrix mutiplication. More specifically, if we multiply an array of size (T, T) where the array is a lower triangle as well as all the rows sum upto 1, then the resultanat matrix will be our average matrix. Because this ooperation is done using matrixes, we can leverage the power of parellization through GPUs. Hence, using Batch Matrix multiply we can do this weighted aggregation using the (T, T) array.
 
-### Code Cleanup
+## Code Cleanup
 
-### Extending the Bigram Model
+Now that e have the vocab size as a global constructor, we do not need to pass it through the constructor anymore. We will add another global variable `n_embed` that specifies the number of embedding dimentions. This will now become the 2^nd^ dimention of the enbedding table of dimentions `(vocab_size, n_embed)`.
+
+Now the embeddings table doesnot return logits directly instead we get `tok_emb` (token embeddings) and a linear layer will be present between the `logits` and the `tok_emb` variables. Now we need to make a `self.lm_head` linear layer in the constructor. We will get our logits when we pass the token embeddings through the lm_head.
+
+New we create a positional encoding table in the constructor as well named `self.position_embedding_table` wich is an embedding table of size `(block_size, n_embed)`. We use this in the forward step to get the `pos_emb` variable.
+
+Finally the `pos_emb` and `tok_emb` matricies get concatanated to create the final result
+
+## Extending the Bigram Model
+
+### Crux of Self-Attention
+
+Self-attention solves the problem of getting the contextual data from the past in a data dependent way. This done by emiting 2 vectors: ==**Query**== and ==**Key**== at every single node / token. Query vector signifies *what am I looking for?* whereas the Key ector signifies *what do I contain?*. We get our affinities in the sequence by doing a dot product between the keys and the query vectors. So if the key and the query vectos are similarly directional we ill have higher affinity (cosine property).
+
+After transposing the key vector and doing the dot product, we will get a `(B, T, T)` matrix i.e. the affinities that will become our weights. FInally, we will create a value vector as well wich will become our outut vector after we dot-product our weights and values.
+
+![Attention Diagram]()
+
+### Further Information
+
+NOTE: Self-Atention is a communication mechanism. Like a directed node with multiple in-edges, where the weighted sum of these edges is attention. this is done in a data-dependent manner i.e. depending on data that is actually present.
+
+NOTE: Attention has no notion of space
+
+## Conclusions
