@@ -13,6 +13,7 @@ We build a Generatively Pretrained Transformer (GPT), following the paper **"Att
 - [Andrej's Collab](https://colab.research.google.com/drive/1JMLa53HDuA-i7ZBmqV7ZnA3c_fvtXnx-?usp=sharing)
 - [Github repo of ChatGPT nn-zero-to-hero](https://github.com/karpathy/ng-video-lecture)
 - [Main nn-zero-to-hero repo](https://github.com/karpathy/nn-zero-to-hero)
+- [Another Great Resource to Learn about Transformers](https://peterbloem.nl/blog/transformers)
 
 ## Metadata
 
