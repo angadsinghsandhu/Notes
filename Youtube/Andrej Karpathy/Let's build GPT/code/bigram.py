@@ -9,7 +9,7 @@ batch_size = 32         # sequences running in parallel (B)
 block_size = 8          # max sequence length (T)
 # vocab_size = ...      # retrieved drectly from number of unique charaters in dataset (C)
 max_iters = 3000        # iterations to train model
-eval_interal = 300      # verbose data printing interval
+eval_interal = 300      # interval in training max_iters to check loss
 eval_iters = 200        # number of batches to average-over to minimize training noise
 learning_rate = 1e-2    # learning rate of optimizer
 # to run with GPU on collab: Runtime > Change Runtime Type > GPU
@@ -20,9 +20,9 @@ print(f"Device Type : {device}")
 
 torch.manual_seed(1337)
 
-# loading dataset
-URL = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
-res = wget.download(URL, "tinyshakespeare.txt")
+# # loading dataset
+# URL = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
+# res = wget.download(URL, "tinyshakespeare.txt")
 
 # reading dataset to store in a variable
 with open('tinyshakespeare.txt', 'r', encoding='utf-8') as f:
@@ -35,8 +35,8 @@ vocab_size = len(chars)
 # creating mappings
 stoi = {ch:idx for idx, ch in enumerate(chars)}
 itos = {idx:ch for idx, ch in enumerate(chars)}
-encode = lambda s: [stoi(s) for c in s]
-decode = lambda i: ''.join([itos(idx) for idx in i])
+encode = lambda s: [stoi[c] for c in s]
+decode = lambda l: ''.join([itos[idx] for idx in l])
 
 # splitting training and validation data
 data = torch.tensor(encode(text), dtype=torch.long)
@@ -111,7 +111,7 @@ class BigramLanguageModel(nn.Module):
         # creating lookup table of logits for each token
         # creating embedding table of (size of the dictionary of embeddings) by (the size of each embedding vector)
         # example: for an embedding with 1,000 tokens each of 200 dimentions, the table would be Embedding(1000, 200)
-        self.token_embedding_table = nn.Embeddin(vocab_size, vocab_size)
+        self.token_embedding_table = nn.Embedding(vocab_size, vocab_size)
 
     # this method is called when the initialize class variable is called like a function
     # the inputs to this are inputs (idx) and targets (labels)
@@ -154,5 +154,53 @@ class BigramLanguageModel(nn.Module):
 
             # apply softmax to embeddings to convert into a probability distribution
             probs = F.softmax(logits, dim = -1)
-        return None
 
+            # TODO : idk what thsi does
+            # sampling from distribution the next charater
+            idx_next = torch.multinomial(probs, num_samples=1)
+
+            # adding sample to input to generate next character
+            idx = torch.cat((idx, idx_next), dim=1)     # (B, T+1) 
+
+        return idx
+    
+# creating model instance
+model = BigramLanguageModel(vocab_size)
+m = model.to(device=device)     # sending model to GPU/CPU
+
+# creating PyTorch optimizer
+optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+
+# Training the Model
+for iter in range(max_iters):
+
+    # checking loss in every eval_iterval steps
+    if iter % eval_interal == 0:
+        losses = estimate_loss(m)
+        # losses = estimate_loss(model)
+        print(f"step {iter} | train loss = {losses['train']:.4f} | val loss = {losses['val']:.4f}")
+
+    # sample batch of data
+    X, Y = get_batch('train')
+
+    # evaluate loss
+    logits, loss  = model(X, Y)
+
+    # set all gradients to zero
+    optimizer.zero_grad()
+
+    # backwar propagation step
+    loss.backward()
+
+    # perform single optimization step
+    optimizer.step()
+
+# # start generation from model
+# initial context
+context = torch.zeros((1, 1), dtype=torch.long, device=device)
+
+# print initial charaters
+print(f"the initial conext charater is : {decode(context[0].tolist())}")
+
+# printing generated code
+print(decode(m.generate(context, max_new_tokens=50)[0].tolist()))
