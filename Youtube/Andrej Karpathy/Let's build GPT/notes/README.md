@@ -84,7 +84,7 @@ Now we age going to extend this model so that the previous context (history) of 
 
 ### Converting model to a script
 
-Now we take all our code from the python notebook to a runnable script where most of our code remains the same with some minor changes. 
+Now we take all our code from the python notebook to a runnable script where most of our code remains the same with some minor changes.
 
 We introduce some global variabes such as `device`, `eval_iters`. `device` to help run the model on GPU devices, if GPU device is available then we have to move the data to these devices on loading similarly we want to move the model parameters to the device as well when we create the model (example: moving the `nn.Embeding().weight` table to the device which stores the lookup table). This is done so that all the calculation be done on the GPU in a higly optimized manner.
 
@@ -92,19 +92,21 @@ We also want a less noisy version of esuring the loss, rather than just printing
 
 NOTE: The `@torch.no_grad()` context manager decorator over the `estimate_loss()` function tells PyTorch that `.backward()` does not need to be called on anything inside the function.
 
-NOTE: it is a good idea to switch the model model from `training` to `inference` where necessary as the training layers (example: `BatchNorm`, `Dropout`) behave differently in such different modes. This can be done by calling the `model.eval()` and `model.train()` methods. 
+NOTE: it is a good idea to switch the model model from `training` to `inference` where necessary as the training layers (example: `BatchNorm`, `Dropout`) behave differently in such different modes. This can be done by calling the `model.eval()` and `model.train()` methods.
 
 ![Estimate Loss Function]()
 
 ## Example: Mathematical Trick in Self-Attention
 
-To get an idea of creating optimaized attention operations in neural networks we are goinf to take a Toy Example. Where we define a random tensor of shape (B, T, C) where B=4, T=8, C=2. Currently all these 3 dimentions are not sharing information between each other. 
+To get an idea of creating optimaized attention operations in neural networks we are goinf to take a Toy Example. Where we define a random tensor of shape (B, T, C) where B=4, T=8, C=2. Currently all these 3 dimentions are not sharing information between each other.
 
 To couple them in a particular way where the token at a position should not communicate with any future (next) token that is a Token at position 4 should not be connected to tokens 5 6, 7 etc (as these are future tokens in the sequence). Hence, the information flows only from the previous context to the current timestep.
 
 The simplest way to do this is to take an average of all the previous steps that becomes a feature vector that summarizes the current context summary. This conversion (summation or averaging more precicely) is a very lossy conversion where all the spactial data is lost. We will explain how to brin this information back later.
 
-Thus, what we are going to do is for every sequence in the B dimention we are going to calculate the average of the previous T tokens for each T^th^ token. ![avg attention example]()
+Thus, what we are going to do is for every sequence in the B dimention we are going to calculate the average of the previous T tokens for each T^th^ token.
+
+![avg attention example]()
 
 In the above example every row in the *orignal tensor* corresponds to a row in the averaged out tensor. The first rows in bot tensors are the same as they have no values behind them. In the second row `(0.1 + 0.2) / 2 = 0.15` as seen in the 2^nd^ row of the 1^st^ column of the average tensor. Similarly, the 3^rd^ row of the 1^st^ column of the average tensor would be `(0.1 + 0.2 + 0.3) / 3 = 0.2` and so on...
 
@@ -132,8 +134,42 @@ After transposing the key vector and doing the dot product, we will get a `(B, T
 
 ### Further Information
 
-NOTE: Self-Atention is a communication mechanism. Like a directed node with multiple in-edges, where the weighted sum of these edges is attention. this is done in a data-dependent manner i.e. depending on data that is actually present.
+#### NOTE #1
 
-NOTE: Attention has no notion of space
+Self-Atention is a communication mechanism. Like a directed node with multiple in-edges (each edge has some vector of information), where the weighted sum of these edges is attention. this is done in a data-dependent manner i.e. depending on data that is present in the incomming nodes at that moment.
+
+#### NOTE #2
+
+Attention has no notion of space. Attention simply acts over a set of vectors, by defaul these vectors do not cntain their positional data. Hence, positional encoding need to be added separately to get generations that are coherent (keep the semantic understanding of the positions of words)
+
+#### NOTE #3
+
+All information across the different batches are processed separately. Hence, the information in the block of batch 1 does not effect the training of batch 2 or 3 and vice-versa.
+
+#### NOTE #4
+
+In the case of language models, we keep a constranint on the data that future tokens do not communicate with tokens from the past. But this might not always be the case. In many cases, for example, if we want a model that does sentiment analysis or topic modeling. Our ==**encoder**== model should take in information from the past and future tokens.
+
+We have created a ==**decoder**== for our Language Model as it has an autoregressive structure where it is decoding language
+
+#### NOTE #5
+
+Attention vs Self-Atention vs Cross-Attention
+
+When `keys`, `queries` and `values` all come from the same source, it is called ==**Self-Attention**==.
+
+For a case where `queries` come from the same source but the `keys` and `values` come from different external sources (encoder blocks) this type of attention is called ==**Cross-Attention**==
+
+#### NOTE #6
+
+`"Scaled"` Attention is when we divide our weights (`wei`) by the root of the `head_size` as a normalization operation. This is to make the `wei` matix have unit variance and 0 mean calulated from input matrices that are of unit variance and 0 mean themselves, such as `Q` (queries) and `K` (keys).
+
+This is important as `wei` is given as input to a `Softmax` funcion, which converges to `one-hot vectors` (array with a single 1 and all other fields as 0) if the input array does not have diffused values (having very positive and very negative (sharpened) values).
+
+This normalization would help the model from getting extremly peaky.
+
+### Creating self attention Block
+
+lorem ipsum
 
 ## Conclusions
