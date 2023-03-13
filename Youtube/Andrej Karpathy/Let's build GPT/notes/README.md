@@ -64,7 +64,7 @@ In the `forward` step we are predicting what comes next using a probability dist
 
 As no tokens talk to each other for this model. We have an individual representation for each unique character. Example: for token 5, we get the array at index 4 (index starts from 0) in the embeddings table. Which is a probabity distribution of the possible next word in the sequence i.e. 3: 50% prob, 27: 6% prob, 31: 2% prob, and so on...
 
-This prediction distribution is called the ==**logits**== (also called `scores`) and is returned in the feed-forward step. The shape of logits is : `(B, T, C)` a.k.a. `(batch, time, channel)` a.k.a. `(batch_size, block_size, vocab_size)` i.e. for our example : `(4, 8, 65)`.
+This prediction distribution is called the ==**logits**== (also called `scores`) and is returned in the feed-forward step. The shape of logits is : `(B, T, C)` a.k.a. `(batch, time, channel)` a.k.a. `(batch_size, block_size, vocab_size)` i.e. for our example : `(4, 8, 65)`. Logits in Deep Learning are the values that we get from the model that would be fed into a `Softmax` or `ArgMax` layer to get our final predictions.
 
 After making the predictions we evaluate our ==**loss function**==, this is only done if the **targets** are provided otherwise the loss is set to *None*. A good function to evalue our model is the `Negative Log Likelyhood` a.k.a. `Cross Entropy`. To use this we reshape our logits and targets as (BxT, C) & (BxT, 1) respectively. ![Bigram Class with init and forward functions](../imgs/bigram-class.png)
 
@@ -168,8 +168,46 @@ This is important as `wei` is given as input to a `Softmax` funcion, which conve
 
 This normalization would help the model from getting extremly peaky.
 
-### Creating self attention Block
+![Softmax result, diffused vs sharpened inputs]()
 
-lorem ipsum
+### Creating Self-Attention Block Class
+
+Using our knowledge of self-attention. We create a new class `Head()` that handles all the self-attention operations. When this class is initialized we create the internal `Linear` layers (without bias) of `key`, `query` and `value`. We also create a buffer named `trill` where we stor our bottom triangle matrix of size (T, T).
+
+In the `forward()` function of this class first we get the shape of our input `x` i.e. `B, T, C`. We send our input through the linear layers of `key` and `query` linear layers to get `k` and `q` variables. Then we get our weights by geeting the dot product of `q` and `k` (transposed along T and C axis) and finally normalizing by C (channels) (scaled attention).
+
+We alter our weights using a `maked_fill` from our previously define `trill buffer matriz` to make sure that every node only communicates with the past and not the future.
+
+We pass our weights through a `Softmax` layer along the last axis, as well as perform the weighted aggregation of the `values` to get the `v` array. Finally, the dot product of weights `wei` (of shape: (B, T, T)) and values `v` (of shape: (B, T, C)) are stored in a variable called `out`. The `out` tensor is returned as the result.  
+
+### Updating Bigram Language Model Class
+
+In the `__init__()` class of the model we intoduce a new local parameter called `sa_head`(self-attention head) which is the instantiated `Head` class with `n_embed` as the input depicting head size.
+
+In the `forward()` step once the positional and token embedding are encoded into the input `x` variable, we pass that through our `sa_head` function to add self attention to that block. The output to this is sent to our langauge modeling head (`lm_head`) to create the logits.
+
+Also, in our `generate()` funtion we crop our context to make sure that our embeddings donot run out of scope with respect to the input.
+
+NOTE: we decreae the `learning_rate` as the self-attention model cannot tolerate huge changes in weights.
+
+### Multi-Head attention
+
+Here we calcuate multiple attention blocks in parallel and concaternate the product. We create a new `MultiHeadAttention` class. In it's `__init__()` function we take in `num_heads` and `head_size` as inputs and create a module list of `num_heads` length filled with instantiated `Head` classes each of size `head_size`. This list is stored in a variable called `heads`.
+
+In the `forward` method we het the input `x` which we send to each head in the odule list and concatenate the result which is sent as the result.
+
+In the `__init__()` method of the `BigramLanguageModel` Class we update the `sa_head`(self-attention head) parameter. Where earlier it was the instantiated `Head` class, now is the instantiated `MultiHeadAttention` Class with its first arg as the `num_heads` and the second arg as the `n_embed` divided by `num_heads` (number of communication channels are conserved).
+
+![diagram for multi-head attention]()
+
+### Adding FeedForward Layer
+
+In our model the token looked at each other but did not get a chance to actually learn from the text passes into them. Hence we add a neural net to add and extend computation in our decoder transformer.
+
+We add simple multi-layer perceptron to increase computation on a per-nodel level. We do this by adding a `FeedForward` class. where the `__init__()` has a `net` parameter whch is a single Sequential layer with `Linear` and `ReLU` layers. In the `forward()` step we execute the `net` parameter and return the results.
+
+In the `__init__()` method of the `BigramLanguageModel` Class we define a new `ffwd` parameter with is the instantiation of the `FeedForward` Class. This `ffwd` arameter is called directly after the self attention head `sa_head()`.
+
+![Feed Forward Class Inplementation]()
 
 ## Conclusions
