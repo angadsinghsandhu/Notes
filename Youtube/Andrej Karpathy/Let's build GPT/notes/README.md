@@ -210,4 +210,35 @@ In the `__init__()` method of the `BigramLanguageModel` Class we define a new `f
 
 ![Feed Forward Class Inplementation]()
 
+## Creating Transformer Block
+
+We now finally create a `Block` class which interspeces communication and comutation to create poweful models. The communication is done in the `MultiHeadAttention` class and the computation is done using the `FeedForward` class. This process is done independently on all the tokens.
+
+The relation between the embeddings (`n_embed`) and attention heads (`n_head`) are:
+
+$$ HeadSize * NumberOfHeads = NumberOfEmbeddings  $$
+
+### Optimizing the Model
+
+Deep neural netwoks suffer from optimization issues, to counterac these the transformer uses 2 main ideas:
+
+- **Residual Connections** or **Skip Connections**
+- **LayerNorm**
+
+![Skip Connections]()
+
+In skip connections the gradiends are added from computation to the orignal values. Addition distributes gradients equally to both of its pathways. This makes the gradients from the loss skip directly to the input unimeded, rather than going through all the aditional comutation of the transformer.
+
+hence, in the `forward()` step `x = self.sa(x)` becomes `x += self.sa(x)`, similar to how `x = self.ffwd(x)` becomes `x += self.ffwd(x)`. We also add a projection (`proj`) pathway to our `MultiHeadAttention` and `FeedForward` classes.
+
+### OverFitting (LayerNorm)
+
+Our `Validation` loss begins to get ahead of our `Train` loss which signifies that our model is overfitting on our data. To alleviate this we use LayerNorm, this is smimilar to BatchNorm where we normalize accross the Batch dimention to create a ==**Unit Gaussian Distribution**== (Zero Mean and Unit Standard Deviation).
+
+LayerNorm is defined in PyTorch itself and unlike when the transformer architecture was initially developed and the `LayerNorm` was applied just after each operation, now the `LayerNorm` is applied just before each operation (`Pre-Norm Formulation`) as well as at the end of the transformer.
+
+### Code Cleanup #2
+
+In order to scale up the model we need to add some additional config variables. `n_layer` is a variable that specifies how many block layers do we need. `n_head` is a variable that specifies the number of attention heads in each layer of the `Block` class. We also added `Dropout` regularization to our `FeedForward` class to alleviate overfitting.
+
 ## Conclusions
