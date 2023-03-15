@@ -59,7 +59,7 @@
 <summary>Click to Expand</summary>
 
 1. Stanford
-   1. [CS 234n: Reinforcement Learning]()
+   1. [CS 234: Reinforcement Learning](https://github.com/angadsinghsandhu/notes/tree/master/University/Stanford/Stanford%20CS234%20-%20Reinforcement%20Learning%20(2019))
    2. [CS 224n: NLP with Deep Learning]()
 2. Harward
 
@@ -74,7 +74,7 @@
 <summary>Click to Expand</summary>
 
 1. Andrej Karpahy
-   1. [nn-zero-to-hero: ChatGPT from Scratch]()
+   1. [nn-zero-to-hero: ChatGPT from Scratch](https://github.com/angadsinghsandhu/notes/tree/master/Youtube/Andrej%20Karpathy/Let's%20build%20GPT)
 2. freeCodeCamp
    1. lorem ipsum
 3. Programming with Mosh
@@ -88,8 +88,7 @@
 
 | <!-- -->                         | <!-- -->                         |
 | -------------------------------- | -------------------------------- |
-| ChatGPT from Scratch |  |
-|  |  |
+| [ChatGPT from Scratch](https://github.com/angadsinghsandhu/notes/tree/master/Youtube/Andrej%20Karpathy/Let's%20build%20GPT) | [Deep Learning at VU Amsterdam - Lecture 12: Transformers](https://www.youtube.com/playlist?list=PLIXJ-Sacf8u60G1TwcznBmK6rEL3gmZmV) |
 
 ## Table of Notes: To be Done
 
@@ -97,6 +96,8 @@
 | -------------------------------- | -------------------------------- |
 | ML books | Documentation |
 | ART of WAR | Adding CS Labs from undergrad |
+| [Machine Learning for Audio](https://www.youtube.com/playlist?list=PLo2EIpI_JMQtOQK_B4G97yn1QWZ4Xi4Tu) | [Reinforcement Learning from Human Feedback From Zero to ChatGPT](https://www.youtube.com/playlist?list=PLo2EIpI_JMQtycKADxAmr47KL_uOPKmz3) |
+| [Hugging Face Course](https://www.youtube.com/playlist?list=PLo2EIpI_JMQvWfQndUesu0nPBAtZ9gP1o) |  |
 
 ![Twitter Follow](https://img.shields.io/twitter/follow/visenger?style=social)
 [![Twitter URL](https://img.shields.io/twitter/follow/?style=social)](https://twitter.com/angadsandhuwork)
