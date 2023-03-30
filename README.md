@@ -10,9 +10,10 @@
 
 1. [Books](#book)
 2. [Undergrad Notes](#btech)
-3. [University Classes](#univ)
-4. [Courses](#courses)
-5. [Youtube](#youtube)
+3. [Courses](#courses)
+4. [Duolingo](#duo)
+5. [University Classes](#univ)
+6. [Youtube](#youtube)
 
 <a name="book"></a>
 
@@ -47,6 +48,20 @@
 <summary>Click to Expand</summary>
 
 1. lorem ipsum
+
+</details>
+
+<a name="duo"></a>
+
+## Duolingo Courses that I have completed
+
+<details>
+
+<summary>Click to Expand</summary>
+
+1. [German]()
+2. [French]()
+3. [Japanese]()
 
 </details>
 
