@@ -203,4 +203,4 @@ context = torch.zeros((1, 1), dtype=torch.long, device=device)
 print(f"the initial conext charater is : {decode(context[0].tolist())}")
 
 # printing generated code
-print(decode(m.generate(context, max_new_tokens=50)[0].tolist()))
+print(decode(m.generate(context, max_new_tokens=800)[0].tolist()))
