@@ -266,10 +266,7 @@ Nouns
 Pronouns
 | <!-- --> | <!-- --> |
 | :------: | :------: |
-
-Verb
-| <!-- --> | <!-- --> |
-| :------: | :------: |
+| zu | to |
 
 Adverb
 | <!-- --> | <!-- --> |
@@ -294,18 +291,14 @@ Interjection
 | :------: | :------: |
 | Entschuldigung | Excuse Me |
 
-Conjunction
-| <!-- --> | <!-- --> |
-| :------: | :------: |
-
-### U3 : Story Terms
+### U3.1 : Story Terms
 
 | <!-- --> | <!-- --> |
 | :------: | :------: |
 | **Nouns** | |
-| Kaufhaus | Department Store |
-| Kasse | Cash Register |
-| Ahnung | idea |
+| Kaufhaus `(n)` | Department Store |
+| Kasse `(f)` | Cash Register |
+| Ahnung `(f)` | Idea |
 | **Verb** | |
 | Arbeiten | Work |
 | Mögen | Like |
@@ -324,3 +317,103 @@ Conjunction
 | für | for |
 | **Interjection** | |
 | Kein / Keine | no (negation) |
+
+### U3.2 : Story Terms
+
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+| **Nouns** | |
+| Schüler `(m)` | Student |
+| Bus `(m)` | Bus |
+| Schule `(f)` | School |
+| Frankreich `(f)` | France |
+| Schauspieler `(m)` | Actor |
+| Flaschen `(f)` | Bottles |
+| Bücher `(n)` | Books |
+| Sprachen `(f)` | Languages |
+| Schuhe `(m)` | Shoes |
+| Freundin `(f)` | friend |
+| **Pronuns** | |
+| unserer | our |
+| deine | your |
+| **Verb** | |
+| fahren | to ride |
+| heißt | called |
+| spricht | speaks |
+| hat | has |
+| liebt | love |
+| **Adjective** | |
+| das | this |
+| interessant | interesting |
+| drei | three |
+| **Preposition** | |
+| mit dem | by |
+| aus | from |
+
+## Unit 4
+
+### U4 : Tips
+
+- Well, to ask `yes` or `no` questions in German, just switch the position of the subject and the verb.
+- Remember how mein goes with masculine nouns and meine with feminine ones? It’s the same with dein and deine.
+
+### U4 : Words
+
+Nouns
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+| Berlin `(n)` | Berlin |
+| Amerika `(n)` | America |
+| Österreich `(n)` | Austria |
+| Frankreich `(n)` | France |
+| Kanada `(n)` | Canada |
+| Beruf `(m)` | Profession |
+| Studentin `(f)` | Student |
+| Lehrer `(m)` / Lehrerin `(f)` | Lecturer / Teacher |
+| Arzt `(m)` / Ärztin `(f)` | Doctor |
+
+Pronouns
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+| was | what |
+| dein `(m)` / deine `(f)` | your |
+
+Verb
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+| komme / kommst | coming |
+
+Adverb
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+| woher | where |
+
+Adjective
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+
+Preposition
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+| aus | out of / from |
+
+Interjection
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+
+Conjunction
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+
+### U4 : Story Terms
+
+| <!-- --> | <!-- --> |
+| :------: | :------: |
+| **Nouns** | |
+| **Pronuns** | |
+| **Verb** | |
+| **Adverb** | |
+| **Adjective** | |
+| **Preposition** | |
+| **Interjection** | |
+| **Conjunction** | |
