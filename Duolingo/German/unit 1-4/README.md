@@ -4,7 +4,7 @@
 
 ### U0 : Tips
 
-- 
+-
 
 ### U0 : Words
 
@@ -40,19 +40,6 @@ Conjunction
 | <!-- --> | <!-- --> |
 | :------: | :------: |
 
-### U0 : Story Terms
-
-| <!-- --> | <!-- --> |
-| :------: | :------: |
-| **Nouns** | |
-| **Pronuns** | |
-| **Verb** | |
-| **Adverb** | |
-| **Adjective** | |
-| **Preposition** | |
-| **Interjection** | |
-| **Conjunction** | |
-
 ## Unit 1
 
 ### U1 : Tips
@@ -65,28 +52,28 @@ Conjunction
 Nouns
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| Vater `(m)` | Father |
+| Bruder `(m)` | Brother |
+| Sohn `(m)` | Son |
+| Ehemann `(m)` | Husband |
+| Mann `(m)` | Man |
+| Junge `(m)` | Boy |
 | Kaffee `(m)` | Coffee |
-| Milch `(f)` | Milk |
 | Tee `(m)` | Tea |
 | Wasser `(n)` | Water |
-| Bruder `(m)` | Brother |
-| Schwester `(f)` | Sister |
-| Vater `(m)` | Father |
 | Mutter `(f)` | Mother|
-| Sohn `(m)` | Son |
+| Schwester `(f)` | Sister |
 | Tochter `(f)` | Daughter |
-| Ehemann `(m)` | Husband |
 | Gattin `(f)` | Wife |
-| Mann `(m)` | Man |
 | Frau `(f)` | Woman |
-| Junge `(m)` | Boy |
 | Mädchen `(f)` | Girl |
+| Milch `(f)` | Milk |
 
 Pronouns
 | <!-- --> | <!-- --> |
 | :------: | :------: |
 | ich | I |
-| meine / mein | my |
+| mein `(m)` / meine `(f)` | my |
 | du | you (informal) |
 
 Verb
@@ -106,7 +93,7 @@ Adverb
 Adjective
 | <!-- --> | <!-- --> |
 | :------: | :------: |
-| eine / ein | a |
+| ein `(m)``(n)` / eine `(f)` | a |
 | sehr | very |
 | klug | smart |
 | groß | tall / big |
@@ -123,42 +110,6 @@ Conjunction
 | :------: | :------: |
 | und | and |
 | oder | or |
-
-### U1 : Story Terms
-
-| <!-- --> | <!-- --> |
-| :------: | :------: |
-| **Nouns** | |
-| Pass `(m)` | Passport |
-| Flughafen `(m)` | Airport |
-| Schatz `(m)` | Sweetheart |
-| Taxi `(n)` | Taxi |
-| Tasche `(f)` | Bag |
-| Jacke `(f)` | Jacket |
-| Hand `(f)` | Hand |
-| **Pronuns** | |
-| er | it |
-| seine | his |
-| dein / deiner | your |
-| was | what |
-| **Verb** | |
-| läuft | runs |
-| sind | are |
-| habe | have |
-| **Adverb** | |
-| jetzt | now |
-| **Adjective** | |
-| großes | big |
-| **Preposition** | |
-| in | in |
-| zu | to |
-| zum | to the |
-| im | at the |
-| mehr hier | here anymore |
-| **Conjunction** | |
-| Aber | but |
-| **Interjection** | |
-| nicht | don't (negation) |
 
 ## Unit 2
 
@@ -182,15 +133,15 @@ Nouns
 Adverb
 | <!-- --> | <!-- --> |
 | :------: | :------: |
-| wie Geht's | how are you |
-| es Geht | I’m all right |
-| wo | Where |
+| wie geht's | how are you |
+| es geht | I’m all right |
+| wo | where |
 | natürlich | of course |
 
 Adjective
 | <!-- --> | <!-- --> |
 | :------: | :------: |
-| die / der / das | the |
+| der `(m)` / die `(f)` / das `(n)` | the |
 | schön | beautiful |
 | gut | good |
 | super | great |
@@ -207,35 +158,7 @@ Interjection
 | bis später | see you later |
 | bis morgen | see you tomorrow |
 | kein problem | no problem |
-| es tut mir leid | i'm sorry |
-
-### U2 : Story Terms
-
-| <!-- --> | <!-- --> |
-| :------: | :------: |
-| **Nouns** | |
-| Arzt (m) / Ärztin (f) | Doctor |
-| Supermarkt (m) | Supermarket |
-| Haus (m) | House |
-| Hemd (m) | Shirt |
-| **Pronuns** | |
-| sie | you (formal) |
-| er | he |
-| ihr | her |
-| **Verb** | |
-| hilfe | help |
-| kommt | comes |
-| brauche | need |
-| braucht | needs |
-| sieht | sees |
-| **Adjective** | |
-| elegante | elegant |
-| teuer | expensive |
-| reich | rich |
-| schnell | quick |
-| krank | sick |
-| **Preposition** | |
-| da drüben | over there |
+| ***es tut mir leid*** | i'm sorry |
 
 ## Unit 3
 
@@ -249,19 +172,19 @@ Nouns
 | <!-- --> | <!-- --> |
 | :------: | :------: |
 | Salat `(m)` | Salad |
-| Pizza `(f)` | Pizza |
 | Käse `(m)` | Cheese |
+| Kellner `(m)` | Waiter |
 | Sandwich `(n)` | Sandwich |
 | Ei `(n)` | Egg |
 | Mineralwasser `(n)` | Mineral Water |
 | Salz `(n)` | Salt |
-| ***Speisekarte*** `(f)` | Menu |
 | Restaurant `(n)` | Restaurant |
-| Kellner `(m)` | Waiter |
-| Wurst `(f)` | Sausage |
 | ***Essen*** `(n)` | Food |
-| ***Rechnung*** `(f)` | Bill / Check |
 | Schnitzel `(n)` | Schnitzel |
+| Pizza `(f)` | Pizza |
+| ***Speisekarte*** `(f)` | Menu |
+| Wurst `(f)` | Sausage |
+| ***Rechnung*** `(f)` | Bill / Check |
 
 Pronouns
 | <!-- --> | <!-- --> |
@@ -289,66 +212,7 @@ Preposition
 Interjection
 | <!-- --> | <!-- --> |
 | :------: | :------: |
-| Entschuldigung | Excuse Me |
-
-### U3.1 : Story Terms
-
-| <!-- --> | <!-- --> |
-| :------: | :------: |
-| **Nouns** | |
-| Kaufhaus `(n)` | Department Store |
-| Kasse `(f)` | Cash Register |
-| Ahnung `(f)` | Idea |
-| **Verb** | |
-| Arbeiten | Work |
-| Mögen | Like |
-| nehme | take |
-| Machen | to do / to make |
-| **Adjective** | |
-| neue | new |
-| rote | red |
-| schwarze | black |
-| billig | cheap |
-| elegant | elegant |
-| warm | warm |
-| perfekt | perfect |
-| Wunderbar | wonderful |
-| **Preposition** | |
-| für | for |
-| **Interjection** | |
-| Kein / Keine | no (negation) |
-
-### U3.2 : Story Terms
-
-| <!-- --> | <!-- --> |
-| :------: | :------: |
-| **Nouns** | |
-| Schüler `(m)` | Student |
-| Bus `(m)` | Bus |
-| Schule `(f)` | School |
-| Frankreich `(f)` | France |
-| Schauspieler `(m)` | Actor |
-| Flaschen `(f)` | Bottles |
-| Bücher `(n)` | Books |
-| Sprachen `(f)` | Languages |
-| Schuhe `(m)` | Shoes |
-| Freundin `(f)` | friend |
-| **Pronuns** | |
-| unserer | our |
-| deine | your |
-| **Verb** | |
-| fahren | to ride |
-| heißt | called |
-| spricht | speaks |
-| hat | has |
-| liebt | love |
-| **Adjective** | |
-| das | this |
-| interessant | interesting |
-| drei | three |
-| **Preposition** | |
-| mit dem | by |
-| aus | from |
+| ***Entschuldigung*** | Excuse Me |
 
 ## Unit 4
 
@@ -362,19 +226,24 @@ Interjection
 Nouns
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| Beruf `(m)` | Profession |
 | Berlin `(n)` | Berlin |
+| München `(n)` | Munich |
+| Wien `(n)` | Vienna |
+| Deutschland `(n)` | Germany |
 | Amerika `(n)` | America |
 | Österreich `(n)` | Austria |
 | Frankreich `(n)` | France |
 | Kanada `(n)` | Canada |
-| Beruf `(m)` | Profession |
-| Studentin `(f)` | Student |
 | Lehrer `(m)` / Lehrerin `(f)` | Lecturer / Teacher |
 | Arzt `(m)` / Ärztin `(f)` | Doctor |
+| Stadt `(f)` | City / Town |
+| Studentin `(f)` | Student |
 
 Pronouns
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| es | it |
 | was | what |
 | dein `(m)` / deine `(f)` | your |
 
@@ -387,33 +256,31 @@ Adverb
 | <!-- --> | <!-- --> |
 | :------: | :------: |
 | woher | where |
+| wie | how |
+| auch | also |
 
 Adjective
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| klein `(m)` / kleine `(f)` | small / short |
+| wunderbar | wonderful |
+| laut | loud |
+| cool | cool |
+| teuer | expensive |
+| aufregend | exiting |
 
 Preposition
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| in | in |
 | aus | out of / from |
+| woher | from where |
 
 Interjection
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| kommst du | are you coming |
 
 Conjunction
 | <!-- --> | <!-- --> |
 | :------: | :------: |
-
-### U4 : Story Terms
-
-| <!-- --> | <!-- --> |
-| :------: | :------: |
-| **Nouns** | |
-| **Pronuns** | |
-| **Verb** | |
-| **Adverb** | |
-| **Adjective** | |
-| **Preposition** | |
-| **Interjection** | |
-| **Conjunction** | |
