@@ -45,7 +45,7 @@ Conjunction
 ### U1 : Tips
 
 - In English, we capitalize some words, like people’s names. In German, you capitalize `all nouns`.
-- German nouns have `gender`! Some nouns are masculine, like Vater and Bruder, while others are feminine, like Mutter and Schwester.
+- German nouns have `gender`! Some nouns are **masculine**, like `Vater` and `Bruder`, while others are **feminine**, like `Mutter` and `Schwester`.
 
 ### U1 : Words
 
@@ -94,7 +94,7 @@ Adverb
 Adjective
 | <!-- --> | <!-- --> |
 | :------: | :------: |
-| ein `(m)``(n)` / eine `(f)` | a |
+| ein `(m)(n)` / eine `(f)` | a |
 | sehr | very |
 | klug | smart |
 | groß | tall / big |
@@ -116,9 +116,9 @@ Conjunction
 
 ### U2 : Tips
 
-- The word `der` also changes depending on the gender of the word it’s paired with. If it’s masculine, it’s `der`. If it’s feminine, it’s `die`.
-- It’s not just words for people that have gender `all words` do! For example, words like `Bär` and `Hund` are masculine, while `Eule` and `Katze` are feminine.
-- Lots of German words have a `silent h`. This silent h makes the vowel before it just a little bit `longer`.
+- The word `der` also changes depending on the **gender** of the word it’s paired with. If it’s **masculine**, it’s `der`. If it’s **feminine**, it’s `die`.
+- It’s not just words for people that have gender `all words` do! For example, words like `Bär` and `Hund` are **masculine**, while `Eule` and `Katze` are **feminine**.
+- Lots of German words have a `silent h`. This silent ***h*** makes the vowel before it just a little bit `longer`.
 
 ### U2 : Words
 
@@ -136,7 +136,7 @@ Adverb
 | :------: | :------: |
 | wie geht's | how are you |
 | es geht | I’m all right |
-| wo | where |
+| wo | where (someone is) |
 | natürlich | of course |
 
 Adjective
@@ -219,7 +219,7 @@ Interjection
 ### U4 : Tips
 
 - Well, to ask `yes` or `no` questions in German, just switch the position of the subject and the verb.
-- Remember how mein goes with masculine nouns and meine with feminine ones? It’s the same with dein and deine.
+- Remember how `mein` goes with **masculine** nouns and `meine` with **feminine** ones? It’s the same with `dein` and `deine`.
 
 ### U4 : Words
 
@@ -244,7 +244,7 @@ Nouns
 | Student `(m)` / Studentin `(f)` | Student |
 | Freund `(m)` / Freundin `(f)` | Friend |
 | Stadt `(f)` | City / Town |
-|  Arbeit `(f)` | Job / Work |
+| Arbeit `(f)` | Job / Work |
 
 Pronouns
 | <!-- --> | <!-- --> |
@@ -252,7 +252,6 @@ Pronouns
 | er | he |
 | sie | she |
 | es | it |
-| was | what |
 | dein `(m)` / deine `(f)` | your |
 
 Verb
@@ -263,7 +262,9 @@ Verb
 Adverb
 | <!-- --> | <!-- --> |
 | :------: | :------: |
-| woher | where |
+| woher | where (coming from) |
+| wohin | where (going to) |
+| was | what |
 | wie | how |
 | auch | also |
 
@@ -284,7 +285,6 @@ Preposition
 | :------: | :------: |
 | in | in |
 | aus | out of / from |
-| woher | from where |
 
 Interjection
 | <!-- --> | <!-- --> |

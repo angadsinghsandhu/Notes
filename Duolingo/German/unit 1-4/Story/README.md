@@ -170,10 +170,21 @@
 | <!-- --> | <!-- --> |
 | :------: | :------: |
 | **Nouns** | |
+| Bahnhof `(m)` | Railway Station |
+| Wohnung `(f)` | Apartment |
+| Universitat `()` | University |
+| Bibliothek | Library |
 | **Pronuns** | |
+| das `(m)` / diese `(f)` | this |
+| wir | we |
+| seine | his |
 | **Verb** | |
+| fährt | driving |
+| nimmt | taking |
 | **Adverb** | |
 | **Adjective** | |
 | **Preposition** | |
+| zum `(m) (n)` / zur `(f)` | to the |
 | **Interjection** | |
+| richtig | right |
 | **Conjunction** | |
