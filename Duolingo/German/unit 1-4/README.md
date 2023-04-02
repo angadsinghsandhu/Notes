@@ -61,6 +61,7 @@ Nouns
 | Kaffee `(m)` | Coffee |
 | Tee `(m)` | Tea |
 | Wasser `(n)` | Water |
+| Brot `(n)` | Bread |
 | Mutter `(f)` | Mother|
 | Schwester `(f)` | Sister |
 | Tochter `(f)` | Daughter |
@@ -173,7 +174,6 @@ Nouns
 | :------: | :------: |
 | Salat `(m)` | Salad |
 | Käse `(m)` | Cheese |
-| Kellner `(m)` | Waiter |
 | Sandwich `(n)` | Sandwich |
 | Ei `(n)` | Egg |
 | Mineralwasser `(n)` | Mineral Water |
@@ -229,20 +229,28 @@ Nouns
 | Beruf `(m)` | Profession |
 | Berlin `(n)` | Berlin |
 | München `(n)` | Munich |
+| New York `(n)` | New York |
 | Wien `(n)` | Vienna |
 | Deutschland `(n)` | Germany |
 | Amerika `(n)` | America |
 | Österreich `(n)` | Austria |
 | Frankreich `(n)` | France |
 | Kanada `(n)` | Canada |
+| Schauspieler `(m)` / Schauspielerin `(f)` | Actor / Actoress |
+| Professor `(m)` / Professorin `(f)` | Professor |
+| Kellner `(m)` / Kellnerin `(f)` | Waiter / Waitress |
 | Lehrer `(m)` / Lehrerin `(f)` | Lecturer / Teacher |
 | Arzt `(m)` / Ärztin `(f)` | Doctor |
+| Student `(m)` / Studentin `(f)` | Student |
+| Freund `(m)` / Freundin `(f)` | Friend |
 | Stadt `(f)` | City / Town |
-| Studentin `(f)` | Student |
+|  Arbeit `(f)` | Job / Work |
 
 Pronouns
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| er | he |
+| sie | she |
 | es | it |
 | was | what |
 | dein `(m)` / deine `(f)` | your |
@@ -267,7 +275,9 @@ Adjective
 | laut | loud |
 | cool | cool |
 | teuer | expensive |
-| aufregend | exiting |
+| ***aufregend*** | exiting |
+| stressig | stressful |
+| interessant | interesting |
 
 Preposition
 | <!-- --> | <!-- --> |
@@ -284,3 +294,4 @@ Interjection
 Conjunction
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| aber | but |
