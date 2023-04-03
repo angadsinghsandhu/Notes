@@ -25,6 +25,7 @@ Pronouns
 Verb
 | <!-- --> | <!-- --> |
 | :------: | :------: |
+| komme / kommst / kommt | come |
 | koche / kochst / kochst | cook |
 | schwimme / schwimmst / schwimmt | swim |
 
