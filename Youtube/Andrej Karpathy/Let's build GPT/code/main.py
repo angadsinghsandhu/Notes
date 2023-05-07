@@ -1,63 +1,53 @@
-import torch
-from datetime import datetime as dt
-from train.gpt import GPTLanguageModel, estimate_loss, get_batch, decode
+# imports
+from utils.beautify import n, lg, r, cy, ye    # 0
+from utils.beautify import init                # 0
 
-# hyperparameters
-max_iters = 5000
-eval_interval = 500
-learning_rate = 3e-4
-device = 'cuda' if torch.cuda.is_available() else 'cpu'
-# ------------
+import train               # 1, 2
+import generate
 
-# # hyperparameters low
-# max_iters = 2500
-# eval_interval = 250
-# learning_rate = 3e-4
-# device = 'cuda' if torch.cuda.is_available() else 'cpu'
-# # ------------
+# last choice num
+limit = 2
 
-def train_gpt():
-    model = GPTLanguageModel()
-    print("...")
-    m = model.to(device)
-    # print the number of parameters in the model
-    print(sum(p.numel() for p in m.parameters())/1e6, 'M parameters')
+## logic ##
+init()
 
-    # create a PyTorch optimizer
-    optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+# inf loop
+while True:
+    # display choices
+    print(cy+"================================================"+n)
+    print(cy+"================================================\n"+n)
+    print(lg+'[-1] Quit'+n)
+    print(lg+'[0] Banner + Clear Terminal'+n)
+    print(lg+'[1] Train Model'+n)
+    print(lg+'[2] Run Model'+n)
+    
+    # entering choice
+    try:
+        ch = int(input('\nEnter your choice: '))
+        if ch < -1 or ch > limit:
+            print(r+f"Please Choose a Value between 0-{limit}\n\n"+n)
+            continue
+    except ValueError:
+        print(r+"Please Enter Correct Value and Retry\n\n"+n)
+        continue
 
-    for iter in range(max_iters):
+    # exit from program
+    if ch == -1:
+        init()
+        print(f'\n{r} [i] choice {ch} complete !!\n')
+        exit()
+    
+    # to clear terminal and show banner
+    elif ch == 0: init()
 
-        # every once in a while evaluate the loss on train and val sets
-        if iter % eval_interval == 0 or iter == max_iters - 1:
-            losses, model = estimate_loss(model)
-            print(f"step {iter}: train loss {losses['train']:.4f}, val loss {losses['val']:.4f}")
+    # create/recreate a session file for a new number 
+    elif ch == 1: train.menu.execute()
+        
+    # Add all the numbers to a specified group
+    elif ch == 2: generate.menu.execute()
 
-        # sample a batch of data
-        xb, yb = get_batch('train')
+    print(f'\n{r} [i] choice {ch} complete !!\n')
 
-        # evaluate the loss
-        logits, loss = model(xb, yb)
-        optimizer.zero_grad(set_to_none=True)
-        loss.backward()
-        optimizer.step()
-
-    # getting current time string
-    timestamp = dt.now().strftime("_%Y_%m_%d-%H_%M")
-
-    # saving model
-    torch.save(m.state_dict(), f"gpt_state{timestamp}.pt")
-
-def generate_gpt():
-    # loading model
-    m = GPTLanguageModel()
-    m.load_state_dict(torch.load("model/gpt_state.pt", map_location=device))
-    m.eval()
-
-    # generate from the model
-    context = torch.zeros((1, 1), dtype=torch.long, device=device)
-    print(decode(m.generate(context, max_new_tokens=500)[0].tolist()))
-    # open('./data/sample_output.txt', 'w').write(decode(m.generate(context, max_new_tokens=10000)[0].tolist()))
 
 # TODO: Complete Bigram methods
 def train_bigram():

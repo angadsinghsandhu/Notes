@@ -3,6 +3,7 @@ import wget
 import torch
 import torch.nn as nn
 from torch.nn import functional as F
+from datetime import datetime as dt
 
 # hyperparameters
 batch_size = 32         # sequences running in parallel (B)
@@ -16,16 +17,12 @@ learning_rate = 1e-2    # learning rate of optimizer
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
 # --------------
 
-print(f"Device Type : {device}")
-
 torch.manual_seed(1337)
 
-# # loading dataset
-# URL = "https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt"
-# res = wget.download(URL, "tinyshakespeare.txt")
+DATA_PATH = "./data/tinyshakespeare.txt"
 
-# reading dataset to store in a variable
-with open('tinyshakespeare.txt', 'r', encoding='utf-8') as f:
+# wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+with open(DATA_PATH, 'r', encoding='utf-8') as f:
     text = f.read()
 
 # set of unique characters text
@@ -104,7 +101,7 @@ def estimate_loss(model):
 class BigramLanguageModel(nn.Module):
 
     # this method is called when the model variabe is initialized
-    def __init__(self, vocab_size):
+    def __init__(self):
         # calling parent nn.Module class
         super().__init__()
 
@@ -163,44 +160,41 @@ class BigramLanguageModel(nn.Module):
             idx = torch.cat((idx, idx_next), dim=1)     # (B, T+1) 
 
         return idx
-    
-# creating model instance
-model = BigramLanguageModel(vocab_size)
-m = model.to(device=device)     # sending model to GPU/CPU
 
-# creating PyTorch optimizer
-optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+def train_bigram():
+    # creating model instance
+    model = BigramLanguageModel()
+    m = model.to(device=device)     # sending model to GPU/CPU
 
-# Training the Model
-for iter in range(max_iters):
+    # creating PyTorch optimizer
+    optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 
-    # checking loss in every eval_iterval steps
-    if iter % eval_interal == 0:
-        losses = estimate_loss(m)
-        # losses = estimate_loss(model)
-        print(f"step {iter} | train loss = {losses['train']:.4f} | val loss = {losses['val']:.4f}")
+    # Training the Model
+    for iter in range(max_iters):
 
-    # sample batch of data
-    X, Y = get_batch('train')
+        # checking loss in every eval_iterval steps
+        if iter % eval_interal == 0:
+            losses = estimate_loss(m)
+            # losses = estimate_loss(model)
+            print(f"step {iter} | train loss = {losses['train']:.4f} | val loss = {losses['val']:.4f}")
 
-    # evaluate loss
-    logits, loss  = m(X, Y)
+        # sample batch of data
+        X, Y = get_batch('train')
 
-    # set all gradients to zero
-    optimizer.zero_grad()
+        # evaluate loss
+        logits, loss  = m(X, Y)
 
-    # backwar propagation step
-    loss.backward()
+        # set all gradients to zero
+        optimizer.zero_grad()
 
-    # perform single optimization step
-    optimizer.step()
+        # backwar propagation step
+        loss.backward()
 
-# # start generation from model
-# initial context
-context = torch.zeros((1, 1), dtype=torch.long, device=device)
+        # perform single optimization step
+        optimizer.step()
 
-# print initial charaters
-print(f"the initial conext charater is : {decode(context[0].tolist())}")
+    # getting current time string
+    timestamp = dt.now().strftime("_%Y_%m_%d-%H_%M")
 
-# printing generated code
-print(decode(m.generate(context, max_new_tokens=800)[0].tolist()))
+    # saving model
+    torch.save(m.state_dict(), f"model/bigram_state{timestamp}.pt")
