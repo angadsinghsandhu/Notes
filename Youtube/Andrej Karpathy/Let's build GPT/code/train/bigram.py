@@ -152,7 +152,7 @@ class BigramLanguageModel(nn.Module):
             # apply softmax to embeddings to convert into a probability distribution
             probs = F.softmax(logits, dim = -1)
 
-            # TODO : idk what thsi does
+            # TODO : idk what this does
             # sampling from distribution the next charater
             idx_next = torch.multinomial(probs, num_samples=1)
 
