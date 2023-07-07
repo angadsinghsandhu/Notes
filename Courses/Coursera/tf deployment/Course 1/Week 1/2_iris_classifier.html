@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Tensorflow.js</title>
+</head>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+<script lang="js">
+
+    // defining async function run()
+    async function run() {
+
+        // loading csv dataset i.e. iris file
+        const csvURL = "./iris.csv";
+        // const csvURL = "D:/Code/AI/tf deployment specialization/Course 1/Week 1/iris.csv";
+        // const csvURL = "D:/Code/AI/datasets/iris/iris.csv";
+        // const csvURL = "../../../datasets/iris/iris.csv";
+        const trainingData = tf.data.csv(csvURL, {
+            columnConfigs: {
+                //specifying species as a label (becomes part of y set)
+                species: { isLabel: true }
+            }
+        });
+
+        // defining constants
+        const numOfFeatures = (await trainingData.columnNames()).length - 1;
+        const numOfSamples = 150;
+
+        // converting data into arrays
+        const convertedData = trainingData.map(({ xs, ys }) => {
+            // creating one-hot-encode array
+            const labels = [
+                ys.species == "setosa" ? 1 : 0,
+                ys.species == "virginica" ? 1 : 0,
+                ys.species == "versicolor" ? 1 : 0
+            ];
+            return { xs: Object.values(xs), ys: Object.values(labels) };
+        }).batch(10);
+
+        // defining model
+        const model = tf.sequential();
+        model.add(tf.layers.dense({ units: 5, inputShape: [numOfFeatures], activation: "sigmoid" }));
+        model.add(tf.layers.dense({ units: 3, activation: "softmax" }));
+
+        model.compile({ loss: 'categoricalCrossentropy', optimizer: tf.train.adam(0.06) });
+        model.summary();
+
+        // training data
+        await model.fitDataset(convertedData, {
+            epochs: 100,
+            callbacks: {
+                onEpochEnd: async (epoch, logs) => {
+                    console.log("Epoch: " + epoch + " Loss: " + logs.loss);
+                }
+            }
+        });
+
+        // predicting value 
+        const testVal = tf.tensor2d([4.4, 2.9, 1.4, 0.2], [1, 4]);
+        const prediction = model.predict(testVal);
+
+        // getting output
+        alert(prediction);
+    }
+
+    // calling run() function 
+    run();
+</script>
+
+<body>
+    <h1>Iris Classifier</h1>
+</body>
+
+</html>

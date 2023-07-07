@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+
+<script>
+    async function run() {
+        const MODEL_URL = "http://127.0.0.1:8887/model.json";
+        const model = await tf.loadLayersModel(MODEL_URL);
+        console.log(model.summary());
+        const input = tf.tensor2d([10.0], [1, 1]);
+        const result = model.predict(input);
+        alert(result);
+    }
+    run();
+</script>
+
+<body>
+    <h1>trained model!</h1>
+    <span>(open console.)</span>
+</body>
+
+</html>

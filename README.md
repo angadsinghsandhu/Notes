@@ -1,5 +1,8 @@
 # NOTES [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome) [![Made With Love](https://img.shields.io/badge/Made%20With-Love-orange.svg)](https://github.com/chetanraj/awesome-github-badges)
 
+<!-- TODO : Add DSA to main README -->
+<!-- TODO : Edit Coursera Courses -->
+
 <!-- ![MLOps. You Desing It. Your Train It. You Run It.](awesome-mlops-intro.png)
 
 *A list of notes/books/resorces/code that I've written over the years :point_right: [ml-ops.org](https://ml-ops.org/)* -->
