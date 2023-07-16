@@ -14,7 +14,7 @@ In this case, you will be building a simple classifier that can tell the differe
 
 One of the traditional challenges in classification is writing a program that can tell a fish from a cat. One approach could be to write a set of rules describing the characteristics of a cat or a fish. However, this approach would take time, effort, and skill, and could become complicated as more scenarios are encountered.
 
-Deep learning offers an alternative approach by essentially making the computer do all the hard work of constructing all those rules. By creating a <span style="background-color: #FFFF00">structure</span>, giving the network <span style="background-color: #FFFF00">lots of data</span>, and providing it with a way to ==determine whether it is getting the right answer==, <u>***deep learning** can create a function that, given the input of an image, returns cat or fish*</u>. Along the way, we will learn key concepts of how to use PyTorch.
+Deep learning offers an alternative approach by essentially making the computer do all the hard work of constructing all those rules. By creating a *structure*, giving the network *lots of data*, and providing it with a way to *determine whether it is getting the right answer*, <u>***deep learning** can create a function that, given the input of an image, returns cat or fish*</u>. Along the way, we will learn key concepts of how to use PyTorch.
 
 ### But First, Data
 
@@ -22,13 +22,13 @@ Before building the image classifier, data is needed. The amount of data require
 
 One option for obtaining this data is to use a standard collection of images used to train neural networks, called **ImageNet**. It contains more than `14 million images` and `20,000 categories` and is the standard that all image classifiers judge themselves against. Along with the data, PyTorch needs a way to determine what is a cat and what is a fish. This is done using a **label** attached to the data, and training in this manner is called **supervised learning**.
 
-If using ImageNet data, its labels may not be useful because they contain too much information. A label of `tabby cat` or `trout` is separate from `cat` or `fish`, so ==relabeling== may be necessary. A list of image URLs and labels for both fish and cats can be used to download the images from the URLs and place them in the appropriate locations for training (look at [This download.py Script](https://github.com/angadsinghsandhu/Notes/blob/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%202%20-%20Image%20Clasification%20with%20Pytorch/download.py)).
+If using ImageNet data, its labels may not be useful because they contain too much information. A label of `tabby cat` or `trout` is separate from `cat` or `fish`, so *relabeling* may be necessary. A list of image URLs and labels for both fish and cats can be used to download the images from the URLs and place them in the appropriate locations for training (look at [This download.py Script](https://github.com/angadsinghsandhu/Notes/blob/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%202%20-%20Image%20Clasification%20with%20Pytorch/download.py)).
 
 The relabeling is simple, the `download.py` script stores cat pictures in the directory **train/cat** and fish pictures in **train/fish**. The data now needs to be put into a format that PyTorch can understand.
 
 ### PyTorch and Data Loaders
 
-In PyTorch, loading and converting data into formats that are ready for training can often be time-consuming. To make this process more consistent, ==PyTorch has developed standard conventions for interacting with data==, whether it be ==images, text, or audio==. These conventions are **datasets** and **data loaders**.
+In PyTorch, loading and converting data into formats that are ready for training can often be time-consuming. To make this process more consistent, *PyTorch has developed standard conventions for interacting with data*, whether it be *images, text, or audio*. These conventions are **datasets** and **data loaders**.
 
 A <u>***dataset** is a Python class that allows access to the data being supplied to the neural network*</u>. A <u>***data loader** feeds data from the dataset into the network*</u> and can encompass information such as the number of worker processes feeding data into the network or the number of images being passed in at once.
 
@@ -36,7 +36,7 @@ Every dataset, regardless of the type of data it contains, can interact with PyT
 
 The `__getitem__` method must be able to take an image and transform it into a tensor, returning both the tensor and the label so that PyTorch can operate on it. While this scenario comes up frequently, PyTorch provides tools to make this process easier.
 
-Here is an example of the ==abstract Python class for a dataset==:
+Here is an example of the *abstract Python class for a dataset*:
 
 ```py
 class Dataset(object):
@@ -78,7 +78,7 @@ def check_image(path):
 train_data = torchvision.datasets.ImageFolder(root=train_data_path, transform=transformation, is_valid_file=check_image)
 ```
 
-In addition to loading the data, `torchvision` also allows for specifying a list of ==transformations that will be applied to an image before it is fed into the neural network==.
+In addition to loading the data, `torchvision` also allows for specifying a list of *transformations that will be applied to an image before it is fed into the neural network*.
 
 The default transform is to convert image data into a tensor using the `transforms.ToTensor()` method, but other transforms can also be applied.
 
@@ -90,7 +90,7 @@ The images are then converted to tensors and normalized around a specific set of
 
 The mean and standard deviation values used in this example are from the ImageNet dataset as a whole, but these values could be calculated specifically for the fish and cat subset if desired.
 
-The ==composable transforms== also allow for easy ==data augmentation== through ==image rotation== and ==skewing==, which will be discussed further in [Chapter 4](https://github.com/angadsinghsandhu/Notes/tree/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%204%20-%20Transfer%20Learning%20and%20Other%20Tricks).
+The *composable transforms* also allow for easy *data augmentation* through *image rotation* and *skewing*, which will be discussed further in [Chapter 4](https://github.com/angadsinghsandhu/Notes/tree/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%204%20-%20Transfer%20Learning%20and%20Other%20Tricks).
 
 In addition to the transforms we also specify a `check_image()` function that is passed into aour `ImageFolder API` to cross-check if the path is valid for the images we are loading.
 
@@ -129,27 +129,27 @@ test_data_loader = data.DataLoader(test_data, batch_size=batch_size)
 
 The `batch_size` parameter specifies how many images will go through the network before it is trained and updated. Smaller batches, known as `mini-batches`, <u>require less memory and can make training faster by updating the network more quickly</u>.
 
-By default, PyTorch's data loaders are set to a `batch_size` of 1, but this can be changed. The `batch_size` can be adjusted to see ==how big of a mini-batch can be used without exhausting the GPU's memory==. Additional parameters can also be specified, such as how datasets are ==sampled== or whether the entire set is ==shuffled== on each run.
+By default, PyTorch's data loaders are set to a `batch_size` of 1, but this can be changed. The `batch_size` can be adjusted to see *how big of a mini-batch can be used without exhausting the GPU's memory*. Additional parameters can also be specified, such as how datasets are *sampled* or whether the entire set is *shuffled* on each run.
 
 ## Finally, a Neural Network
 
 The simplest deep learning network consists of an input layer, which works on the `input tensors`, an `output layer`, which is the size of the number of our output classes (here `2`), and a `hidden layer` between them.
 
-In our first example, we'll use `fully connected layers`. In a <u>**fully connected network**, every node in a layer affects every node in the next layer, and each connection has a **weight** that determines the strength of the signal from that node going into the next layer</u>. These weights are updated when we train the network, normally from a ==random initialization==.
+In our first example, we'll use `fully connected layers`. In a <u>**fully connected network**, every node in a layer affects every node in the next layer, and each connection has a **weight** that determines the strength of the signal from that node going into the next layer</u>. These weights are updated when we train the network, normally from a *random initialization*.
 
-As an input passes through the network, a matrix multiplication of the `weights` and `biases` of that layer onto the input is performed. The result is then passed through an `activation function` to introduce ==nonlinearity== into the system.
+As an input passes through the network, a matrix multiplication of the `weights` and `biases` of that layer onto the input is performed. The result is then passed through an `activation function` to introduce *nonlinearity* into the system.
 
 Here is an illustration of what a fully connected network with an input layer, a hidden layer, and a two-node output layer:
 
 ![Neural Net](https://www.researchgate.net/profile/Haohan-Wang-4/publication/282997080/figure/fig4/AS:305939199610886@1449952997594/A-typical-two-layer-neural-network-Input-layer-does-not-count-as-the-number-of-layers-of.png)
 
-Each connection between nodes ==represents a weight== that determines the strength of the signal from one node to the next.
+Each connection between nodes *represents a weight* that determines the strength of the signal from one node to the next.
 
 ### Activation Functions
 
-`Activation functions` are used in neural networks to introduce ==nonlinearity== into the system. The most common activation function used in deep learning is the **ReLU**, or **rectified linear unit**. This function is simple, <u>implementing `max(0,x)`, so the result is 0 if the input is negative, or just the input (x) if x is positive</u>.
+`Activation functions` are used in neural networks to introduce *nonlinearity* into the system. The most common activation function used in deep learning is the **ReLU**, or **rectified linear unit**. This function is simple, <u>implementing `max(0,x)`, so the result is 0 if the input is negative, or just the input (x) if x is positive</u>.
 
-Another activation function that is commonly used is the **softmax** function. <u>This function produces a set of values between 0 and 1 that adds up to 1, representing probabilities</u>. It weights the values so that it ==exaggerates differences==, producing one result in a vector higher than everything else. The softmax function is ==often used at the **end** of a classification network to ensure that the network makes a definite prediction== about what class it thinks the input belongs to.
+Another activation function that is commonly used is the **softmax** function. <u>This function produces a set of values between 0 and 1 that adds up to 1, representing probabilities</u>. It weights the values so that it *exaggerates differences*, producing one result in a vector higher than everything else. The softmax function is *often used at the **end** of a classification network to ensure that the network makes a definite prediction* about what class it thinks the input belongs to.
 
 ### Creating a Network
 
@@ -179,7 +179,7 @@ In the example you provided, a simple network called `SimpleNet` is defined with
 
 The `relu` activation functions are then applied to the layers in order, with the final `softmax` output providing the **prediction** for that image.
 
-The numbers in the hidden layers are somewhat arbitrary, with the ==exception of the output== of the final layer, which is 2 to match up with the two classes of **cat** or **fish**. In general, it is desirable for the data in the layers to be ==compressed== as it goes down the stack. By reducing the size of the output with respect to the input, that ==part of the network is forced to learn a representation of the original input== with fewer resources, hopefully ==extracting some features== of the images that are important to the problem being solved.
+The numbers in the hidden layers are somewhat arbitrary, with the *exception of the output* of the final layer, which is 2 to match up with the two classes of **cat** or **fish**. In general, it is desirable for the data in the layers to be *compressed* as it goes down the stack. By reducing the size of the output with respect to the input, that *part of the network is forced to learn a representation of the original input* with fewer resources, hopefully *extracting some features* of the images that are important to the problem being solved.
 
 Once a **prediction** has been made, it can be compared with the **actual label** of the original image to see whether it was correct. However, PyTorch needs some way to quantify not just whether a prediction is right or wrong, but just how wrong or right it is.
 
@@ -187,7 +187,7 @@ Once a **prediction** has been made, it can be compared with the **actual label*
 
 `Loss functions` are an essential component of an effective deep learning solution. PyTorch uses loss functions to <u>determine how to update the network to achieve the desired results</u>.
 
-In the case of a ==multiclass categorization task==, the built-in `CrossEntropyLoss` function is used. Another commonly used loss function is `MSELoss`, which is a standard mean squared loss used for making ==numerical predictions==.
+In the case of a *multiclass categorization task*, the built-in `CrossEntropyLoss` function is used. Another commonly used loss function is `MSELoss`, which is a standard mean squared loss used for making *numerical predictions*.
 
 It is important to note that the `CrossEntropyLoss` function incorporates the `softmax()` function as part of its operation. This means that the `forward()` method of the network would need to be updated accordingly.
 
@@ -211,17 +211,17 @@ Loss functions can be simple or complex, and PyTorch comes with a comprehensive 
 
 One thing to be aware of when using the `CrossEntropyLoss` function is that it incorporates the `softmax()` function as part of its operation. This means that the `forward()` method of the network would need to be updated accordingly.
 
-Optimizing a neural network involves finding the lowest point on the `loss curve`, where the loss is ==minimized==. This can be done by altering the values of the weights and checking against the gradient of the curve to determine how good a move is being made.
+Optimizing a neural network involves finding the lowest point on the `loss curve`, where the loss is *minimized*. This can be done by altering the values of the weights and checking against the gradient of the curve to determine how good a move is being made.
 
-The size of these moves is known as the `learning rate` and is often a key parameter that needs to be adjusted to get the network learning properly and efficiently. A good learning rate can be determined through experimentation, with a starting value of around ==0.001== often being a good choice. Large learning rates can cause the network to bounce all over the place during training, ==preventing it from converging on a good set of weights==.
+The size of these moves is known as the `learning rate` and is often a key parameter that needs to be adjusted to get the network learning properly and efficiently. A good learning rate can be determined through experimentation, with a starting value of around *0.001* often being a good choice. Large learning rates can cause the network to bounce all over the place during training, *preventing it from converging on a good set of weights*.
 
 ![Loss vs Paramerter Graph](https://miro.medium.com/v2/resize:fit:700/1*shYI61ej9RuuqBVHgspDZg.png)
 
-One issue to be aware of when optimizing a neural network is the danger of getting trapped in local minima, where the network appears to have found the shallowest part of the loss curve but actually shallower areas exist elsewhere. To avoid this problem, `stochastic gradient descent (SGD)` can be used, where ==random gradients are sampled during a batch==.
+One issue to be aware of when optimizing a neural network is the danger of getting trapped in local minima, where the network appears to have found the shallowest part of the loss curve but actually shallower areas exist elsewhere. To avoid this problem, `stochastic gradient descent (SGD)` can be used, where *random gradients are sampled during a batch*.
 
 ![Loss vs 2 Paramerters Graph](https://www.xpertup.com/wp-content/uploads/2018/05/1-1.gif)
 
-PyTorch comes with several built-in optimizers, including `SGD`, `AdaGrad`, `RMSProp`, and `Adam`. The Adam optimizer is often preferred for deep learning tasks because it uses a ==learning rate per parameter and adapts that learning rate depending on how training is progressing==.
+PyTorch comes with several built-in optimizers, including `SGD`, `AdaGrad`, `RMSProp`, and `Adam`. The Adam optimizer is often preferred for deep learning tasks because it uses a *learning rate per parameter and adapts that learning rate depending on how training is progressing*.
 
 Creating an Adam-based optimizer in PyTorch is simple. The `optim.Adam()` method is called and passed the weights of the network that it will be updating, along with the desired learning rate. Here is an example of how to create an Adam-based optimizer for the `SimpleNet` network with a learning rate of 0.001:
 
@@ -303,25 +303,25 @@ def train(model, optimizer, loss_fn, train_loader, val_loader, epochs=20, device
 
 We iterate over each epoch using `for epoch in range(1, epochs+1):`. We first initialize the `train_loss` float variables as **0.0** which is used to keep track of the training loss.
 
-Every `Epoch` has 2 parts, the ==train== part and the ==evaluation== part. We start the Train part of the epoch by calling `model.train()`. This line sets the model to training mode. In ==training mode==, certain layers of the model such as `dropout` and `batch normalization` behave differently than in ==evaluation mode==.
+Every `Epoch` has 2 parts, the *train* part and the *evaluation* part. We start the Train part of the epoch by calling `model.train()`. This line sets the model to training mode. In *training mode*, certain layers of the model such as `dropout` and `batch normalization` behave differently than in *evaluation mode*.
 
-We then start looping over every batch created by our data loader, specifically our Data Loader for Training. This is done by calling `for batch in train_loader:`. The next command `optimizer.zero_grad()` method is called at the beginning of ==each iteration== to ==reset the gradients to zero==. This is necessary because gradients accumulate by default, meaning that if they were not reset, each batch would have to deal with the gradients from all previous batches as well as its own.
+We then start looping over every batch created by our data loader, specifically our Data Loader for Training. This is done by calling `for batch in train_loader:`. The next command `optimizer.zero_grad()` method is called at the beginning of *each iteration* to *reset the gradients to zero*. This is necessary because gradients accumulate by default, meaning that if they were not reset, each batch would have to deal with the gradients from all previous batches as well as its own.
 
 We unpack the current batch of data into inputs and targets by calling `inputs, targets = batch`. Then move the inputs and targets to the specified device (CPU or GPU) using the `.to()` API as `inputs = inputs.to(device)` and `targets = targets.to(device)`.
 
 This line We computes the model's predictions for the current batch of inputs, by passing the inputs to the model as a parameter: `output = model(inputs)`.
 
-`loss = loss_fn(output, targets)`: This line computes the loss between the ==model's predictions== and the ==true targets== using the provided loss function. After the loss is calculated we compute the gradients of all optimized parameters with respect to the loss by calling `loss.backward()` (Backward Propogation). Finally the command `optimizer.step()` updates the model's parameters using the newly computed gradients using the optimizer.
+`loss = loss_fn(output, targets)`: This line computes the loss between the *model's predictions* and the *true targets* using the provided loss function. After the loss is calculated we compute the gradients of all optimized parameters with respect to the loss by calling `loss.backward()` (Backward Propogation). Finally the command `optimizer.step()` updates the model's parameters using the newly computed gradients using the optimizer.
 
-First `train_loss += loss.data.item()` adds the current batch's loss to the running total of training loss for the epoch. Then, `train_loss /= len(train_loader.dataset)` computes the ==average== training loss over all batches by dividing the **total training loss** by **the size of the training dataset**.
+First `train_loss += loss.data.item()` adds the current batch's loss to the running total of training loss for the epoch. Then, `train_loss /= len(train_loader.dataset)` computes the *average* training loss over all batches by dividing the **total training loss** by **the size of the training dataset**.
 
 This is where the first part i.e. Training Mode of the epoch ends. Now we begin the Evaluation Mode of the epoch. `model.eval()`: is called to set the model to evaluation mode. In evaluation mode, certain layers of the model such as dropout and batch normalization behave differently than in training mode.
 
 Similar to the `train_loss` float variable we initialize the `val_loss` float as **0.0**. This variable will be used to keep track of the validation loss.
 
-We also initialize the variables `num_correct` and `num_examples` to 0. These variables will be used to keep track of the ==number of correct predictions== and the ==total number of examples==, respectively.
+We also initialize the variables `num_correct` and `num_examples` to 0. These variables will be used to keep track of the *number of correct predictions* and the *total number of examples*, respectively.
 
-Similar to the Training Mode, Now we start a for loop that will iterate over each batch of data provided by the `val_loader` through `for batch in val_loader:`. The line `inputs, targets = batch` unpacks the current batch of data into inputs and targets. `inputs = inputs.to(device)` and `targets = targets.to(device)` are used to move the inputs and targets to the specified device. `output = model(inputs)` computes the model's predictions for the current batch of inputs. `loss = loss_fn(output, targets)` computes the loss between the ==model's predictions== and the ==true targets== using the provided loss function.
+Similar to the Training Mode, Now we start a for loop that will iterate over each batch of data provided by the `val_loader` through `for batch in val_loader:`. The line `inputs, targets = batch` unpacks the current batch of data into inputs and targets. `inputs = inputs.to(device)` and `targets = targets.to(device)` are used to move the inputs and targets to the specified device. `output = model(inputs)` computes the model's predictions for the current batch of inputs. `loss = loss_fn(output, targets)` computes the loss between the *model's predictions* and the *true targets* using the provided loss function.
 
 The line `val_loss += loss.data.item() * inputs.size(0)` updates the running total of validation loss. The `loss.data.item()` expression extracts the scalar value of the loss computed for the current batch of data. This value is then multiplied by the size of the current batch, `inputs.size(0)`, to weight the contribution of this batch's loss to the total validation loss (this step is no required if all batches are of same size but it is still a good convention to have). This weighting is necessary because the last batch of data may be smaller than the other batches if the size of the validation dataset is not divisible by the batch size.
 
@@ -331,9 +331,9 @@ Then the line `correct = torch.eq(torch.max(F.softmax(output, dim=1), dim=1)[1],
 
 The `torch.eq(..., targets)` expression then compares these predicted class indices to the true class indices provided in `targets`. This returns a boolean tensor of the same shape as `targets`, where each element is `True` if the corresponding prediction is correct and `False` otherwise. This boolean tensor is then assigned to the variable `correct`. In other words, this line computes a boolean mask indicating which examples in the current batch were correctly classified by the model.
 
-Finally, `num_correct += torch.sum(correct).item()` adds the ==number of correct predictions in the current batch== to the ==running total of correct predictions==. And `num_examples += correct.shape[0]` adds the ==size of the current batch== to the ==running total of examples==.
+Finally, `num_correct += torch.sum(correct).item()` adds the *number of correct predictions in the current batch* to the *running total of correct predictions*. And `num_examples += correct.shape[0]` adds the *size of the current batch* to the *running total of examples*.
 
-We computes the ==average validation loss over all batches== by dividing the ==total validation loss== by the ==size of the validation dataset== i.e. `val_loss /= len(val_loader.dataset)`.
+We computes the *average validation loss over all batches* by dividing the *total validation loss* by the *size of the validation dataset* i.e. `val_loss /= len(val_loader.dataset)`.
 
 The last line prints out some statistics for each epoch, including training loss, validation loss, and accuracy.
 
@@ -354,7 +354,7 @@ In this example, the model is copied to the GPU if PyTorch reports that one is a
 
 ## Putting It All Together
 
-[ch2 Jupyter Notebook](https://github.com/angadsinghsandhu/Notes/blob/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%202%20-%20Image%20Clasification%20with%20Pytorch/ch2.ipynb)
+[Chapter 2 Jupyter Notebook](https://github.com/angadsinghsandhu/Notes/blob/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%202%20-%20Image%20Clasification%20with%20Pytorch/ch2.ipynb)
 
 ### Making Predictions
 
@@ -373,11 +373,11 @@ prediction = prediction.argmax()
 print(labels[prediction]) 
 ```
 
-In this example, an image is loaded from the filesystem and transformed using the ==same transform pipeline== that was used during training. Because the network expects a 4D tensor representing a batch of images, <u>the image tensor is expanded to add an extra dimension at the front using the</u> `unsqueeze(0)` method.
+In this example, an image is loaded from the filesystem and transformed using the *same transform pipeline* that was used during training. Because the network expects a 4D tensor representing a batch of images, <u>the image tensor is expanded to add an extra dimension at the front using the</u> `unsqueeze(0)` method.
 
 The image is then passed through the model to generate a prediction. The `argmax()` function is used to find the index of the highest value in the prediction tensor, which corresponds to the predicted class. This index is then used to look up the corresponding label in the `labels` array and print out the prediction.
 
-We ould calculate the ==Accuracy== of our tained model on the Test Set (Data that the model has never seen before) by using the following code:
+We ould calculate the *Accuracy* of our tained model on the Test Set (Data that the model has never seen before) by using the following code:
 
 ```py
 labels = ['cat','fish']
@@ -402,13 +402,13 @@ with torch.no_grad():
         print(f"Accuracy of this Batch {i+1} : {accuracy}")
 ```
 
-`labels = ['cat','fish']` defines a list of class labels. In this case, there are two classes: 'cat' and 'fish'. `correct = 0` and `total = 0` initialize the variables `correct` and `total` to 0. These variables will be used to keep track of the number of correct predictions and the total number of examples, respectively. `with torch.no_grad():` command starts a `with` block that ==disables gradient computation==. Since we are ==only evaluating== the model and ==not updating== its parameters, we do not need to compute gradients.
+`labels = ['cat','fish']` defines a list of class labels. In this case, there are two classes: 'cat' and 'fish'. `correct = 0` and `total = 0` initialize the variables `correct` and `total` to 0. These variables will be used to keep track of the number of correct predictions and the total number of examples, respectively. `with torch.no_grad():` command starts a `with` block that *disables gradient computation*. Since we are *only evaluating* the model and *not updating* its parameters, we do not need to compute gradients.
 
 `for batch in test_data_loader:`: starts a for loop that will iterate over each batch of data provided by the `test_data_loader`. `inputs, targets = batch` unpacks the current batch of data into inputs and targets. The lines `inputs = inputs.to(device)` and `targets = targets.to(device)` move the inputs and targets to the specified device.
 
 We compute the model's predictions for the current batch of inputs using `predictions = simplenet(inputs)`. We start a nested for loop to iterate over each example in the current batch i.e. `for i, prediction in enumerate(predictions):`.
 
-`prediction = prediction.argmax()` computes the index of the maximum value in the prediction vector for the current example. This index corresponds to the predicted class for this example. We check if the predicted class for this example is equal to its true class, If the predicted class is equal to the true class, then we increment the variable `correct` by 1 to count this as a correct prediction `if prediction == targets[i]: correct += 1`.
+`prediction = prediction.argmax()` computes the index of the maximum value in the prediction vector for the current example. This index corresponds to the predicted class for this example. We check if the predicted class for this example is equal to its true class, If the predicted class is equal to the true class, then we increment the variable `correct` by 1 to count this as a correct prediction `if prediction * targets[i]: correct += 1`.
 
 `total += 1` increments the variable `total` by 1 to count this example. After all examples in all batches have been processed, `accuracy = correct / total` computes the overall accuracy by dividing the number of correct predictions by the total number of examples. The last line prints out some statistics for each batch, including its accuracy.
 
