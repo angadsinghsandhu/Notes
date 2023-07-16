@@ -22,13 +22,13 @@ Before building the image classifier, data is needed. The amount of data require
 
 One option for obtaining this data is to use a standard image collection to train neural networks, called **ImageNet**. It contains more than `14 million images` and `20,000 categories` and is the standard that all image classifiers judge themselves against. Along with the data, PyTorch needs a way to determine what is a cat and what is a fish. This is done using a **label** attached to the data, and training in this manner is called **supervised learning**.
 
-Using ImageNet data may make its labels useless because they contain too much information. A label of `tabby cat` or `trout` is separate from `cat` or `fish`, so ==relabeling== may be necessary. A list of image URLs and labels for both fish and cats can be used to download the images from the URLs and place them in the appropriate locations for training (look at [This download.py Script](https://github.com/angadsinghsandhu/Notes/blob/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%202%20-%20Image%20Clasification%20with%20Pytorch/download.py)).
+Using ImageNet data may make its labels useless because they contain too much information. A label of `tabby cat` or `trout` is separate from `cat` or `fish`, so *relabeling* may be necessary. A list of image URLs and labels for both fish and cats can be used to download the images from the URLs and place them in the appropriate locations for training (look at [This download.py Script](https://github.com/angadsinghsandhu/Notes/blob/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%202%20-%20Image%20Clasification%20with%20Pytorch/download.py)).
 
 The relabeling is simple, the `download.py` script stores cat pictures in the directory **train/cat** and fish pictures in **train/fish**. The data now needs to be put into a format that PyTorch can understand.
 
 ### PyTorch and Data Loaders
 
-In PyTorch, loading and converting data into ready-for-training formats can often be time-consuming. To make this process more consistent, ==PyTorch has developed standard conventions for interacting with data==, whether it be ==images, text, or audio==. These conventions are **datasets** and **data loaders**.
+In PyTorch, loading and converting data into ready-for-training formats can often be time-consuming. To make this process more consistent, *PyTorch has developed standard conventions for interacting with data*, whether it be *images, text, or audio*. These conventions are **datasets** and **data loaders**.
 
 A <u>***dataset** is a Python class that allows access to the data being supplied to the neural network*</u>. A <u>***data loader** feeds data from the dataset into the network*</u> and can encompass information such as the number of worker processes feeding data into the network or the number of images being passed in at once.
 
@@ -137,7 +137,7 @@ The simplest deep learning network consists of an input layer, which works on th
 
 In our first example, we'll use `fully connected layers`. In a <u>**fully connected network**, every node in a layer affects every node in the next layer, and each connection has a **weight** that determines the strength of the signal from that node going into the next layer</u>. These weights are updated when we train the network, normally from a *random initialization*.
 
-As an input passes through the network, a matrix multiplication of that layer's `weights` and `biases` onto the input is performed. The result is then passed through an `activation function` to introduce ==nonlinearity== into the system.
+As an input passes through the network, a matrix multiplication of that layer's `weights` and `biases` onto the input is performed. The result is then passed through an `activation function` to introduce *nonlinearity* into the system.
 
 Here is an illustration of what a fully connected network with an input layer, a hidden layer, and a two-node output layer:
 
@@ -179,7 +179,7 @@ In our example, a simple network called `SimpleNet` is defined with three fully 
 
 The `relu` activation functions are then applied to the layers in order, with the final `softmax` output providing the **prediction** for that image.
 
-The numbers in the hidden layers are somewhat arbitrary, with the ==exception of the output== of the final layer, which is 2 to match up with the two classes of **cat** or **fish**. In general, it is desirable for the data in the layers to be ==compressed== as it goes down the stack. By reducing the size of the output with respect to the input, that ==part of the network is forced to learn a representation of the original input== with fewer resources, hopefully, ==extracting some features== of the images that are important to the problem being solved.
+The numbers in the hidden layers are somewhat arbitrary, with the *exception of the output* of the final layer, which is 2 to match up with the two classes of **cat** or **fish**. In general, it is desirable for the data in the layers to be *compressed* as it goes down the stack. By reducing the size of the output with respect to the input, that *part of the network is forced to learn a representation of the original input* with fewer resources, hopefully, *extracting some features* of the images that are important to the problem being solved.
 
 Once a **prediction** has been made, it can be compared with the **actual label** of the original image to see whether it was correct. However, PyTorch needs some way to quantify not just whether a prediction is right or wrong, but just how wrong or right it is.
 
@@ -217,7 +217,7 @@ The size of these moves is known as the `learning rate` and is often a key param
 
 ![Loss vs Paramerter Graph](https://miro.medium.com/v2/resize:fit:700/1*shYI61ej9RuuqBVHgspDZg.png)
 
-One issue to be aware of when optimizing a neural network is the danger of getting trapped in local minima, where the network appears to have found the shallowest part of the loss curve but actually, shallower areas exist elsewhere. To avoid this problem, `stochastic gradient descent (SGD)` can be used, where ==random gradients are sampled during a batch==.
+One issue to be aware of when optimizing a neural network is the danger of getting trapped in local minima, where the network appears to have found the shallowest part of the loss curve but actually, shallower areas exist elsewhere. To avoid this problem, `stochastic gradient descent (SGD)` can be used, where *random gradients are sampled during a batch*.
 
 ![Loss vs 2 Paramerters Graph](https://www.xpertup.com/wp-content/uploads/2018/05/1-1.gif)
 
