@@ -2,17 +2,17 @@
 
 After setting up PyTorch, we will work through an example that can easily be expanded as you get more comfortable working with PyTorch.
 
-This example is used throughout the book to demonstrate how to debug a model or deploy it to production.
+This example is used throughout the book to demonstrate how to debug or deploy a model to production.
 
 ## Our Classification Problem
 
 We will be constructing an *Image Classifier* using a neural network. The network is given a picture and asked to identify what is in the picture.
 
-In this case, you will be building a simple classifier that can tell the difference between `fish` and `cats`, iterating over the design and how you build your model to make it more and more accurate.
+In this case, we will build a simple classifier that can tell the difference between `fish` and `cats`, iterating over the design and how you build your model to make it more and more accurate.
 
 ## Traditional Challenges
 
-One of the traditional challenges in classification is writing a program that can tell a fish from a cat. One approach could be to write a set of rules describing the characteristics of a cat or a fish. However, this approach would take time, effort, and skill, and could become complicated as more scenarios are encountered.
+One of the traditional challenges in classification is writing a program that can tell a fish from a cat. One approach could be to write a set of rules describing a cat's or a fish's characteristics. However, this approach would take time, effort, and skill, and could become complicated as more scenarios are encountered.
 
 Deep learning offers an alternative approach by essentially making the computer do all the hard work of constructing all those rules. By creating a *structure*, giving the network *lots of data*, and providing it with a way to *determine whether it is getting the right answer*, <u>***deep learning** can create a function that, given the input of an image, returns cat or fish*</u>. Along the way, we will learn key concepts of how to use PyTorch.
 
@@ -20,21 +20,21 @@ Deep learning offers an alternative approach by essentially making the computer 
 
 Before building the image classifier, data is needed. The amount of data required depends on the deep learning technique being used. In this case, training from scratch often requires access to a large quantity of data, so a lot of pictures of *fishes* and *cats* are needed.
 
-One option for obtaining this data is to use a standard collection of images used to train neural networks, called **ImageNet**. It contains more than `14 million images` and `20,000 categories` and is the standard that all image classifiers judge themselves against. Along with the data, PyTorch needs a way to determine what is a cat and what is a fish. This is done using a **label** attached to the data, and training in this manner is called **supervised learning**.
+One option for obtaining this data is to use a standard image collection to train neural networks, called **ImageNet**. It contains more than `14 million images` and `20,000 categories` and is the standard that all image classifiers judge themselves against. Along with the data, PyTorch needs a way to determine what is a cat and what is a fish. This is done using a **label** attached to the data, and training in this manner is called **supervised learning**.
 
-If using ImageNet data, its labels may not be useful because they contain too much information. A label of `tabby cat` or `trout` is separate from `cat` or `fish`, so *relabeling* may be necessary. A list of image URLs and labels for both fish and cats can be used to download the images from the URLs and place them in the appropriate locations for training (look at [This download.py Script](https://github.com/angadsinghsandhu/Notes/blob/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%202%20-%20Image%20Clasification%20with%20Pytorch/download.py)).
+Using ImageNet data may make its labels useless because they contain too much information. A label of `tabby cat` or `trout` is separate from `cat` or `fish`, so ==relabeling== may be necessary. A list of image URLs and labels for both fish and cats can be used to download the images from the URLs and place them in the appropriate locations for training (look at [This download.py Script](https://github.com/angadsinghsandhu/Notes/blob/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%202%20-%20Image%20Clasification%20with%20Pytorch/download.py)).
 
 The relabeling is simple, the `download.py` script stores cat pictures in the directory **train/cat** and fish pictures in **train/fish**. The data now needs to be put into a format that PyTorch can understand.
 
 ### PyTorch and Data Loaders
 
-In PyTorch, loading and converting data into formats that are ready for training can often be time-consuming. To make this process more consistent, *PyTorch has developed standard conventions for interacting with data*, whether it be *images, text, or audio*. These conventions are **datasets** and **data loaders**.
+In PyTorch, loading and converting data into ready-for-training formats can often be time-consuming. To make this process more consistent, ==PyTorch has developed standard conventions for interacting with data==, whether it be ==images, text, or audio==. These conventions are **datasets** and **data loaders**.
 
 A <u>***dataset** is a Python class that allows access to the data being supplied to the neural network*</u>. A <u>***data loader** feeds data from the dataset into the network*</u> and can encompass information such as the number of worker processes feeding data into the network or the number of images being passed in at once.
 
-Every dataset, regardless of the type of data it contains, can interact with PyTorch if it satisfies an abstract Python class. This class requires the implementation of two methods: one that returns the size of the dataset i.e. `_len_` and one that retrieves an item from the dataset in a (label, tensor) pair i.e. `_getitem_`. This pair is called by the data loader as it pushes data into the neural network for training.
+Every dataset, regardless of its type of data, can interact with PyTorch if it satisfies an abstract Python class. This class requires implementing two methods: one that returns the size of the dataset i.e. `_len_` and one that retrieves an item from the dataset in a (label, tensor) pair i.e. `_getitem_`. This pair is called the data loader as it pushes data into the neural network for training.
 
-The `__getitem__` method must be able to take an image and transform it into a tensor, returning both the tensor and the label so that PyTorch can operate on it. While this scenario comes up frequently, PyTorch provides tools to make this process easier.
+The `__getitem__` method must be able to take an image and transform it into a tensor, returning both the tensor and the label so that PyTorch can operate on it. While this scenario frequently arises, PyTorch provides tools to make this process easier.
 
 Here is an example of the *abstract Python class for a dataset*:
 
@@ -50,7 +50,7 @@ class Dataset(object):
 
 To build a training dataset, the `torchvision` package includes a class called `ImageFolder` that can be used to load images from a directory structure where each directory is a label.
 
-For example, all images labelled as *cat* would be in a directory called `cat`. Here is an example of how to use the `ImageFolder` class to load data for the cats and fish example:
+For example, all images labeled as *cat* would be in a directory called `cat`. Here is an example of how to use the `ImageFolder` class to load data for the cats and fish example:
 
 ```py
 import torchvision
@@ -60,7 +60,7 @@ train_data_path = "./train/"
 val_data_path = "./val/"
 test_data_path = "./test/"
 
-# creating transformation pipeline
+# Creating a transformation pipeline
 transformation = transforms.Compose([
     transforms.Resize((64, 64)),
     transforms.ToTensor(),
@@ -80,7 +80,7 @@ train_data = torchvision.datasets.ImageFolder(root=train_data_path, transform=tr
 
 In addition to loading the data, `torchvision` also allows for specifying a list of *transformations that will be applied to an image before it is fed into the neural network*.
 
-The default transform is to convert image data into a tensor using the `transforms.ToTensor()` method, but other transforms can also be applied.
+The default transform converts image data into a tensor using the `transforms.ToTensor()` method, but other transforms can also be applied.
 
 In this example, incoming images are first scaled to a resolution of 64x64 using the `Resize((64, 64))` transform to increase processing performance.
 
@@ -92,18 +92,18 @@ The mean and standard deviation values used in this example are from the ImageNe
 
 The *composable transforms* also allow for easy *data augmentation* through *image rotation* and *skewing*, which will be discussed further in [Chapter 4](https://github.com/angadsinghsandhu/Notes/tree/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%204%20-%20Transfer%20Learning%20and%20Other%20Tricks).
 
-In addition to the transforms we also specify a `check_image()` function that is passed into aour `ImageFolder API` to cross-check if the path is valid for the images we are loading.
+In addition to the transforms, we specify a `check_image()` function that is passed into our `ImageFolder API` to cross-check if the path is valid for the images we are loading.
 
 ### Building Validation and Test Datasets
 
-In addition to the training data, validation and test datasets are also needed. The difference between these datasets is that :
+In addition to the training data, validation, and test datasets are also needed. The difference between these datasets is that :
 
-- The <u>**validation set** is used to evaluate how well the model is generalizing to the problem domain</u>, rather than fitting to the training data.
+- The <u>**validation set** is used to evaluate how well the model generalizes to the problem domain</u>, rather than fitting to the training data.
 - The <u>**test set** provides a final evaluation of the model's performance after training is complete</u>.
 
 One danger of deep learning is <u>**overfitting**, where the model becomes very good at recognizing what it has been trained on but cannot generalize to examples it hasn't seen</u>.
 
-To prevent this, a **validation set** of cat and fish pictures that do not occur in the training set is used. At the end of each <u>*training cycle* which is called an **epoch**</u>, the model is compared against this set to make sure it isn't getting things wrong.
+To prevent this, a **validation set** of cat and fish pictures that do not occur in the training set is used. At the end of each <u>*training cycle* called an **epoch**</u>, the model is compared against this set to ensure it isn't getting things wrong.
 
 In addition to a validation set, we should also create a **test set**. This is used to test the model after all training has been completed.
 
@@ -137,7 +137,7 @@ The simplest deep learning network consists of an input layer, which works on th
 
 In our first example, we'll use `fully connected layers`. In a <u>**fully connected network**, every node in a layer affects every node in the next layer, and each connection has a **weight** that determines the strength of the signal from that node going into the next layer</u>. These weights are updated when we train the network, normally from a *random initialization*.
 
-As an input passes through the network, a matrix multiplication of the `weights` and `biases` of that layer onto the input is performed. The result is then passed through an `activation function` to introduce *nonlinearity* into the system.
+As an input passes through the network, a matrix multiplication of that layer's `weights` and `biases` onto the input is performed. The result is then passed through an `activation function` to introduce ==nonlinearity== into the system.
 
 Here is an illustration of what a fully connected network with an input layer, a hidden layer, and a two-node output layer:
 
@@ -175,11 +175,11 @@ simplenet = SimpleNet()
 
 In PyTorch, creating a network involves inheriting from the `torch.nn.Module` class and filling out the `__init__` and `forward` methods. The `__init__` method is used to set up the network, such as calling the superclass constructor and defining the layers of the network. The `forward` method describes how data flows through the network during both training and making predictions.
 
-In the example you provided, a simple network called `SimpleNet` is defined with three fully connected layers, called `Linear` in PyTorch. The input data is first converted from a 3D tensor into a 1D tensor of shape **(1, 12288)** (as we are using 64x64 images with 3 RGB channels the total datapoins become 64 x 64 x 3 = **12288**) using the `view()` method so that it can be fed into the first `Linear` layer.
+In our example, a simple network called `SimpleNet` is defined with three fully connected layers, called `Linear` in PyTorch. The input data is first converted from a 3D tensor into a 1D tensor of shape **(1, 12288)** (as we are using 64x64 images with 3 RGB channels the total data points become 64 x 64 x 3 = **12288**) using the `view()` method so that it can be fed into the first `Linear` layer.
 
 The `relu` activation functions are then applied to the layers in order, with the final `softmax` output providing the **prediction** for that image.
 
-The numbers in the hidden layers are somewhat arbitrary, with the *exception of the output* of the final layer, which is 2 to match up with the two classes of **cat** or **fish**. In general, it is desirable for the data in the layers to be *compressed* as it goes down the stack. By reducing the size of the output with respect to the input, that *part of the network is forced to learn a representation of the original input* with fewer resources, hopefully *extracting some features* of the images that are important to the problem being solved.
+The numbers in the hidden layers are somewhat arbitrary, with the ==exception of the output== of the final layer, which is 2 to match up with the two classes of **cat** or **fish**. In general, it is desirable for the data in the layers to be ==compressed== as it goes down the stack. By reducing the size of the output with respect to the input, that ==part of the network is forced to learn a representation of the original input== with fewer resources, hopefully, ==extracting some features== of the images that are important to the problem being solved.
 
 Once a **prediction** has been made, it can be compared with the **actual label** of the original image to see whether it was correct. However, PyTorch needs some way to quantify not just whether a prediction is right or wrong, but just how wrong or right it is.
 
@@ -189,7 +189,7 @@ Once a **prediction** has been made, it can be compared with the **actual label*
 
 In the case of a *multiclass categorization task*, the built-in `CrossEntropyLoss` function is used. Another commonly used loss function is `MSELoss`, which is a standard mean squared loss used for making *numerical predictions*.
 
-It is important to note that the `CrossEntropyLoss` function incorporates the `softmax()` function as part of its operation. This means that the `forward()` method of the network would need to be updated accordingly.
+It is important to note that the `CrossEntropyLoss` function incorporates the `softmax()` function as part of its operation. This means that the `forward()` method of the network must be updated accordingly.
 
 Here is an example of how the `forward()` method might look after incorporating the `CrossEntropyLoss` function:
 
@@ -207,9 +207,9 @@ def forward(self, x):
 
 Training a neural network involves passing data through the network, using a loss function to determine the difference between the prediction and the actual label, and then using that information to update the weights of the network in an attempt to minimize the loss. To perform these updates, an optimizer is used.
 
-Loss functions can be simple or complex, and PyTorch comes with a comprehensive collection of built-in loss functions that can be used for most applications. In the case of a multiclass categorization task like the one being discussed, the built-in `CrossEntropyLoss` function is recommended. Another commonly used loss function is `MSELoss`, which is a standard mean squared loss used for making numerical predictions.
+Loss functions can be simple or complex, and PyTorch comes with a comprehensive collection of built-in loss functions that can be used for most applications. For a multiclass categorization task like the one being discussed, the built-in `CrossEntropyLoss` function is recommended. Another commonly used loss function is `MSELoss`, which is a standard mean squared loss used for making numerical predictions.
 
-One thing to be aware of when using the `CrossEntropyLoss` function is that it incorporates the `softmax()` function as part of its operation. This means that the `forward()` method of the network would need to be updated accordingly.
+One thing to be aware of when using the `CrossEntropyLoss` function is that it incorporates the `softmax()` function as part of its operation. This means that the network's `forward()` method must be updated accordingly.
 
 Optimizing a neural network involves finding the lowest point on the `loss curve`, where the loss is *minimized*. This can be done by altering the values of the weights and checking against the gradient of the curve to determine how good a move is being made.
 
@@ -217,13 +217,13 @@ The size of these moves is known as the `learning rate` and is often a key param
 
 ![Loss vs Paramerter Graph](https://miro.medium.com/v2/resize:fit:700/1*shYI61ej9RuuqBVHgspDZg.png)
 
-One issue to be aware of when optimizing a neural network is the danger of getting trapped in local minima, where the network appears to have found the shallowest part of the loss curve but actually shallower areas exist elsewhere. To avoid this problem, `stochastic gradient descent (SGD)` can be used, where *random gradients are sampled during a batch*.
+One issue to be aware of when optimizing a neural network is the danger of getting trapped in local minima, where the network appears to have found the shallowest part of the loss curve but actually, shallower areas exist elsewhere. To avoid this problem, `stochastic gradient descent (SGD)` can be used, where ==random gradients are sampled during a batch==.
 
 ![Loss vs 2 Paramerters Graph](https://www.xpertup.com/wp-content/uploads/2018/05/1-1.gif)
 
 PyTorch comes with several built-in optimizers, including `SGD`, `AdaGrad`, `RMSProp`, and `Adam`. The Adam optimizer is often preferred for deep learning tasks because it uses a *learning rate per parameter and adapts that learning rate depending on how training is progressing*.
 
-Creating an Adam-based optimizer in PyTorch is simple. The `optim.Adam()` method is called and passed the weights of the network that it will be updating, along with the desired learning rate. Here is an example of how to create an Adam-based optimizer for the `SimpleNet` network with a learning rate of 0.001:
+Creating an Adam-based optimizer in PyTorch is simple. The `optim.Adam()` method is called and passed the network weights that it will be updating, along with the desired learning rate. Here is an example of how to create an Adam-based optimizer for the `SimpleNet` network with a learning rate of 0.001:
 
 ```python
 import torch.optim as optim
@@ -309,13 +309,13 @@ We then start looping over every batch created by our data loader, specifically 
 
 We unpack the current batch of data into inputs and targets by calling `inputs, targets = batch`. Then move the inputs and targets to the specified device (CPU or GPU) using the `.to()` API as `inputs = inputs.to(device)` and `targets = targets.to(device)`.
 
-This line We computes the model's predictions for the current batch of inputs, by passing the inputs to the model as a parameter: `output = model(inputs)`.
+This line computes the model's predictions for the current batch of inputs, by passing the inputs to the model as a parameter: `output = model(inputs)`.
 
 `loss = loss_fn(output, targets)`: This line computes the loss between the *model's predictions* and the *true targets* using the provided loss function. After the loss is calculated we compute the gradients of all optimized parameters with respect to the loss by calling `loss.backward()` (Backward Propogation). Finally the command `optimizer.step()` updates the model's parameters using the newly computed gradients using the optimizer.
 
 First `train_loss += loss.data.item()` adds the current batch's loss to the running total of training loss for the epoch. Then, `train_loss /= len(train_loader.dataset)` computes the *average* training loss over all batches by dividing the **total training loss** by **the size of the training dataset**.
 
-This is where the first part i.e. Training Mode of the epoch ends. Now we begin the Evaluation Mode of the epoch. `model.eval()`: is called to set the model to evaluation mode. In evaluation mode, certain layers of the model such as dropout and batch normalization behave differently than in training mode.
+This is where the first part i.e., Training Mode of the epoch ends. Now we begin the Evaluation Mode of the epoch. `model.eval()`: is called to set the model to evaluation mode. In the evaluation mode, certain model layers such as dropout and batch normalization behave differently than in the training mode.
 
 Similar to the `train_loss` float variable we initialize the `val_loss` float as **0.0**. This variable will be used to keep track of the validation loss.
 
@@ -323,7 +323,7 @@ We also initialize the variables `num_correct` and `num_examples` to 0. These va
 
 Similar to the Training Mode, Now we start a for loop that will iterate over each batch of data provided by the `val_loader` through `for batch in val_loader:`. The line `inputs, targets = batch` unpacks the current batch of data into inputs and targets. `inputs = inputs.to(device)` and `targets = targets.to(device)` are used to move the inputs and targets to the specified device. `output = model(inputs)` computes the model's predictions for the current batch of inputs. `loss = loss_fn(output, targets)` computes the loss between the *model's predictions* and the *true targets* using the provided loss function.
 
-The line `val_loss += loss.data.item() * inputs.size(0)` updates the running total of validation loss. The `loss.data.item()` expression extracts the scalar value of the loss computed for the current batch of data. This value is then multiplied by the size of the current batch, `inputs.size(0)`, to weight the contribution of this batch's loss to the total validation loss (this step is no required if all batches are of same size but it is still a good convention to have). This weighting is necessary because the last batch of data may be smaller than the other batches if the size of the validation dataset is not divisible by the batch size.
+The line `val_loss += loss.data.item() * inputs.size(0)` updates the running total of validation loss. The `loss.data.item()` expression extracts the scalar value of the loss computed for the current batch of data. This value is then multiplied by the size of the current batch, `inputs.size(0)`, to weight the contribution of this batch's loss to the total validation loss (this step is not required if all batches are of the same size but it is still a good convention to have). This weighting is necessary because the last batch of data may be smaller than the other batches if the size of the validation dataset is not divisible by the batch size.
 
 In other words, this line computes a weighted average of the losses over all batches of validation data, where each batch's loss is weighted by the size of the batch. This ensures that the computed validation loss is an unbiased estimate of the average loss over the entire validation dataset, even if the batch sizes are not all equal.
 
@@ -339,7 +339,7 @@ The last line prints out some statistics for each epoch, including training loss
 
 ### Making It Work on the GPU
 
-To take advantage of the GPU, we need to move our input tensors and the model itself to the GPU by explicitly using the `to()` method. Here’s an example that copies the `SimpleNet` to the GPU:
+We need to move our input tensors and the model itself to the GPU by explicitly using the `to()` method to take advantage of the GPU. Here’s an example that copies the `SimpleNet` to the GPU:
 
 ```python
 if torch.cuda.is_available():
@@ -428,7 +428,7 @@ To reload the saved model, you can use the `torch.load()` method as follows:
 simplenet = torch.load("/tmp/simplenet")
 ```
 
-This stores both the parameters and the structure of the model to a file. However, if you change the structure of the model at a later point, this might cause problems. For this reason, it is more common to save a model's `state_dict` instead. The `state_dict` is a standard Python dictionary that contains maps of each layer's parameters in the model.
+This stores the model's parameters and structure in a file. However, if you change the structure of the model at a later point, this might cause problems. For this reason, it is more common to save a model's `state_dict` instead. The `state_dict` is a standard Python dictionary that contains maps of each layer's parameters in the model.
 
 Here is an example of how to save the `state_dict` of a model:
 
@@ -444,7 +444,7 @@ simplenet_state_dict = torch.load("/tmp/simplenet")
 simplenet.load_state_dict(simplenet_state_dict)
 ```
 
-The benefit of using the `state_dict` is that it allows for more flexibility when extending or modifying the model. The `load_state_dict()` method can be called with a `strict=False` parameter to assign parameters to layers in the model that exist in the `state_dict`, but does not fail if the loaded `state_dict` has layers missing or added from the model's current structure.
+The benefit of using the `state_dict` is that it allows for more flexibility when extending or modifying the model. The `load_state_dict()` method can be called with a `strict=False` parameter to assign parameters to layers in the model that exists in the `state_dict`, but does not fail if the loaded `state_dict` has layers missing or added from the model's current structure.
 
 Models can be saved to disk during a training run and reloaded at another point so that training can continue where it left off. This can be useful when using cloud-based GPU resources that have time limits, as it allows you to save the model before reaching the time limit and continue training in a new session.
 
