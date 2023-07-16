@@ -78,7 +78,7 @@ def check_image(path):
 train_data = torchvision.datasets.ImageFolder(root=train_data_path, transform=transformation, is_valid_file=check_image)
 ```
 
-In addition to loading the data, `torchvision` also allows for specifying a list of ==transformations that will be applied to an image before it is fed into the neural network==. 
+In addition to loading the data, `torchvision` also allows for specifying a list of ==transformations that will be applied to an image before it is fed into the neural network==.
 
 The default transform is to convert image data into a tensor using the `transforms.ToTensor()` method, but other transforms can also be applied.
 
@@ -98,9 +98,9 @@ In addition to the transforms we also specify a `check_image()` function that is
 
 ### Building Validation and Test Datasets
 
-In addition to the training data, validation and test datasets are also needed. The difference between these datasets is that : 
+In addition to the training data, validation and test datasets are also needed. The difference between these datasets is that :
 
-- The <u>**validation set** is used to evaluate how well the model is generalizing to the problem domain</u>, rather than fitting to the training data. 
+- The <u>**validation set** is used to evaluate how well the model is generalizing to the problem domain</u>, rather than fitting to the training data.
 - The <u>**test set** provides a final evaluation of the model's performance after training is complete</u>.
 
 One danger of deep learning is <u>**overfitting**, where the model becomes very good at recognizing what it has been trained on but cannot generalize to examples it hasn't seen</u>.
@@ -135,7 +135,7 @@ By default, PyTorch's data loaders are set to a `batch_size` of 1, but this can 
 
 ## Finally, a Neural Network
 
-The simplest deep learning network consists of an input layer, which works on the `input tensors`, an `output layer`, which is the size of the number of our output classes (here `2`), and a `hidden layer` between them. 
+The simplest deep learning network consists of an input layer, which works on the `input tensors`, an `output layer`, which is the size of the number of our output classes (here `2`), and a `hidden layer` between them.
 
 In our first example, we'll use `fully connected layers`. In a <u>**fully connected network**, every node in a layer affects every node in the next layer, and each connection has a **weight** that determines the strength of the signal from that node going into the next layer</u>. These weights are updated when we train the network, normally from a ==random initialization==.
 
@@ -177,7 +177,7 @@ simplenet = SimpleNet()
 
 In PyTorch, creating a network involves inheriting from the `torch.nn.Module` class and filling out the `__init__` and `forward` methods. The `__init__` method is used to set up the network, such as calling the superclass constructor and defining the layers of the network. The `forward` method describes how data flows through the network during both training and making predictions.
 
-In the example you provided, a simple network called `SimpleNet` is defined with three fully connected layers, called `Linear` in PyTorch. The input data is first converted from a 3D tensor into a 1D tensor of shape **(1, 12288)** (as we are using 64x64 images with 3 RGB channels the total datapoins become 64 x 64 x 3 = **12288**) using the `view()` method so that it can be fed into the first `Linear` layer. 
+In the example you provided, a simple network called `SimpleNet` is defined with three fully connected layers, called `Linear` in PyTorch. The input data is first converted from a 3D tensor into a 1D tensor of shape **(1, 12288)** (as we are using 64x64 images with 3 RGB channels the total datapoins become 64 x 64 x 3 = **12288**) using the `view()` method so that it can be fed into the first `Linear` layer.
 
 The `relu` activation functions are then applied to the layers in order, with the final `softmax` output providing the **prediction** for that image.
 
@@ -234,7 +234,7 @@ optimizer = optim.Adam(simplenet.parameters(), lr=0.001)
 
 ## Training
 
-Training a neural network involves `passing data through the network`, `using a loss function to determine the difference between the prediction and the actual label`, and then `using an optimizer to update the weights of the network in an attempt to minimize the loss`. 
+Training a neural network involves `passing data through the network`, `using a loss function to determine the difference between the prediction and the actual label`, and then `using an optimizer to update the weights of the network in an attempt to minimize the loss`.
 
 The code trains a PyTorch model by iterating over each epoch and each batch of data within each epoch. For each batch, it computes the model's predictions, computes the loss between these predictions and the true targets, computes gradients with respect to this loss, and updates the model's parameters using these gradients. It also keeps track of training loss by accumulating it over all batches and computing its average at end of each epoch.
 
