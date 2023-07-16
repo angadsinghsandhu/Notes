@@ -90,9 +90,7 @@ The images are then converted to tensors and normalized around a specific set of
 
 The mean and standard deviation values used in this example are from the ImageNet dataset as a whole, but these values could be calculated specifically for the fish and cat subset if desired.
 
-The ==composable transforms== also allow for easy ==data augmentation== through ==image rotation== and ==skewing==, which will be discussed further in [Chapter 4]().
-
-<!-- TODO : add chapter 4 link above -->
+The ==composable transforms== also allow for easy ==data augmentation== through ==image rotation== and ==skewing==, which will be discussed further in [Chapter 4](https://github.com/angadsinghsandhu/Notes/tree/master/Books/Programming%20PyTorch%20for%20Deep%20Learning%20-%20Ian%20Pointer/Chapter%204%20-%20Transfer%20Learning%20and%20Other%20Tricks).
 
 In addition to the transforms we also specify a `check_image()` function that is passed into aour `ImageFolder API` to cross-check if the path is valid for the images we are loading.
 
