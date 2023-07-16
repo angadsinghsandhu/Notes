@@ -18,7 +18,7 @@
 
 ### ResNet
 
-### Other Architectures Are Available!
+### Other Architectures Are Available
 
 ## Using Pretrained Models in PyTorch
 
