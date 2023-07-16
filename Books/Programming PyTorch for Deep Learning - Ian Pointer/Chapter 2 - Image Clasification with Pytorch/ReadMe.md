@@ -14,7 +14,7 @@ In this case, you will be building a simple classifier that can tell the differe
 
 One of the traditional challenges in classification is writing a program that can tell a fish from a cat. One approach could be to write a set of rules describing the characteristics of a cat or a fish. However, this approach would take time, effort, and skill, and could become complicated as more scenarios are encountered.
 
-Deep learning offers an alternative approach by essentially making the computer do all the hard work of constructing all those rules. By creating a ==structure==, giving the network ==lots of data==, and providing it with a way to ==determine whether it is getting the right answer==, <u>***deep learning** can create a function that, given the input of an image, returns cat or fish*</u>. Along the way, we will learn key concepts of how to use PyTorch.
+Deep learning offers an alternative approach by essentially making the computer do all the hard work of constructing all those rules. By creating a <span style="background-color: #FFFF00">structure</span>, giving the network <span style="background-color: #FFFF00">lots of data</span>, and providing it with a way to ==determine whether it is getting the right answer==, <u>***deep learning** can create a function that, given the input of an image, returns cat or fish*</u>. Along the way, we will learn key concepts of how to use PyTorch.
 
 ### But First, Data
 
