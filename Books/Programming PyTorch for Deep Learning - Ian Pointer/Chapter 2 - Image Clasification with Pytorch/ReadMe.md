@@ -145,6 +145,8 @@ Here is an illustration of what a fully connected network with an input layer, a
 
 ![Loss vs Paramerter Graph](https://www.researchgate.net/profile/Mohamed-Zahran-16/publication/303875065/figure/fig4/AS:371118507610123@1465492955561/A-hypothetical-example-of-Multilayer-Perceptron-Network.png)
 
+TODO : get image working 
+
 Each connection between nodes *represents a weight* that determines the strength of the signal from one node to the next.
 
 ### Activation Functions
