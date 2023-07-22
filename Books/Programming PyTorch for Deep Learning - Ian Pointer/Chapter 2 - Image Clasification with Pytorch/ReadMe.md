@@ -141,9 +141,7 @@ As an input passes through the network, a matrix multiplication of that layer's 
 
 Here is an illustration of what a fully connected network with an input layer, a hidden layer, and a two-node output layer:
 
-![Neural Net](https://www.researchgate.net/profile/Mohamed-Zahran-16/publication/303875065/figure/fig4/AS:371118507610123@1465492955561/A-hypothetical-example-of-Multilayer-Perceptron-Network.png)
-
-![Loss vs Paramerter Graph](https://www.researchgate.net/profile/Mohamed-Zahran-16/publication/303875065/figure/fig4/AS:371118507610123@1465492955561/A-hypothetical-example-of-Multilayer-Perceptron-Network.png)
+![Loss vs Paramerter Graph](https://cdn.analyticsvidhya.com/wp-content/uploads/2021/02/Screenshot-from-2021-02-25-13-19-20-244x300.png)
 
 TODO : get image working 
 
