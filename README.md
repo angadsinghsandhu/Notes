@@ -11,12 +11,14 @@
 
 ## Table of Contents
 
-1. [Books](#book)
-2. [Undergrad Notes](#btech)
-3. [Courses](#courses)
-4. [Duolingo](#duo)
-5. [University Classes](#univ)
-6. [Youtube](#youtube)
+1. [B.Tech](#book)
+2. [Books](#book)
+3. Courses
+4. [Undergrad Notes](#btech)
+5. [Courses](#courses)
+6. [Duolingo](#duo)
+7. [University Classes](#univ)
+8. [Youtube](#youtube)
 
 <a name="book"></a>
 
