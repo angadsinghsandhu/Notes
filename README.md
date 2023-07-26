@@ -14,11 +14,12 @@
 1. [B.Tech](#book)
 2. [Books](#book)
 3. Courses
-4. [Undergrad Notes](#btech)
-5. [Courses](#courses)
-6. [Duolingo](#duo)
-7. [University Classes](#univ)
-8. [Youtube](#youtube)
+4. DSA
+5. [Undergrad Notes](#btech)
+6. [Courses](#courses)
+7. [Duolingo](#duo)
+8. [University Classes](#univ)
+9. [Youtube](#youtube)
 
 <a name="book"></a>
 
