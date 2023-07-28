@@ -13,7 +13,7 @@
 
 1. [B.Tech](#book)
 2. [Books](#book)
-3. Courses
+3. Courses(#courses)
 4. DSA
 5. [Undergrad Notes](#btech)
 6. [Courses](#courses)
