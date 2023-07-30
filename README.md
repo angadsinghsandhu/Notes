@@ -47,6 +47,18 @@
 
 <a name="courses"></a>
 
+## Courses
+
+<details>
+
+<summary>Click to Expand</summary>
+
+1. lorem ipsum
+
+</details>
+
+<a name="courses"></a>
+
 ## Courses from Educational Websites
 
 <details>
