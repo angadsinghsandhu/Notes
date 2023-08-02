@@ -9,7 +9,7 @@
 
 ![Twitter Follow](https://img.shields.io/twitter/follow/visenger?style=social)
 
-## Table of Contents.
+## Table of Contents
 
 1. [B.Tech](#book)
 2. [Books](#book)
