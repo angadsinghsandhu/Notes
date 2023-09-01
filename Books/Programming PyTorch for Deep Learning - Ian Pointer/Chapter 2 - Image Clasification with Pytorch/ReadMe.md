@@ -141,7 +141,9 @@ As an input passes through the network, a matrix multiplication of that layer's 
 
 Here is an illustration of what a fully connected network with an input layer, a hidden layer, and a two-node output layer:
 
-![Neural Net](https://www.researchgate.net/profile/Haohan-Wang-4/publication/282997080/figure/fig4/AS:305939199610886@1449952997594/A-typical-two-layer-neural-network-Input-layer-does-not-count-as-the-number-of-layers-of.png)
+![Loss vs Paramerter Graph](https://cdn.analyticsvidhya.com/wp-content/uploads/2021/02/Screenshot-from-2021-02-25-13-19-20-244x300.png)
+
+TODO : get image working 
 
 Each connection between nodes *represents a weight* that determines the strength of the signal from one node to the next.
 

@@ -1,4 +1,4 @@
-# NOTES [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome) [![Made With Love](https://img.shields.io/badge/Made%20With-Love-orange.svg)](https://github.com/chetanraj/awesome-github-badges)
+# NOTES. [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome) [![Made With Love](https://img.shields.io/badge/Made%20With-Love-orange.svg)](https://github.com/chetanraj/awesome-github-badges)
 
 <!-- TODO : Add DSA to main README -->
 <!-- TODO : Edit Coursera Courses -->
@@ -11,12 +11,15 @@
 
 ## Table of Contents
 
-1. [Books](#book)
-2. [Undergrad Notes](#btech)
-3. [Courses](#courses)
-4. [Duolingo](#duo)
-5. [University Classes](#univ)
-6. [Youtube](#youtube)
+1. [B.Tech](#book)
+2. [Books](#book)
+3. Courses(#courses)
+4. DSA(#dsa)
+5. [Undergrad Notes](#btech)
+6. [Courses](#courses)
+7. [Duolingo](#duo)
+8. [University Classes](#univ)
+9. [Youtube](#youtube)
 
 <a name="book"></a>
 
@@ -33,6 +36,30 @@
 <a name="btech"></a>
 
 ## Notes From my Computer Science Undergrad
+
+<details>
+
+<summary>Click to Expand</summary>
+
+1. lorem ipsum
+
+</details>
+
+<a name="courses"></a>
+
+## Courses
+
+<details>
+
+<summary>Click to Expand</summary>
+
+1. lorem ipsum
+
+</details>
+
+<a name="dsa"></a>
+
+## DSA
 
 <details>
 
