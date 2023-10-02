@@ -12,7 +12,8 @@ This section may be cross-listed with other sections in the same course. Section
 
 ## Some more important links
 
-- [Main Website]()
+- [Main Website](https://www.cs.jhu.edu/~jason/465/)
+- [Syllabus](https://www.cs.jhu.edu/~jason/465/syllabus.pdf)
 - [Github Repo](https://github.com/falloutdurham/beginners-pytorch-deep-learning)
 
 ## Metadata
