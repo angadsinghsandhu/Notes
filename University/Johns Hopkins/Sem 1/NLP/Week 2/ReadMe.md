@@ -1,4 +1,4 @@
-# Week 2: Lecture 4-6
+# Week 2: Lecture 4-5
 
 ## Lecture 4a
 
@@ -151,6 +151,61 @@ Given Posterori ration becomes skewed towards the outcome that is favoured by th
 
 ## Extraa Reading: Probability Basics
 
-## Lecture 5
+## Lecture 5a : Smoothing
 
-## Lecture 6
+Relative frequency estimation can be harmful, if we see something happen 0 out of 3 times it does not mean that the event is impossibe. **Smoothing** is used to reduce this risk.
+
+A **word type** is a disinct vocabulary item, where a **token** is an occurance of that type.
+
+Dictionary = list of Word Types
+Corpus = List of Tokens
+
+We estimate the proability of dictionary types using counts of corpus tokens. But some probabilities could become 0 just becase those specific tokens were not found in the corpus but the tokens can still be found. hence, Positive counts need to be discounted (reduced) and reallocated to zero probabilities (especially if deonominator or numerator is small)
+
+### Add-1 Smoothing
+
+Add 1 to the counts of all sequences. More the observations, lesser the overall effect of smoothing without taking out specific poabilities.
+
+Smoothibng heuristics is an estimator for probabilities. For a dictionary with a large number of word types and lots of Novel (never seen before) events, Add-1 smoothing startes making Novel events extremly likely (same as non-novel events).
+
+### Add-lambda (λ) Smoothing
+
+To alleviate the problem discussed above we use add-λ smoothing, this gives a lower probability to novel events.
+
+if λ is too small we dont smooth much, **High Variance**. if λ is too high we smooth too much, **High Bias**. Smoothing reduces Variance.
+
+for Unsmoothed estimates:
+
+Estimates that are correct on average = Low Biased
+Such estimate are far from truth = High Variance
+
+for Smoothed estimates:
+
+Estimates that are incorrect on average = High Biased
+Such estimate are closer to truth = Low Variance
+
+High Smoothing = Underfit (Ignore Data)
+No Smoothing = Overfit (Memorized Data)
+
+λ is a hyperparameter that can be seleted, we create a (hold-out) validation set from 20% of the train data and calculate the best value for λ.
+
+### 5-fold Cross-Validation (Jackknifing)
+
+if one single 20% validation set too less creat 5 such sets each of 20% data and pick λ that performs best on average.
+
+### N-fold Cross-Validation (Leave One Out)
+
+Same as 5-fold but instead of dividing trainig set into 5 parts we find best λ for each sentence. Ths method is also very fast.
+
+### Back-off + Smoothing
+
+Smoothing reduces Variance so does Backoff. Some unigrams are more probable than the others. Using both together gives a weighted average:
+
+$$
+p_hat(A|B,C) = \alpha * { count(A,B,C)  \above count(B,C) } + (1-\alpha) * p_hat(baby|the) 
+where \alpha = {count(B,C) \above count(B,C) + \alpha * λV}
+$$
+
+Before, we were averaging the trigram relative frequency estimate with the uniform distribution. Now we’re averaging it with the “backed-off” (bigram) distribution.
+
+## Lecture 5b
