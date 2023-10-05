@@ -199,13 +199,73 @@ Same as 5-fold but instead of dividing trainig set into 5 parts we find best λ 
 
 ### Back-off + Smoothing
 
-Smoothing reduces Variance so does Backoff. Some unigrams are more probable than the others. Using both together gives a weighted average:
-
-$$
-p_hat(A|B,C) = \alpha * { count(A,B,C)  \above count(B,C) } + (1-\alpha) * p_hat(baby|the) 
-where \alpha = {count(B,C) \above count(B,C) + \alpha * λV}
-$$
+Smoothing reduces Variance so does Backoff. Some unigrams are more probable than the others. Using both together gives a weighted average.
 
 Before, we were averaging the trigram relative frequency estimate with the uniform distribution. Now we’re averaging it with the “backed-off” (bigram) distribution.
 
-## Lecture 5b
+***Backoff Smoothing as model averaging:***
+
+$$
+\hat{p}(a|c,b) = \alpha \cdot p(a|c,b) + (1-\alpha) \cdot \hat{p}(a|b) \\
+where \ \alpha = \frac{count(b,c)}{count(b,c) + \lambda \cdot V}
+$$
+
+Before, we were averaging the **trigram relative frequency estimate** with the **uniform distribution**. Now we’re averaging it with the **“backed-off” (bigram) distribution**. Backed-off distribution is itself just an estimate, but a pretty good one:
+
+- Close to what we want since it still considers 2 of the 3 words (**low bias**)
+- Based on more data (**low variance**)
+- We can estimate it by backing off to unigram distribution, in turn (**lowers variance more**)
+
+### Jelinel-Mercer Smoothing
+
+This is also called "deleted interpolation", where we use a weighted avergae of the backed-off naive models:
+
+$$
+\hat{p}_{average}(a|c,b) = \mu_3 \cdot \hat{p}(a|c,b) + \mu_2 \cdot \hat{p}(a|b) + \mu_1 \cdot \hat{p}(a)\\
+where \ \mu_1 + \mu_2 + \mu_3 = 1 \ and \ (0 \le \mu \le 1)
+$$
+
+The weights $\mu$ can depend on the context of $c \ and \ b$. If we have “enough data” in context $c \ and \ b$, can make $\mu_3$ large.  E.g.:
+
+- If $count(c, b)$ is high
+- If the entropy of z is low in the context xy
+
+Learn the weights on held-out data w/ jackknifing. Different $\mu_3$ when $c \ and \ b$ is observed 1 time, 2 times, 3-5 times, $\dots$
+
+### More Techiques
+
+Cross-validation is a general-purpose wrench for tweaking **any** constants in **any** system. Here, the system will train the counts from **Train** data, but we use **Dev** data to tweak how much the system smooths them ($|\lambda$) and how much it backs off for different kinds of contexts ($\mu_3$ etc.)
+
+Det (Determiners): Closed Class (fixed)
+N (Noun): Open Class (unfixed)
+
+T: Total Types of tokens
+N: Total Number of tokens
+
+T == N for singletons and T < N for all other cases
+
+#### Witten-Bell Smoothing Ideas
+
+#### Good Tuning Smoothing Ideas
+
+#### Good Tuning vs Witten Bell
+
+## Lecture 5b : Log-Linear Models
+
+We’ve been estimating conditional probabilities using modified count ratios. Instead, maybe we could find a formula that yields conditional probabilities, and estimate the parameters (numbers) that appear in that formula.
+
+In fact, optimize them!  Not to make the probabilities individually good, but to ensure that together, they achieve good cross-entropy or task performance.
+
+### Conditional Modeling
+
+### Linear Scoring
+
+### Features to Use
+
+### Log-Linear COnditional Probability
+
+### Trainig $\theta$
+
+### Gradient Based Trainig
+
+### Maximizing Entropy
