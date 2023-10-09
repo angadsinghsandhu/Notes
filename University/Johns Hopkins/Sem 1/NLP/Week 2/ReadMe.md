@@ -6,7 +6,7 @@
 
 Properties of P (axioms):
 
-1. $p(\empty) = 0$
+1. $p(\emptyset) = 0$
 2. $p(X) \leq p(Y) \text{ for any set } X \subseteq Y = 0$
 3. $p(X \text{ and } Y) = p(X) + p(Y) \ \text{if} \ p(X \text{ or } Y) = 0$ (mutully exclusive)
 4. $p(X \ and \ \neg Y) + p(X \ and \ Y) = p(X)$
@@ -79,16 +79,20 @@ $$
 
 ![trigram model](./imgs/trigram-model.png)
 
-A trigram model:
+model definition:
 
 - Generates Random Sentence
 - Finds Event Probabilities
 
-p(X) is the probability of a random variable where, X is a variable that is a function on outcome space.
+![model definition](imgs/mod1.png)
+
+![Model Definition](imgs/mod2.png)
+
+p(X) is the probability of a random variable where X is a variable that is a function on outcome space.
 
 ### Directed Modeling
 
-french to english translation $P(e|f)$, where $P(e,f)$ is the actual distribution over pairs. Hence we can create a direct mdel of french to english with $P(e|f)$ as the Posterior probability where the likelihood $P(f|e)$ models the Adequecy of a specific translation (translate and reorder) and $P(e)$ (n-gram) judges Fluency.
+french to english translation $P(e|f)$, where $P(e,f)$ is the actual distribution over pairs. Hence we can create a direct model of french to english with $P(e|f)$ as the Posterior probability where the likelihood $P(f|e)$ models the Adequecy of a specific translation (translate and reorder) and $P(e)$ (n-gram) judges Fluency.
 
 ### Measure Performance
 
@@ -96,9 +100,9 @@ Split data into train and test
 
 #### Cross-Entropy (aka `xent` or `log-loss`)
 
-This is a measure of model performance through probability.
+This is a measure of model performance through probability. xent is the average **"surprisal"** where smaller is better (when p(x) is high surprisal us low). surprisal is given by:
 
-xent = average negative log-probability (**"surprisal"**) [smaller is better] = $-log(p(x))$
+negative log-probability (**"surprisal"**) = $-log(p(x))$
 
 #### Huffman Code
 
@@ -106,10 +110,13 @@ With Huffman code # bits = surprisal = $-log(p(x))$
 
 For a given model, calculating avg surprisal for estimated and true probabilities:
 
-$$ H(p) = Entropy = Avg Surprisal per character = \sum p(x) * (-log p(x)) $$
-$$ H(p, p_hat) = Cross-Entropy = Avg Surprisal per character = \sum p_hat(x) * (-log p(x)) $$
+$$ H(p) = Entropy = Avg \ Surprisal \ per \  character = \sum p(x) * (-\log p(x)) $$
+
+$$ H(p, p_hat) = Cross-Entropy = Avg \  Surprisal \ per \ character = \sum \hat{p}(x) * (-\log p(x)) $$
 
 Where, $p(x)$ is the estimated probability by the model and $p_hat(x)$ is the true probability. It is a perfect model (lowest cross-entropy value) when p = p_hat. Hence, lower limit of entropy is the true distribution.
+
+![Cross Entropy](imgs/xent.png)
 
 Improvements on surprisal for trigrams or language models in general:
 
@@ -117,7 +124,7 @@ Improvements on surprisal for trigrams or language models in general:
 - Negate log to get positive Bits
 - Divide by length of text (or word)
 
-Perplexity = 2^surprisal
+Perplexity = $2^{surprisal}$
 
 ## Lecture 4b
 
@@ -145,6 +152,10 @@ Bayes theorum can be uses for:
 
 $$ P(sentence=x|labguage=english) = P_{english}(sentence=x) $$
 
+### Noisy Channel
+
+![noisy channel](imgs/noisy.png)
+
 **Noisy Channel** Maps A to B and a **Decoder** creates the most likely reconstruction of A from B.
 
 Given Posterori ration becomes skewed towards the outcome that is favoured by the likelihood ratio as priori ratio remains the same.
@@ -152,6 +163,8 @@ Given Posterori ration becomes skewed towards the outcome that is favoured by th
 ## Extraa Reading: Probability Basics
 
 ## Lecture 5a : Smoothing
+
+### Smoothing
 
 Relative frequency estimation can be harmful, if we see something happen 0 out of 3 times it does not mean that the event is impossibe. **Smoothing** is used to reduce this risk.
 
