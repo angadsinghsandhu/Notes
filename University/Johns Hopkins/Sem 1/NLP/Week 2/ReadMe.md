@@ -166,6 +166,8 @@ Given Posterori ration becomes skewed towards the outcome that is favoured by th
 
 Noisy channels the likelihood `p(B|A)`, derived from the initial event that is our prior `p(A)`, both of these terms are finally combined to create our posterior probability `p(A|B)`.
 
+The type of maximization that happens in a Noisy Channel is called Decoding.
+
 ## Extraa Reading: Probability Basics
 
 ## Lecture 5a : Smoothing

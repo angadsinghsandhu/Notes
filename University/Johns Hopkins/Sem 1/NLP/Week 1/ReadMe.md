@@ -26,6 +26,8 @@ Phonetics > Phonlogy > Morphology > Syntax > Semantics > Pragmatics
 
 **Trigram**: Frequencies of Letters or Words given 2 previous Letters or Words
 
+The larger the **n-gram**, lesser the **bias**. Bias of a 100-gram model is lowe than 3-gram as it assumes less but has higher sensitivity to the input data.
+
 ## Lecture 2
 
 - **Regular Expresion**: A regular expression is a sequence of characters that specifies a match pattern in text. Usually such patterns are used by string-searching algorithms for "find" or "find and replace" operations on strings, or for input validation.
