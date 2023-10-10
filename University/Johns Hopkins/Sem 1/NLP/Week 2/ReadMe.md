@@ -104,6 +104,10 @@ This is a measure of model performance through probability. xent is the average 
 
 negative log-probability (**"surprisal"**) = $-log(p(x))$
 
+Total Cross-Entropy of a corpus remains constant. If a corpus has `N` words and the average size of a word is 6 letters then the corpus has `6N` letters. Thus:
+
+$$\text{Cross-Entropy of Corpus} = N * \text{Cross-Entropy per word} = 6 \cdot N \cdot \text{Cross-Entropy per letter}$$
+
 #### Huffman Code
 
 With Huffman code # bits = surprisal = $-log(p(x))$
@@ -159,6 +163,8 @@ $$ P(sentence=x|labguage=english) = P_{english}(sentence=x) $$
 **Noisy Channel** Maps A to B and a **Decoder** creates the most likely reconstruction of A from B.
 
 Given Posterori ration becomes skewed towards the outcome that is favoured by the likelihood ratio as priori ratio remains the same.
+
+Noisy channels the likelihood `p(B|A)`, derived from the initial event that is our prior `p(A)`, both of these terms are finally combined to create our posterior probability `p(A|B)`.
 
 ## Extraa Reading: Probability Basics
 
