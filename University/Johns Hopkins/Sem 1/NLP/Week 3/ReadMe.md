@@ -1,6 +1,164 @@
-# Week 2: Lecture 6-13
+# Week 3: Lecture 6-13
 
-## Lecture 6
+## Lecture 6 : Syntax (Syntactic Attribtes)
+
+### Part 1: Attributes and Variables
+
+3 ways to think of a context free rule:
+
+here is a list:
+
+1. **Generation** (production): `S --> NP VP`
+2. **Parsing** (comprehension): `S <-- NP VP`
+3. **Verification** (checking): `S == NP VP`
+
+An analogy of this would be in Object Oriented Programming (OOP) where a class is an interface and it has an implementation i.e. instantiated object.
+
+Here `S` is the interface or class and `NP VP` is a particular object of the `S` class. The `S` class can rewrite to different objects.
+
+But similar to OOP, we should pass some arguements to our object. Hence, we should not just have an `S` but different kinds of `S`'s so we should pass some auguements into `S` that create different objects, that themseles pass these arguements down to their children.
+
+Doing this with CFG, instead of calling a class with arguements, we say that our non-terminal is *specialized* with some attributes attached. example:
+
+$$S[tense=past]$$
+
+#### Using Attributes
+
+There are 3 common ways to use attibutes in CFG:
+
+- **Morphology**: coordinates the spelling and pronunciation of word with attributes attached to the preterminal. example:
+$$Verb[head=thrill, \ tense=present] \ \rightarrow Thrills$$
+
+- **Projetion**: project attribute from one rule to another. Hence, when parsing from right to left, or generating from right to left the non-terminal on the left adopts the same attributes as the non-terminal on the right. eg:
+$$VP[head=\alpha, \ tense=\beta, \ num = \gamma] \ \rightarrow V[head=\alpha, \ tense=\beta, \ num = \gamma] \ NP$$
+
+- **Agreement**: between sister phrases. Hence, the attributes on the right need to agree to combine on the basis of some attribute (in the example below its the fact that both NP and VP are singular). example:
+$$S[head=\alpha, \ tense=\beta] \rightarrow NP[num=\alpha, \dots] \ VP[head=\alpha, \ tense=\beta, \ num=\gamma, \dots]$$
+
+TODO: Write about Generation and Parsing Example
+
+### Part 2: Head Words
+
+**Haed Words**: the "head word." is a constituent, in other words, a subtree of a tree. A head word is the most important part of a phrase
+
+TODO : write about why we use Head words
+
+Uses of head words:
+
+1. Morphology
+2. Subcategorization (transitive vs. intransitive)
+3. Selectional Restrictions
+
+TODO: Syntactic attributes for log-linear models
+
+#### Log-Linear Models
+
+$$p(NP[\dots],\ VP[\dots]\ |\ S[\dots]) = \frac{exp(\sum_k\ \theta_k \cdot f_k(S[\dots] \rightarrow NP[\dots],\ VP[\dots]))}{Z(S[\dots])}$$
+
+### Part 3: Post-Processing
+
+Sometimes, it can be beneficial to let your grammar do some, but not all, of the work. You could use your grammar to generate a form of the sentence that is close to what you want, but not quite there. Then, you can use a **post-processing step** to refine the sentence into its final form.
+
+One advantage of this approach is that the grammar is very sensitive to the structure of **sub-trees**. Each sub-tree is generated *independently* from one another, which is essentially what context-freeness means.
+
+However, if you use a **post-processor**, you can create rules where a part of one constituent affects a part of an adjacent constituent. This allows for more complex interactions between different parts of the sentence. Steps to compose grammer wih post-procssor:
+
+1. Using CFG + randsent to generate some internal sentence
+2. Do post-processing on that sentence.
+3. The post-processor can fix up even more things accross constituent boundaries.
+
+The post-processing device that can do this is known as a finite-state transducer. This tool can be used to transform the output of your grammar into the final sentence form that you desire.
+
+#### Example: CAPS
+
+It's a common rule that sentences start with capital letters, but this isn't always the case, even in English. For instance, consider the sentence "We will meet Smith 59, the chief." It starts with a capital letter. However, if we embed this sentence into a larger one, like "She wonders whether we will meet Smith 59, the chief," the word "we" wouldn't be capitalized because it's part of an embedded sentence.
+
+Only the top-level sentence (the child of ROOT) starts with a capital letter and ends with a period. One way to describe this is by imagining a rule that says ROOT goes to S (sentence) preceded by a special symbol, the CAPS symbol, and followed by a period.
+
+TODO: Add images
+
+The CAPS symbol combines with whatever word shows up after it in post-processing to make a capitalized version of that word. It doesn't care about how deep the noun phrase is; it's just going to affect the first word of that noun phrase across the constituent boundary. This is how we can handle capitalization in sentences.
+
+The CAPS symbol can also appear within a sentence, typically to capitalize proper nouns like "Smith." This can be represented in a rule where a proper noun starts with the CAPS symbol and continues with the noun, like "smith." In post-processing, this results in a capitalized "Smith."
+
+Post-processing can also handle other aspects of sentence construction. For example, "we will" might optionally turn into the contraction "we'll." This involves the subject combining with the first word of the verb phrase, which is nested deep within the verb phrase.
+
+Punctuation is another area where post-processing comes into play. Normally, words are separated by spaces, but if you have a comma, post-processing can attach it to the preceding token without any space. If you have two commas in a row or a comma followed by a period, these can be condensed into a single comma or period respectively.
+
+Post-processing can also handle morphological changes. For example, when adding the "-ed" suffix to "meet," it doesn't become "meeted" but changes to the irregular past tense form "met." Similarly, the possessive form of "me" is not "me's" but "my," and the plural of "child" is not "childs" but "children."
+
+All these modifications are handled by post-processing, allowing the context-free grammar to generate a more convenient form of the sentence that is then refined into its final form.
+
+#### Cost of Enhancements
+
+We have seen:
+
+- Syntactic Attributes
+- Post-processing
+
+The use of attributes and post-processing in context-free grammars doesn't necessarily make it harder to parse sentences. In fact, they don't really add any cost because a context-free grammar with these extra features can be converted into an ordinary context-free grammar, albeit a larger one.
+
+For instance, if we have a rule with variables ranging over finite sets, we could write out versions of this rule that specialize those variables to particular values. This results in a larger set of rules, but it's still finite, so we still have a context-free grammar.
+
+Post-processing can also be converted into something that uses attributes. For example, the post-processor might change "a" to "an" before a vowel. We could represent this by having every non-terminal keep track of whether it starts with a vowel or not and require the determiner to agree with the following word or constituent.
+
+These conversions reassure us that these enhancements don't allow us to build unnatural languages. They also mean that we can still use our old algorithms for computational purposes. If we want to parse something that we wrote using our new methods, we could just convert the grammar to an ordinary context-free grammar and give that grammar to the parser.
+
+The benefit of using these extra techniques is that we get simpler grammars. It might be easier to attach probabilities to them because we've got fewer rules. It's more systematic and allows us to apply a pattern across multiple rules. So, in essence, these techniques offer a more efficient and systematic approach to handling language structures.
+
+Indeed, these enhancements are not only beneficial for computational purposes but also for language learning, both in the context of theoretical and computational linguistics. Having fewer rules means that a language learner has fewer things to learn. A systematic system, with its consistent patterns and structures, is easier to grasp and understand. This makes the learning process more efficient and manageable. So, in essence, these techniques offer a more efficient and systematic approach to handling language structures, benefiting both computation and learning.
+
+### Part 4: the English tense system
+
+The "-s" in "she eats" is an operator that modifies the next verb by adding an "-s" to it. This is why we get "eats" when we put an "-s" on "eat", "has" when we put an "-s" on "have", and "is" when we put an "-s" on "be". These last two are irregular forms.
+
+The "-ed" or "-en" ending is used to indicate the past participle. For example, the past participle of "jump" is "jumped", and the past participle of "be" is "been".
+
+The "-ing" ending is used to indicate the present participle, which is very regular in English. For example, if we put "-ing" on "jump", we always get "jumping". If we put "-ing" on "be", we get "being", and if we put "-ing" on "have", we get "having".
+
+#### Affix-Hopping
+
+Chomsky suggested that these endings should go before the verb because they are also related to the previous verb. In his formalism, things that were adjacent had an easier time influencing one another.
+
+#### Attributes for Post-Processing
+
+We can also describe these patterns using attributes. For example, in the sentence "has been thrilling", at the top level, we have a present-tense thrill. This present tense is actually a present perfect tense, indicating a completed action. The kind of perfect that we have is perfect progressive, indicating an ongoing action that will be completed. This results in a progressive thrill, which pops out as a word at the bottom as "thrilling".
+
+This approach allows us to handle different tenses and aspects systematically and efficiently. The English tense system, while systematic, can be complex and sometimes doesn't follow the expected patterns. For instance, while you might expect to be able to say "is having thrilled" or "will be having been thrilling" based on the rules of tense formation, these constructions are not actually allowed in English.
+
+This suggests that there's a certain order or hierarchy to how these tenses can be combined. For example, you can have a perfect progressive tense ("has been thrilling"), but not a progressive perfect ("is having thrilled").
+
+This order might be something that needs to be handled by additional features or by a language model. It could also be governed by some other mechanism that dictates the sequence in which you're allowed to apply rules. This would mean that the system is not entirely context-free.
+
+As a child, you might have intuitively understood this order without being able to articulate it, as in your anecdote about saying "have had gone." While this construction might feel like it should be even further in the past than "had gone," it's not a construction that's typically used in English.
+
+So while the rules for forming tenses in English can be described systematically, there are nuances and exceptions that make the system more complex than it might initially appear.
+
+The English tense system for verbs is systematic but can be complex to capture with a context-free grammar. Let's consider the verb "to eat" as an example. It has irregular forms: "eat," "ate," "eaten," and "eating."
+
+The basic tenses are present ("she eats"), past ("she ate"), future ("she will eat"), and infinitive ("to eat" or the bare infinitive "eat" as in "she makes her dog eat").
+
+We also have the perfect aspect, which indicates a completed action: "she has eaten" (present perfect), "she had eaten" (past perfect), "she will have eaten" (future perfect), and "she wants to have eaten" (infinitive perfect).
+
+The progressive aspect indicates an ongoing action: "she is eating" (present progressive), "she was eating" (past progressive), "she will be eating" (future progressive), and "she wants to be eating" (infinitive progressive).
+
+You can also combine these aspects: "she has been eating" (present perfect progressive), "she had been eating" (past perfect progressive), "she will have been eating" (future perfect progressive), and "she wants to have been eating" (infinitive perfect progressive).
+
+These tenses are formed using auxiliary verbs and sometimes unexpected verb endings. Noam Chomsky explained this using a post-processing mechanism. For example, in the sentence "Mary jumps," the "-s" ending is actually placed before the verb and fixed up by post-processing.
+
+This approach allows us to handle different tenses and aspects systematically and efficiently.
+
+The English tense system, while systematic, can be complex and sometimes doesn't follow the expected patterns. For instance, while you might expect to be able to say "is having thrilled" or "will be having been thrilling" based on the rules of tense formation, these constructions are not actually allowed in English.
+
+This suggests that there's a certain order or hierarchy to how these tenses can be combined. For example, you can have a perfect progressive tense ("has been thrilling"), but not a progressive perfect ("is having thrilled").
+
+This order might be something that needs to be handled by additional features or by a language model. It could also be governed by some other mechanism that dictates the sequence in which you're allowed to apply rules. This would mean that the system is not entirely context-free.
+
+As a child, you might have intuitively understood this order without being able to articulate it, as in your anecdote about saying "have had gone." While this construction might feel like it should be even further in the past than "had gone," it's not a construction that's typically used in English.
+
+So while the rules for forming tenses in English can be described systematically, there are nuances and exceptions that make the system more complex than it might initially appear.
+
+### Part 5: Gaps
 
 ## Lecture 8 : Parsing CKY
 
@@ -10,7 +168,26 @@ A parser in NLP uses the grammar rules to verify if the input text is valid or n
 
 ![Parsing](imgs/parsing.png)
 
-Where Programming Laguages are easy to parse and Natural Language is hard to parse as there are no set grammar rules, no scope or precidence and lots of overloading.
+Where Programming Laguages are easy to parse (and in linear time) Programming Languages can be parsed in linear time from left to right. eg: some parsing techniques like LR parsing, SLR parsing. Natural Language is hard to parse as there are no set grammar rules, no parenthesis, no scope or precidence and lots of overloading.some of the issues in paring language are:
+
+- No parenthesis to indicate precedence
+- **Overloading** is an issue, where a symbol can mean different things (eg: Bet).
+- Not knowing grammar in advance (grammar keeps evolving)
+- CFG is not best formalism.
+
+First we pars into syntax tree and then then parse semantics.
+
+### Parsing Problem
+
+We send our test sentences into into parsers and compare to our test sentences to score our parser. Scoring techniques:
+
+- **Exact Match**: 1 or 0
+- **Partial Credit**: Looking into what got attached to wrong things
+
+Modern parser are pretty good, some of their applications are:
+
+- Parsing sentence + Parts of Speech (POS) using some probabalistic model.
+- Processing Downstream Tasks
 
 ### Ambiguity
 
@@ -31,11 +208,11 @@ Pence the parsing problem is defined as giving different sentences to a parser, 
 - Speech Recognition using parsing
 - Grammar Checking
 - Indexing for Information Retrival
-- Inormation Extraction
+- Inormation Extraction (for databases)
 
 ### Algorithm
 
-Liguistic properties are defined over trees and one needs to parse to make subtle distinctions. Parsing also gives us the semanics of order (**COmpositional Semantics**). Eg: what is the parse of $5*(6+2/4)$
+Liguistic properties are defined over trees and one needs to parse to make subtle distinctions. Parsing also gives us the semanics of order (**Compositional Semantics**). Eg: what is the parse of $5*(6+2/4)$
 
 Making Parsing Algorithm:
 

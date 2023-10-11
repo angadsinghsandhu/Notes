@@ -15,6 +15,7 @@ This section may be cross-listed with other sections in the same course. Section
 - [Main Website](https://www.cs.jhu.edu/~jason/465/)
 - [Syllabus](https://www.cs.jhu.edu/~jason/465/syllabus.pdf)
 - [Github Repo](https://github.com/falloutdurham/beginners-pytorch-deep-learning)
+- [Lecture VIdeos](https://jh.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%2204c32d8b-df1d-485a-8ee9-b06801241409%22&sortColumn=0&sortAscending=true&maxResults=150)
 
 ## Metadata
 
