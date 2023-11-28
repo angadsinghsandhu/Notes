@@ -19,7 +19,8 @@ Deep learning (DL) has emerged as a powerful tool for solving data-intensive lea
 |----|----|
 | Name | Programming PyTorch for Deep Learning |
 | Instructor | [Ian Pointer](https://www.linkedin.com/in/ian-pointer-5058a716/) |
-| Link | <https://www.oreilly.com/library/view/programming-pytorch-for/9781492045342/>  |
+| Link | <https://www.oreilly.com/library/view/programming-pytorch-for/9781492045342/> |
+| Lectures | <https://jh.hosted.panopto.com/Panopto/Pages/Sessions/List.aspx#folderID=%2269157f56-61a4-4150-977d-b05a0153adbf%22> |
 | Tags | PyTorch, AI, ML, NLP, Transformers, Theory |
 | Difficulty | Advanced |
 | Level | Graduate |
