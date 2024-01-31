@@ -1,11 +1,13 @@
-# NLP : Salf-Supervised Model (EN.601.671) - Daniel Khashabi
+# NLP : Self-Supervised Model (EN.601.671) - Daniel Khashabi
 
 This is an advanced class for attenbased, self-supervided models for NLP. The course will cover the following topics:
 
-1. Self-Supervised Learning for NLP
-2. Attention Models
-3. Transformers
-4. BERT
+Topics include (not limited to):
+
+- Self-Supervised Learning for NLP
+- Attention Models
+- Transformers
+- BERT
 
 ## PreRequisites
 
