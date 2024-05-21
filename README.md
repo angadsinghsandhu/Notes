@@ -2,7 +2,6 @@
 
 <!-- TODO : Add DSA to main README -->
 <!-- TODO : Edit Coursera Courses -->
- 
 <!-- ![MLOps. You Desing It. Your Train It. You Run It.](awesome-mlops-intro.png)
 
 *A list of notes/books/resorces/code that I've written over the years :point_right: [ml-ops.org](https://ml-ops.org/)* -->
@@ -11,15 +10,12 @@
 
 ## Table of Contents
 
-1. [B.Tech](#book)
-2. [Books](#book)
-3. Courses(#courses)
-4. DSA(#dsa)
-5. [Undergrad Notes](#btech)
-6. [Courses](#courses)
-7. [Duolingo](#duo)
-8. [University Classes](#univ)
-9. [Youtube](#youtube)
+1. [Books](#book)
+2. [Classes](#class)
+3. [Courses](#course)
+4. [Languages](#lang)
+5. [Leetcode](#leet)
+6. [Tutorials](#tut)
 
 <a name="book"></a>
 
@@ -33,69 +29,9 @@
 
 </details>
 
-<a name="btech"></a>
+---
 
-## Notes From my Computer Science Undergrad
-
-<details>
-
-<summary>Click to Expand</summary>
-
-1. lorem ipsum
-
-</details>
-
-<a name="courses"></a>
-
-## Courses
-
-<details>
-
-<summary>Click to Expand</summary>
-
-1. lorem ipsum
-
-</details>
-
-<a name="dsa"></a>
-
-## DSA
-
-<details>
-
-<summary>Click to Expand</summary>
-
-1. lorem ipsum
-
-</details>
-
-<a name="courses"></a>
-
-## Courses from Educational Websites
-
-<details>
-
-<summary>Click to Expand</summary>
-
-1. lorem ipsum
-
-</details>
-
-<a name="duo"></a>
-
-## Duolingo Courses that I have completed
-
-<details>
-
-<summary>Click to Expand</summary>
-
-1. [German]()
-2. [French]()
-3. [Japanese]()
-
-</details>
-
-<a name="univ"></a>
+<a name="class"></a>
 
 ## University Courses from around the world
 
@@ -110,9 +46,55 @@
 
 </details>
 
-<a name="youtube"></a>
+---
 
-## Things I learned on YouTube
+<a name="course"></a>
+
+## Courses from Educational Websites
+
+<details>
+
+<summary>Click to Expand</summary>
+
+1. lorem ipsum
+
+</details>
+
+---
+
+<a name="lang"></a>
+
+## Language Courses that I have completed
+
+<details>
+
+<summary>Click to Expand</summary>
+
+1. [German]()
+2. [French]()
+3. [Japanese]()
+
+</details>
+
+---
+
+<a name="leet"></a>
+
+## Leetcode Notes for Interview Prep and Competitive Programming
+
+<details>
+
+<summary>Click to Expand</summary>
+
+1. lorem ipsum
+
+</details>
+
+---
+
+<a name="tut"></a>
+
+## Sigle Video Tutorials
 
 <details>
 
