@@ -1,0 +1,23 @@
+
+
+Suggestion:
+
+The following Perl constructs may be useful in doing text segment analysis:
+
+
+ @chars = split(//,$str);    # divides string into a list of characters
+ foreach $c (@chars) {       # iterates over characters in the string
+   if ($c eq "\t") ...       # tests if $c is a tab.
+   if ($c =~ /\s/) ...       # tests if $c is a whitespace character
+   if ($c =~ /\S/) ...       # tests if $c is a non-whitespace character
+   if ($c =~ /[A-Za-z]/) ... # tests if $c is an alphabetic character
+ }
+
+Plain text will tend to have a high proportion of alphabetic and space
+characters ( /[A-Za-z ]/ ), with a typically much smaller proportion of 
+numbers and major sentence punctuation ( /[0-9,.!?;:'"`$%]/ etc.), and very 
+few primarily mathematical punctuation marks ( /[<>+=^*]/ etc.). Comparing
+relative total counts of these character types may provide helpful
+clues regarding the most likely classification of a segment.
+
+

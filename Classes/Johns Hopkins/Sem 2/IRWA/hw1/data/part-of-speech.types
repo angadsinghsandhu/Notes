@@ -1,0 +1,28 @@
+
+Some definitions of the brown corpus tags.
+Others should be apparent
+
+DT  - Determiner (The, a, an)
+CC  - Conjunction (and, or)
+IN  - Preposition (in, of)
+PRP - Pronoun (I, it, he)
+CD  - number
+
+NN  - Noun
+NNS - Noun (plural)
+NP  - Noun (proper)
+
+VB  - Verb                     - eat
+VBZ - Verb 3rd person singular - eats
+VBD - Verb, past               - ate
+VBG - Verb, progressive        - eating
+VBN - Verb, past participle    - eaten
+
+JJ  - Adjective               - big
+JJR - Adjective (comparative) - bigger
+JJT - Adjective (superlative) - biggest
+
+RB  - Adverb   
+
+
+

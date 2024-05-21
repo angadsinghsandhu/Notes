@@ -1,0 +1,25 @@
+#!/usr/local/bin/perl
+
+###################################################
+#   make_block.prl (simple version)
+#
+#   Usage: make_block.prl < t1 | more
+#
+#   Adds #BLANK# at blank lines. The actual program
+#   used for creating training and test data adds
+#   additional spaces to separated abutting quotes
+#   and abutting signature sections.
+###################################################
+ 
+
+while (<>) {
+   if ($_ =~ /^\s*$/) 
+   {
+     printf("#BLANK#\t%s",$_);
+   }
+   else {
+     printf("%s",$_);
+   }
+}
+
+
