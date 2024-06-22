@@ -41,7 +41,7 @@
 
 1. Stanford
    1. [CS 234: Reinforcement Learning](https://github.com/angadsinghsandhu/notes/tree/master/University/Stanford/Stanford%20CS234%20-%20Reinforcement%20Learning%20(2019))
-   2. [CS 224n: NLP with Deep Learning]()
+   2. [CS 224n: NLP with Deep Learning](https://github.com/angadsinghsandhu/notes/tree/master/University/Stanford)
 2. Harward
 
 </details>
@@ -70,9 +70,9 @@
 
 <summary>Click to Expand</summary>
 
-1. [German]()
-2. [French]()
-3. [Japanese]()
+1. [French](https://github.com/angadsinghsandhu/Notes/tree/master/Languages/French)
+2. [German](https://github.com/angadsinghsandhu/Notes/tree/master/Languages/German)
+3. [Japanese](https://github.com/angadsinghsandhu/Notes/tree/master/Languages/Japanese)
 
 </details>
 
