@@ -41,7 +41,7 @@
 
 1. Stanford
    1. [CS 234: Reinforcement Learning](https://github.com/angadsinghsandhu/notes/tree/master/University/Stanford/Stanford%20CS234%20-%20Reinforcement%20Learning%20(2019))
-   2. [CS 224n: NLP with Deep Learning](https://github.com/angadsinghsandhu/notes/tree/master/University/Stanford)
+   2. [CS 224n: NLP with Deep Learning](https://github.com/angadsinghsandhu/Notes/tree/master/Classes/Stanford/CS%20224n%20-%20NLP%20with%20Deep%20Learning)
 2. Harward
 
 </details>

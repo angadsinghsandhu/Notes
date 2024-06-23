@@ -4,25 +4,28 @@
 
 This lecture discusses two fundamental concepts in algorithm and program development: **Priori Analysis** and **Posteriori Testing**. These terms describe the evaluation methods used for algorithms and programs, respectively.
 
-## Definitions and Comparisons
+## Definitions
 
 ### Priori Analysis
 
 - **Definition**: Analysis of an algorithm by studying it theoretically before it is implemented.
 - **Purpose**: To determine the theoretical performance of an algorithm in terms of time and space usage without actually executing it.
-- **Characteristics**:
-  - **Theoretical Evaluation**: Focuses on understanding how the algorithm works and predicting its efficiency.
-  - **Language and Hardware Independence**: The analysis is not bound by programming language or hardware specifications.
-  - **Output**: Provides a function describing the algorithm's time and space complexity.
 
 ### Posteriori Testing
 
 - **Definition**: Testing a program by executing it to observe its actual performance.
 - **Purpose**: To measure the actual runtime and memory usage of a program during its execution.
-- **Characteristics**:
-  - **Empirical Evaluation**: Actual execution of the program to collect performance data.
-  - **Language and Hardware Dependence**: Testing is specific to the program's operating environment, including hardware and system software.
-  - **Output**: Results include specific measurements like execution time in seconds or milliseconds and memory usage in bytes.
+
+## Comparison
+
+| Aspect          | Priori Analysis                                                  | Posteriori Testing                                                 |
+|-----------------|------------------------------------------------------------------|--------------------------------------------------------------------|
+| **Scope**       | Theoretical evaluation of an algorithm's performance before      | Empirical testing of a program's performance through actual        |
+|                 | implementation.                                                  | execution.                                                         |
+| **Language Usage** | Analysis is conceptual and not bound to any specific programming  | Testing is conducted within the context of a specific programming  |
+|                 | language.                                                        | language environment.                                              |
+| **Dependency**  | Independent of programming language and hardware specifications. | Dependent on specific programming languages and hardware setups.   |
+| **Metrics**     | Theoretical functions describing time and space complexity.       | Actual runtime measurements (e.g., seconds, milliseconds) and memory usage (e.g., bytes).                                        |
 
 ## Summary
 

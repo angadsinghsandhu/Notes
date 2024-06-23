@@ -6,7 +6,7 @@ Sorting Algorithms
 - Insertion Sort
 - Selection Sort
 - Quick Sort
-- Heap sort
+- Heap Sort
 
 Searching Algorithms
 

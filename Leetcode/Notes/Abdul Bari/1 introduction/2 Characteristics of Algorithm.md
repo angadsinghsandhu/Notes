@@ -6,10 +6,13 @@ This lecture discusses the essential characteristics of algorithms, drawing anal
 
 ## Characteristics of an Algorithm
 
-### Input and Output
+### Input
 
-- **Input**: Algorithms may take zero or more inputs. An algorithm that doesn't require an input is still valid.
-- **Output**: Every algorithm must generate at least one output to justify its existence. This is similar to how functions in programming may not take parameters but still produce a result.
+- **Definition**: An algorithm may take zero or more inputs. Even if an algorithm doesn't require an input, it must produce an output to justify its existence. Algorithms may take zero or more inputs. An algorithm that doesn't require an input is still valid.
+
+### Output
+
+- **Definition**: Every algorithm must generate at least one output to justify its existence. This is similar to how functions in programming may not take parameters but still produce a result.
 
 ### Definiteness
 

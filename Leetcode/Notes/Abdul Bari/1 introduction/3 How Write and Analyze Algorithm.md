@@ -21,8 +21,19 @@ This lecture covers the essential aspects of writing and analyzing algorithms, f
   - Like time complexity, space usage is expressed in terms of the amount of input but can also be a constant, especially for simpler algorithms.
 
 - **Other Criteria**:
-  - Depending on the application, other factors might be considered, such as data transfer, network consumption, power consumption, and CPU usage (especially in terms of how many CPU registers are used).
+  - Depending on the application, other factors might be considered, such as **data transfer**, **network consumption**, **power consumption**, and **CPU/GPU usage** (especially in terms of how many CPU registers are used).
   - These factors are particularly relevant for applications that run on diverse devices or require efficient data handling and minimal power consumption.
+
+## Example Algorithm
+
+```c
+Algorithm swap(a, b)
+begin
+    temp := a
+    a := b
+    b := temp
+end
+```
 
 ## Example Analysis
 
