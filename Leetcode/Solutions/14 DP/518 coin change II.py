@@ -5,10 +5,6 @@
 # Tags: Dynamic Programming
 # link: https://leetcode.com/problems/coin-change-ii/
 
-# https://leetcode.com/problems/network-delay-time/
-# https://leetcode.com/problems/cheapest-flights-within-k-stops/
-# https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
-
 from typing import List
 
 class Solution:
