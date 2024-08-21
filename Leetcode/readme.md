@@ -8,6 +8,8 @@
 
 - do important algorithms first
 - then practice Microsoft sample questions
+- <https://algomap.io/>
+- <https://neetcode.io/roadmap>
 
 ## System Design
 
