@@ -24,3 +24,7 @@ This chapter covers Ethereum, a decentralized platform that enables smart contra
 - Video Lecture 8 not available
 - Video Lecture 9 not available
 - Video Lecture 10 not available
+
+## Notes
+
+### Lecture 7: Towards Ethereum
