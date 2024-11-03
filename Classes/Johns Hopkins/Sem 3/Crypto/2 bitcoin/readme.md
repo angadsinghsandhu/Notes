@@ -117,9 +117,63 @@ This chapter covers Bitcoin, the first and most well-known cryptocurrency. It in
 - `sign` and `pubkey` get added to the stack first, then the operations are performed
 - most nodes only accespt standard transactions
 - 99.9% of operations are simple signature checks
-- less than 0.01% operations are [TODO: complete points]
+- less than 0.01% operations are MLTI-SIG
+- less than 0.01% operations are Pay-to-Script-Hash
 - Proof of Burn: burning coins to prove that you have skin in the game
   - OP_RETURN: burn coins by sending them to an address that is not valid (arbitrary data)
   - arbitrary data is stored in the blockchain can be used to store data (NFTs etc.)
 
 ### Lecture 6: Mechanics of Bitcoin II
+
+- rollups: a way to store transactions off-chain and then add them to the blockchain
+  - rollups help scale blockchain trasactions
+  - from 10 transactions per second to 1000 transactions per second
+  - We use zk (zero knowledge) or optimistic rollups to prove that the transactions are valid
+  - smaller blockchains can be used to store transactions, and the main blockchain can be used to store the hash of the smaller blockchains
+  - mint something called rappit (rollup appit)
+  - possible problems with rollups:
+    - reorgs: if the main chain is reorged, the rollups will also need to be be reorged
+    - rug pulls
+  - `custodial bridges`: a way to move assets from one blockchain to another
+- Applications of proof of burn
+  - colored coins: coins that represent assets
+  - NFTs: non-fungible tokens
+  - sidechain: burn bitcoin to get altcoins
+  - pay-to-script-hash: a way to have a sender not specify the entire sript of the key, they can just specify the hash of the script, later the reedeemer can provide the script that matches the hash
+- Segwit (segregated witness): a way to fix the malleability issue in bitcoin
+  - malleability: changing the transaction id of a transaction
+  - Segwit moves the signature to a different part of the transaction, so that the signature does not affect the transaction id
+  - Segwit also increases the block size limit
+  - Segwit also fixes the `quadratic hashing problem`
+  - its a soft fork, so that nodes that do not upgrade can still validate transactions
+- Segwig paved the way for second layer solutions like lightning network
+- Bitcoin limits
+  - bigger blocks take longer to propagate across the network
+  - block size limit: 1MB, 10 minutes to mine a block. But this has issues when transactions are more than 1MB, transactions stay longer in the mempool
+  - smaller block size also means that the fees are higher due to competition
+  - if block size is increased, powerful miners might get control over the network
+- Hard Forking: creating a new blockchain by changing the rules of the blockchain
+  - Bitcoin Cash: increased block size to 8MB
+  - Bitcoin Classic: increased block size to 2MB
+- `replay attack`: a way to replay a transaction on both forked blockchains
+- Applications of Bitcoin
+  - "Fair" transactions
+    - escrow: a way to hold funds in a transaction until a certain condition is met
+    - escrow in bitcoin: use a multisig transaction to hold funds in escrow
+    - multisig: a way to have multiple signatures to validate a transaction, eg. 2 of 3 signatures are required to validate a transaction
+    - the first person signs the transaction and sends it to the second person, the second person signs the transaction and the transaction is validated
+    - issues with multisig
+      - if one of the signers is offline, the transaction cannot be validated (eg 2 users being offline in a 2 of 3 multisig)
+      - collusion: multiple signers collude to prevent the transaction from being validated or validate a malicious transaction
+  - Micro-payments
+    - repeatable payments
+    - payment channels: a way to open a channel between two parties and keep sending transactions without having to validate each transaction on the blockchain
+    - problems with payment channels
+      - if one party goes offline, the channel is closed
+      - the receiver can leave the channel, locking the funds
+      - the receiver can cheat as it is only a 2 way channel
+    - solution: put version numbers on the transactions, so that the receiver cannot cheat by sending a later version of the transaction
+    - lock time: a way to lock the funds in a transaction for a certain amount of time before the transaction is validated (time locks)
+- limitation of bitcoin
+  - we cannot write complex scripts in bitcoin that reference global state
+  - solution: smart contracts

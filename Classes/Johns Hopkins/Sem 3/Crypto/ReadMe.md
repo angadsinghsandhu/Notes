@@ -23,7 +23,7 @@ This course focuses on blockchains and their applications, particularly in crypt
 
 ## Important Dates
 
-- **First Homework Submission:** September 9, 2024
+- **First Homework Submission:** September   9, 2024
 - **Midterm Exam:** November 4, 2024
 - **Group Presentations:** November 20, December 2, December 4, 2024
 - **Final Project Submission:** December 4, 2024

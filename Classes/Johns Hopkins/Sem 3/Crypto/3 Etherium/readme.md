@@ -26,3 +26,4 @@ This chapter covers Ethereum, a decentralized platform that enables smart contra
 ## Notes
 
 ### Lecture 7: Towards Ethereum and Smart Contracts I
+

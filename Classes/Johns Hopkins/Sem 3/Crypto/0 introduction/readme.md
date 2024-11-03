@@ -19,7 +19,7 @@ This chapter covers the basics of blockchains and their applications. It introdu
 - 1980s when we started seeing digital cash
   - cannot convert bills to digital cash because of double spending problem
   - solution to double spending
-    - online trusted third party (star policy graph)
+    - online trusted third party (`star policy graph`)
     - offline computers that never misbehave (eg BOA e-ATM cards)
   - problems with online cash
     - privacy
@@ -44,10 +44,10 @@ This chapter covers the basics of blockchains and their applications. It introdu
   - no single point of attack
 - Consensus needed for decentralized systems
   - compress database into a serializer form (like a string, or chain) that can be agreed on by all parties
-  - New Data Structure => Blockchain, divide our huge database into ordered blocks
+  - New Data Structure => `Blockchain`, divide our huge database into ordered blocks
   - new blocks can only be added to the end of the chain and the chain is immutable
 - Structure of Bitcoin
-  - trnasactions are stored in blocks
+  - transactions are stored in blocks
   - blocks are linked together in a chain using cryptographic hashes
   - a hash function is a one-way function that takes an input and produces a fixed-size output (called digest)
   - hash functions are collision resistant (hard to find two inputs that produce the same output)
