@@ -16,6 +16,8 @@ This chapter covers the basics of blockchains and their applications. It introdu
 
 ## Notes
 
+### Lecture 0: Introduction to Blockchains
+
 - 1980s when we started seeing digital cash
   - cannot convert bills to digital cash because of double spending problem
   - solution to double spending

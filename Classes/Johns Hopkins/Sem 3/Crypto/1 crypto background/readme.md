@@ -17,6 +17,8 @@ This chapter covers the basics of cryptocurrencies and their applications. It in
 
 ## Notes
 
+### Lecture 1: Cryptocurrency Background
+
 - cryptographic graph function (eg SHA-256)
   - it is a one-way function that takes an infinite input and produces a fixed-size output (called `digest`)
   - propreties of hash functions
