@@ -756,3 +756,4 @@ Action - Describe all the steps you took to complete the above tasks:
 Results - Talk about the consequences or outcome of the situation and your actions:
 
 "With these actions, we were able to have consistent page load times under 3 seconds. I also shared my experience with other project managers in the team through a brown bag presentation to prevent the situation from happening again."
+
