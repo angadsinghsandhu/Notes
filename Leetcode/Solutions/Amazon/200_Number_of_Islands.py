@@ -1,3 +1,5 @@
+# TODO: revisit [IMP]
+
 # File: Leetcode/Solutions/Amazon/200_Number_of_Islands.py
 
 """
@@ -65,15 +67,15 @@ class Solution:
         T.C.: O(m * n) - Each cell is visited once.
         S.C.: O(m * n) - Recursion stack in the worst case.
         """
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+
         def dfs(i, j):
-            if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] == '0':
+            if not (0 <= i , len(grid) and 0 <= j < len(grid[0])) or grid[i][j] == '0':
                 return
             grid[i][j] = '0'  # Mark as visited
             # Explore all four directions
-            dfs(i + 1, j)
-            dfs(i - 1, j)
-            dfs(i, j + 1)
-            dfs(i, j - 1)
+            for dx, dy in directions:
+                dfs(i + dx, j + dy)
 
         num_islands = 0
         for i in range(len(grid)):
@@ -96,20 +98,23 @@ class Solution:
         rows, cols = len(grid), len(grid[0])
         directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
 
+        def bfs(i, j):
+            queue = deque([(i, j)])
+            grid[i][j] = '0'
+
+            while queue:
+                x, y = queue.popleft()
+                for dx, dy in directions:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == '1':
+                        grid[nx][ny] = '0'
+                        queue.append((nx, ny))
+
         for i in range(rows):
             for j in range(cols):
                 if grid[i][j] == '1':
                     num_islands += 1
-                    queue = deque([(i, j)])
-                    grid[i][j] = '0'  # Mark as visited
-
-                    while queue:
-                        x, y = queue.popleft()
-                        for dx, dy in directions:
-                            nx, ny = x + dx, y + dy
-                            if 0 <= nx < rows and 0 <= ny < cols and grid[nx][ny] == '1':
-                                grid[nx][ny] = '0'  # Mark as visited
-                                queue.append((nx, ny))
+                    bfs(i, j)
         return num_islands
 
 # Run and print sample test cases

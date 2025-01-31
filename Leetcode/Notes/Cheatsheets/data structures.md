@@ -1225,7 +1225,801 @@ By leveraging the `Counter` class and its `elements()` method, you can efficient
 
 ## 4. Sets
 
-<!-- TODO -->
+- **Description:**  
+  A Set in Python is used to store a collection of unique items with the following properties:
+  - **No Duplicate Elements:** If you try to insert the same item again, it overwrites the previous one.
+  - **Unordered Collection:** Sets are unordered, meaning that when you access all items, they are accessed without any specific order, and you cannot access items using indices as you can with lists.
+  - **Efficient Operations:** Internally implemented using hashing, making sets efficient for search, insert, and delete operations.
+  - **Mutable:** You can add or remove elements after their creation, but the individual elements within the set cannot be changed directly.
+
+- **When to Use:**  
+  Ideal for scenarios where:
+  - You need to store unique elements.
+  - You require efficient membership testing.
+  - You need to perform set operations like union, intersection, and difference.
+  - Eliminating duplicates from a collection.
+
+- **Key Patterns:**
+  - **Eliminating Duplicates:** Removing duplicate elements from a list or other iterable.
+  - **Membership Testing:** Quickly checking if an element exists within a collection.
+  - **Set Operations:** Performing unions, intersections, differences, and symmetric differences.
+  - **Frequency Counting:** When combined with `Counter` for counting occurrences of unique elements.
+
+- **LeetCode Problem Types:**
+  - **Two Sum (Problem #1)**
+  - **Group Anagrams (Problem #49)**
+  - **Top K Frequent Elements (Problem #347)**
+  - **Intersection of Two Arrays (Problem #349)**
+  - **Distinct Elements in an Array**
+  - **Check if an Array is a Subset of Another**
+  
+- **Python Implementation:**
+
+  ```python
+  # Example 1: Creating a Set
+  s = {10, 50, 20}
+  print(s)          # Output: {10, 50, 20}
+  print(type(s))    # Output: <class 'set'>
+  
+  # Example 2: Type Casting with set()
+  # Typecasting list to set
+  s = set(["a", "b", "c"])
+  print(s)          # Output: {'a', 'b', 'c'}
+  
+  # Adding elements to the set
+  s.add("d")
+  print(s)          # Output: {'a', 'b', 'c', 'd'}
+  
+  # Adding multiple elements using a loop
+  for i in range(1, 6):
+      s.add(i)
+  print(s)          # Output: {1, 2, 3, 4, 5, 'a', 'b', 'c', 'd'}
+  ```
+
+- **Time Complexity:**
+  - **Add (`add`):** O(1) average
+  - **Remove (`remove`):** O(1) average
+  - **Membership Test (`in`):** O(1) average
+  - **Union (`|`), Intersection (`&`), Difference (`-`), Symmetric Difference (`^`):** O(len(s) + len(t))
+  
+- **Space Complexity:**  
+  O(n), where n is the number of elements in the set.
+
+- **Additional Notes:**
+  - **Immutable Elements:** Only immutable (hashable) types can be added to a set. Mutable types like lists or dictionaries cannot be added.
+  - **No Order Guarantee:** The order of elements in a set is not guaranteed and may vary.
+  - **Frozen Sets:** For immutable sets, use `frozenset()`, which allows sets to be used as dictionary keys or elements of other sets.
+
+- **Best Practices:**
+  - **Use Sets for Unordered Unique Collections:** When the order of elements is not important, and uniqueness is required.
+  - **Leverage Set Operations for Efficient Computations:** Utilize built-in set operations for tasks like finding common elements or differences.
+  - **Avoid Using Lists for Membership Tests:** Sets provide faster membership testing compared to lists.
+  - **Combine with Other Data Structures:** Use sets alongside lists or dictionaries for more complex data manipulation tasks.
+
+- **Examples:**
+
+  #### Example 1: Checking for Unique Elements
+  ```python
+  # Removing duplicates from a list
+  numbers = [1, 2, 2, 3, 4, 4, 5]
+  unique_numbers = set(numbers)
+  print(unique_numbers)  # Output: {1, 2, 3, 4, 5}
+  ```
+
+  #### Example 2: Set Operations
+  ```python
+  set1 = {1, 2, 3, 4}
+  set2 = {3, 4, 5, 6}
+
+  # Union
+  union_set = set1 | set2
+  print("Union:", union_set)  # Output: Union: {1, 2, 3, 4, 5, 6}
+
+  # Intersection
+  intersection_set = set1 & set2
+  print("Intersection:", intersection_set)  # Output: Intersection: {3, 4}
+
+  # Difference
+  difference_set = set1 - set2
+  print("Difference:", difference_set)  # Output: Difference: {1, 2}
+
+  # Symmetric Difference
+  sym_diff_set = set1 ^ set2
+  print("Symmetric Difference:", sym_diff_set)  # Output: Symmetric Difference: {1, 2, 5, 6}
+  ```
+
+  #### Example 3: Iterating Over a Set
+  ```python
+  fruits = {"apple", "banana", "cherry"}
+  for fruit in fruits:
+      print(fruit)
+  # Output (order may vary):
+  # apple
+  # banana
+  # cherry
+  ```
+
+  #### Example 4: Using `frozenset`
+  ```python
+  # Creating a frozenset
+  fs = frozenset([1, 2, 3])
+  print(fs)  # Output: frozenset({1, 2, 3})
+  
+  # Using frozenset as a dictionary key
+  my_dict = {fs: "immutable set"}
+  print(my_dict[frozenset([1, 2, 3])])  # Output: immutable set
+  ```
+
+- **FAQs:**
+
+  **1. What are sets in Python?**  
+  Sets in Python are unordered collections of unique elements. They are defined using curly braces `{}` or the `set()` function and are useful for storing distinct items and performing mathematical set operations like union, intersection, and difference.
+
+  **2. How do you perform set operations in Python?**  
+  Sets in Python support various operations:
+  - **Union:** `set1 | set2` or `set1.union(set2)`
+  - **Intersection:** `set1 & set2` or `set1.intersection(set2)`
+  - **Difference:** `set1 - set2` or `set1.difference(set2)`
+  - **Symmetric Difference:** `set1 ^ set2` or `set1.symmetric_difference(set2)`
+
+  **Example:**
+  ```python
+  set1 = {1, 2, 3}
+  set2 = {3, 4, 5}
+
+  print(set1 | set2)  # Output: {1, 2, 3, 4, 5}
+  print(set1 & set2)  # Output: {3}
+  print(set1 - set2)  # Output: {1, 2}
+  print(set1 ^ set2)  # Output: {1, 2, 4, 5}
+  ```
+
+  **3. What is the difference between a set and a tuple in Python?**  
+  - **Set:**  
+    - **Unordered:** No guaranteed order of elements.
+    - **Unique Elements:** Cannot contain duplicates.
+    - **Mutable:** Elements can be added or removed.
+    - **Defined using `{}` or `set()`.
+  
+  - **Tuple:**  
+    - **Ordered:** Maintains the order of elements.
+    - **Can Contain Duplicates:** Elements can repeat.
+    - **Immutable:** Cannot be changed after creation.
+    - **Defined using `()` or `tuple()`.
+
+  **4. Can you add mutable elements like lists to a set in Python?**  
+  No, sets can only contain hashable (immutable) elements. Attempting to add a mutable element like a list will raise a `TypeError`.
+
+  **Example:**
+  ```python
+  my_set = {1, 2, 3}
+  my_set.add([4, 5])  # Raises TypeError: unhashable type: 'list'
+  ```
+
+  **5. How do you input a set from the user in Python?**  
+  You can use the `input()` function to get user input and then convert it into a set. For example, to read a string of characters separated by spaces and convert them to a set:
+
+  ```python
+  # Input a set from user
+  input_str = input("Enter elements separated by space: ")
+  input_set = set(input_str.split())
+  print(input_set)
+  ```
+
+  **6. How to find the maximum and minimum elements in a set in Python?**  
+  You can use the built-in `max()` and `min()` functions to find the maximum and minimum elements in a set, respectively.
+
+  **Example:**
+  ```python
+  numbers = {10, 50, 20, 40}
+  print("Max:", max(numbers))  # Output: Max: 50
+  print("Min:", min(numbers))  # Output: Min: 10
+  ```
+
+  **7. How to remove elements from a set in Python?**  
+  You can remove elements using methods like `remove()`, `discard()`, and `clear()`.
+
+  **Example:**
+  ```python
+  my_set = {1, 2, 3, 4, 5}
+  
+  # Remove an element (raises KeyError if not present)
+  my_set.remove(3)
+  
+  # Discard an element (does not raise an error if not present)
+  my_set.discard(10)
+  
+  # Clear the entire set
+  my_set.clear()
+  
+  print(my_set)  # Output: set()
+  ```
+
+  **4. What are frozen sets in Python?**  
+  `frozenset` is an immutable version of a set. Once created, you cannot add or remove elements from a `frozenset`. They are hashable and can be used as dictionary keys or elements of other sets.
+
+  **Example:**
+  ```python
+  fs = frozenset([1, 2, 3])
+  print(fs)  # Output: frozenset({1, 2, 3})
+  
+  # Using frozenset as a dictionary key
+  my_dict = {fs: "immutable set"}
+  print(my_dict[frozenset([1, 2, 3])])  # Output: immutable set
+  ```
+
+  **9. Can sets be nested in Python?**  
+  No, sets cannot contain other sets because sets are mutable and unhashable. However, you can include `frozenset` objects within a set.
+
+  **Example:**
+  ```python
+  # Nested sets using frozenset
+  s = {frozenset([1, 2]), frozenset([3, 4])}
+  print(s)  # Output: {frozenset({1, 2}), frozenset({3, 4})}
+  ```
+
+  **10. How to iterate over a set in Python?**  
+  You can iterate over a set using a `for` loop.
+
+  **Example:**
+  ```python
+  fruits = {"apple", "banana", "cherry"}
+  for fruit in fruits:
+      print(fruit)
+  # Output (order may vary):
+  # apple
+  # banana
+  # cherry
+  ```
+
+### 4.2 Frozen Set
+
+- **Description:**  
+  Frozen sets in Python are immutable objects that only support methods and operators that produce a result without affecting the frozen set or sets to which they are applied. They are created using the `frozenset()` method. Unlike regular sets, frozen sets cannot have their elements modified after creation, making them suitable for use as keys in dictionaries or elements of other sets.
+
+- **When to Use:**  
+  Use frozen sets when:
+  - You need an immutable set that can be used as a dictionary key or stored in another set.
+  - Ensuring that the set cannot be modified after its creation.
+  - Implementing hashable collections that require uniqueness without mutability.
+
+- **Key Patterns:**
+  - **Immutable Collections:** Storing unique elements in a collection that should not change.
+  - **Dictionary Keys:** Using sets as keys in dictionaries by converting them to frozensets.
+  - **Set Operations on Immutable Sets:** Performing set operations while maintaining immutability.
+
+- **LeetCode Problem Types:**
+  - **Group Anagrams (Problem #49)**
+  - **Top K Frequent Elements (Problem #347)**
+  - **Intersection of Two Arrays (Problem #349)**
+  - **Two Sum (Problem #1)**
+  - **Check if Array is a Subset of Another**
+  
+- **Python Implementation:**
+
+  ```python
+  # Example 1: Creating a Frozen Set
+  fs = frozenset([1, 2, 3])
+  print(fs)  # Output: frozenset({1, 2, 3})
+  
+  # Example 2: Using frozenset as a Dictionary Key
+  my_dict = {frozenset([1, 2, 3]): "immutable set"}
+  print(my_dict[frozenset([1, 2, 3])])  # Output: immutable set
+  
+  # Example 3: Attempting to Modify a Frozen Set
+  fs = frozenset([1, 2, 3])
+  try:
+      fs.add(4)
+  except AttributeError as e:
+      print(e)  # Output: 'frozenset' object has no attribute 'add'
+  
+  # Example 4: Nested Frozen Sets
+  nested_fs = {frozenset([1, 2]), frozenset([3, 4])}
+  print(nested_fs)  # Output: {frozenset({1, 2}), frozenset({3, 4})}
+  ```
+
+- **Time Complexity:**
+  - **Creation (`frozenset()`):** O(n), where n is the number of elements.
+  - **Membership Test (`in`):** O(1) average
+  - **Set Operations (union, intersection, etc.):** O(len(s) + len(t))
+  
+- **Space Complexity:**  
+  O(n), where n is the number of elements in the frozen set.
+
+- **Additional Notes:**
+  - **Immutability:** Once created, a frozen set cannot be altered, ensuring the integrity of the data.
+  - **Hashable:** Frozen sets are hashable and can be used as keys in dictionaries or elements of other sets.
+  - **No Modification Methods:** Methods like `add()`, `remove()`, or `clear()` are not available for frozen sets.
+
+- **Best Practices:**
+  - **Use Frozen Sets for Immutable Collections:** When you need a set that should not change throughout the program.
+  - **Combine with Dictionaries:** Use frozen sets as keys in dictionaries to map unique sets to values.
+  - **Leverage for Nested Sets:** When you need to include sets within other sets, use frozen sets to maintain immutability.
+
+- **Example: Implementing a Dictionary with Frozen Set Keys**
+
+  ```python
+  from collections import defaultdict
+
+  # Initialize a dictionary with frozenset keys
+  group_dict = defaultdict(list)
+
+  # Sample data: grouping words by their unique character sets
+  words = ["eat", "tea", "tan", "ate", "nat", "bat"]
+  for word in words:
+      key = frozenset(word)
+      group_dict[key].append(word)
+
+  # Display grouped words
+  for key, group in group_dict.items():
+      print(f"Group {key}: {group}")
+
+  # Output:
+  # Group frozenset({'e', 'a', 't'}): ['eat', 'tea', 'ate']
+  # Group frozenset({'n', 'a', 't'}): ['tan', 'nat']
+  # Group frozenset({'b', 'a', 't'}): ['bat']
+  ```
+
+  **Explanation:**  
+  This example groups words that are anagrams by their unique character sets using frozen sets as keys in a dictionary.
+
+### 4.3 Set Operations in Python
+
+- **Description:**  
+  Python sets support various operations that allow you to perform mathematical set operations such as union, intersection, difference, and symmetric difference. These operations are highly efficient due to the underlying hash table implementation of sets.
+
+- **When to Use:**  
+  Use set operations when you need to:
+  - Combine multiple sets of unique elements.
+  - Find common elements between sets.
+  - Determine elements present in one set but not in another.
+  - Identify elements that are unique to each set.
+
+- **Key Patterns:**
+  - **Union of Sets:** Combining all unique elements from multiple sets.
+  - **Intersection of Sets:** Finding common elements between sets.
+  - **Difference of Sets:** Identifying elements present in one set but not in another.
+  - **Symmetric Difference of Sets:** Finding elements that are in either of the sets but not in both.
+
+- **LeetCode Problem Types:**
+  - **Union of Two Arrays**
+  - **Intersection of Two Arrays**
+  - **Find the Duplicate Number (Problem #287)**
+  - **Check if Array is a Subset of Another**
+  - **Distinct Elements in an Array**
+
+- **Python Implementation:**
+
+  ### Union Operation
+
+  ```python
+  # Union using union() function
+  people = {"Jay", "Idrish", "Archil"}
+  vampires = {"Karan", "Arjun"}
+  dracula = {"Deepanshu", "Raju"}
+
+  population = people.union(vampires)
+  print("Union using union() function")
+  print(population)
+  # Output: {'Idrish', 'Arjun', 'Jay', 'Karan', 'Archil'}
+
+  # Union using '|' operator
+  population = people | dracula
+  print("\nUnion using '|' operator")
+  print(population)
+  # Output: {'Idrish', 'Deepanshu', 'Raju', 'Jay', 'Archil'}
+  ```
+
+  ### Intersection Operation
+
+  ```python
+  # Intersection using intersection() function
+  set1 = set()
+  set2 = set()
+
+  for i in range(5):
+      set1.add(i)
+
+  for i in range(3, 9):
+      set2.add(i)
+
+  set3 = set1.intersection(set2)
+  print("Intersection using intersection() function")
+  print(set3)
+  # Output: {3, 4}
+
+  # Intersection using '&' operator
+  set3 = set1 & set2
+  print("\nIntersection using '&' operator")
+  print(set3)
+  # Output: {3, 4}
+  ```
+
+  ### Difference Operation
+
+  ```python
+  # Difference using difference() function
+  set1 = set()
+  set2 = set()
+
+  for i in range(5):
+      set1.add(i)
+
+  for i in range(3, 9):
+      set2.add(i)
+
+  set3 = set1.difference(set2)
+  print("Difference of two sets using difference() function")
+  print(set3)
+  # Output: {0, 1, 2}
+
+  # Difference using '-' operator
+  set3 = set1 - set2
+  print("\nDifference of two sets using '-' operator")
+  print(set3)
+  # Output: {0, 1, 2}
+  ```
+
+  ### Symmetric Difference Operation
+
+  ```python
+  set1 = {1, 2, 3, 4}
+  set2 = {3, 4, 5, 6}
+
+  # Symmetric Difference using symmetric_difference() function
+  sym_diff = set1.symmetric_difference(set2)
+  print("Symmetric Difference using symmetric_difference() function")
+  print(sym_diff)
+  # Output: {1, 2, 5, 6}
+
+  # Symmetric Difference using '^' operator
+  sym_diff = set1 ^ set2
+  print("\nSymmetric Difference using '^' operator")
+  print(sym_diff)
+  # Output: {1, 2, 5, 6}
+  ```
+
+### 4.4 Adding and Removing Elements in Python Sets
+
+- **Description:**  
+  Adding and removing elements in Python sets can be done using methods like `add()`, `remove()`, `discard()`, `update()`, and `clear()`. These operations allow you to dynamically modify the contents of a set.
+
+- **When to Use:**  
+  Use these methods when you need to:
+  - Add new unique elements to a set.
+  - Remove existing elements from a set.
+  - Update a set with multiple elements.
+  - Clear all elements from a set.
+
+- **Key Patterns:**
+  - **Dynamic Modification:** Adding or removing elements based on conditions.
+  - **Updating Sets:** Combining multiple elements into a set efficiently.
+  - **Clearing Sets:** Resetting a set to empty when needed.
+
+- **LeetCode Problem Types:**
+  - **Distinct Elements in an Array**
+  - **Check Pair with Target Sum**
+  - **Duplicate within K Distance**
+  - **Find the Duplicate Number (Problem #287)**
+  - **Check if Array is a Subset of Another**
+
+- **Python Implementation:**
+
+  ### Adding Elements
+
+  ```python
+  # Adding elements to a set
+  people = {"Jay", "Idrish", "Archil"}
+  print("Initial set")
+  print(people)
+  # Output: {'Idrish', 'Archil', 'Jay'}
+
+  # Adding a single element
+  people.add("Daxit")
+  
+  # Adding multiple elements using a loop
+  for i in range(1, 6):
+      people.add(i)
+  
+  print("\nSet after adding elements:")
+  print(people)
+  # Output: {1, 2, 3, 4, 5, 'Daxit', 'Archil', 'Jay', 'Idrish'}
+  ```
+
+  ### Removing Elements
+
+  ```python
+  # Removing elements from a set
+  my_set = {1, 2, 3, 4, 5, 6}
+
+  print("Initial set:")
+  print(my_set)
+  # Output: {1, 2, 3, 4, 5, 6}
+
+  # Removing an element using remove()
+  my_set.remove(3)
+  print("\nSet after removing 3:")
+  print(my_set)
+  # Output: {1, 2, 4, 5, 6}
+
+  # Removing an element using discard() (no error if element not present)
+  my_set.discard(10)
+  print("\nSet after discarding 10 (no error):")
+  print(my_set)
+  # Output: {1, 2, 4, 5, 6}
+
+  # Clearing the set
+  my_set.clear()
+  print("\nSet after clearing:")
+  print(my_set)
+  # Output: set()
+  ```
+
+### 4.5 Heterogeneous Elements in Python Sets
+
+- **Description:**  
+  Python sets can store heterogeneous elements, meaning a set can contain a mixture of different data types such as strings, integers, booleans, etc.
+
+- **When to Use:**  
+  Use when you need a collection of unique elements of various data types.
+
+- **Python Implementation:**
+
+  ```python
+  # Python example demonstrating that a set can store heterogeneous elements
+  s = {"Geeks", "for", 10, 52.7, True}
+  print(s)  # Output: {True, 'for', 'Geeks', 10, 52.7}
+  ```
+
+  **Explanation:**  
+  The set `s` contains a mix of strings, integers, a float, and a boolean. Sets handle heterogeneous data types seamlessly as long as the elements are hashable.
+
+### 4.6 Python Frozen Sets
+
+- **Description:**  
+  Frozen sets in Python are immutable objects that only support methods and operators that produce a result without affecting the frozen set or sets to which they are applied. They are created using the `frozenset()` method. Unlike regular sets, frozen sets cannot have their elements modified after creation.
+
+- **When to Use:**  
+  Use frozen sets when:
+  - You need an immutable set that can be used as a dictionary key or stored in another set.
+  - Ensuring that the set cannot be modified after its creation.
+  - Implementing hashable collections that require uniqueness without mutability.
+
+- **Key Patterns:**
+  - **Immutable Collections:** Storing unique elements in a collection that should not change.
+  - **Dictionary Keys:** Using sets as keys in dictionaries by converting them to frozensets.
+  - **Set Operations on Immutable Sets:** Performing set operations while maintaining immutability.
+
+- **LeetCode Problem Types:**
+  - **Group Anagrams (Problem #49)**
+  - **Top K Frequent Elements (Problem #347)**
+  - **Intersection of Two Arrays (Problem #349)**
+  - **Two Sum (Problem #1)**
+  - **Check if Array is a Subset of Another**
+  
+- **Python Implementation:**
+
+  ```python
+  from collections import OrderedDict
+
+  # Example 1: Basic Usage of OrderedDict
+  print("Example 1: Basic OrderedDict")
+  od = OrderedDict()
+  od['a'] = 1
+  od['b'] = 2
+  od['c'] = 3
+  od['d'] = 4
+
+  for key, value in od.items():
+      print(key, value)
+  # Output:
+  # a 1
+  # b 2
+  # c 3
+  # d 4
+
+  # Example 2: Changing Value of a Key
+  print("\nExample 2: Changing Value of a Key")
+  od['c'] = 5
+  for key, value in od.items():
+      print(key, value)
+  # Output:
+  # a 1
+  # b 2
+  # c 5
+  # d 4
+
+  # Example 3: Equality Comparison
+  print("\nExample 3: Equality Comparison")
+  od1 = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+  od2 = OrderedDict([('c', 3), ('b', 2), ('a', 1)])
+  print(od1 == od2)  # Output: False
+
+  # Example 4: Reversing an OrderedDict
+  print("\nExample 4: Reversing OrderedDict")
+  reversed_od = OrderedDict(reversed(list(od.items())))
+  for key, value in reversed_od.items():
+      print(key, value)
+  # Output:
+  # d 4
+  # c 5
+  # b 2
+  # a 1
+
+  # Example 5: Using popitem()
+  print("\nExample 5: Using popitem()")
+  last_item = od.popitem(last=True)
+  print("Popped Item:", last_item)  # Output: ('d', 4)
+  for key, value in od.items():
+      print(key, value)
+  # Output:
+  # a 1
+  # b 2
+  # c 5
+
+  # Example 6: Moving Keys to End or Beginning
+  print("\nExample 6: Moving Keys")
+  od.move_to_end('a')  # Move 'a' to the end
+  od.move_to_end('b', last=False)  # Move 'b' to the beginning
+  for key, value in od.items():
+      print(key, value)
+  # Output:
+  # b 2
+  # c 5
+  # a 1
+  ```
+
+  **Explanation:**  
+  This example demonstrates various `OrderedDict` operations, which are useful for maintaining the order of elements. Although Python 3.7+ dictionaries maintain insertion order by default, `OrderedDict` provides additional methods like `move_to_end()` and `popitem()` for more controlled ordering.
+
+### 4.7 Internal Working of Sets
+
+- **Description:**  
+  Sets in Python are implemented using a hash table. This allows for efficient storage and retrieval of elements, ensuring that operations like search, insert, and delete can be performed in constant time on average.
+
+- **When to Use:**  
+  Use when:
+  - You need fast membership testing.
+  - You require uniqueness of elements.
+  - Performing frequent insertions and deletions.
+
+- **Key Patterns:**
+  - **Hashing:** Utilizing hash functions to map elements to indices in the hash table.
+  - **Handling Collisions:** Implementing collision resolution strategies like chaining (linked lists) when multiple elements hash to the same index.
+
+- **Python Implementation:**
+
+  ### Adding Elements to Python Sets
+
+  ```python
+  # Python program to demonstrate adding elements in a set
+
+  # Creating a Set
+  people = {"Jay", "Idrish", "Archil"}
+  print("People:", end = " ")
+  print(people)
+  # Output: People: {'Idrish', 'Archil', 'Jay'}
+
+  # This will add 'Daxit' to the set
+  people.add("Daxit")
+
+  # Adding elements to the set using a loop
+  for i in range(1, 6):
+      people.add(i)
+
+  print("\nSet after adding elements:", end = " ")
+  print(people)
+  # Output: Set after adding elements: {1, 2, 3, 4, 5, 'Daxit', 'Archil', 'Jay', 'Idrish'}
+  ```
+
+  **Explanation:**  
+  This example shows how to add single and multiple elements to a set using the `add()` method and a loop. The set automatically ensures that all elements remain unique.
+
+### 4.8 Time Complexity of Sets
+
+- **Description:**  
+  Understanding the time complexity of various set operations is crucial for writing efficient Python code, especially in competitive programming and performance-critical applications.
+
+- **Time Complexity Table:**
+
+  | Operation                    | Average Case       | Worst Case          | Notes                                                      |
+  |------------------------------|---------------------|---------------------|------------------------------------------------------------|
+  | `x in s`                     | O(1)                | O(n)                | Membership test                                            |
+  | `s | t` (Union)               | O(len(s) + len(t))  | O(len(s) + len(t))    | Combining all unique elements from both sets              |
+  | `s & t` (Intersection)        | O(min(len(s), len(t))) | O(len(s) * len(t)) | Finding common elements                                   |
+  | `s - t` (Difference)          | O(len(s))           | O(len(s))            | Elements in s not in t                                     |
+  | `s ^ t` (Symmetric Difference)| O(len(s) + len(t))  | O(len(s) + len(t))    | Elements in either s or t but not in both                  |
+  | `add(x)`                     | O(1)                | O(n)                | Adding an element                                          |
+  | `remove(x)`                  | O(1)                | O(n)                | Removing an element (raises KeyError if not present)      |
+  | `discard(x)`                 | O(1)                | O(n)                | Removing an element (does not raise an error if absent)    |
+  | `clear()`                    | O(n)                | O(n)                | Removing all elements from the set                         |
+  | `copy()`                     | O(n)                | O(n)                | Creating a shallow copy of the set                          |
+  | `update(iterable)`           | O(k)                | O(k)                | Adding multiple elements from an iterable to the set        |
+  | `intersection_update(t)`     | O(len(t))           | O(len(t))            | Updating the set with the intersection of itself and t       |
+  | `difference_update(t)`       | O(len(t))           | O(len(t))            | Updating the set by removing elements found in t             |
+  | `symmetric_difference_update(t)` | O(len(t))        | O(len(t))            | Updating the set with the symmetric difference of itself and t|
+
+- **Space Complexity:**  
+  O(n), where n is the number of elements in the set.
+
+### 4.9 Problems Based on Sets
+
+- **Description:**  
+  Sets are versatile and can be applied to a wide range of problems that involve uniqueness, membership testing, and set operations. Below are some common problem types where sets are particularly useful.
+
+- **Problem Types:**
+  - **Distinct Elements in an Array:** Find the number of unique elements.
+  - **Union of Two Arrays:** Combine elements from two arrays without duplicates.
+  - **Intersection of Two Arrays:** Find common elements between two arrays.
+  - **Repeating Elements:** Identify elements that appear multiple times.
+  - **Check if an Array is a Subset of Another:** Determine if all elements of one array are present in another.
+  - **Check Pair with Target Sum:** Find if any pair of elements sums up to a target value.
+  - **Check for Disjoint Sets:** Verify if two sets have no elements in common.
+  - **Duplicate within K Distance:** Check if duplicates are within a certain distance from each other.
+  - **Longest Consecutive Sequence:** Find the length of the longest sequence of consecutive numbers.
+  - **Find Two Numbers that Add Up to a Target (Two Sum):** Identify two numbers that sum up to a specific target.
+
+### 4.10 Clearing Python Sets
+
+- **Description:**  
+  The `clear()` method in Python sets removes all elements from the set, resulting in an empty set.
+
+- **When to Use:**  
+  Use when you need to reset a set to an empty state without creating a new set.
+
+- **Python Implementation:**
+
+  ```python
+  # Python program to demonstrate clearing a set
+
+  set1 = {1, 2, 3, 4, 5, 6}
+  
+  print("Initial set")
+  print(set1)
+  # Output: Initial set
+  # {1, 2, 3, 4, 5, 6}
+  
+  # This method will remove all elements of the set
+  set1.clear()
+  
+  print("\nSet after using clear() function")
+  print(set1)
+  # Output:
+  # Set after using clear() function
+  # set()
+  ```
+
+  **Explanation:**  
+  The `clear()` method removes all elements from `set1`, leaving it empty.
+
+### 4.11 Pitfalls of Python Sets
+
+- **Description:**  
+  While sets are powerful and efficient, there are some pitfalls to be aware of when using them in Python.
+
+- **Pitfalls:**
+  - **No Specific Order:**  
+    Sets do not maintain elements in any particular order, which means you cannot rely on the order of elements when iterating over a set.
+  
+  - **Only Immutable Elements:**  
+    Only instances of immutable types (e.g., strings, numbers, tuples) can be added to a set. Mutable types like lists or dictionaries cannot be added and will raise a `TypeError`.
+
+- **Example:**
+  
+  ```python
+  # Attempting to add a mutable element to a set
+  try:
+      my_set = {1, 2, 3}
+      my_set.add([4, 5])  # This will raise a TypeError
+  except TypeError as e:
+      print(e)  # Output: unhashable type: 'list'
+  ```
+
+  **Explanation:**  
+  The above code attempts to add a list to a set, which is not allowed because lists are mutable and unhashable.
+
+Python sets are an essential data structure for handling collections of unique elements with efficient operations. Understanding their properties, operations, and potential pitfalls can help you leverage sets effectively in your programming tasks, especially in competitive programming and data analysis scenarios.
+
+By utilizing sets and their various methods, you can perform complex data manipulations with ease and efficiency, making sets a powerful tool in your Python toolkit.
 
 ## 5. Stacks (Using list or deque)
 
@@ -1568,7 +2362,7 @@ By understanding and utilizing queues and deques through the `collections.deque`
   - **Pop (`heappop`):** O(log n)
   - **Push and Pop (`heappushpop`):** O(log n)
   - **Heapify (`heapify`):** O(n)
-  - **Find n Smallest/Largest (`nsmallest`/`nlargest`):** O(n log k), where k is the number of elements to find
+  - **Find k Smallest/Largest (`nsmallest`/`nlargest`):** O(n log k), where k is the number of elements to find
   - **Merge (`merge`):** O(n log k), where k is the number of iterables being merged
 
 - **Space Complexity:**  
@@ -1757,7 +2551,7 @@ By understanding and utilizing queues and deques through the `collections.deque`
   - **Pop (`heappop`):** O(log n)
   - **Push and Pop (`heappushpop`):** O(log n)
   - **Heapify (`heapify`):** O(n)
-  - **Find n Largest (`nlargest`):** O(n log k)
+  - **Find k Largest (`nlargest`):** O(n log k)
   - **Merge (`merge`):** O(n log k), where k is the number of iterables being merged
 
 - **Space Complexity:**  

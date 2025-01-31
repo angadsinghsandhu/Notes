@@ -1,3 +1,5 @@
+# TODO: revisit
+
 """
 Problem Number: 130
 Problem Name: Surrounded Regions
@@ -62,15 +64,14 @@ class Solution:
             return
         
         rows, cols = len(board), len(board[0])
+        directions = [(1, 0), (-1, 0), (0, 1), (0, -1)]
         
         def dfs(r: int, c: int) -> None:
             """Marks border-connected 'O's with temporary 'T' marker using DFS"""
             if 0 <= r < rows and 0 <= c < cols and board[r][c] == 'O':
                 board[r][c] = 'T'
-                dfs(r+1, c)
-                dfs(r-1, c)
-                dfs(r, c+1)
-                dfs(r, c-1)
+                for dr, dc in directions:
+                    dfs(r + dr, c + dc)
         
         # Mark border-connected regions
         for r in range(rows):

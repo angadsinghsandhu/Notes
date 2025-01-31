@@ -1,4 +1,4 @@
-# TODO
+# TODO: understand problem and do again
 
 ### **File:** `Leetcode/Solutions/Amazon/1152_Analyze_User_Website_Visit_Pattern.py`
 

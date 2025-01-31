@@ -1,4 +1,4 @@
-# TODO
+# TODO: revisit
 
 # File: Leetcode/Solutions/1478_Allocate_Mailboxes.py
 
@@ -133,6 +133,7 @@ class Solution:
                 cost[i][j] = sum(abs(house - median) for house in houses[i:j+1])
 
         # Initialize DP table
+        # dp[i][j] represents the minimum total distance for the first `i` houses with `j` mailboxes
         dp = [[sys.maxsize] * (k + 1) for _ in range(n + 1)]
         dp[0][0] = 0  # Base case: 0 houses with 0 mailboxes
 
@@ -153,30 +154,7 @@ class Solution:
         T.C.: O(n^2 * k)
         S.C.: O(n * k)
         """
-        if not houses:
-            return 0
-
-        houses.sort()
-        n = len(houses)
-
-        # Precompute the cost for all ranges [i, j]
-        cost = [[0] * n for _ in range(n)]
-        for i in range(n):
-            for j in range(i, n):
-                median = houses[(i + j) // 2]
-                cost[i][j] = sum(abs(house - median) for house in houses[i:j+1])
-
-        # Initialize DP table
-        dp = [[sys.maxsize] * (k + 1) for _ in range(n + 1)]
-        dp[0][0] = 0  # Base case
-
-        for i in range(1, n + 1):
-            for j in range(1, min(k, i) + 1):
-                for p in range(i):
-                    if dp[p][j-1] != sys.maxsize:
-                        dp[i][j] = min(dp[i][j], dp[p][j-1] + cost[p][i-1])
-
-        return dp[n][k]
+        # TODO: Implement the space-optimized solution
 
     def optimized_solution_with_memoization(self, houses: List[int], k: int) -> int:
         """

@@ -118,36 +118,47 @@ class Solution:
         T.C.: O(log(min(m, n)))
         S.C.: O(1)
         """
-        # Ensure nums1 is the smaller array
+        # Ensure nums1 is the smaller array (so we do binary search on it)
         if len(nums1) > len(nums2):
-            nums1, nums2 = nums2, nums1
+            return self.optimized_solution(nums2, nums1)
 
         m, n = len(nums1), len(nums2)
-        low, high = 0, m
+        left, right = 0, m
 
-        while low <= high:
-            partition1 = (low + high) // 2  # Partition for nums1
-            partition2 = (m + n + 1) // 2 - partition1  # Partition for nums2
+        # Half-length of combined array (for partitioning)
+        total_len = m + n
+        half = (total_len + 1) // 2  # works for both even/odd combined length
 
-            # Handle edge cases for partition1 and partition2
-            max_left1 = float('-inf') if partition1 == 0 else nums1[partition1 - 1]
-            min_right1 = float('inf') if partition1 == m else nums1[partition1]
+        while left <= right:
+            # Partition indices in nums1 and nums2
+            mid1 = (left + right) // 2
+            mid2 = half - mid1
 
-            max_left2 = float('-inf') if partition2 == 0 else nums2[partition2 - 1]
-            min_right2 = float('inf') if partition2 == n else nums2[partition2]
+            # Edges around the partition in nums1
+            max_left_1 = float('-inf') if mid1 == 0 else nums1[mid1 - 1]
+            min_right_1 = float('inf') if mid1 == m else nums1[mid1]
 
-            # Check if the partition is correct
-            if max_left1 <= min_right2 and max_left2 <= min_right1:
-                # Calculate the median
-                if (m + n) % 2 == 1:
-                    return float(max(max_left1, max_left2))
+            # Edges around the partition in nums2
+            max_left_2 = float('-inf') if mid2 == 0 else nums2[mid2 - 1]
+            min_right_2 = float('inf') if mid2 == n else nums2[mid2]
+
+            # Check if we have a valid partition
+            if max_left_1 <= min_right_2 and max_left_2 <= min_right_1:
+                # We found the correct partition. Compute the median based on odd/even length.
+                if total_len % 2 == 1:
+                    # Odd total length: single middle value
+                    return float(max(max_left_1, max_left_2))
                 else:
-                    return (max(max_left1, max_left2) + min(min_right1, min_right2)) / 2.0
-            elif max_left1 > min_right2:
-                high = partition1 - 1
+                    # Even total length: average of two middle values
+                    return (max(max_left_1, max_left_2) + min(min_right_1, min_right_2)) / 2.0
+            elif max_left_1 > min_right_2:
+                # Too far right in nums1, move partition left
+                right = mid1 - 1
             else:
-                low = partition1 + 1
+                # Too far left in nums1, move partition right
+                left = mid1 + 1
 
+        # Theoretically unreachable if inputs are valid and sorted
         raise ValueError("Input arrays are not sorted or invalid.")
 
 # Run and print sample test cases
@@ -160,3 +171,4 @@ if __name__ == "__main__":
     print(solution.optimized_solution([0, 0], [0, 0]))  # Output: 0.0
     print(solution.optimized_solution([], [1]))  # Output: 1.0
     print(solution.optimized_solution([2], []))  # Output: 2.0
+    print(solution.optimized_solution([1, 2, 3, 4, 5, 6, 7, 8], [5, 6, 7, 8, 9]))  # Output: 2.0

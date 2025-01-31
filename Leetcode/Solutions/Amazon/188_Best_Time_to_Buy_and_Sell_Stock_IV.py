@@ -1,5 +1,3 @@
-# TODO
-
 ### **File:** `Leetcode/Solutions/Amazon/188_Best_Time_to_Buy_and_Sell_Stock_IV.py`
 
 """
@@ -86,8 +84,10 @@ class Solution:
         Approach:
         - Use **Dynamic Programming**:
           - If `k >= len(prices) // 2`, we can apply a **greedy approach** (unlimited transactions).
-          - Otherwise, use `dp[t][d]` where `t` is the number of transactions and `d` is the day.
-          - Update the states efficiently using a rolling max tracking.
+          - Otherwise, use "optimized DP" to track profits with at most `k` transactions.
+        - Initialize a DP table `dp` to track profits.
+        - Iterate through the `prices` array and update the DP table dynamically.
+        - Return the maximum profit from the DP table.
 
         T.C.: O(n * k) - Iterating over `prices` for `k` transactions.
         S.C.: O(k) - Optimized DP table.
@@ -102,17 +102,19 @@ class Solution:
             return sum(max(prices[i] - prices[i - 1], 0) for i in range(1, n))
 
         # Initialize DP table
-        dp = [[0] * n for _ in range(k + 1)]
+        dp = [0] * n
 
-        for t in range(1, k + 1):
-            max_buy = -prices[0]  # Track the maximum buy profit dynamically
-            for d in range(1, n):
-                # Max profit from either not selling or selling on day `d`
-                dp[t][d] = max(dp[t][d - 1], prices[d] + max_buy)
-                # Update max_buy for future transactions
-                max_buy = max(max_buy, dp[t - 1][d] - prices[d])
+        for t in range(k):
+            max_buy_profit = -prices[0]  # Track the maximum buy profit dynamically
+            profit = 0
+            for i in range(1, n):
+                # Update max_buy_profit for future transactions (buying at minimum price)
+                max_buy_profit = max(max_buy_profit, dp[i] - prices[i])
+                # Max profit from either not selling or selling on day `i`
+                profit = max(profit, prices[i] + max_buy_profit)
+                dp[i] = max(dp[i - 1], profit)
 
-        return dp[k][-1]
+        return dp[-1]
 
 
 # Run and print sample test cases
@@ -123,3 +125,8 @@ if __name__ == "__main__":
     print(solution.maxProfit(2, [2,4,1]))        # Output: 2
     print(solution.maxProfit(2, [3,2,6,5,0,3]))  # Output: 7
     print(solution.maxProfit(3, [1,2,4,2,5,7,2,4,9,0]))  # Output: 13
+
+    # test
+    print(solution.maxProfit(2, [3,3,5,0,0,3,1,4]))  # Output: 6
+    print(solution.maxProfit(2, [1,2,3,4,5]))        # Output: 4
+    print(solution.maxProfit(2, [7,6,4,3,1]))        # Output: 0

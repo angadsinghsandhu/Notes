@@ -1,3 +1,5 @@
+# TODO: revisit
+
 # File: Leetcode/Solutions/1268_Search_Suggestions_System.py
 
 """
@@ -91,13 +93,13 @@ class Solution:
         - Return the top 3 products in that range.
 
         T.C.: O(n log n + m log n) - Sorting and binary search for each prefix.
-        S.C.: O(n + m) - Storing the sorted products.
+        S.C.: O(n + m) - Storing the sorted products. where n is the number of products and m is the length of the search word.
         """
         products.sort()
         suggestions = []
         prefix = ""
-        for char in searchWord:
-            prefix += char
+        for ch in searchWord:
+            prefix += ch
             # Find the starting index of the prefix using binary search
             left, right = 0, len(products)
             while left < right:

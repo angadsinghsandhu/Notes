@@ -1,4 +1,4 @@
-# TODO
+# TODO: revisit
 
 """
 Problem Number: 286

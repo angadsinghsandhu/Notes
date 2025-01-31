@@ -1,5 +1,3 @@
-# TODO
-
 ### **File:** `Leetcode/Solutions/Amazon/123_Best_Time_to_Buy_and_Sell_Stock_III.py`
 
 """
@@ -85,7 +83,7 @@ class Solution:
         int - The maximum profit that can be achieved with at most two transactions.
     """
 
-    def maxProfit(self, prices: list[int]) -> int:
+    def maxProfit_dp(self, prices: list[int]) -> int:
         """
         Approach:
         - **Dynamic Programming** approach using four key states:
@@ -107,12 +105,49 @@ class Solution:
 
         for price in prices:
             # Update states in the correct order
-            f1 = max(f1, -price)         # Buying first stock at minimum cost
+            f1 = max(f1, 0 - price)      # Buying first stock at minimum cost
             f2 = max(f2, f1 + price)     # Selling first stock at maximum profit
             f3 = max(f3, f2 - price)     # Buying second stock after first profit
             f4 = max(f4, f3 + price)     # Selling second stock at maximum profit
 
         return f4  # The maximum profit possible with up to two transactions
+    
+    def maxProfit_divide_and_conquer(self, prices: list[int]) -> int:
+        """
+        Approach:
+        - **Divide and Conquer** approach to find the maximum profit.
+        - We divide the array into two halves and find the maximum profit for each half.
+        - We also find the maximum profit by buying on the left and selling on the right.
+        - The maximum profit is the maximum of the three values.
+        
+        T.C.: O(n) - Single pass through the array.
+        S.C.: O(1) - Constant space used.
+        """
+
+        n = len(prices)
+        if n == 0:
+            return 0
+        
+        leftMaxProfit, rightMaxProfit = [0] * n, [0] * n
+
+        # Find the maximum profit from left to right
+        minPrice = prices[0]
+        for i in range(1, n):
+            leftMaxProfit[i] = max(leftMaxProfit[i - 1], prices[i] - minPrice)
+            minPrice = min(minPrice, prices[i])
+
+        # Find the maximum profit from right to left
+        maxPrice = prices[n - 1]
+        for i in range(n - 2, -1, -1):
+            rightMaxProfit[i] = max(rightMaxProfit[i + 1], maxPrice - prices[i])
+            maxPrice = max(maxPrice, prices[i])
+
+        # Find the maximum profit by buying on the left and selling on the right
+        maxProfit = rightMaxProfit[0]
+        for i in range(1, n):
+            maxProfit = max(maxProfit, leftMaxProfit[i - 1] + rightMaxProfit[i])
+
+        return maxProfit
 
 
 # Run and print sample test cases

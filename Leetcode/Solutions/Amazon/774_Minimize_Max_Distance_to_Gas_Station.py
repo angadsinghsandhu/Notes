@@ -1,4 +1,4 @@
-# TODO
+# TODO: revisit
 
 # File: Leetcode/Solutions/774_Minimize_Max_Distance_to_Gas_Station.py
 
@@ -150,7 +150,7 @@ class Solution:
                 gap = stations[i] - stations[i - 1]
                 # Number of additional stations needed in this gap
                 # Subtract 1 to handle exact multiples
-                required += int(gap / D)
+                required += gap // D
             return required <= K
 
         # Initialize binary search boundaries
@@ -232,13 +232,13 @@ class Solution:
         left, right = 0.0, max(gaps)
 
         while right - left > 1e-6:
-            mid = (left + right) / 2
+            mid = (left + right) / 2.0
             required = 0
             for gap in gaps:
                 required += int(gap / mid)
-            if required <= K:
+            if required <= K:   # Feasible
                 right = mid
-            else:
+            else:               # Not feasible
                 left = mid
         return left
 
