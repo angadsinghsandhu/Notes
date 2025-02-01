@@ -635,6 +635,8 @@ you realize I have something really meaningful that matters to customers. That's
 - Describe the most challenging situation in your life and how you handled it.
 - Give an example of a time when you had to handle a variety of assignments. What was the outcome?
 - Tell me about a time when your team gave up on something, but you pushed them to deliver results.
+- Describe a time you faced a tight deadline.
+- Explain a task you couldn’t finish on time.
 
 ## 15. Strive to be Earth’s Best Employer
 
