@@ -664,6 +664,8 @@ you realize I have something really meaningful that matters to customers. That's
 - A time when you got stuck 75% through a project? How did you ensure it got done? (Also may be dive deep)
 - Tell me about yourself; why you? Why Amazon? Where do you see yourself in 5 years?
 - Give me an example of delivering a project under a tight deadline.	(Also maybe bias for action)
+- Describe a time you faced a tight deadline.
+- Explain a task you couldn’t finish on time.
 
 ## 15. Strive to be Earth’s Best Employer
 

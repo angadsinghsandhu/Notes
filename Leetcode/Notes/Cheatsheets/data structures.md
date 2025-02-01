@@ -1274,6 +1274,9 @@ By leveraging the `Counter` class and its `elements()` method, you can efficient
   for i in range(1, 6):
       s.add(i)
   print(s)          # Output: {1, 2, 3, 4, 5, 'a', 'b', 'c', 'd'}
+
+  # check if an element is present in the set
+  print("a" in s)   # Output: True
   ```
 
 - **Time Complexity:**
