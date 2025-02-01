@@ -1,4 +1,4 @@
-# Leadership Principal
+# Leadership Principle
 
 ## 1. Customer Obsession
 
@@ -105,6 +105,8 @@ want and owners and that's what we expect.
 - Tell me about a time when you took on a task that was beyond your job responsibilities.
 - Tell me about a time when you had to work on a task with unclear responsibilities.
 - Tell me about a time when you showed an initiative to work on a challenging project.
+- A time when you jumped on something outside of your area of responsibility.	(Also dive deep)
+- Tell me about a time when you took on something significant outside your responsibility. (Also think big)
 
 ## 3. Invent and Simplify
 
@@ -152,9 +154,10 @@ So we have to constantly be pushing ourselves to invent and reinvent what's poss
 
 ### Questions
 
-- Describe a time when you found a simple solution to a complex problem.
+- Describe a time when you found a simple solution to a complex problem. (Also may come under Dive Deep)
 - Tell me about a time when you invented something.
 - Tell me about a time when you tried to simplify a process but failed. What would you have done differently?
+- What’s your most recent invention?	(Also think big)
 
 ## 4. Are Right, A Lot
 
@@ -191,6 +194,7 @@ themselves. But all we care about as leaders is getting to the best possible ans
 - Tell me about a time when you effectively used your judgment to solve a problem.
 - Tell me about a time when you had to work with insufficient information or incomplete data.
 - Tell me about a time when you were wrong.
+- Tell me about a time when you had to deal with an ambiguous situation.
 
 ## 5. Learn and Be Curious
 
@@ -225,6 +229,9 @@ into work.
 - Tell me about an important lesson you learned over the past year.
 - Tell me about a situation or experience you went through that changed your way of thinking.
 - Tell me about a time when you made a smarter decision with the help of your curiosity.
+- Tell me about a time when you failed.	(Deliver Results)
+- How do you learn?
+- Tell me about a time when you realized you needed a deeper level of subject matter expertise to do your job well.	
 
 ## 6. Hire and Develop the Best
 
@@ -312,6 +319,7 @@ increasing what's possible for customers and have those really high expectations
 - Tell me about a time when you were dissatisfied with the quality of a project at work. What did you do to improve it?
 - Tell me about a time when you motivated others to go above and beyond.
 - Describe a situation when you couldn't meet your standards and expectations on a task.
+- Describe a time when you refused to compromise your standards.
 
 ## 8. Think Big
 
@@ -348,6 +356,9 @@ Amazon unique but also gives us a unique impact in the world.
 - Tell me about your most significant professional achievement.
 - Tell me about a time when you had to make a bold and challenging decision.
 - Tell me about a time when your vision led to a great impact.
+- Tell me about yourself. When did you go above and beyond? (Also may be customer obsession)
+- A time when you set a vision when there wasn’t one. (Also ownership)
+- Tell me about a time when you saw a bigger opportunity than the initial goal.	(Also invent and simplify)
 
 ## 9. Bias for Action
 
@@ -407,6 +418,9 @@ why can't we move faster for customers?
 - Provide an example of when you took a calculated risk.
 - Describe a situation when you took the initiative to correct a problem or a mistake rather than waiting for someone else to do it.
 - Tell me about a time when you required some information from somebody else, but they weren't responsive. What did you do?
+- Tell me about a time when you were faced with a tough deadline and how you managed it. (Also could be under Deliver Results)
+- A time when speed was of the essence.	(Also deliver results)
+- Give me an example of a calculated risk where speed was critical.	(Also frugality)
 
 ## 10. Frugality
 
@@ -468,6 +482,8 @@ that's the way we want to operate together.
 - Describe a time when you had to rely on yourself to complete a task.
 - Tell me about a time when you had to be frugal.
 - Tell me about a time when you had to rely on yourself to complete a project.
+- Give me an example of cost-saving or eliminating waste.	(Also deliver results)
+- 
 
 ## 11. Earn Trust
 
@@ -510,6 +526,10 @@ presented to a much broader group.
 - Describe a time when you had to speak up in a difficult or uncomfortable environment.
 - What would you do to gain the trust of your team?
 - Tell me about a time when you had to tell a harsh truth to someone.
+- Tell me about a time when you convinced someone of something. (Also have backbone, disagree and commit)
+- What’s your weakness?	(Also could be could be linear and be curious)
+- Tell me about a time when you communicated a change in direction.
+- What are your strengths and weaknesses?	(Also may be learn and be curious)	
 
 ## 12. Dive Deep
 
@@ -549,6 +569,8 @@ the real issues that could impact customers.
 - Tell me about the most complicated problem you've had to deal with.
 - Give me an example of when you utilized in-depth data to develop a solution.
 - Tell me about something that you have learned in your role.
+- Tell me about a time when you didn't have enough data.	(Are right, a lot)
+- Tell me about a time when you were trying to understand a complex problem.	(Are right, a lot)i
 
 ## 13. Have Backbone; Disagree and Commit
 
@@ -589,6 +611,10 @@ So, have backbone, disagree and commit is a very important leadership principle 
 - Describe a time when you disagreed with the approach of a team member. What did you do?
 - Give me an example of something you believe in that nobody else does.
 - Tell me about an unpopular decision of yours.
+- Tell me about a time when you had conflict with a team member/major disagreement with your boss. (Also under Earn Trust)
+- Why Amazon?
+- Describe a difficult interaction you had with a customer.
+- Tell me about a time when you strongly disagreed with your manager.	(disagree and commit)
 
 ## 14. Deliver Results
 
@@ -635,6 +661,9 @@ you realize I have something really meaningful that matters to customers. That's
 - Describe the most challenging situation in your life and how you handled it.
 - Give an example of a time when you had to handle a variety of assignments. What was the outcome?
 - Tell me about a time when your team gave up on something, but you pushed them to deliver results.
+- A time when you got stuck 75% through a project? How did you ensure it got done? (Also may be dive deep)
+- Tell me about yourself; why you? Why Amazon? Where do you see yourself in 5 years?
+- Give me an example of delivering a project under a tight deadline.	(Also maybe bias for action)
 
 ## 15. Strive to be Earth’s Best Employer
 
