@@ -4,28 +4,28 @@
 _**Leadership Principles:** Deliver Results, Have Backbone; Disagree and Commit, Invent and Simplify_
 
 ### **Situation**  
-Beumer Group is a Germany-based logistics systems manufacturer operating in over 70 countries with 5,500 employees and $1.8 billion in revenue. Specializing in automated logistics, the company needed to streamline its warehouse operations to handle growing global logistics demands. This required replacing outdated manual processes with modern digital solutions.
+Beumer Group is a Germany-based logistics systems manufacturer operating in over 70 countries with 5,500 employees and $1.8 billion in revenue. Specializing in automated logistics, the company needed to streamline its warehouse operations to handle the growing logistics demands globally. This required replacing outdated manual processes with modern digital solutions.
 
 ### **Task**  
-During my first year of college, I secured an internship as a Full Stack Web Development Intern at Beumer Group. I was tasked with developing a basic Visitor Management System (VMS) to digitize the manual tracking of more than 150 warehouse visits per day. Initially, I struggled to meet my manager’s expectations because I had not clearly communicated the project’s scope and requirements.
+During my first year of college, I secured an internship as a Full Stack Web Development Intern at Beumer Group. I was tasked with developing a basic Visitor Management System (VMS) to digitize the manual tracking of more than 150 warehouse visits per day accross the country. Initially, I struggled to meet my manager’s expectations because of a lack of proper communication about the project’s scope and requirements.
 
 ### **Action**  
-Recognizing the communication gap, I proactively arranged one-on-one meetings with my manager to request clear requirements and a better understanding of expectations. I then expanded the basic project scope by integrating additional functionalities. I implemented a multi-tier authorization system with three roles—Visitor, Employee, and Manager—and rebuilt the manual log system using the MEAN stack (MongoDB, Express.js, Angular, Node.js). This approach increased operational efficiency, reduced errors, and improved system accessibility. I also implemented real-time alerts for managers when visitors failed to check out, which enhanced security.
+Recognizing the communication gap, I proactively arranged one-on-one meetings with my manager to request clear requirements and a better understanding of expectations. I then expanded the basic project scope by integrating additional functionalities. I implemented a multi-tier authorization system with three roles—Visitor, Employee, and Manager—and rebuilt the manual log system using the MEAN stack (MongoDB, Express.js, Angular, Node.js) along with techniques such as lazy loading. This approach increased operational efficiency, reduced errors, and improved system accessibility. I also implemented real-time alerts for managers when visitors failed to check out, which enhanced security.
 
 ### **Result**  
 By applying lazy loading techniques, I enhanced the system speed by 35%, ensuring fast data retrieval even during high traffic. The improved system achieved a 100% reduction in unauthorized warehouse access incidents after deployment. This experience reinforced the importance of clear communication and assertiveness—skills that have been instrumental in my subsequent projects.
 
-## **2. Untitled Startup (2021) – Peer Networking App**
+## **2. Untitled Startup (2021) – Peer Networking App** [add numbers back]
 _**Leadership Principles:** Have Backbone; Disagree and Commit, Earn Trust, Think Big_
 
 ### **Situation**  
-In 2021, I co-founded a college startup with five of the best computer science undergraduates from my university, each specializing in different areas such as backend development, UI/UX design, and database management. During the COVID-19 pandemic, remote learning limited students’ ability to connect with their peers, and there was a clear need for a platform to bridge this gap among over 10,000 potential network members.
+In 2021, I co-founded a college startup with five of the best computer science undergraduates from my university, each specializing in different areas such as backend development, UI/UX design, and database management. During the COVID-19 pandemic, remote learning limited students’ ability to connect with their peers, and form bonds with each other, wich is especially important in the first few years of college. There was a clear need for a platform to bridge this gap for over 10,000 potential new students every year in my university.
 
 ### **Task**  
 Our mission was to develop a platform that connected students based on academic and personal interests. Despite assembling a talented team, we encountered challenges in executive decision-making. The differing approaches and schedules of team members led to frequent misalignments in goals, and after six months, we had only a mock frontend and a functioning backend. The unresolved conflicts in vision and work distribution hindered progress and ultimately affected the project’s success.
 
 ### **Action**  
-I recognized that my failure to lead assertively was a key factor in our decision-making delays. I made a conscious effort to shift from a consensus-driven approach to decisive leadership. I engaged with industry professionals to gain insights into effective startup execution and market validation. Additionally, I personally worked to improve the application’s features—such as the messaging system—by immersing myself in hands-on development and iterating rapidly on the design.
+I recognized that my failure to lead assertively was a key factor in our decision-making delays. I made a conscious effort to shift from a consensus-driven approach to decisive leadership. I engaged with industry professionals to gain insights into effective idea execution. Additionally, I personally worked to improve the application’s features—such as the messaging system—by immersing myself in hands-on development and iterating rapidly on the design.
 
 ### **Result**  
 Although the startup ultimately failed due to time constraints following COVID-19, I emerged with invaluable leadership experience. I learned the importance of decisiveness and having a backbone rather than simply seeking to please everyone. This experience helped me develop the ability to manage teams effectively, and I later applied the robust backend system in my final project in 2023.
@@ -36,16 +36,16 @@ Although the startup ultimately failed due to time constraints following COVID-1
 _**Leadership Principles:** Learn and Be Curious, Dive Deep, Deliver Results_
 
 ### **Situation**  
-In 2021, I joined the Maryland Information and Network Dynamics (MIND) Lab at the University of Maryland as an Undergraduate Research Assistant. The lab is renowned for cutting-edge research and collaborates with both academia and industry, contributing to four patents and supporting 20 PhD dissertations. I worked on Natural Language Processing (NLP) focused on extracting insights from nursing home inspection reports.
+In 2021, I joined the Maryland Information and Network Dynamics (MIND) Lab at the University of Maryland as an Undergraduate Research Assistant, where I collaborated closely with two PhD students and a team of over 30 interns. The lab is renowned for cutting-edge research and collaborates with both academia and industry, contributing to four patents and supporting 20 PhD dissertations since it was founded. I worked on NLP techniques focused on extracting insights from nursing home inspection reports.
 
 ### **Task**  
-I was responsible for developing a multi-component NLP model capable of summarizing key insights from a large corpus of 15,000 nursing home inspection reports. Early approaches using topic modeling methods such as Latent Dirichlet Allocation (LDA) and Hierarchical Dirichlet Process (HDP) struggled to capture the necessary themes accurately. My challenge was to refine the extraction process so that the summaries were both accurate and concise while preserving critical healthcare compliance information.
+I was responsible for developing a multi-component NLP model capable of summarizing key insights from a large corpus of 15,000 nursing home inspection reports which in turn would work with summarization tools being created by other group members. Early approaches using topic modeling methods such as Latent Dirichlet Allocation (LDA) and Hierarchical Dirichlet Process (HDP) struggled to capture the necessary themes accurately. My challenge was to refine the extraction process so that the summaries were both accurate and concise while preserving critical healthcare compliance information.
 
 ### **Action**  
-I identified an opportunity to improve the model by incorporating Word2Vec embeddings to track semantic shifts over time. By applying vector arithmetic to measure semantic similarity and using k-means clustering to group related terms, I enhanced the model’s ability to extract meaningful themes. I collaborated closely with two PhD students and a team of over 30 interns, refining the data pipeline and improving preprocessing techniques to ensure cleaner inputs for the model.
+I identified an opportunity to improve the model by incorporating Word2Vec embeddings to track semantic shifts over time. By applying vector arithmetic to measure semantic similarity and using k-means clustering to group related terms, I enhanced the model’s ability to extract meaningful themes and their change over time. refining the data pipeline and improving preprocessing techniques to ensure cleaner inputs and outputs for the model.
 
 ### **Result**  
-The Word2Vec-based NLP model significantly improved the interpretability of the dataset, making the results more accessible for healthcare policymakers. My work culminated in a published research paper and a conference presentation at the European Alliance for Innovation (EAI). Additionally, I presented a live demonstration at PyData NYC, showcasing how NLP could transform regulatory document analysis—a breakthrough that paved the way for future NLP-driven compliance solutions in the healthcare sector.
+The Word2Vec-based NLP model significantly improved the interpretability of the reports, making the results more accessible and accurate for easy data ingestion. My work culminated in a published research paper and a conference presentation at the European Alliance for Innovation (EAI). Additionally, I presented a live demonstration at PyData NYC, showcasing how NLP could transform document analysis and trend fetection, a breakthrough that paved the way for future research in the field.
 
 ---
 
