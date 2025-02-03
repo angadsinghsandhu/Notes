@@ -1,5 +1,3 @@
-# TODO: new
-
 # File: Leetcode/Solutions/Amazon/297_Serialize_and_Deserialize_Binary_Tree.py
 
 """

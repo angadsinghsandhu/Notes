@@ -1,7 +1,3 @@
-# TODO: new
-
-# File: Leetcode/Solutions/108_Convert_Sorted_Array_to_Binary_Search_Tree.py
-
 """
 Problem Number: 108
 Problem Name: Convert Sorted Array to Binary Search Tree

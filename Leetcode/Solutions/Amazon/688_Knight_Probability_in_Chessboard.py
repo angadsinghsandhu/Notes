@@ -1,4 +1,4 @@
-# TODO: new
+# TODO: revisit
 
 # File: Leetcode/Solutions/Amazon/688_Knight_Probability_in_Chessboard.py
 

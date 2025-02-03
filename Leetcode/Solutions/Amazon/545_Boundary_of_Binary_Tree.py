@@ -1,4 +1,4 @@
-# TODO: new
+# TODO: revisit
 
 # File: Leetcode/Solutions/545_Boundary_of_Binary_Tree.py
 

@@ -1,5 +1,3 @@
-# TODO: new
-
 # File: Leetcode/Solutions/Amazon/116_Populating_Next_Right_Pointers_in_Each_Node.py
 
 """
@@ -110,6 +108,46 @@ class Solution:
             
             # Move to the next level
             leftmost = leftmost.left
+        
+        return root
+    
+    def connect_queue(self, root: Optional[Node]) -> Optional[Node]:
+        """
+        Approach:
+        - Use a level-order traversal (BFS) to connect nodes at the same level.
+        - For each level, connect the next pointer of each node to its right neighbor.
+        - If a node is the last in its level, its next pointer should be set to NULL.
+
+        T.C.: O(n) - We visit each node once.
+        S.C.: O(n) - We use a queue to store nodes at each level.
+        """
+        if not root:
+            return root
+        
+        from collections import deque
+        
+        # Use a queue to store nodes at each level
+        queue = deque([root])
+        
+        # Traverse each level
+        while queue:
+            level_size = len(queue)
+            
+            # Traverse the current level and connect the next pointers
+            for i in range(level_size):
+                node = queue.popleft()
+                
+                # Connect the left child to the right child
+                if i == level_size - 1:
+                    node.next = None
+                else:
+                    node.next = queue[0]
+                
+                # Add the left and right children to the queue
+                if node.left:
+                    queue.append(node.left)
+                if node.right:
+                    queue.append(node.right)
         
         return root
 

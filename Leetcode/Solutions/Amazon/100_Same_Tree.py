@@ -1,5 +1,3 @@
-# TODO: new
-
 # File: Leetcode/Solutions/100_Same_Tree.py
 
 """

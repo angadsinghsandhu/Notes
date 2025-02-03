@@ -1,4 +1,4 @@
-# TODO: new
+# TODO: revisit
 
 # File: Leetcode/Solutions/Amazon/98_Validate_Binary_Search_Tree.py
 
@@ -67,41 +67,27 @@ class Solution:
         """
         Approach:
         - Perform an in-order traversal of the tree.
-        - Keep track of the last visited node's value.
-        - Ensure that each node's value is greater than the last visited node's value.
-        - If any node violates this condition, the tree is not a valid BST.
+        - At each node, check if the value is greater than the value of the previous node.
+        - If the values are not in increasing order, return False.
+        - If the traversal completes without any issues, return True.
 
         T.C.: O(n) - We visit each node once.
         S.C.: O(h) - The space used by the recursion stack, where h is the height of the tree.
         """
-        def in_order_traversal(node):
-            nonlocal last_value_visited
-            
+        def valid(l_bound, node, r_bound):
+            # Check if the node is None
             if node is None:
                 return True
             
-            # Traverse the left subtree
-            if not in_order_traversal(node.left):
+            # Check if the node's value is within the bounds
+            if not l_bound < node.val < r_bound:
                 return False
             
-            # Check the current node's value
-            if last_value_visited >= node.val:
-                return False
-            
-            # Update the last visited value
-            last_value_visited = node.val
-            
-            # Traverse the right subtree
-            if not in_order_traversal(node.right):
-                return False
-            
-            return True
+            # Recursively check the left and right subtrees
+            return valid(l_bound, node.left, node.val) and valid(node.val, node.right, r_bound)
 
-        # Initialize the last visited value with negative infinity
-        last_value_visited = float('-inf')
-        
         # Start the in-order traversal from the root
-        return in_order_traversal(root)
+        return valid(float("-inf"), root, float("-inf"))
 
 # Run and print sample test cases
 if __name__ == "__main__":

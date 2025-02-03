@@ -1,5 +1,3 @@
-# TODO: new
-
 # File: Leetcode/Solutions/101_Symmetric_Tree.py
 
 """

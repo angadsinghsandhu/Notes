@@ -1,4 +1,4 @@
-# TODO: new
+# TODO: revisit
 
 # File: Leetcode/Solutions/Amazon/207_Course_Schedule.py
 

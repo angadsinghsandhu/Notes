@@ -1,4 +1,4 @@
-# TODO: new
+# TODO: revisit
 
 # File: Leetcode/Solutions/124_Binary_Tree_Maximum_Path_Sum.py
 

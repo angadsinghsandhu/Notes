@@ -1,5 +1,3 @@
-# TODO: new
-
 # File: Leetcode/Solutions/Amazon/103_Binary_Tree_Zigzag_Level_Order_Traversal.py
 
 """

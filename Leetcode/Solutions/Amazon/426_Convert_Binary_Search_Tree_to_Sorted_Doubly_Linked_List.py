@@ -1,4 +1,4 @@
-# TODO: new
+# TODO: revisit
 
 # File: Leetcode/Solutions/426_Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List.py
 
@@ -69,7 +69,8 @@ class Solution:
         Node - The head of the sorted circular doubly-linked list.
     """
 
-    def treeToDoublyList(self, root: Optional[Node]) -> Optional[Node]:
+    # in-place solution
+    def treeToDoublyList_in_place(self, root: 'Node') -> 'Node':
         """
         Approach:
         - Perform an in-order traversal of the BST.
@@ -81,67 +82,23 @@ class Solution:
         """
         if not root:
             return None
-
-        # Initialize head and prev pointers
-        self.head = None
-        self.prev = None
-
-        # Perform in-order traversal to convert the BST to a doubly-linked list
-        self._in_order_traversal(root)
-
-        # Connect the first and last nodes to make the list circular
-        self.head.left = self.prev
-        self.prev.right = self.head
-
-        # Return the head of the doubly-linked list
-        return self.head
-
-    def _in_order_traversal(self, node: Optional[Node]) -> None:
-        """
-        Helper function to perform in-order traversal and adjust pointers.
-        """
-        if not node:
-            return
-
-        # Traverse the left subtree
-        self._in_order_traversal(node.left)
-
-        # Process the current node
-        if not self.prev:
-            # If prev is None, this is the smallest node (head of the list)
-            self.head = node
-        else:
-            # Link the previous node with the current node
-            self.prev.right = node
-            node.left = self.prev
-
-        # Update prev to the current node
-        self.prev = node
-
-        # Traverse the right subtree
-        self._in_order_traversal(node.right)
-
-    # in-place solution
-    def treeToDoublyList_in_place(self, root: 'Node') -> 'Node':
-        if not root:
-            return None
         
         self.head = None
-        self.prev = None
+        self.tail = None
         
         def inorder(node):
             if not node:
                 return
             inorder(node.left)
             
-            if self.prev:
+            if self.tail:
                 # Link the previous node with the current node
-                self.prev.right = node
-                node.left = self.prev
+                self.tail.right = node
+                node.left = self.tail
             else:
                 # The first node, set the head
                 self.head = node
-            self.prev = node
+            self.tail = node
             
             inorder(node.right)
         
@@ -149,8 +106,8 @@ class Solution:
         inorder(root)
         
         # Connect the head and tail to make it circular
-        self.prev.right = self.head
-        self.head.left = self.prev
+        self.tail.right = self.head
+        self.head.left = self.tail
         
         return self.head
 

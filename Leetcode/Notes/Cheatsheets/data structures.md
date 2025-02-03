@@ -261,6 +261,220 @@ Below is an extended guide that includes explanations of when to use each struct
   - **Combine with Other Algorithms:**
     - Use sorting as a preliminary step to simplify problems, making it easier to apply algorithms like binary search or two-pointers.
 
+## 3. Itertools
+
+- **Description:**  
+  The `itertools` module in Python provides a collection of functions for creating iterators to generate combinations, permutations, and other operations on iterable data structures. These functions are highly efficient and memory-friendly, allowing for the generation of complex sequences without storing them in memory. Common functions include `product()`, `permutations()`, `combinations()`, and `groupby()`, among others. By leveraging `itertools`, you can efficiently solve problems that involve generating or processing combinations, permutations, and subsequences.
+
+### 3.1 Combinations
+
+- **When to Use:** 
+  Use combinations when you need to:
+  - Generate all possible subsets of a specific size from a given set of elements.
+  - Enumerate all distinct ways to select a subset of elements without repetition.
+  - Solve problems that involve selecting a subset of elements that satisfy specific conditions.
+
+- **Key Patterns:**
+  - **Subset Generation:** Enumerating all possible subsets of a given size.
+  - **Combination Sum Problems:** Finding combinations that sum to a target value.
+  - **Unique Combinations:** Generating distinct subsets without repetition.
+  - **Subset Sum Problems:** Identifying subsets that satisfy specific conditions.
+  - **Combinatorial Problems:** Solving problems that involve selecting elements from a set.
+
+- **LeetCode Problem Types:**
+  - **Combination Sum (Problem #39):** Involves finding all unique combinations that sum to a target value.
+  - **Subsets (Problem #78):** Requires generating all possible subsets of a given set of elements.
+  - **Letter Combinations of a Phone Number (Problem #17):** Involves generating all possible letter combinations based on a phone number.
+  - **Combination Sum II (Problem #40):** Requires finding unique combinations that sum to a target value.
+  - **Subsets II (Problem #90):** Involves generating unique subsets without repetition.
+
+- **Python Implementation:**
+
+  ```python
+  from itertools import combinations
+
+  # Example 1: Generating Combinations of a List
+  nums = [1, 2, 3]
+  for r in range(1, len(nums) + 1):
+      print(list(combinations(nums, r)))
+
+  # Output:
+  # [(1,), (2,), (3,)]
+  # [(1, 2), (1, 3), (2, 3)]
+  # [(1, 2, 3)]
+
+  # Example 2: Using Combinations to Solve a Problem
+  def combination_sum(nums, target):
+      result = []
+      for r in range(1, len(nums) + 1):
+          for combination in combinations(nums, r):
+              if sum(combination) == target:
+                  result.append(combination)
+      return result
+
+  # Usage
+  nums = [2, 3, 6, 7]
+  target = 7
+
+  print(combination_sum(nums, target))
+
+  # Output: [(7,), (2, 2, 3)]
+  ```
+
+- **Time Complexity:**
+  - **Generation of Combinations:** O(2^n) for generating all possible subsets of size n.
+  - **Checking Combinations:** O(n) for checking the sum of each combination.
+
+- **Space Complexity:**
+  - **Generation of Combinations:** O(2^n) for storing all possible subsets of size n.
+  - **Checking Combinations:** O(n) for storing the current combination.
+
+- **Additional Notes:**
+  - **Memory Efficiency:** `itertools` functions are memory-efficient as they generate elements on the fly without storing them in memory.
+  - **Combinatorial Problems:** Problems involving combinations often require a brute-force approach to generate all possible subsets efficiently.
+  - **Optimization Techniques:** For large input sizes, consider optimizing the solution to avoid generating all possible combinations.
+
+- **Best Practices:**
+  - **Use Itertools for Combinatorial Problems:** Leverage `itertools` functions for generating combinations, permutations, and subsequences efficiently.
+  - **Optimize for Large Inputs:** For problems with large input sizes, consider optimizing the solution to avoid generating all possible combinations.
+  - **Combine with Other Techniques:** Integrate `itertools` functions with other algorithms to solve complex combinatorial problems effectively.
+
+### 3.2 Combinations with Replacement
+
+- **When to Use:**  
+  Use combinations with replacement when you need to:
+  - Generate all possible combinations of a specific size from a given set of elements, allowing for repetition.
+  - Enumerate all distinct ways to select a subset of elements with the possibility of repetition.
+  - Solve problems that involve selecting elements with replacement to satisfy specific conditions.
+
+- **Key Patterns:**
+  - **Combination Generation with Repetition:** Enumerating all possible combinations with the option of selecting the same element multiple times.
+  - **Repetitive Selections:** Solving problems that involve selecting elements with replacement to achieve a specific target.
+  - **Permutations with Duplicates:** Generating permutations of elements with duplicates or repetitions.
+  - **Combinatorial Problems with Multiplicity:** Addressing problems that require selecting elements with varying frequencies.
+
+- **LeetCode Problem Types:**
+  - **Combination Sum IV (Problem #377):** Involves finding the number of combinations that sum to a target value with repetitions allowed.
+  - **Subsets II (Problem #90):** Requires generating unique subsets with the possibility of duplicates.
+  - **Letter Combinations of a Phone Number (Problem #17):** Involves generating all possible letter combinations based on a phone number with repetitions allowed.
+  - **Combination Sum III (Problem #216):** Requires finding unique combinations that sum to a target value with a specific number of elements.
+
+- **Python Implementation:**
+
+  ```python
+  from itertools import combinations_with_replacement
+
+  # Example 1: Generating Combinations with Replacement
+  nums = [1, 2, 3]
+  for r in range(1, len(nums) + 1):
+      print(list(combinations_with_replacement(nums, r)))
+
+  # Output:
+  # [(1,), (2,), (3,)]
+  # [(1, 1), (1, 2), (1, 3), (2, 2), (2, 3), (3, 3)]
+  # [(1, 1, 1), (1, 1, 2), (1, 1, 3), (1, 2, 2), (1, 2, 3), (1, 3, 3), (2, 2, 2), (2, 2, 3), (2, 3, 3), (3, 3, 3)]
+
+  # Example 2: Using Combinations with Replacement to Solve a Problem
+  def combination_sum_with_replacement(nums, target):
+      result = []
+      for r in range(1, len(nums) + 1):
+          for combination in combinations_with_replacement(nums, r):
+              if sum(combination) == target:
+                  result.append(combination)
+      return result
+
+  # Usage
+  nums = [2, 3, 6, 7]
+
+  print(combination_sum_with_replacement(nums, 7))
+
+  # Output: [(7,), (2, 2, 3)]
+  ```
+
+- **Time Complexity:**
+  - **Generation of Combinations:** O((n + r - 1) choose r) for generating all possible combinations with replacement.
+  - **Checking Combinations:** O(n) for checking the sum of each combination.
+
+- **Space Complexity:**
+  - **Generation of Combinations:** O((n + r - 1) choose r) for storing all possible combinations with replacement.
+  - **Checking Combinations:** O(n) for storing the current combination.
+
+- **Additional Notes:**
+  - **Repetitive Selections:** Combinations with replacement allow for selecting the same element multiple times in a combination.
+  - **Combinatorial Problems with Multiplicity:** Problems involving selecting elements with varying frequencies can be efficiently solved using combinations with replacement.
+  - **Optimization Techniques:** For large input sizes, consider optimizing the solution to avoid generating all possible combinations with replacement.
+
+- **Best Practices:**
+  - **Use Itertools for Combinatorial Problems:** Leverage `itertools` functions for generating combinations with replacement efficiently.
+  - **Optimize for Large Inputs:** For problems with large input sizes, consider optimizing the solution to avoid generating all possible combinations with replacement.
+  - **Combine with Other Techniques:** Integrate `itertools` functions with other algorithms to solve complex combinatorial problems effectively.
+
+### 3.3 Permutations
+
+- **When to Use:**  
+  Use permutations when you need to:
+  - Generate all possible arrangements of a specific size from a given set of elements.
+  - Enumerate all distinct ways to order a subset of elements without repetition.
+  - Solve problems that involve arranging elements in different orders to satisfy specific conditions.
+
+- **Key Patterns:**
+  - **Permutation Generation:** Enumerating all possible arrangements of elements.
+  - **Ordering Problems:** Solving problems that involve ordering elements in distinct ways.
+  - **Unique Arrangements:** Generating permutations without repetition.
+  - **String Permutations:** Finding all possible arrangements of characters in a string.
+  - **Combinatorial Problems with Ordering:** Addressing problems that require ordering elements in different ways.
+
+- **LeetCode Problem Types:**
+  - **Permutations (Problem #46):** Involves finding all possible permutations of a set of distinct integers.
+  - **Next Permutation (Problem #31):** Requires generating the lexicographically next greater permutation of a sequence.
+  - **Permutations II (Problem #47):** Involves finding unique permutations of a set of integers with duplicates.
+  - **String Permutations:** Problems that involve generating all possible arrangements of characters in a string.
+  - **Combinatorial Problems with Ordering:** Problems that require ordering elements in different ways to achieve specific outcomes.
+
+- **Python Implementation:**
+
+  ```python
+  from itertools import permutations
+
+  # Example 1: Generating Permutations of a List
+  nums = [1, 2, 3]
+  for r in range(1, len(nums) + 1):
+      print(list(permutations(nums, r)))
+
+  # Output:
+  # [(1,), (2,), (3,)]
+  # [(1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)]
+  # [(1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1)]
+
+  # Example 2: Using Permutations to Solve a Problem
+  def permute(nums):
+      return list(permutations(nums))
+
+  # Usage
+  nums = [1, 2, 3]
+  print(permute(nums))
+
+  # Output: [(1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1)]
+  ```
+
+- **Time Complexity:**
+  - **Generation of Permutations:** O(n!) for generating all possible permutations of size n.
+  - **Checking Permutations:** O(n) for checking each permutation.
+
+- **Space Complexity:**
+  - **Generation of Permutations:** O(n!) for storing all possible permutations of size n.
+  - **Checking Permutations:** O(n) for storing the current permutation.
+
+- **Additional Notes:**
+  - **Unique Arrangements:** Permutations generate all possible unique arrangements of elements without repetition.
+  - **Ordering Problems:** Problems involving ordering elements in different ways can be efficiently solved using permutations.
+  - **Optimization Techniques:** For large input sizes, consider optimizing the solution to avoid generating all possible permutations.
+
+- **Best Practices:**
+  - **Use Itertools for Combinatorial Problems:** Leverage `itertools` functions for generating permutations efficiently.
+  - **Optimize for Large Inputs:** For problems with large input sizes, consider optimizing the solution to avoid generating all possible permutations.
+  - **Combine with Other Techniques:** Integrate `itertools` functions with other algorithms to solve complex combinatorial problems effectively.
+
 ## 3. Dict
 
 ### 3.1 Hash Tables (Dictionaries in Python)

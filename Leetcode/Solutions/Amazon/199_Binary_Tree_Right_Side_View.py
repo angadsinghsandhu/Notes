@@ -1,5 +1,3 @@
-# TODO: new
-
 # File: Leetcode/Solutions/199_Binary_Tree_Right_Side_View.py
 
 """

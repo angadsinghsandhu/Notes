@@ -1,5 +1,3 @@
-# TODO: new
-
 # File: Leetcode/Solutions/Amazon/102_Binary_Tree_Level_Order_Traversal.py
 
 """

@@ -1,4 +1,4 @@
-# TODO: new
+# TODO: revisit (practice code)
 
 # File: Leetcode/Solutions/Amazon/105_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal.py
 
@@ -68,14 +68,14 @@ class Solution:
         TreeNode - The root of the constructed binary tree.
     """
 
-    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+    def buildTree_fast(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
         """
         Approach:
+        - Fact: first element in preorder is the root.
+        - Fact: elements before the root in inorder are in the left subtree.
+        - Fact: elements after the root in inorder are in the right subtree.
         - Use a hash map to store the indices of elements in the inorder traversal for quick lookup.
         - Recursively construct the tree by dividing the preorder and inorder arrays based on the root.
-        - The root is the first element in the preorder array.
-        - The left subtree is constructed from the elements before the root in the inorder array.
-        - The right subtree is constructed from the elements after the root in the inorder array.
 
         T.C.: O(n) - We visit each node once.
         S.C.: O(n) - The hash map stores all the indices of the inorder array.
@@ -108,6 +108,27 @@ class Solution:
 
         # Start the recursive construction of the tree
         return build(0, len(preorder) - 1, 0, len(inorder) - 1)
+    
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        """
+        Approach:
+        - The first element in the preorder traversal is always the root of the tree.
+        - The root divides the inorder traversal into left and right subtrees.
+        - We can recursively construct the left and right subtrees using the same logic.
+        
+        T.C.: O(n^2) - We visit each node once and search for the root in the inorder array.
+        S.C.: O(n) - The recursive stack can go as deep as the height of the tree.
+        """
+        if not preorder or not inorder:
+            return None
+
+        root = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+
+        root.left = self.buildTree(preorder[1:mid+1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid+1:], inorder[mid+1:])
+
+        return root
 
 # Run and print sample test cases
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-# TODO: new
+# TODO: revisit
 
 # File: Leetcode/Solutions/Amazon/863_All_Nodes_Distance_K_in_Binary_Tree.py
 
@@ -12,7 +12,7 @@ Leetcode Link: https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree
 
 DESCRIPTION
 
-Given the root of a binary tree, the value of a target node target, and an integer k, return an array of the values of all nodes that have a distance k from the target node.
+Given the root of a binary tree, the value of a target node "target", and an integer k, return an array of the values of all nodes that have a distance k from the target node.
 
 You can return the answer in any order.
 
