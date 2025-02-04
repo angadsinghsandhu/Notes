@@ -1,5 +1,3 @@
-# TODO: new
-
 # File: Leetcode/Solutions/1373_Maximum_Sum_BST_in_Binary_Tree.py
 
 """
