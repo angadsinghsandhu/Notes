@@ -163,13 +163,13 @@ I began my journey at ShareKhan by BNP Paribas a FinTech startup, where I worked
  
 Throughout this time, I have also been actively contributing to AI research as well. I have published papers on temporal topic modeling at the 2024 EAI PervasiveHealth conference in Greece and presented a live demo of my work at the PyData event in NYC last year, along with a few more conferences and journals that I have been a part of. Apart from that, my role as a graduate teaching assistant at JHU has allowed me to share my passion for machine learning with others and learn how to be a better educator.
 
-Looking ahead, I’m eager to lead multi-disciplinary teams that tackle complex problems at scale, particularly in integrating AI into real-life sitations and empowering people all across the world. I want to see myself not just advancing technology, but also ensuring that these innovations have a tangible, positive impact on society. I’m excited about the future and the opportunity to drive meaningful change at Amazon using my experience in research & development, and my technical expertise.
+Looking ahead, I’m eager to lead multi-disciplinary teams that tackle complex problems at scale, particularly in integrating AI into real-life situations and empowering people all across the world. I want to see myself not just advancing technology, but also ensuring that these innovations have a tangible, positive impact on society. I’m excited about the future and the opportunity to drive meaningful change at Amazon using my experience in research & development, as well as my technical skills.
 
 ## **Why Amazon?**
 
 Johns Hopkins University and Amazon have collaborated to help advance AI research and bridge the gap between industry and academia in an initiative known as AI2AI, which supports my research lab as well. At a recent AI2AI event at Hopkins, I had the opportunity to discuss research with Grant Stiemel, Principal Scientist at Amazon AI. His insights into Amazon’s work in large-scale AI optimizations, multimodal learning and his general excitement about furthering technological advancements in the field, resonated deeply with my own interests. The collaboration also clearly showcased how Amazon fosters innovation and encourages curiosity, which reinforces my desire to join an organization such as Amazon.
 
-As a loyal customer myself, I've experienced firsthand the high standards and customer-centric mindset that define Amazon as a brand. As a passionate CS engineer, the sheer scope and scalability of Amazon's technical services are inspiring. For instance, major organizations like Intuit and Slack rely on Amazon’s infrastructure to power their AI-driven features. Heroku, a platform I have personally used for my own projects, is built on AWS. Additionally, Anthropic leverages AWS as its primary cloud provider. It would be an incredible opportunity to contribute to the systems that form the backbone of so many innovative applications.
+As a loyal customer myself, I've experienced firsthand the customer-centric mindset that define Amazon as a brand. As a passionate CS engineer, the sheer scope and scalability of Amazon's technical services are inspiring. For instance, major organizations like Intuit and Slack rely on Amazon’s infrastructure to power their AI-driven features. Heroku, a platform I have personally used for my own projects, is built on AWS. Additionally, Anthropic leverages AWS as its primary cloud provider. It would be an incredible opportunity to contribute to the systems that form the backbone of so many innovative applications.
 
 And that's why I want to join Amazon.
 
@@ -181,15 +181,17 @@ And that's why I want to join Amazon.
 
 1. **Tell me about a time when you were not able to meet a time commitment. What prevented you from meeting it? What was the outcome and what did you learn from it?**  
    _Leadership Principles: Deliver Results, Earn Trust_  
-   BEUMER Group (2020) – Initially failed to meet manager's expectations due to miscommunication but later requested clear requirements and delivered an improved VMS.
+   - **PyData** overnight demo remake
+   - **Beumer Group** failed to meet expectations and delayed
 
 2. **Describe a long-term project that you managed. How did you keep everything moving along in a timely manner?**  
    _Leadership Principles: Deliver Results, Ownership_  
-   While working on an AI-driven surgical training project at Johns Hopkins Medicine (2024), I managed a long-term initiative by implementing structured timelines and regular progress reviews. I focused on optimizing LLM inference throughput, which improved overall project efficiency and ensured that key milestones were met.
+   **JHU Research Assistant:** implementing structured timelines, optimizing LLM inference throughput, improved overall project efficiency
 
 3. **Give me an example of a time when you set a goal and were able to meet or achieve it.**  
    _Leadership Principles: Deliver Results, Think Big_  
-   At PyData NYC (2024), I recognized that my Word2Vec demo was performing too slowly for a live presentation. I worked intensively overnight to optimize the demo, resulting in a highly polished and efficient presentation that met the high expectations of the audience.
+   - **PyData NYC**: Word2Vec demo was performing too slowly for a live presentation. I worked intensively overnight to optimize the demo, resulting in a highly polished and efficient presentation that met the high expectations of the audience.
+   - **JHU Research Assistant**: implementing structured timelines, optimizing LLM inference throughput, improved overall project efficiency
 
 ---
 
@@ -197,19 +199,18 @@ And that's why I want to join Amazon.
 
 4. **Tell me about a time you had to quickly adjust your work priorities to meet changing demands.**  
    _Leadership Principles: Bias for Action, Deliver Results_  
-   At PyData NYC (2024), I discovered that my NLP demo was too slow for the live event. I rapidly adapted by integrating Polars for GPU acceleration, ensuring that the presentation ran smoothly and effectively addressed audience expectations.
-
+   - **PyData NYC**, I discovered that my NLP demo was too slow for the live event. I rapidly adapted by integrating Polars for GPU acceleration, ensuring that the presentation ran smoothly and effectively addressed audience expectations.
 ---
 
 ### **Team / Decision Making**
 
 5. **Give me an example when you had to push back to HQ or challenge a decision.**  
    _Leadership Principles: Have Backbone; Disagree and Commit, Deliver Results_  
-   Beumer Group
+   - **BEUMER Group**
 
 7. **Tell me about a decision that you regret.**  
    _Leadership Principles: Earn Trust, Learn and Be Curious_  
-   During my time at the Untitled Startup (2021), I regret not leading decisively during critical moments. My hesitation led to communication gaps and misaligned team goals, ultimately contributing to the project's failure. This experience taught me the importance of assertive leadership and clear communication.
+   **Untitled Project:** I regret not leading decisively during critical moments. 
 
 ---
 
@@ -217,23 +218,26 @@ And that's why I want to join Amazon.
 
 8. **What did you do when you needed to motivate a group of individuals?**  
    _Leadership Principles: Hire and Develop the Best_  
-   TA story; (Example details can be drawn from instances where I motivated team members by setting clear expectations and celebrating small wins, ensuring that each team member felt supported and valued.)
+   - **Untitled Project**
+   - TA story; (Example details can be drawn from instances where I motivated team members by setting clear expectations and celebrating small wins, ensuring that each team member felt supported and valued.)
 
 9. **Tell me about a time you stepped up into a leadership role.**  
    _Leadership Principles: Ownership, Think Big_  
-   upGAN, At ShareKhan (2022), I identified inefficiencies in how Twitter customer queries were handled. I took the initiative to propose and lead the development of a sentiment analysis system that automated query classification and significantly reduced compliance response times.
-
+   - **Untitled Project**
+   - **ShareKhan**: Sentiment Analysis project ownership
+   - upGAN, At ShareKhan (2022), I identified inefficiencies in how Twitter customer queries were handled. I took the initiative to propose and lead the development of a sentiment analysis system that automated query classification and significantly reduced compliance response times.
+   
 ---
 
 ### **Team / Communication & Negotiation**
 
 10. **Do you collaborate well?**  
     _Leadership Principles: Earn Trust, Dive Deep_  
-    At Johns Hopkins Research (2024), I collaborated with doctors, machine learning engineers, and fellow researchers to integrate LLM-based surgical training insights. This collaboration required clear, consistent communication and a deep understanding of diverse perspectives, ensuring that all contributions were effectively integrated.
+    **JHU Research:** I collaborated with doctors, machine learning engineers, and fellow researchers to integrate LLM-based surgical training insights. This collaboration required clear, consistent communication and a deep understanding of diverse perspectives, ensuring that all contributions were effectively integrated.
 
 11. **Describe a situation when you negotiated with others in your organization to reach an agreement.**  
     _Leadership Principles: Earn Trust, Have Backbone; Disagree and Commit_  
-    (An example from my experience could involve negotiating resource allocations or project scopes where I effectively balanced differing priorities to reach a consensus.)
+    - Untitled Project
 
 ---
 
@@ -241,15 +245,17 @@ And that's why I want to join Amazon.
 
 12. **We've all had to work with people that don't like us. How do you deal with someone that doesn't like you?**  
     _Leadership Principles: Earn Trust, Have Backbone_  
+    - Optum: Team members disliked me because I had a headstart due to my prep. I talked it out eith them and shared my resources.
     I focus on building mutual respect by demonstrating consistent professionalism and a willingness to understand different perspectives. For instance, when working with a colleague who was initially resistant, I made an effort to engage them in one-on-one discussions to address any misunderstandings, which ultimately improved our collaboration. Alternatively, maybe talk about not "disliked" but more someone unwilling to work with you, a new intern/team member as they had no previous reason to dislike you.
 
 13. **We all make mistakes we wish we could take back. Tell me about a time you wish you’d handled a situation differently with a colleague.**  
     _Leadership Principles: Learn and Be Curious_  
-    At the Untitled Startup (2021), I did not address internal disputes early enough, which led to misalignment and eventual project breakdown. Reflecting on this, I learned the importance of early intervention and setting clear communication channels to manage expectations and prevent conflicts.
+    Untitled Project: 
 
 14. **Describe the last time you had to apologize to someone.**  
     _Leadership Principles: Earn Trust_  
-    At BEUMER Group (2020), I once apologized to my manager for misinterpreting the project requirements. I took full responsibility, clarified the requirements immediately, and subsequently redesigned the system to meet the expectations, which reinforced trust and improved project outcomes.
+    - BEUMER Group: Apologized to my manager for misinterpreting the project requirements.
+    - JHU TA: Apologized to students
 
 ---
 
@@ -257,11 +263,11 @@ And that's why I want to join Amazon.
 
 15. **Give me an example of a time you faced a conflict while working on a team. How did you handle that?**  
     _Leadership Principles: Have Backbone; Disagree and Commit_  
-    (I can draw on experiences from my startup or collaborative research projects where differing opinions required decisive conflict resolution, ensuring that the team moved forward constructively.)
+    - Untitled Project
 
 16. **Tell me about a time when you received negative feedback from your manager. How did you respond?**  
     _Leadership Principles: Earn Trust, Learn and Be Curious_  
-    At BEUMER Group (2020), after receiving negative feedback regarding initial project miscommunication, I actively sought clarification, adjusted my approach, and ultimately delivered a successful project. This response not only improved the project outcome but also enhanced my communication skills.
+    BEUMER Group: After receiving negative feedback regarding initial project miscommunication, I actively sought clarification, adjusted my approach, and ultimately delivered a successful project. This response not only improved the project outcome but also enhanced my communication skills.
 
 ---
 
@@ -269,23 +275,24 @@ And that's why I want to join Amazon.
 
 17. **Tell me about a time when you missed an obvious solution to a problem.**  
     _Leadership Principles: Dive Deep, Learn and Be Curious_  
-    [] **Chat-generated:** At ShareKhan (2022), I initially overcomplicated tweet classification by overlooking a simpler regex-based filtering method. Recognizing this oversight, I revised the approach, which led to a more efficient solution for processing customer inquiries.
+    - JHU RA: Optimizing code processes
 
 18. **Tell me about a time when you faced a problem that had multiple possible solutions.**  
     _Leadership Principles: Are Right, A Lot_  
-    [] **Chat-generated:** (An example could involve evaluating different algorithms for data processing or model optimization where I carefully compared options before selecting the most effective solution.)
+    - UMD: Topic modeling solutions: stochastic counting, LDA, etc.
 
 19. **Tell me about a time when you came up with a new approach to a problem.**  
     _Leadership Principles: Invent and Simplify_  
-    [] **Chat-generated:** At Agronomy Journal (2022), I developed a novel probabilistic model to forecast crop infestations by integrating historical data with weather patterns, thereby providing innovative solutions to agricultural challenges.
+    - UMD: Word2Vec 
 
 20. **Describe a time when you anticipated potential problems and developed preventive measures.**  
     _Leadership Principles: Think Big, Dive Deep_  
-    []**Chat-generated:** At Optum (2022), while designing the Healthcare Policy Management System, I anticipated potential security risks and implemented additional safeguards to prevent fraudulent policy applications, ensuring the system’s long-term integrity.
+    - **Sharekhan:** data could be skewed, tasked someone to check for false positives and negatives 
+    - **Beumer group:** Tresspassing notification alerts for managers for proactive security measures
 
 21. **Describe a situation in which you found a creative way to overcome an obstacle.**  
     _Leadership Principles: Invent and Simplify_  
-    At PyData NYC (2024), I completely reworked my NLP demo overnight by integrating GPU-accelerated Polars, creatively overcoming significant performance issues and ensuring a successful presentation.
+    - PyData NYC: I completely reworked my NLP demo overnight by integrating GPU-accelerated Polars, creatively overcoming significant performance issues and ensuring a successful presentation.
 
 ---
 
@@ -293,11 +300,11 @@ And that's why I want to join Amazon.
 
 22. **We all deal with difficult customers. Tell me about a challenging client situation.**  
     _Leadership Principles: Customer Obsession, Earn Trust_  
-    [] **Chat-generated:** At ShareKhan (2022), I improved chatbot accuracy by gathering and analyzing feedback from institutional clients, which allowed us to fine-tune the system to better meet customer expectations.
+    - JHU RA: Medical professionals unhappy with outcomes 
 
 23. **How do you show customer obsession?**  
     _Leadership Principles: Customer Obsession_  
-    I demonstrate customer obsession by ensuring that every project I work on has the end-user in mind. For example, at Johns Hopkins Medicine (2024), I optimized an AI-driven surgical training system that directly improved doctor feedback and patient outcomes.
+    - JHU Research Assistant: I demonstrate customer obsession by ensuring that every project I work on has the end-user in mind. For example, at Johns Hopkins Medicine, I optimized an AI-driven surgical training system that directly improved doctor feedback and patient outcomes.
 
 ---
 
@@ -305,11 +312,11 @@ And that's why I want to join Amazon.
 
 24. **Tell me about a time you recovered from a difficult situation.**  
     _Leadership Principles: Deliver Results, Earn Trust_  
-    At BEUMER Group (2020), after initially failing to meet project expectations due to miscommunication, I took full ownership of the Visitor Management System redesign. By clarifying requirements and enhancing system functionality, I turned the situation around and achieved a successful outcome.
+    At BEUMER Group, after initially failing to meet project expectations due to miscommunication, I took full ownership of the Visitor Management System redesign. By clarifying requirements and enhancing system functionality, I turned the situation around and achieved a successful outcome.
 
 25. **Tell me about a time you failed and what you learned.**  
     _Leadership Principles: Learn and Be Curious, Earn Trust_  
-    At the Untitled Startup (2021), my failure to lead decisively resulted in misaligned team goals and project failure. This experience taught me that clear communication and assertive leadership are essential to prevent conflicts and drive team success.
+    Untitled Project: my failure to lead decisively resulted in misaligned team goals and project failure. This experience taught me that clear communication and assertive leadership are essential to prevent conflicts and drive team success.
 
 ---
 
@@ -317,11 +324,12 @@ And that's why I want to join Amazon.
 
 26. **Describe a time when you were 75% through a project and got stuck. How did you ensure it got done? Was it a successful one?**  
     _Leadership Principles: Deliver Results, Dive Deep, Bias for Action_  
-    [] **Chat-generated:** (An example might detail a project pivot during a complex research phase where I identified roadblocks and restructured the approach to meet deadlines successfully.)
+    - Untitled Project: Almsot done with MVP but UI/UX designer had to step back from operations for personal reasons. The time constraint late stage of the project could not warrant a new designer, so we upheaved our roadmap, set new goals, reassigned tasks within our existing team, and got the work done.
 
 27. **Tell me about a time when you had to deal with an ambiguous situation because you didn’t have enough data. How did you approach it and what was the outcome?**  
     _Leadership Principles: Are Right, A Lot, Dive Deep_  
-    [] **Chat-generated:** While working on topic modeling at the University of Maryland (2021), I encountered ambiguities due to inconsistent data. I conducted exploratory analyses and transitioned to a Word2Vec approach, which enhanced dataset interpretability and led to more accurate insights.
+    - **Beumer Group**
+    - Untitled Project: Team members were unresponsive and vague with project completion goals after covid
 
 ---
 
@@ -333,11 +341,11 @@ And that's why I want to join Amazon.
 
 29. **Tell me about a time when you had a major disagreement with your boss.**  
     _Leadership Principles: Have Backbone; Disagree and Commit, Earn Trust_  
-    []
+    - PI/advisor only wanted to use open-source models for outputs, pushed back to advocate for annotated data from real-world professionals to generate better models
 
 30. **Give me an example when you had to push back to HQ or challenge a decision.**  
     _Leadership Principles: Have Backbone; Disagree and Commit, Deliver Results_  
-    []
+    - JHU TA: advocate for extra hours
 
 ---
 
@@ -345,19 +353,21 @@ And that's why I want to join Amazon.
 
 31. **Tell me about a time you had to quickly adjust your work priorities to meet changing demands.**  
     _Leadership Principles: Bias for Action, Deliver Results_  
-    At PyData NYC (2024), I recognized that my NLP demo was too slow for a live presentation. I quickly reworked the core data processing pipeline using GPU-accelerated Polars, which optimized processing speeds by 70% and ensured a high-quality, efficient demo for the conference.
+    - PyData NYC: reworked demo was too slow for a live presentation
 
 32. **Tell me about a decision that you regret.**  
     _Leadership Principles: Earn Trust, Learn and Be Curious_  
-    At the Untitled Startup (2021), I regret not leading decisively during a crucial phase of the project. My hesitation resulted in misaligned goals and internal conflict, teaching me the value of assertive leadership and timely decision-making.
+    - Untitled Project
 
 33. **Tell me about a time you stepped up into a leadership role.**  
-    [] **Chat-generated:** _Leadership Principles: Ownership, Think Big_  
-    At ShareKhan (2022), I identified significant inefficiencies in the handling of Twitter customer queries. I stepped up by proposing and leading the development of a sentiment analysis system that automated query classification, reducing compliance response times by 50% and demonstrating my ability to take charge in challenging situations.
+    _Leadership Principles: Ownership, Think Big_  
+    - Untitled Project
+    - Beumer Group
 
 34. **Describe a situation when you negotiated with others in your organization to reach an agreement.**  
     _Leadership Principles: Earn Trust, Have Backbone; Disagree and Commit_  
-    [] **Chat-generated:** (A fitting example might involve negotiating project scopes or resource allocations in one of my roles, where I facilitated constructive dialogue to arrive at a mutually beneficial solution.)
+    - Untitled Project
+    - JHU Research Assistant
 
 ---
 
@@ -365,56 +375,84 @@ And that's why I want to join Amazon.
 
 35. **We all make mistakes we wish we could take back. Tell me about a time you wish you’d handled a situation differently with a colleague.**  
     _Leadership Principles: Earn Trust, Learn and Be Curious_  
-    At the Untitled Startup (2021), I failed to address team misalignment early, which eventually led to internal conflicts and the project’s collapse. This experience taught me the importance of proactive conflict resolution and clear communication to maintain team cohesion.
+    - Untitled project: team misalignment
 
 ---
 
 ### **Problem Prevention & Strategy**
 
-36. **Describe a time when you anticipated potential problems and developed preventive measures.**  
-    _Leadership Principles: Think Big, Dive Deep_  
-    [] **Chat-generated:** At Optum (2022), I anticipated potential security vulnerabilities in our Healthcare Policy Management System. I integrated additional safeguards and preventive measures during development, which prevented fraudulent policy applications and ensured system integrity.
-
-37. **How have you leveraged data to develop a strategy?**  
+36. **How have you leveraged data to develop a strategy?**  
     _Leadership Principles: Are Right, A Lot, Dive Deep_  
-    At ShareKhan (2022), I used Twitter sentiment analysis to identify key topics driving user engagement. This data-driven insight enabled the marketing team to optimize outreach strategies in real time.
+    - ShareKhan: sentiment analysis provided data-driven insight that enabled the marketing team to cut response time by half.
 
-38. **Describe a time when you were 75% through a project and had to pivot strategy.**  
+37. **Describe a time when you were 75% through a project and had to pivot strategy.**  
     _Leadership Principles: Bias for Action, Deliver Results_  
-    [] **Chat-generated:** During my work on LLM fine-tuning at Johns Hopkins Research (2024), I realized that the CNN-Transformer approach was inefficient for processing medical video data. I pivoted to using Vision Transformers, which improved model performance by 40% and ensured the project’s success.
-
-39. **Tell me about a time you had to deal with ambiguity.**  
-    _Leadership Principles: Dive Deep, Are Right, A Lot_  
-    [] **Chat-generated:** At the University of Maryland (2021), while working on topic modeling for summarization, I encountered ambiguous results due to semantic inconsistencies in the data. I conducted extensive exploratory research, transitioned to a Word2Vec-based approach, and ultimately enhanced data interpretability and model accuracy.
+    - Untitled Project: Almsot done with MVP but UI/UX designer had to step back from operations for personal reasons. The time constraint late stage of the project could not warrant a new designer, so we upheaved our roadmap, set new goals, reassigned tasks within our existing team, and got the work done.
 
 ---
 
 ### **Innovation & Ownership**
 
-40. **What’s the most innovative new idea that you have implemented?**  
+38. **What’s the most innovative new idea that you have implemented?**  
     _Leadership Principles: Invent and Simplify, Think Big_  
-    [] **Chat-generated:** At Johns Hopkins Research (2024), I developed a FlashAttention-based optimization for large language models, reducing inference time by 50% and significantly improving training efficiency.
+    - ShareKhan sentiment analysis
+    - Word2Vec paper
+    - JHU mLLMs
 
-41. **Provide an example of when you personally demonstrated ownership.**  
+39. **Provide an example of when you personally demonstrated ownership.**  
     _Leadership Principles: Ownership, Deliver Results_  
-    At BEUMER Group (2020), I took full ownership of the Visitor Management System redesign after an initial failure. My proactive approach and subsequent improvements led to a 100% reduction in unauthorized warehouse access incidents.
+    **BEUMER Group**: Took full ownership of the Visitor Management System redesign after an initial failure. My proactive approach and subsequent improvements led to a 100% reduction in unauthorized warehouse access incidents.
 
     Also: JHU TA
 
-42. **Describe a time when you sacrificed short-term goals for long-term success.**  
+40. **Describe a time when you sacrificed short-term goals for long-term success.**  
     _Leadership Principles: Think Big, Ownership_  
-    [] **Chat-generated:** At Johns Hopkins Research (2024), I devoted additional time to optimizing LLM inference efficiency, even though it delayed short-term experiments. This focus on long-term scalability ultimately ensured a robust and future-proof solution.
+    - JHU TA: Short-term goal was to complete academic schedule ahead of time and focus on research, study, projects and personal goals. After seeing the consistent pileup of students outside my door, however, I was compelled to dedicating my time towards ensuring student success by increasing office hours. At the end of the semester, I was on top of my academic and research work while also having helped my class truly understand extremely important, interesting and useful topics that they will carry forward and use in their work.
+
+---
+
+**41. Tell me about a time you missed a deadline on a project, how did you respond?**  
+_**Leadership Principles:** Deliver Results, Earn Trust, Bias for Action_  
+  - **PyData**
+  - **Untitled Project:** missed out on self-imposed deadline of launching before the start of a new semeseter, but had reworked your roadmap to still complete the project within your new framework
 
 ---
 
 ### **Self-Reflection & Weaknesses**
 
-43. **What’s your biggest weakness?**  
+42. **What’s your biggest weakness?**  
     _Leadership Principles: Earn Trust, Learn and Be Curious_  
-    [] **Chat-generated:** Earlier in my career, I struggled with leadership and decisive decision-making, as evidenced during my time at the Untitled Startup (2021). Through these experiences, I have worked hard to develop assertiveness and strategic thinking, turning a previous weakness into an area of continuous improvement.
+    - I tend to delve deep into every task I am assigned, because I want to be thorough in my work and make sure that the results that I deliver are accurate and robust. This, however, means that I often have a hard time letting work go and delegating tasks to team members to speed up the process. To remedy this, I have started to communicate my project goals and have taken the time to train and collaborate with members to handle tasks in an efficient manner. This way, everyone in the team functions cohesively and I am assured of the standard of work being presented. An example of this would be at **Beumer group**, where I guided my fellow teammates through utilizing the MEAN stack, and was able to delegate some frontend development tasks. The project panned out very well, utlimately. 
 
-### **45. Tell me about a time you missed a deadline on a project, how did you respond?**  
-_**Leadership Principles:** Deliver Results, Earn Trust, Bias for Action_  
-[] **Chat-generated:**  UMD Research (2021) Initially **struggled to meet research deadlines** due to **unexpected data inconsistencies** in nursing home reports. Recognizing the delay, I **immediately communicated the issue** to my research advisor and proposed **a data preprocessing pipeline to improve efficiency**. By **automating parts of the summarization process**, I was able to **recover lost time and ensure that the next milestone was met on schedule**. This experience taught me the **importance of proactive problem-solving and clear communication when handling unexpected setbacks**.
+    - JHU research: Wanted to manage all aspects of fine-tuning mLLMs and struggled with delegation because I had a standard of work that I wanted to maintain. However, it slowed me down and this was was not efficient or constructive in a fast-paced, result-focused research environment where papers were waiting on the results of my work. Therefore, I hand-picked and trained one junior researcher on my tasks and methods to ensure the same standards of work while doubling my efficiency.
 
-    []
+    <!-- - When assigned a task, I tend to think beyond the basic scope and focus on long-term goals. However, this sometimes means that I spend more time than necessary on a project that requires the bare minimum. In order to maximize efficiency, I am trying to prioritize delivering the requirements asked of me as quickly and efficiently as I can, and only then pitching further improvements to managers. For example, [] -->
+
+    <!-- - [Something that can be corrected easily] While I have completed multiple internships, projects and have research experience, I have not necessarily worked with the methodologies that corporate workplaces use today. Theoretically, I know about the existence of project management frameworks such as Agile, but I hope to remedy this in the near future -->
+
+---
+
+### Strengths
+
+- PyData: Balanced speed and quality, cool under pressure, passion for learning, does things with the end user in mind
+- "Self-correcting": have overcome professional failures in stride
+- Ability to deal with ambiguity through efficient communication and work
+- Thinking Big
+
+### Words to Describe You
+
+- Reliable
+- Result-oriented
+- Efficient/Self-sufficient
+- Communicative
+- Visionary
+
+ ---
+
+### Questions to ask the Interviewer
+
+- Do you have any concerns or reservations about me as a candidate (I can help clear them out)? What do you want out of an SDE candidate?
+- Is there anything that we discussed today that you would like me to elaborate upon further?
+- What made YOU want to join Amazon, and what has made you stay?
+- Day in the interviewer's life, what sort of work would I be looking at in their teams?
+- What were your goals when you joined Amazon, and do you think you've achieved them?
