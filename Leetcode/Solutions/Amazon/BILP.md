@@ -219,12 +219,14 @@ And that's why I want to join Amazon.
 8. **What did you do when you needed to motivate a group of individuals?**  
    _Leadership Principles: Hire and Develop the Best_  
    - **Untitled Project**
+   - TA story; (Example details can be drawn from instances where I motivated team members by setting clear expectations and celebrating small wins, ensuring that each team member felt supported and valued.)
 
 9. **Tell me about a time you stepped up into a leadership role.**  
    _Leadership Principles: Ownership, Think Big_  
    - **Untitled Project**
    - **ShareKhan**: Sentiment Analysis project ownership
-
+   - upGAN, At ShareKhan (2022), I identified inefficiencies in how Twitter customer queries were handled. I took the initiative to propose and lead the development of a sentiment analysis system that automated query classification and significantly reduced compliance response times.
+   
 ---
 
 ### **Team / Communication & Negotiation**
