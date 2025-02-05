@@ -31,7 +31,7 @@
 ## **Concepts & Theory**  
 
 2. **Operating Systems**  
-   - Boot process, caching vs. paging, stack vs. heap memory.
+   caching vs. paging
 
 ---
 
