@@ -39,13 +39,13 @@ _**Leadership Principles:** Learn and Be Curious, Dive Deep, Deliver Results_
 In 2021, I joined the Maryland Information and Network Dynamics (MIND) Lab at the University of Maryland, College Park as an Undergraduate Research Assistant, where I collaborated closely with two PhD students and a team of over 30 interns. The lab is renowned for cutting-edge research and collaborates with both academia and industry, contributing to four patents and supporting 20 PhD dissertations since it was founded.
 
 ### **Task**  
-I was responsible for developing a multi-component NLP model capable of summarizing key insights from a large corpora of **15,000** nursing home inspection reports which in turn would work with summarization tools being created by other group members. Early approaches using topic modeling methods such as **Latent Dirichlet Allocation (LDA)** and **Hierarchical Dirichlet Process (HDP)** struggled to capture the necessary themes accurately. My challenge was to refine the extraction process so that the summaries were both accurate and concise while preserving critical healthcare compliance information.
+I was responsible for developing a multi-component NLP model capable of summarizing key insights from a large corpora of **1,000** nursing home inspection reports which in turn would work with summarization tools being created by other group members. Early approaches using topic modeling methods such as **Latent Dirichlet Allocation (LDA)** and **Hierarchical Dirichlet Process (HDP)** struggled to capture the necessary themes accurately. My challenge was to refine the extraction process so that the summaries were both accurate and concise while preserving critical healthcare compliance information.
 
 ### **Action**  
 I identified an opportunity to improve the model by incorporating Word2Vec embeddings to track semantic shifts in tokens over time. By applying vector arithmetic to measure semantic similarity and using k-means clustering to group related terms, I enhanced the model’s ability to extract meaningful themes and their change over time. I worked on refining the data pipeline and improving preprocessing techniques to ensure cleaner inputs and outputs for the model.
 
 ### **Result**  
-The Word2Vec-based NLP model significantly improved the interpretability of the reports, making the results more accessible and accurate for easy data ingestion. This outcome of this project could potentially benefit over **1.2 million residents** staying in nursing homes across the US. My work culminated in a published research paper and a conference presentation at the European Alliance for Innovation (EAI). Additionally, I presented a live demonstration at PyData NYC, showcasing how this method could transform document analysis and trend detection, a breakthrough that paved the way for future research in the field.
+The Word2Vec-based NLP model significantly improved the interpretability of the reports, making the results more accessible and accurate for easy data ingestion. This outcome of this project could potentially benefit over **0.5 million residents** staying in nursing homes across the US. My work culminated in a published research paper and a conference presentation at the European Alliance for Innovation (EAI). Additionally, I presented a live demonstration at PyData NYC, showcasing how this method could transform document analysis and trend detection, a breakthrough that paved the way for future research in the field.
 
 ---
 
@@ -66,9 +66,14 @@ The implementation of the Sentiment Analysis Bot reduced the compliance team's r
 
 ---
 
-## **4.5 ShareKhan by BNP Paribas (2022) – GPT style finantial models**
+## **4.5 ShareKhan by BNP Paribas (2023) – GPT style financial models**
 
 [TODO]
+
+### Result
+
+- Created a basic charater-level GPT-3 style model that could shakespearan text
+- used 1 million + financial documents to continue pretrainig a base GPT-3 style model (vicuna)
 
 ## **5. Agronomy Journal (2022) – Time-Series Crop Infestation Prediction**
 _**Leadership Principles:** Think Big, Deliver Results, Earn Trust_
@@ -152,14 +157,18 @@ Taking the initiative, I dedicated extra time beyond the scheduled office hours 
 ### **Result**  
  These steps not only helped address individual learning gaps but also fostered a more engaging and supportive learning environment. As a direct result of my initiative, my weekly office hours increased to over 12 hours, and I received commendations from the professor for my efforts. Most importantly, all students passed the course, with the median grade for the semester improving by 15% compared to the previous year. This experience reinforced my belief in the importance of proactive and personalized support.
 
+## **10. Johns Hopkins (2024) – upGan ML:DL project**
+
+## **11. Johns Hopkins (2024) – ESMnrg**
+
 ---
 
 # Introductory Questions
 
 ## Tell Me About Yourself
-Hi, I’m Angad Sandhu, a master’s student majoring in Computer Science at Johns Hopkins University’s Whiting School of Engineering specializing in generative AI, NLP, and high performance computing. Over the past few years, I’ve been dedicated to exploring and applying advanced AI models to solve real-world challenges and drive transformative changes in industries such as healthcare and finance.
+Hi, I’m Angad Sandhu, a master’s student majoring in Computer Science at Johns Hopkins University’s Whiting School of Engineering specializing in generative AI, NLP, and high performance computing. Over the past few years, I’ve dedicated myself to exploring and applying advanced AI models to solve real-world challenges and drive transformative changes in industries such as healthcare and finance.
 
-I began my journey at ShareKhan by BNP Paribas a FinTech startup, where I worked on decoder-style generative models that enhanced how users interact with financial data. Following this, I built a healthcare policy management platform at Optum that could successfully serve thousands of policies from multiple clients, delivering scalable, real-world solutions. At Johns Hopkins Medicine, I’m currently working on benchmarking state-of-the-art multimodal LLMs for medical applications and fine-tuning them using instruct-tuning and RLHF methods. My experience with high performace DL librabries such as DeepSpeed, and HF Accelerate allow me to run and train such models on our local, bare metal distributed high-performance computing clusters. 
+I began my journey at ShareKhan by BNP Paribas a FinTech startup, where I worked on decoder-style generative models that enhanced how users interact with financial data. Following this, I built a healthcare policy management platform at Optum that could successfully serve thousands of policies from multiple clients, delivering scalable, real-world solutions. At Johns Hopkins Medicine, I’m currently working on benchmarking state-of-the-art multimodal LLMs for medical applications and fine-tuning them using instruct-tuning and RLHF methods. My experience with high performace DL librabries such as DeepSpeed, and HF Accelerate allow me to run and train such models on our local, bare metal distributed hpc clusters. 
  
 Throughout this time, I have also been actively contributing to AI research as well. I have published papers on temporal topic modeling at the 2024 EAI PervasiveHealth conference in Greece and presented a live demo of my work at the PyData event in NYC last year, along with a few more conferences and journals that I have been a part of. Apart from that, my role as a graduate teaching assistant at JHU has allowed me to share my passion for machine learning with others and learn how to be a better educator.
 
@@ -172,6 +181,45 @@ Johns Hopkins University and Amazon have collaborated to help advance AI researc
 As a loyal customer myself, I've experienced firsthand the customer-centric mindset that define Amazon as a brand. As a passionate CS engineer, the sheer scope and scalability of Amazon's technical services are inspiring. For instance, major organizations like Intuit and Slack rely on Amazon’s infrastructure to power their AI-driven features. Heroku, a platform I have personally used for my own projects, is built on AWS. Additionally, Anthropic leverages AWS as its primary cloud provider. It would be an incredible opportunity to contribute to the systems that form the backbone of so many innovative applications.
 
 And that's why I want to join Amazon.
+
+---
+
+## **Self-Reflection & Weaknesses**
+
+42. **What’s your biggest weakness?**  
+    _Leadership Principles: Earn Trust, Learn and Be Curious_  
+    - I tend to delve deep into every task I am assigned, because I want to be thorough in my work and make sure that the results that I deliver are accurate and robust. This, however, means that I often have a hard time letting work go and delegating tasks to team members to speed up the process. To remedy this, I have started to communicate my project goals and have taken the time to train and collaborate with members to handle tasks in an efficient manner. This way, everyone in the team functions cohesively and I am assured of the standard of work being presented. An example of this would be at **Optum**, where I guided my fellow teammates through utilizing the Angular, and was able to delegate some frontend development tasks. While I could focus on the ASP.NET backend. The project panned out very well, utlimately. 
+
+    - JHU research: Wanted to manage all aspects of fine-tuning mLLMs and struggled with delegation because I had a standard of work that I wanted to maintain. However, it slowed me down and this was was not efficient or constructive in a fast-paced, result-focused research environment where papers were waiting on the results of my work. Therefore, I hand-picked and trained one junior researcher on my tasks and methods to ensure the same standards of work while doubling my efficiency.
+
+    <!-- - When assigned a task, I tend to think beyond the basic scope and focus on long-term goals. However, this sometimes means that I spend more time than necessary on a project that requires the bare minimum. In order to maximize efficiency, I am trying to prioritize delivering the requirements asked of me as quickly and efficiently as I can, and only then pitching further improvements to managers. For example, [] -->
+
+    <!-- - [Something that can be corrected easily] While I have completed multiple internships, projects and have research experience, I have not necessarily worked with the methodologies that corporate workplaces use today. Theoretically, I know about the existence of project management frameworks such as Agile, but I hope to remedy this in the near future -->
+
+---
+
+### Strengths
+
+- PyData: Balanced speed and quality, cool under pressure, passion for learning, does things with the end user in mind
+- "Self-correcting": have overcome professional failures in stride
+- Ability to deal with ambiguity through efficient communication and work
+- Thinking Big
+
+### Words to Describe You
+
+- Reliable
+- Result-oriented
+- Efficient/Self-sufficient
+- Communicative
+- Visionary
+
+## Questions to ask the Interviewer
+
+- Do you have any concerns or reservations about me as a candidate (I can help clear them out)? What do you want out of an SDE candidate?
+- Is there anything that we discussed today that you would like me to elaborate upon further?
+- What were your goals when you joined Amazon, and do you think you've achieved them?
+- What made YOU want to join Amazon, and what has made you stay?
+- Day in the interviewer's life, what sort of work would I be looking at in their teams?
 
 ---
 
@@ -207,6 +255,7 @@ And that's why I want to join Amazon.
 5. **Give me an example when you had to push back to HQ or challenge a decision.**  
    _Leadership Principles: Have Backbone; Disagree and Commit, Deliver Results_  
    - **BEUMER Group**
+   - Gratuate RA: Asked for infiniband connection for faster data transfer and multi-node multi-GPU training
 
 7. **Tell me about a decision that you regret.**  
    _Leadership Principles: Earn Trust, Learn and Be Curious_  
@@ -224,9 +273,8 @@ And that's why I want to join Amazon.
 9. **Tell me about a time you stepped up into a leadership role.**  
    _Leadership Principles: Ownership, Think Big_  
    - **Untitled Project**
-   - **ShareKhan**: Sentiment Analysis project ownership
-   - upGAN, At ShareKhan (2022), I identified inefficiencies in how Twitter customer queries were handled. I took the initiative to propose and lead the development of a sentiment analysis system that automated query classification and significantly reduced compliance response times.
-   
+   - **ShareKhan**: Sentiment Analysis project ownership, At ShareKhan (2022), I identified inefficiencies in how Twitter customer queries were handled. I took the initiative to propose and lead the development of a sentiment analysis system that automated query classification and significantly reduced compliance response times.
+   - upGAN
 ---
 
 ### **Team / Communication & Negotiation**
@@ -238,6 +286,7 @@ And that's why I want to join Amazon.
 11. **Describe a situation when you negotiated with others in your organization to reach an agreement.**  
     _Leadership Principles: Earn Trust, Have Backbone; Disagree and Commit_  
     - Untitled Project
+    - JHU Research Assistant
 
 ---
 
@@ -264,6 +313,7 @@ And that's why I want to join Amazon.
 15. **Give me an example of a time you faced a conflict while working on a team. How did you handle that?**  
     _Leadership Principles: Have Backbone; Disagree and Commit_  
     - Untitled Project
+    - Graduate RA: Disagreement with advisor on model selection, advocated for infiniBand connection for faster data transfer and multi-node multi-GPU training
 
 16. **Tell me about a time when you received negative feedback from your manager. How did you respond?**  
     _Leadership Principles: Earn Trust, Learn and Be Curious_  
@@ -416,43 +466,4 @@ _**Leadership Principles:** Deliver Results, Earn Trust, Bias for Action_
   - **PyData**
   - **Untitled Project:** missed out on self-imposed deadline of launching before the start of a new semeseter, but had reworked your roadmap to still complete the project within your new framework
 
----
-
-### **Self-Reflection & Weaknesses**
-
-42. **What’s your biggest weakness?**  
-    _Leadership Principles: Earn Trust, Learn and Be Curious_  
-    - I tend to delve deep into every task I am assigned, because I want to be thorough in my work and make sure that the results that I deliver are accurate and robust. This, however, means that I often have a hard time letting work go and delegating tasks to team members to speed up the process. To remedy this, I have started to communicate my project goals and have taken the time to train and collaborate with members to handle tasks in an efficient manner. This way, everyone in the team functions cohesively and I am assured of the standard of work being presented. An example of this would be at **Beumer group**, where I guided my fellow teammates through utilizing the MEAN stack, and was able to delegate some frontend development tasks. The project panned out very well, utlimately. 
-
-    - JHU research: Wanted to manage all aspects of fine-tuning mLLMs and struggled with delegation because I had a standard of work that I wanted to maintain. However, it slowed me down and this was was not efficient or constructive in a fast-paced, result-focused research environment where papers were waiting on the results of my work. Therefore, I hand-picked and trained one junior researcher on my tasks and methods to ensure the same standards of work while doubling my efficiency.
-
-    <!-- - When assigned a task, I tend to think beyond the basic scope and focus on long-term goals. However, this sometimes means that I spend more time than necessary on a project that requires the bare minimum. In order to maximize efficiency, I am trying to prioritize delivering the requirements asked of me as quickly and efficiently as I can, and only then pitching further improvements to managers. For example, [] -->
-
-    <!-- - [Something that can be corrected easily] While I have completed multiple internships, projects and have research experience, I have not necessarily worked with the methodologies that corporate workplaces use today. Theoretically, I know about the existence of project management frameworks such as Agile, but I hope to remedy this in the near future -->
-
----
-
-### Strengths
-
-- PyData: Balanced speed and quality, cool under pressure, passion for learning, does things with the end user in mind
-- "Self-correcting": have overcome professional failures in stride
-- Ability to deal with ambiguity through efficient communication and work
-- Thinking Big
-
-### Words to Describe You
-
-- Reliable
-- Result-oriented
-- Efficient/Self-sufficient
-- Communicative
-- Visionary
-
  ---
-
-### Questions to ask the Interviewer
-
-- Do you have any concerns or reservations about me as a candidate (I can help clear them out)? What do you want out of an SDE candidate?
-- Is there anything that we discussed today that you would like me to elaborate upon further?
-- What made YOU want to join Amazon, and what has made you stay?
-- Day in the interviewer's life, what sort of work would I be looking at in their teams?
-- What were your goals when you joined Amazon, and do you think you've achieved them?

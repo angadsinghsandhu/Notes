@@ -1,4 +1,3 @@
-```markdown
 # Design Patterns in Python
 
 This document provides an overview of several important design patterns with Python code examples and notes. The following patterns are covered:

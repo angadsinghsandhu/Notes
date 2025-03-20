@@ -1,0 +1,16 @@
+Travesal
+    - BFS
+    - DFS
+    - A*
+
+Prepositional Logic 
+
+First Order Logic
+
+Conjunctive Normal Form (CNF)
+
+resolution proof
+
+Constraint Satisfaction (backtracking search)
+
+minimum remaining values (MRV) heuristic and forward checking
