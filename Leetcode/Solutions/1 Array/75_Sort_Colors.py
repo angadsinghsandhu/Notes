@@ -109,21 +109,20 @@ class Solution:
 if __name__ == "__main__":
     solution = Solution()
 
+    # Example 1
+    arr1 = [2,0,2,1,1,0]
+    solution.brute_force(arr1)
+    print(arr1)  # [0,0,1,1,2,2]
 
-# Example 1
-arr1 = [2,0,2,1,1,0]
-solution.brute_force(arr1)
-print(arr1)  # [0,0,1,1,2,2]
+    arr2 = [2,0,2,1,1,0]
+    solution.optimized(arr2)
+    print(arr2)  # [0,0,1,1,2,2]
 
-arr2 = [2,0,2,1,1,0]
-solution.optimized(arr2)
-print(arr2)  # [0,0,1,1,2,2]
+    # Example 2
+    arr3 = [2,0,1]
+    solution.brute_force(arr3)
+    print(arr3)  # [0,1,2]
 
-# Example 2
-arr3 = [2,0,1]
-solution.brute_force(arr3)
-print(arr3)  # [0,1,2]
-
-arr4 = [2,0,1]
-solution.optimized(arr4)
-print(arr4)  # [0,1,2]
+    arr4 = [2,0,1]
+    solution.optimized(arr4)
+    print(arr4)  # [0,1,2]
