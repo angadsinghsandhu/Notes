@@ -35,6 +35,8 @@ A binary tree is a tree where each node has at most two children, referred to as
 
 Traversing a tree means visiting every node exactly once. There are two main approaches: Depth-First Search (DFS) and Breadth-First Search (BFS).
 
+![tree](./imgs/tree.png)
+
 ### Depth-First Search (DFS)
 
 DFS explores as far as possible down each branch before backtracking. It's commonly implemented using recursion.
