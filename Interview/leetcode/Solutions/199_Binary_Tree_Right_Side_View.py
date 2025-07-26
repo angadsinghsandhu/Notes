@@ -49,13 +49,7 @@ The right side view of the tree is `[1,3,4,5]`.
 
 from collections import deque
 from typing import List, Optional
-
-# Definition for a binary tree node.
-class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+from helpers import TreeNode, build_tree
 
 class Solution:
     """
@@ -71,7 +65,7 @@ class Solution:
         List[int] - The values of the nodes visible from the right side of the tree.
     """
 
-    def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
+    def rightSideView_Iterative(self, root: Optional[TreeNode]) -> List[int]:
         """
         Approach 1: BFS (Level-Order Traversal)
         - Use a queue to perform a level-order traversal.
@@ -102,7 +96,7 @@ class Solution:
 
         return result
 
-    def rightSideViewDFS(self, root: Optional[TreeNode]) -> List[int]:
+    def rightSideView_Recursive(self, root: Optional[TreeNode]) -> List[int]:
         """
         Approach 2: DFS (Depth-First Search)
         - Perform a DFS traversal, prioritizing the right subtree.
@@ -127,36 +121,37 @@ class Solution:
 
         dfs(root, 0)
         return result
+    
+    def rightSideView(self, root: Optional[TreeNode], flag=True) -> List[int]:
+        """
+        Main entry point for the LeetCode problem.
+        Calls the iterative solution as a standard optimal approach.
+        """
+        if flag: 
+            return self.rightSideView_Recursive(root)
+        else: 
+            return self.rightSideView_Iterative(root)
 
 # Run and print sample test cases
 if __name__ == "__main__":
     solution = Solution()
 
-    # Helper function to create a binary tree from a list of values
-    def create_tree(values: List[int], index: int = 0) -> Optional[TreeNode]:
-        if index >= len(values) or values[index] is None:
-            return None
-        root = TreeNode(values[index])
-        root.left = create_tree(values, 2 * index + 1)
-        root.right = create_tree(values, 2 * index + 2)
-        return root
-
     # Test case 1
-    tree1 = create_tree([1, 2, 3, None, 5, None, 4])
-    print(solution.rightSideView(tree1))  # Output: [1, 3, 4]
-    print(solution.rightSideViewDFS(tree1))  # Output: [1, 3, 4]
+    tree1 = build_tree([1, 2, 3, None, 5, None, 4])
+    print(solution.rightSideView(tree1, True))  # Output: [1, 3, 4]
+    print(solution.rightSideView(tree1, False))  # Output: [1, 3, 4]
 
     # Test case 2
-    tree2 = create_tree([1, 2, 3, 4, None, None, None, 5])
-    print(solution.rightSideView(tree2))  # Output: [1, 3, 4, 5]
-    print(solution.rightSideViewDFS(tree2))  # Output: [1, 3, 4, 5]
+    tree2 = build_tree([1, 2, 3, 4, None, None, None, 5])
+    print(solution.rightSideView(tree2, True))  # Output: [1, 3, 4, 5]
+    print(solution.rightSideView(tree2, False))  # Output: [1, 3, 4, 5]
 
     # Test case 3 (Single node)
-    tree3 = create_tree([1])
-    print(solution.rightSideView(tree3))  # Output: [1]
-    print(solution.rightSideViewDFS(tree3))  # Output: [1]
+    tree3 = build_tree([1])
+    print(solution.rightSideView(tree3, True))  # Output: [1]
+    print(solution.rightSideView(tree3, False))  # Output: [1]
 
     # Test case 4 (Empty tree)
-    tree4 = create_tree([])
-    print(solution.rightSideView(tree4))  # Output: []
-    print(solution.rightSideViewDFS(tree4))  # Output: []
+    tree4 = build_tree([])
+    print(solution.rightSideView(tree4, True))  # Output: []
+    print(solution.rightSideView(tree4, False))  # Output: []
