@@ -17,10 +17,10 @@ def print_matrix(matrix: List[List[int]]) -> None:
 ############ Tree Helper Functions ############
 # Definition for a binary tree node.
 class TreeNode:
-    def __init__(self, val=0, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
+    def __init__(self, val: int = 0, left: Optional['TreeNode'] = None, right: Optional['TreeNode'] = None):
+        self.val: int = val
+        self.left: Optional[TreeNode] = left
+        self.right: Optional[TreeNode] = right
 
 # Helper function to build a tree from a list (for testing purposes)
 def build_tree(nodes: List[Optional[int]]) -> Optional[TreeNode]:

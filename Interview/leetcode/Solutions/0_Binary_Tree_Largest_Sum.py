@@ -59,7 +59,7 @@ class Solution:
         int - The maximum diameter sum in the binary tree.
     """
 
-    def maxDiameterSum(self, tree: List[int]) -> int:
+    def maxDiameterSum(self, tree: List[int]) -> float:
         """
         Approach:
         - Use a helper function `dfs` to perform a post-order traversal of the tree.
@@ -75,7 +75,7 @@ class Solution:
             """
             Helper function to perform DFS and return the maximum path sum that can be extended through the current node.
             """
-            if index >= len(tree) or tree[index] is None:
+            if index >= len(tree):
                 return 0
 
             # Recursively calculate the maximum path sum for the left and right subtrees
