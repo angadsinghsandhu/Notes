@@ -4,7 +4,7 @@
 Problem Number: 286
 Problem Name: Walls and Gates
 Difficulty: Medium
-Tags: Breadth-First Search (BFS), Array, Matrix
+Tags: BFS, Multi-source BFS, Grid, Graph, Neetcode 150
 Company (Frequency): Amazon, Bloomberg, ByteDance, Facebook, Google, Microsoft, Uber
 Leetcode Link: https://leetcode.com/problems/walls-and-gates/
 

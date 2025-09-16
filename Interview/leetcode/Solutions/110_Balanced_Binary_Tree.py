@@ -5,8 +5,8 @@
 Problem Number: 110
 Problem Name: Balanced Binary Tree
 Difficulty: Easy
-Tags: Tree, Depth-First Search, Binary Tree
-Company (Frequency): Amazon (15), Facebook (10), Google (8)
+Tags: Tree, Depth-First Search, Binary Tree, Neetcode 150
+Company (Frequency): Amazon (15), Apple, Facebook (10), Google (8), Microsoft
 Leetcode Link: https://leetcode.com/problems/balanced-binary-tree/description/
 GeeksforGeeks Link: https://www.geeksforgeeks.org/check-if-a-binary-tree-is-height-balanced-or-not/
 

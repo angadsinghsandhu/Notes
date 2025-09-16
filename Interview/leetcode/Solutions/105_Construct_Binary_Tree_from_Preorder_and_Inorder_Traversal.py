@@ -1,13 +1,13 @@
-# TODO: revisit (practice code)
+# TODO: revisit
 
-# File: Leetcode/Solutions/Amazon/105_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal.py
+# File: Leetcode/Solutions/105_Construct_Binary_Tree_from_Preorder_and_Inorder_Traversal.py
 
 """
 Problem Number: 105
 Problem Name: Construct Binary Tree from Preorder and Inorder Traversal
 Difficulty: Medium
-Tags: Tree, Array, Hash Table, Divide and Conquer, Binary Tree
-Company (Frequency): Amazon (40)
+Tags: Array, Hash Table, Tree, Depth-First Search, Binary Tree, Neetcode 150
+Company (Frequency): Amazon (40), Apple, Facebook, Google, Microsoft
 Leetcode Link: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/description/
 
 DESCRIPTION
@@ -144,7 +144,7 @@ if __name__ == "__main__":
         if not root:
             return []
         result = []
-        queue = [root]
+        queue: List[Optional[TreeNode]] = [root]
         while queue:
             node = queue.pop(0)
             if node:

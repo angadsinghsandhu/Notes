@@ -1,4 +1,4 @@
-### File: Leetcode/Solutions/Amazon/188_Best_Time_to_Buy_and_Sell_Stock_IV.py
+### File: Leetcode/Solutions/188_Best_Time_to_Buy_and_Sell_Stock_IV.py
 
 """
 Problem Number: 188

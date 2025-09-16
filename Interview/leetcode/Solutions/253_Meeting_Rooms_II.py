@@ -1,12 +1,12 @@
 # TODO: revisit
 
-# File: Leetcode/Solutions/Amazon/253_Meeting_Rooms_II.py
+# File: Leetcode/Solutions/253_Meeting_Rooms_II.py
 
 """
 Problem Number: 253
 Problem Name: Meeting Rooms II
 Difficulty: Medium
-Tags: Greedy, Array, Two Pointers, Prefix Sum, Sorting, Heap (Priority Queue)
+Tags: Greedy, Array, Two Pointers, Prefix Sum, Sorting, Heap (Priority Queue), Neetcode 150
 Company (Frequency): Amazon, Microsoft, Google, Apple, Adobe (High)
 Leetcode Link: https://leetcode.com/problems/meeting-rooms-ii/
 Lintcode Link: https://www.lintcode.com/problem/919/

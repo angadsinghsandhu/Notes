@@ -4,7 +4,7 @@
 Problem Number: 124
 Problem Name: Binary Tree Maximum Path Sum
 Difficulty: Hard
-Tags: Tree, Depth-First Search, Dynamic Programming, Binary Tree
+Tags: Dynamic Programming, Tree, Depth-First Search, Binary Tree, Neetcode 150
 Company (Frequency): Amazon (15), Microsoft (10), Facebook (8)
 Leetcode Link: https://leetcode.com/problems/binary-tree-maximum-path-sum/description/
 
@@ -51,7 +51,7 @@ The optimal path is `15 -> 20 -> 7` with a path sum of `15 + 20 + 7 = 42`.
 - `-1000 <= Node.val <= 1000`
 """
 
-from typing import List
+from typing import List, Optional
 
 # Definition for a binary tree node.
 class TreeNode:
@@ -74,7 +74,7 @@ class Solution:
         int - The maximum path sum of any non-empty path in the tree.
     """
 
-    def maxPathSum(self, root: TreeNode) -> int:
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
         """
         Approach:
         - Use a helper function `dfs` to recursively compute the maximum path sum for each subtree.
@@ -88,7 +88,7 @@ class Solution:
         # Initialize the global maximum path sum to negative infinity
         self.max_sum = float('-inf')
 
-        def dfs(node: TreeNode) -> int:
+        def dfs(node: Optional[TreeNode]) -> int:
             """
             Helper function to perform depth-first search and compute the maximum path sum.
             """
@@ -112,17 +112,22 @@ class Solution:
         dfs(root)
 
         # Return the global maximum path sum
-        return self.max_sum
+        return int(self.max_sum)
 
 # Run and print sample test cases
 if __name__ == "__main__":
     solution = Solution()
 
     # Helper function to create a binary tree from a list of values
-    def create_tree(values: List[int], index: int = 0) -> TreeNode:
+    def create_tree(values: List[Optional[int]], index: int = 0) -> Optional[TreeNode]:
         if index >= len(values) or values[index] is None:
             return None
-        root = TreeNode(values[index])
+        
+        val = values[index]
+        if val is None:
+            return None
+
+        root = TreeNode(val)
         root.left = create_tree(values, 2 * index + 1)
         root.right = create_tree(values, 2 * index + 2)
         return root

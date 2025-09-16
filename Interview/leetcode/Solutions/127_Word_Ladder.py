@@ -2,7 +2,7 @@
 Problem Number: 127
 Problem Name: Word Ladder
 Difficulty: Hard
-Tags: Breadth-First Search (BFS), Hash Table, String
+Tags: Breadth-First Search (BFS), Hash Table, String, Neetcode 150
 Company (Frequency): Amazon, Microsoft, Apple, Google, Adobe (High)
 Leetcode Link: https://leetcode.com/problems/word-ladder/
 

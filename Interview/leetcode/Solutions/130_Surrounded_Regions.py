@@ -4,7 +4,7 @@
 Problem Number: 130
 Problem Name: Surrounded Regions
 Difficulty: Medium
-Tags: Depth-First Search (DFS), Breadth-First Search (BFS), Union-Find, Matrix
+Tags: Depth-First Search (DFS), Breadth-First Search (BFS), Union-Find, Matrix, Neetcode 150
 Company (Frequency): Amazon, Microsoft, Facebook, Apple, Google (Medium)
 Leetcode Link: https://leetcode.com/problems/surrounded-regions/
 

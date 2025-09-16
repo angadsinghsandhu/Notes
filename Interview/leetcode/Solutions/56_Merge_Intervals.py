@@ -1,11 +1,11 @@
-# File: Leetcode/Solutions/Amazon/56_Merge_Intervals.py
+# File: Leetcode/Solutions/56_Merge_Intervals.py
 
 """
 Problem Number: 56
 Problem Name: Merge Intervals
 Difficulty: Medium
-Tags: Array, Sorting
-Company (Frequency): Amazon (87)
+Tags: Array, Sorting, Intervals, Neetcode 150
+Company (Frequency): Amazon (87), Google, Facebook, Microsoft, Apple
 Leetcode Link: https://leetcode.com/problems/merge-intervals/description/
 
 DESCRIPTION
@@ -62,13 +62,13 @@ class Solution:
         if not intervals:
             return []
         
-        def _overlap(self, interval1: List[int], interval2: List[int]) -> bool:
+        def _overlap(interval1: List[int], interval2: List[int]) -> bool:
             """
             Helper function to check if two intervals overlap.
             """
             return interval1[1] >= interval2[0] and interval2[1] >= interval1[0]
         
-        def _merge(self, interval1: List[int], interval2: List[int]) -> List[int]:
+        def _merge(interval1: List[int], interval2: List[int]) -> List[int]:
             """
             Helper function to merge two overlapping intervals.
             """

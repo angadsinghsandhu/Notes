@@ -1,4 +1,4 @@
-# File: Leetcode/Solutions/Amazon/2149_Rearrange_Array_Elements_by_Sign.py
+# File: Leetcode/Solutions/2149_Rearrange_Array_Elements_by_Sign.py
 
 """
 Problem Number: 2149

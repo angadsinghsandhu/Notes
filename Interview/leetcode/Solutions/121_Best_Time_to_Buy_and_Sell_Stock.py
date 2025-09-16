@@ -4,7 +4,7 @@
 Problem Number: 121
 Problem Name: Best Time to Buy and Sell Stock
 Difficulty: Easy
-Tags: Array, Dynamic Programming
+Tags: Array, Dynamic Programming, Sliding Window, Neetcode 150
 Company (Frequency): Amazon (45), Microsoft (30), Google (25)
 Leetcode Link: https://leetcode.com/problems/best-time-to-buy-and-sell-stock/description/
 
@@ -64,7 +64,7 @@ class Solution:
                 profit = prices[j] - prices[i]
                 if profit > max_profit:
                     max_profit = profit
-        return max_profit
+        return int(max_profit)
 
     def optimized_solution(self, prices: List[int]) -> int:
         """
@@ -88,7 +88,7 @@ class Solution:
             elif price - min_price > max_profit:
                 max_profit = price - min_price
 
-        return max_profit
+        return int(max_profit)
 
 # Run and print sample test cases
 if __name__ == "__main__":

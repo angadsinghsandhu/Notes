@@ -4,7 +4,7 @@
 Problem Number: 261
 Problem Name: Graph Valid Tree
 Difficulty: Medium
-Tags: Depth-First Search, Breadth-First Search, Union Find, Graph
+Tags: Depth-First Search, Breadth-First Search, Union Find, Graph, Neetcode 150
 Company (Frequency): Google (12), Facebook (10), Amazon (8)
 Leetcode Link: https://leetcode.com/problems/graph-valid-tree/description/
 

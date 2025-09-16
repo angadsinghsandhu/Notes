@@ -1,13 +1,13 @@
 # TODO: revisit
 
-# File: Leetcode/Solutions/Amazon/287_Find_the_Duplicate_Number.py
+# File: Leetcode/Solutions/287_Find_the_Duplicate_Number.py
 
 """
 Problem Number: 287
 Problem Name: Find the Duplicate Number
 Difficulty: Medium
-Tags: Array, Two Pointers, Binary Search, Bit Manipulation
-Company (Frequency): Not explicitly stated, but common in top tech companies like Amazon (implied by file path)
+Tags: Array, Two Pointers, Binary Search, Neetcode 150
+Company (Frequency): Amazon, Apple, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/find-the-duplicate-number/description/>
 
 DESCRIPTION

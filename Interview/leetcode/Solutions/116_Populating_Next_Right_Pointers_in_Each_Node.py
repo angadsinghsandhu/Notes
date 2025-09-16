@@ -1,4 +1,4 @@
-# File: Leetcode/Solutions/Amazon/116_Populating_Next_Right_Pointers_in_Each_Node.py
+# File: Leetcode/Solutions/116_Populating_Next_Right_Pointers_in_Each_Node.py
 
 """
 Problem Number: 116

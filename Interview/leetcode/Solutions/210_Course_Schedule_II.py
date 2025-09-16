@@ -1,13 +1,13 @@
 # TODO: revisit
 
-# File: Leetcode/Solutions/Amazon/210_Course_Schedule_II.py
+# File: Leetcode/Solutions/210_Course_Schedule_II.py
 
 """
 Problem Number: 210
 Problem Name: Course Schedule II
 Difficulty: Medium
-Tags: Depth-First Search, Breadth-First Search, Graph, Topological Sort
-Company (Frequency): Amazon (45)
+Tags: Depth-First Search, Breadth-First Search, Graph, Topological Sort, Neetcode 150
+Company (Frequency): Amazon (45), Google, Facebook, Microsoft, Apple
 Leetcode Link: https://leetcode.com/problems/course-schedule-ii/description/
 
 DESCRIPTION

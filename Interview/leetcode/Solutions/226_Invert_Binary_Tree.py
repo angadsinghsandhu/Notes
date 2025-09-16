@@ -1,12 +1,13 @@
 # File: Leetcode/Solutions/Tree/226_Invert_Binary_Tree.py
+# pyright: ignore[reportInvalidStringEscapeSequence]
 
-"""
+r"""
 Problem Number: 226
 Trial: 0
 Problem Name: Invert Binary Tree
 Difficulty: Easy
-Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
-Company (Frequency): Frequently asked in interviews, classic problem.
+Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree, Neetcode 150
+Company (Frequency): Amazon, Apple, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/invert-binary-tree/description/>
 
 DESCRIPTION

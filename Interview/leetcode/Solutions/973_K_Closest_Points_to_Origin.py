@@ -1,10 +1,10 @@
-# File: Leetcode/Solutions/Amazon/973_K_Closest_Points_to_Origin.py
+# File: Leetcode/Solutions/973_K_Closest_Points_to_Origin.py
 
 """
 Problem Number: 973
 Problem Name: K Closest Points to Origin
 Difficulty: Medium
-Tags: Array, Math, Divide and Conquer, Sorting, Heap (Priority Queue), Quickselect
+Tags: Heap (Priority Queue), Divide and Conquer, Sorting, Geometry, Neetcode 150
 Company (Frequency): Amazon, Microsoft, Google, Apple, Facebook (High)
 Leetcode Link: https://leetcode.com/problems/k-closest-points-to-origin/
 

@@ -1,6 +1,6 @@
 # TODO: revisit
 
-# File: Leetcode/Solutions/Amazon/688_Knight_Probability_in_Chessboard.py
+# File: Leetcode/Solutions/688_Knight_Probability_in_Chessboard.py
 
 """
 Problem Number: 688

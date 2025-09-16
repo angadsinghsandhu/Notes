@@ -4,8 +4,8 @@
 Problem Number: 100
 Problem Name: Same Tree
 Difficulty: Easy
-Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
-Company (Frequency): Amazon (15), Microsoft (10), Google (8)
+Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree, Neetcode 150
+Company (Frequency): Amazon (15), Apple, Facebook, Microsoft (10), Google (8)
 Leetcode Link: https://leetcode.com/problems/same-tree/description/
 
 DESCRIPTION

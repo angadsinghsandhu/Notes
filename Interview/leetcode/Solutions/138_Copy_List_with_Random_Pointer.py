@@ -6,8 +6,8 @@
 Problem Number: 138
 Problem Name: Copy List with Random Pointer
 Difficulty: Medium
-Tags: Hash Table, Linked List
-Company (Frequency): Amazon (15), Microsoft (10), Facebook (8)
+Tags: Hash Table, Linked List, Neetcode 150
+Company (Frequency): Amazon (15), Microsoft (10), Facebook (8), Google
 Leetcode Link: https://leetcode.com/problems/copy-list-with-random-pointer/description/
 
 DESCRIPTION
@@ -39,8 +39,10 @@ The copied list maintains the same structure and pointers as the original list.
 """
 
 # Definition for a Node.
+from typing import Optional
+
 class Node:
-    def __init__(self, x: int, next: 'Node' = None, random: 'Node' = None):
+    def __init__(self, x: int, next: Optional['Node'] = None, random: Optional['Node'] = None):
         self.val = int(x)
         self.next = next
         self.random = random
@@ -59,7 +61,7 @@ class Solution:
         Node - The head of the deep-copied linked list.
     """
 
-    def copyRandomList(self, head: 'Node') -> 'Node':
+    def copyRandomList(self, head: Optional['Node']) -> Optional['Node']:
         """
         Approach:
         - Interleave the original and copied nodes by inserting a copy of each node right after the original node.
@@ -82,18 +84,18 @@ class Solution:
         # Step 2: Set the random pointers for the cloned nodes
         current = head
         while current:
-            if current.random:
+            if current.random and current.next:
                 current.next.random = current.random.next
-            current = current.next.next
+            current = current.next.next if current and current.next else None
 
         # Step 3: Separate the original and cloned lists
         original_current = head
         cloned_head = head.next
         while original_current:
             cloned_current = original_current.next
-            original_current.next = cloned_current.next
-            if cloned_current.next:
-                cloned_current.next = cloned_current.next.next
+            original_current.next = cloned_current.next if cloned_current is not None else None
+            if cloned_current is not None and cloned_current.next is not None:
+                cloned_current.next = cloned_current.next.next if cloned_current.next.next is not None else None
             original_current = original_current.next
 
         return cloned_head

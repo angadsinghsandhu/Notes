@@ -1,4 +1,4 @@
-# File: Leetcode/Solutions/Amazon/45_Jump_Game_II.py
+# File: Leetcode/Solutions/45_Jump_Game_II.py
 
 """
 Problem Number: 45

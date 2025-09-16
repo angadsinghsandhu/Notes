@@ -1,11 +1,11 @@
-# File: Leetcode/Solutions/Amazon/2_Add_Two_Numbers.py
+# File: Leetcode/Solutions/2_Add_Two_Numbers.py
 
 """
 Problem Number: 2
 Problem Name: Add Two Numbers
 Difficulty: Medium
-Tags: Linked List, Math, Recursion
-Company (Frequency): Amazon (89)
+Tags: Linked List, Math, Recursion, Neetcode 150
+Company (Frequency): Amazon (89), Apple, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/add-two-numbers/description/>
 
 DESCRIPTION

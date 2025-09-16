@@ -1,13 +1,13 @@
 # TODO: revisit [IMP]
 
-# File: Leetcode/Solutions/Amazon/146_LRU_Cache.py
+# File: Leetcode/Solutions/146_LRU_Cache.py
 
 """
 Problem Number: 146
 Problem Name: LRU Cache
 Difficulty: Medium
-Tags: Design, Hash Table, Linked List
-Company (Frequency): Amazon (103)
+Tags: Hash Table, Linked List, Design, Doubly-Linked List, Neetcode 150
+Company (Frequency): Amazon (103), Apple, Facebook, Google, Microsoft
 Leetcode Link: https://leetcode.com/problems/lru-cache/description/
 
 DESCRIPTION
@@ -20,7 +20,7 @@ Implement the `LRUCache` class:
 - `int get(int key)` Returns the value of the key if it exists, otherwise returns -1.
 - `void put(int key, int value)` Updates the value of the key if it exists. Otherwise, adds the key-value pair to the cache. If the number of keys exceeds the capacity, the least recently used key is evicted.
 
-Both `get` and `put` must run in \(O(1)\) average time complexity.
+Both `get` and `put` must run in (O(1)) average time complexity.
 """
 
 from collections import OrderedDict

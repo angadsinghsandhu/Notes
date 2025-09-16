@@ -1,4 +1,4 @@
-# File: Leetcode/Solutions/Amazon/88_Merge_Sorted_Array.py
+# File: Leetcode/Solutions/88_Merge_Sorted_Array.py
 
 """
 Problem Number: 88

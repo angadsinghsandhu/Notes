@@ -6,8 +6,8 @@
 Problem Number: 212
 Problem Name: Word Search II
 Difficulty: Hard
-Tags: Trie, Array, String, Backtracking, Matrix
-Company (Frequency): Various (Not specified)
+Tags: Array, String, Backtracking, Trie, Matrix, Neetcode 150
+Company (Frequency): Amazon, Apple, Facebook, Google
 Leetcode Link: https://leetcode.com/problems/word-search-ii/description/
 
 DESCRIPTION
@@ -67,7 +67,7 @@ The word "abcb" cannot be constructed from the board.
 - All the strings of `words` are unique.
 """
 
-from typing import List
+from typing import List, Optional
 
 class TrieNode:
     """
@@ -75,7 +75,7 @@ class TrieNode:
     """
     def __init__(self):
         self.children = {}  # Dictionary to store child nodes
-        self.word = None    # To mark the end of a word
+        self.word: Optional[str] = None    # To mark the end of a word
 
 class Solution:
     """

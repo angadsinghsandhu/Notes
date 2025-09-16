@@ -3,8 +3,8 @@
 Problem Number: 15
 Problem Name: 3Sum
 Difficulty: Medium
-Tags: Array, Two Pointers, Sorting
-Company (Frequency): Extremely common and fundamental interview problem, appears very frequently at top tech companies.
+Tags: Array, Two Pointers, Sorting, Neetcode 150
+Company (Frequency): Amazon, Facebook, Microsoft, Google, Apple
 Leetcode Link: <https://leetcode.com/problems/3sum/description/>
 
 DESCRIPTION

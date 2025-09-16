@@ -1,10 +1,10 @@
-# File: Leetcode/Solutions/Amazon/1_Two_Sum.py
+# File: Leetcode/Solutions/1_Two_Sum.py
 
 """
 Problem Number: 1
 Problem Name: Two Sum
 Difficulty: Easy
-Tags: Array, Hash Table, Two-Pointer
+Tags: Array, Hash Table, Two-Pointer, Neetcode 150
 Company (Frequency): Amazon (117)
 Leetcode Link: <https://leetcode.com/problems/two-sum/description/>
 
@@ -34,9 +34,9 @@ nums = [2, 7, 11, 15], target = 9
 Thus, we return `[0, 1]`.
 
 #### Constraints:
-- \(2 \leq nums.length \leq 10^4\)
-- \(-10^9 \leq nums[i] \leq 10^9\)
-- \(-10^9 \leq target \leq 10^9\)
+- 2 <= nums.length <= 10^4
+- -10^9 <= nums[i] <= 10^9
+- -10^9 <= target <= 10^9
 - Only one valid answer exists.
 
 """
@@ -71,6 +71,9 @@ class Solution:
                 if nums[i] + nums[j] == target:
                     return [i, j]
 
+        # If no solution is found, raise an error (since the problem guarantees one solution)
+        raise ValueError("No two sum solution exists")
+
     def optimized_solution(self, nums: List[int], target: int) -> List[int]:
         """
         Approach:
@@ -86,6 +89,9 @@ class Solution:
             if complement in num_to_index:
                 return [num_to_index[complement], i]
             num_to_index[num] = i
+
+        # If no solution is found, raise an error (since the problem guarantees one solution)
+        raise ValueError("No two sum solution exists")
 
 # Run and print sample test cases
 if __name__ == "__main__":

@@ -1,4 +1,4 @@
-# File: Leetcode/Solutions/Amazon/123_Best_Time_to_Buy_and_Sell_Stock_III.py
+# File: Leetcode/Solutions/123_Best_Time_to_Buy_and_Sell_Stock_III.py
 
 """
 Problem Number: 123

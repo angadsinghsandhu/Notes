@@ -1,13 +1,13 @@
 # TODO
 
-### **File:** `Leetcode/Solutions/Amazon/167_Two_Sum_II_Input_Array_Is_Sorted.py`
+### **File:** `Leetcode/Solutions/167_Two_Sum_II_Input_Array_Is_Sorted.py`
 
 """
 Problem Number: 167
 Problem Name: Two Sum II - Input Array Is Sorted
 Difficulty: Medium
-Tags: Array, Two Pointers, Binary Search
-Company (Frequency): Amazon (87)
+Tags: Array, Two Pointers, Binary Search, Neetcode 150
+Company (Frequency): Amazon, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/>
 
 DESCRIPTION

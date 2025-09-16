@@ -1,11 +1,11 @@
-# File: Leetcode/Solutions/Amazon/20_Valid_Parentheses.py
+# File: Leetcode/Solutions/20_Valid_Parentheses.py
 
 """
 Problem Number: 20
 Problem Name: Valid Parentheses
 Difficulty: Easy
-Tags: String, Stack
-Company (Frequency): Amazon (102)
+Tags: String, Stack, Neetcode 150
+Company (Frequency): Amazon, Facebook, Google, Microsoft, Bloomberg
 Leetcode Link: <https://leetcode.com/problems/valid-parentheses/description/>
 
 DESCRIPTION

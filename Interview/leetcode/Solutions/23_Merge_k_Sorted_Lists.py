@@ -1,11 +1,11 @@
-# File: Leetcode/Solutions/Amazon/23_Merge_k_Sorted_Lists.py
+# File: Leetcode/Solutions/23_Merge_k_Sorted_Lists.py
 
 """
 Problem Number: 23
 Problem Name: Merge k Sorted Lists
 Difficulty: Hard
-Tags: Linked List, Divide and Conquer, Heap (Priority Queue), Merge Sort
-Company (Frequency): Amazon (89)
+Tags: Linked List, Divide and Conquer, Heap (Priority Queue), Merge Sort, Neetcode 150
+Company (Frequency): Amazon (89), Apple, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/merge-k-sorted-lists/description/>
 
 DESCRIPTION
@@ -105,10 +105,10 @@ class Solution:
         S.C.: O(N) for storing all values.
         """
         nodes = []
-        for l in lists:
-            while l:
-                nodes.append(l.val)
-                l = l.next
+        for lst in lists:
+            while lst:
+                nodes.append(lst.val)
+                lst = lst.next
 
         nodes.sort()
         dummy = ListNode()
@@ -136,9 +136,9 @@ class Solution:
         current = dummy
 
         # Initialize the heap with the head of each linked list
-        for l in lists:
-            if l:
-                heapq.heappush(heap, (l.val, l))
+        for lst in lists:
+            if lst:
+                heapq.heappush(heap, (lst.val, lst))
 
         while heap:
             val, node = heapq.heappop(heap)

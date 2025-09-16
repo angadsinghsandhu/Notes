@@ -4,8 +4,8 @@
 Problem Number: 155
 Problem Name: Min Stack
 Difficulty: Medium
-Tags: Stack, Design
-Company (Frequency): Various (Not specified)
+Tags: Stack, Design, Neetcode 150
+Company (Frequency): Amazon, Bloomberg, Google, Facebook, Microsoft
 Leetcode Link: https://leetcode.com/problems/min-stack/description/
 
 DESCRIPTION
@@ -113,7 +113,9 @@ class MinStack:
         T.C.: O(1) - Accessing the last element of a list is constant time.
         S.C.: O(1) - No additional space used.
         """
-        return self.stack[-1] if self.stack else None
+        if not self.stack:
+            raise IndexError("top() called on empty stack")
+        return self.stack[-1]
 
     def getMin(self) -> int:
         """
@@ -123,7 +125,9 @@ class MinStack:
         T.C.: O(1) - Accessing the last element of a list is constant time.
         S.C.: O(1) - No additional space used.
         """
-        return self.min_stack[-1] if self.min_stack else None
+        if not self.min_stack:
+            raise IndexError("getMin() called on empty stack")
+        return self.min_stack[-1]
 
 # Run and print sample test cases
 if __name__ == "__main__":

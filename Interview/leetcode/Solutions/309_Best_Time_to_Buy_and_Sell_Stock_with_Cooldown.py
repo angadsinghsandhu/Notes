@@ -6,7 +6,7 @@
 Problem Number: 309
 Problem Name: Best Time to Buy and Sell Stock with Cooldown
 Difficulty: Medium
-Tags: Array, Dynamic Programming
+Tags: Array, Dynamic Programming, Neetcode 150
 Company (Frequency): Google (15), Amazon (10), Facebook (8)
 Leetcode Link: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/description/
 

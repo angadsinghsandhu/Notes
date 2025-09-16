@@ -6,8 +6,8 @@
 Problem Number: 139
 Problem Name: Word Break
 Difficulty: Medium
-Tags: Dynamic Programming, Trie, Memoization, Hash Table, String
-Company (Frequency): Various (Not specified)
+Tags: Dynamic Programming, Trie, Memoization, Hash Table, String, BFS, String, Neetcode 150
+Company (Frequency): Amazon, Google, Facebook, Microsoft, Apple
 Leetcode Link: https://leetcode.com/problems/word-break/description/
 
 DESCRIPTION

@@ -1,6 +1,6 @@
 # TODO
 
-### **File:** `Leetcode/Solutions/Amazon/122_Best_Time_to_Buy_and_Sell_Stock_II.py`
+### **File:** `Leetcode/Solutions/122_Best_Time_to_Buy_and_Sell_Stock_II.py`
 
 """
 Problem Number: 122

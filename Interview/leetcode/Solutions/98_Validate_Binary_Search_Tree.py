@@ -1,13 +1,13 @@
 # TODO: revisit
 
-# File: Leetcode/Solutions/Amazon/98_Validate_Binary_Search_Tree.py
+# File: Leetcode/Solutions/98_Validate_Binary_Search_Tree.py
 
 """
 Problem Number: 98
 Problem Name: Validate Binary Search Tree
 Difficulty: Medium
-Tags: Tree, Depth-First Search, Binary Search Tree, Binary Tree
-Company (Frequency): Amazon (45)
+Tags: Tree, Depth-First Search, Binary Search Tree, Binary Tree, Neetcode 150
+Company (Frequency): Amazon (45), Apple, Facebook, Google, Microsoft
 Leetcode Link: https://leetcode.com/problems/validate-binary-search-tree/description/
 
 DESCRIPTION

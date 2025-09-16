@@ -4,8 +4,8 @@
 Problem Number: 55
 Problem Name: Jump Game
 Difficulty: Medium
-Tags: Array, Dynamic Programming, Greedy
-Company (Frequency):
+Tags: Greedy, Array, Neetcode 150
+Company (Frequency): Amazon, Google, Facebook, Microsoft, Apple
 Leetcode Link: <https://leetcode.com/problems/jump-game/description/>
 
 DESCRIPTION
@@ -117,10 +117,10 @@ class Solution:
 if __name__ == "__main__":
     solution = Solution()
 
-# Example 1
-print(solution.dp_solution([2, 3, 1, 1, 4]))      # Output: True
-print(solution.greedy_solution([2, 3, 1, 1, 4]))  # Output: True
+    # Example 1
+    print(solution.dp_solution([2, 3, 1, 1, 4]))      # Output: True
+    print(solution.greedy_solution([2, 3, 1, 1, 4]))  # Output: True
 
-# Example 2
-print(solution.dp_solution([3, 2, 1, 0, 4]))      # Output: False
-print(solution.greedy_solution([3, 2, 1, 0, 4]))  # Output: False
+    # Example 2
+    print(solution.dp_solution([3, 2, 1, 0, 4]))      # Output: False
+    print(solution.greedy_solution([3, 2, 1, 0, 4]))  # Output: False

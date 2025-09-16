@@ -4,8 +4,8 @@
 Problem Number: 104
 Problem Name: Maximum Depth of Binary Tree
 Difficulty: Easy
-Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
-Company (Frequency): Frequently asked in interviews.
+Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree, Neetcode 150
+Company (Frequency): Amazon, Apple, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/maximum-depth-of-binary-tree/description/>
 
 DESCRIPTION

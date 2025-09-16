@@ -1,11 +1,11 @@
-# File: Leetcode/Solutions/Amazon/42_Trapping_Rain_Water.py
+# File: Leetcode/Solutions/42_Trapping_Rain_Water.py
 
 """
 Problem Number: 42
 Problem Name: Trapping Rain Water
 Difficulty: Hard
-Tags: Array, Two Pointers
-Company (Frequency): Not explicitly stated, but common in top tech companies like Amazon (implied by file path)
+Tags: Array, Two Pointers, Dynamic Programming, Stack, Monotonic Stack, Neetcode 150
+Company (Frequency): Amazon, Google, Facebook, Microsoft, Apple
 Leetcode Link: <https://leetcode.com/problems/trapping-rain-water/description/>
 
 DESCRIPTION

@@ -4,8 +4,8 @@
 Problem Number: 238
 Problem Name: Product of Array Except Self
 Difficulty: Medium
-Tags: Array, Prefix Sum
-Company (Frequency): Various (Not specified)
+Tags: Array, Prefix Sum, Neetcode 150
+Company (Frequency): Amazon, Apple, Uber, Microsoft
 Leetcode Link: https://leetcode.com/problems/product-of-array-except-self/description/
 
 DESCRIPTION

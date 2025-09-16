@@ -1,4 +1,4 @@
-# File: Leetcode/Solutions/Amazon/189_Rotate_Array.py
+# File: Leetcode/Solutions/189_Rotate_Array.py
 
 """
 Problem Number: 189

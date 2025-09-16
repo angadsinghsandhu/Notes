@@ -1,6 +1,6 @@
 # TODO: revisit
 
-# File: Leetcode/Solutions/Amazon/863_All_Nodes_Distance_K_in_Binary_Tree.py
+# File: Leetcode/Solutions/863_All_Nodes_Distance_K_in_Binary_Tree.py
 
 """
 Problem Number: 863

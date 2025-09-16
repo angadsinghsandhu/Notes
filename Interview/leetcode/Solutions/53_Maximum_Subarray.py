@@ -2,7 +2,8 @@
 Problem Number: 53
 Problem Name: Maximum Subarray
 Difficulty: Medium
-Tags: Array, Divide and Conquer, Dynamic Programming
+Tags: Math, Binary Exponentiation, Dynamic Programming, Neetcode 150
+Company (Frequency): Amazon, Google, Facebook, Microsoft, Apple
 Leetcode Link: <https://leetcode.com/problems/maximum-subarray/description/>
 
 DESCRIPTION
@@ -135,7 +136,7 @@ class Solution:
 
             return max(left_sum, right_sum, cross_sum)
 
-        return find_max_subarray(nums, 0, len(nums) - 1)
+        return int(find_max_subarray(nums, 0, len(nums) - 1))
 
     def _find_max_crossing_sum(self, arr, left, mid, right):
         # Find max sum starting from mid and extending to the left

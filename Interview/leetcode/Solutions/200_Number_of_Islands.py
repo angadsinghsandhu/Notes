@@ -1,13 +1,13 @@
 # TODO: revisit [IMP]
 
-# File: Leetcode/Solutions/Amazon/200_Number_of_Islands.py
+# File: Leetcode/Solutions/200_Number_of_Islands.py
 
 """
 Problem Number: 200
 Problem Name: Number of Islands
 Difficulty: Medium
-Tags: Depth-First Search (DFS), Breadth-First Search (BFS), Union-Find, Matrix
-Company (Frequency): Amazon (103)
+Tags: Depth-First Search (DFS), Breadth-First Search (BFS), Grid, Graph, Neetcode 150
+Company (Frequency): Amazon (103), Google, Facebook, Microsoft, Apple
 Leetcode Link: https://leetcode.com/problems/number-of-islands/description/
 
 DESCRIPTION

@@ -3,8 +3,8 @@
 Problem Number: 152
 Problem Name: Maximum Product Subarray
 Difficulty: Medium
-Tags: Array, Dynamic Programming
-Company (Frequency): Classic DP problem, frequently seen in interviews at top tech companies.
+Tags: Dynamic Programming, Array, Kadane Variant, Neetcode 150
+Company (Frequency): Amazon, Google, Facebook, Microsoft, Apple
 Leetcode Link: <https://leetcode.com/problems/maximum-product-subarray/description/>
 
 DESCRIPTION

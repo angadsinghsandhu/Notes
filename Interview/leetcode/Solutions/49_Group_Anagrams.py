@@ -1,10 +1,10 @@
-# File: Leetcode/Solutions/Amazon/49_Group_Anagrams.py
+# File: Leetcode/Solutions/49_Group_Anagrams.py
 
 """
 Problem Number: 49
 Problem Name: Group Anagrams
 Difficulty: Medium
-Tags: String, Hash Table, Sorting
+Tags: String, Hash Table, Sorting, Neetcode 150, Final 450
 Company (Frequency): Amazon (82)
 Leetcode Link: <https://leetcode.com/problems/group-anagrams/description/>
 

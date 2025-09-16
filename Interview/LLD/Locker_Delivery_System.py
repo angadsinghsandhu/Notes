@@ -1,6 +1,6 @@
 # TODO: new
 
-# FILE: Leetcode/Solutions/Amazon/LLD/Locker_Delivery_System.py
+# FILE: Leetcode/Solutions/LLD/Locker_Delivery_System.py
 
 '''
 # Amazon's "Locker Delivery System" Problem

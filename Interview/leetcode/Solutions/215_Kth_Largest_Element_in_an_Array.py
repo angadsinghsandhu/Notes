@@ -4,8 +4,8 @@
 Problem Number: 215
 Problem Name: Kth Largest Element in an Array
 Difficulty: Medium
-Tags: Array, Divide and Conquer, Sorting, Heap (Priority Queue), Quickselect
-Company (Frequency): (premium)
+Tags: Sorting, Quickselect, Heap (Priority Queue), Neetcode 150
+Company (Frequency): Amazon, Google, Facebook, Microsoft, Apple
 Leetcode Link: https://leetcode.com/problems/kth-largest-element-in-an-array/
 
 DESCRIPTION
@@ -36,8 +36,8 @@ Output:
 
 #### Constraints:
 
-* $1 \leq k \leq nums.length \leq 10^5$
-* $-10^4 \leq nums[i] \leq 10^4$
+* 1 <= k <= nums.length <= 10^5
+* -10^4 <= nums[i] <= 10^4
 """
 
 from typing import List
@@ -47,10 +47,10 @@ import random
 class Solution:
     """
     Thought Process:
-    \- Brute Force: Sort the array in descending order and pick the (k-1)th element.
-    \- Optimized:
-    1\) Min-heap of size k: maintain the k largest elements in O(n log k) time.
-    2\) Quickselect: average O(n) time, worst-case O(n^2), O(1) extra space.
+    - Brute Force: Sort the array in descending order and pick the (k-1)th element.
+    - Optimized:
+    1) Min-heap of size k: maintain the k largest elements in O(n log k) time.
+    2) Quickselect: average O(n) time, worst-case O(n^2), O(1) extra space.
     """
 
 
@@ -124,19 +124,19 @@ class Solution:
 if __name__ == "__main__":
     solution = Solution()
 
-# Example 1
-nums1, k1 = [3, 2, 1, 5, 6, 4], 2
-print(solution.brute_force(nums1, k1))     # 5
-print(solution.heap_solution(nums1, k1))   # 5
-print(solution.quickselect(nums1, k1))     # 5
+    # Example 1
+    nums1, k1 = [3, 2, 1, 5, 6, 4], 2
+    print(solution.brute_force(nums1, k1))     # 5
+    print(solution.heap_solution(nums1, k1))   # 5
+    print(solution.quickselect(nums1, k1))     # 5
 
-# Example 2
-nums2, k2 = [3, 2, 3, 1, 2, 4, 5, 5, 6], 4
-print(solution.brute_force(nums2, k2))     # 4
-print(solution.heap_solution(nums2, k2))   # 4
-print(solution.quickselect(nums2, k2))     # 4
+    # Example 2
+    nums2, k2 = [3, 2, 3, 1, 2, 4, 5, 5, 6], 4
+    print(solution.brute_force(nums2, k2))     # 4
+    print(solution.heap_solution(nums2, k2))   # 4
+    print(solution.quickselect(nums2, k2))     # 4
 
-# Additional tests
-print(solution.brute_force([1], 1))        # 1
-print(solution.heap_solution([2, 1], 1))   # 2
-print(solution.quickselect([2, 1], 2))     # 1
+    # Additional tests
+    print(solution.brute_force([1], 1))        # 1
+    print(solution.heap_solution([2, 1], 1))   # 2
+    print(solution.quickselect([2, 1], 2))     # 1

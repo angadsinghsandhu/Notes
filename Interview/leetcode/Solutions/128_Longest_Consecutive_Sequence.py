@@ -3,7 +3,7 @@
 Problem Number: 128
 Problem Name: Longest Consecutive Sequence
 Difficulty: Medium
-Tags: Array, Hash Table, Union Find
+Tags: Array, Hash Table, Union Find, Neetcode 150
 Company (Frequency): Very common interview question at top tech companies.
 Leetcode Link: <https://leetcode.com/problems/longest-consecutive-sequence/description/>
 

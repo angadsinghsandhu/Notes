@@ -6,7 +6,7 @@
 Problem Number: 417
 Problem Name: Pacific Atlantic Water Flow
 Difficulty: Medium
-Tags: Depth-First Search, Breadth-First Search, Array, Matrix
+Tags: DFS, BFS, Matrix, Graph, Neetcode 150
 Company (Frequency): Amazon (15), Microsoft (10), Google (8)
 Leetcode Link: https://leetcode.com/problems/pacific-atlantic-water-flow/description/
 

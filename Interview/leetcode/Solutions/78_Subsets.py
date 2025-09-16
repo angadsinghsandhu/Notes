@@ -3,8 +3,8 @@
 Problem Number: 78
 Problem Name: Subsets
 Difficulty: Medium
-Tags: Array, Backtracking, Bit Manipulation
-Company (Frequency): Very common interview question, appears frequently in top tech companies.
+Tags: Backtracking, Bit Manipulation, Recursion, Neetcode 150
+Company (Frequency): Amazon, Google, Facebook, Microsoft, Apple
 Leetcode Link: <https://leetcode.com/problems/subsets/description/>
 
 DESCRIPTION

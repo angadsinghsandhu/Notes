@@ -1,13 +1,13 @@
 # TODO
 
-### **File:** `Leetcode/Solutions/Amazon/994_Rotting_Oranges.py`
+### **File:** `Leetcode/Solutions/994_Rotting_Oranges.py`
 
 """
 Problem Number: 994
 Problem Name: Rotting Oranges
 Difficulty: Medium
-Tags: Matrix, Breadth-First Search (BFS), Graph, Queue
-Company (Frequency): Amazon (76)
+Tags: Matrix, Breadth-First Search (BFS), Graph, Queue, Neetcode 150
+Company (Frequency): Amazon (76), Google, Facebook, Microsoft, Apple
 Leetcode Link: <https://leetcode.com/problems/rotting-oranges/>
 
 DESCRIPTION

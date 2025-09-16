@@ -1,4 +1,4 @@
-# File: Leetcode/Solutions/Amazon/103_Binary_Tree_Zigzag_Level_Order_Traversal.py
+# File: Leetcode/Solutions/103_Binary_Tree_Zigzag_Level_Order_Traversal.py
 
 """
 Problem Number: 103

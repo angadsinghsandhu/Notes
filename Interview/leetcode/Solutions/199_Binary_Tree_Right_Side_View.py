@@ -4,7 +4,7 @@
 Problem Number: 199
 Problem Name: Binary Tree Right Side View
 Difficulty: Medium
-Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree
+Tags: Tree, Depth-First Search, Breadth-First Search, Binary Tree, Neetcode 150
 Company (Frequency): Amazon (15), Microsoft (10), Facebook (8)
 Leetcode Link: https://leetcode.com/problems/binary-tree-right-side-view/description/
 

@@ -1,13 +1,13 @@
 # TODO: revist
 
-# File: Leetcode/Solutions/Amazon/3_Longest_Substring_Without_Repeating_Characters.py
+# File: Leetcode/Solutions/3_Longest_Substring_Without_Repeating_Characters.py
 
 """
 Problem Number: 3
 Problem Name: Longest Substring Without Repeating Characters
 Difficulty: Medium
-Tags: String, Sliding Window, Hash Table
-Company (Frequency): Amazon (123)
+Tags: Hash Table, String, Sliding Window, Neetcode 150
+Company (Frequency): Amazon (123), Apple, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/longest-substring-without-repeating-characters/description/>
 
 DESCRIPTION

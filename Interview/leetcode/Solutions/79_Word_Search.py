@@ -1,14 +1,14 @@
 # TODO; revisit
 
-# File: Leetcode/Solutions/Amazon/79_Word_Search.py
+# File: Leetcode/Solutions/79_Word_Search.py
 
 """
 Problem Number: 79
 Problem Name: Word Search
 Difficulty: Medium
-Tags: Array, Backtracking, Matrix, Depth-First Search (DFS)
+Tags: Backtracking, Matrix, DFS, Neetcode 150
 Company (Frequency): Amazon, Microsoft, Apple, Google, Adobe (High)
-Leetcode Link: https://leetcode.com/problems/word-search/
+Leetcode Link: <https://leetcode.com/problems/word-search/>
 
 DESCRIPTION
 

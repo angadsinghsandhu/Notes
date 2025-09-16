@@ -1,11 +1,11 @@
-# File: Leetcode/Solutions/Amazon/4_Median_of_Two_Sorted_Arrays.py
+# File: Leetcode/Solutions/4_Median_of_Two_Sorted_Arrays.py
 
 """
 Problem Number: 4
 Problem Name: Median of Two Sorted Arrays
 Difficulty: Hard
-Tags: Array, Binary Search, Divide and Conquer
-Company (Frequency): Amazon (95)
+Tags: Array, Binary Search, Divide and Conquer, Neetcode 150
+Company (Frequency): Amazon (95), Apple, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/median-of-two-sorted-arrays/description/>
 
 DESCRIPTION

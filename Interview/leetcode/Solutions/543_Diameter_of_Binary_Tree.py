@@ -4,8 +4,8 @@
 Problem Number: 543
 Problem Name: Diameter of Binary Tree
 Difficulty: Easy
-Tags: Tree, Depth-First Search, Binary Tree
-Company (Frequency): Common tree problem, frequently seen in interviews.
+Tags: Tree, Depth-First Search, Binary Tree, Neetcode 150
+Company (Frequency): Amazon, Apple, Facebook, Google, Microsoft
 Leetcode Link: <https://leetcode.com/problems/diameter-of-binary-tree/description/>
 
 DESCRIPTION
@@ -199,9 +199,9 @@ class Solution:
         stack = [(root, 0)] 
         
         # Dictionary to store heights of processed subtrees.
-        # Key: TreeNode, Value: height (number of edges from node to deepest leaf).
+        # Key: Optional[TreeNode], Value: height (number of edges from node to deepest leaf).
         # Initialize with None having height -1, consistent with recursive base case.
-        height_map = {None: -1} 
+        height_map: dict[Optional[TreeNode], int] = {None: -1}
         
         while stack:
             node, state = stack[-1] # Peek at the top element

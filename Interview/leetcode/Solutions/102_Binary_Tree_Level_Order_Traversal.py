@@ -1,11 +1,11 @@
-# File: Leetcode/Solutions/Amazon/102_Binary_Tree_Level_Order_Traversal.py
+# File: Leetcode/Solutions/102_Binary_Tree_Level_Order_Traversal.py
 
 """
 Problem Number: 102
 Problem Name: Binary Tree Level Order Traversal
 Difficulty: Medium
-Tags: Tree, Breadth-First Search, Binary Tree
-Company (Frequency): Amazon (35)
+Tags: Tree, Breadth-First Search, Binary Tree, Neetcode 150
+Company (Frequency): Amazon (35), Apple, Facebook, Google, Microsoft
 Leetcode Link: https://leetcode.com/problems/binary-tree-level-order-traversal/description/
 
 DESCRIPTION

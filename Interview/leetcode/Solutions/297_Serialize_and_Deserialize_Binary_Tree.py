@@ -1,11 +1,11 @@
-# File: Leetcode/Solutions/Amazon/297_Serialize_and_Deserialize_Binary_Tree.py
+# File: Leetcode/Solutions/297_Serialize_and_Deserialize_Binary_Tree.py
 
 """
 Problem Number: 297
 Problem Name: Serialize and Deserialize Binary Tree
 Difficulty: Hard
-Tags: Tree, Depth-First Search, Breadth-First Search, Design, String, Binary Tree
-Company (Frequency): Amazon (45)
+Tags: String, Tree, Depth-First Search, Breadth-First Search, Design, Binary Tree, Neetcode 150
+Company (Frequency): Amazon (45), Apple, Facebook, Google, Microsoft
 Leetcode Link: https://leetcode.com/problems/serialize-and-deserialize-binary-tree/description/
 
 DESCRIPTION
@@ -35,14 +35,13 @@ root = [1,2,3,null,null,4,5]
 """
 
 from typing import Optional
-from collections import deque
 
 # Definition for a binary tree node.
 class TreeNode(object):
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
+    def __init__(self, x: int):
+        self.val: int = x
+        self.left: Optional['TreeNode'] = None
+        self.right: Optional['TreeNode'] = None
 
 class Codec:
     """
