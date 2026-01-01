@@ -1,0 +1,704 @@
+Given leetcode question format it into a python solution, first write the pydoc on the top starting with the metadata (Problem Number, Problem Name, Difficulty, Tags, Company (Frequency), Leetcode Link) and then the problem description as well as the examples with the expected outputs and their corresponding explaainations. make sure add all the imports after that and always make the "Solution" class. inside the class give the thought process of the problem, basically how we need to think about the problem and how to come up with the solution, always write about all the possible solutions of a problem, starting from brute force all the way upto the most space and time efficient version and everything in between, also write about the expected input and output. Fianlly, start writing methods that are the various solutions of the problem, starting from brute force all the way up to the most optimal solution, the name of the method should be appropriately named after the method used to solve the problem. Inside each method write the fuction string that explains in detail that solution and finally write the time and space complexity of that solution and then write the clean python code. Finally Run and print sample test cases.
+
+NOTE: For tree questions write both the iterative and recursive methods. For 2D DP problems always use a top down matrix in one of the solutions.
+
+NOTE: Do not use any markdown-style symbols like ** or __ etc. in the python code as we want to use it and run it in a python file.
+
+NOTE: the python block should start from beginning where the # File: comment is provided till the end after the if __name__ == "__main__": block
+
+Here is an example:
+
+given leetcode question:
+
+53. Maximum Subarray
+Medium
+Topics
+premium lock icon
+Companies
+Given an integer array nums, find the subarray with the largest sum, and return its sum.
+
+ 
+
+Example 1:
+
+Input: nums = [-2,1,-3,4,-1,2,1,-5,4]
+Output: 6
+Explanation: The subarray [4,-1,2,1] has the largest sum 6.
+Example 2:
+
+Input: nums = [1]
+Output: 1
+Explanation: The subarray [1] has the largest sum 1.
+Example 3:
+
+Input: nums = [5,4,-1,7,8]
+Output: 23
+Explanation: The subarray [5,4,-1,7,8] has the largest sum 23.
+ 
+
+Constraints:
+
+1 <= nums.length <= 105
+-104 <= nums[i] <= 104
+ 
+
+Follow up: If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+
+ 
+Accepted
+5,669,658/10.7M
+Acceptance Rate
+52.8%
+Topics
+Array
+Divide and Conquer
+Dynamic Programming
+
+formatted output:
+
+```py
+"""
+Problem Number: 53
+Problem Name: Maximum Subarray
+Difficulty: Medium
+Tags: Math, Binary Exponentiation, Dynamic Programming, Neetcode 150
+Company (Frequency): Amazon, Google, Facebook, Microsoft, Apple
+Leetcode Link: <https://leetcode.com/problems/maximum-subarray/description/>
+
+DESCRIPTION
+
+Given an integer array `nums`, find the subarray with the largest sum, and return its sum.
+
+---
+
+#### Example 1:
+
+Input:
+nums = [-2,1,-3,4,-1,2,1,-5,4]
+
+Output:
+6
+
+Explanation:
+The subarray [4,-1,2,1] has the largest sum 6.
+
+---
+
+#### Example 2:
+
+Input:
+nums = [1]
+
+Output:
+1
+
+Explanation:
+The subarray [1] has the largest sum 1.
+
+---
+
+#### Example 3:
+
+Input:
+nums = [5,4,-1,7,8]
+
+Output:
+23
+
+Explanation:
+The subarray [5,4,-1,7,8] has the largest sum 23.
+
+---
+
+#### Constraints:
+
+- 1 <= nums.length <= 10^5
+- -10^4 <= nums[i] <= 10^4
+
+#### Follow up:
+
+- If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
+"""
+
+from typing import List
+import math
+
+class Solution:
+    """
+    Thought Process:
+    - The problem asks for the largest sum of a contiguous subarray.
+    - The most efficient approach is Kadane's Algorithm, which is a dynamic programming technique. It iterates through the array, keeping track of the maximum sum ending at the current position and the overall maximum sum found so far.
+    - A second approach, as suggested by the follow-up, is Divide and Conquer. This involves recursively splitting the array, solving for the left and right halves, and also calculating the maximum sum that crosses the midpoint. The overall maximum is the largest of these three values.
+
+    Input:
+        nums: List[int] - The array of integers.
+
+    Output:
+        int - The largest subarray sum.
+    """
+
+    def kadanes_algorithm(self, nums: List[int]) -> int:
+        """
+        Approach: Kadane's Algorithm
+        - Iterate through the array, maintaining two variables: `current_max` and `global_max`.
+        - `current_max` is the maximum sum of a subarray ending at the current position.
+        - `global_max` is the maximum sum found anywhere in the array so far.
+        - For each number, we decide whether to extend the current subarray or start a new one. This is done by `current_max = max(num, current_max + num)`.
+        - We then update `global_max` with the new `current_max` if it's larger.
+
+        T.C.: O(n)
+        S.C.: O(1)
+        """
+        if not nums:
+            return 0
+
+        global_max = nums[0]
+        current_max = nums[0]
+
+        for i in range(1, len(nums)):
+            num = nums[i]
+            current_max = max(num, current_max + num)
+            if current_max > global_max:
+                global_max = current_max
+
+        return global_max
+
+    def divide_and_conquer_solution(self, nums: List[int]) -> int:
+        """
+        Approach: Divide and Conquer
+        - Recursively split the array into two halves.
+        - The maximum subarray sum can be in:
+          1. The left half.
+          2. The right half.
+          3. A subarray that crosses the midpoint.
+        - The crossing sum is found by taking the max sum from the midpoint to the left and the max sum from the midpoint to the right.
+        - The function returns the maximum of these three values.
+
+        T.C.: O(n log n)
+        S.C.: O(log n) for recursion stack
+        """
+        def find_max_subarray(arr, left, right):
+            # Base case: only one element
+            if left == right:
+                return arr[left]
+
+            mid = (left + right) // 2
+
+            # 1. Max subarray sum in the left half
+            left_sum = find_max_subarray(arr, left, mid)
+
+            # 2. Max subarray sum in the right half
+            right_sum = find_max_subarray(arr, mid + 1, right)
+
+            # 3. Max subarray sum that crosses the midpoint
+            cross_sum = self._find_max_crossing_sum(arr, left, mid, right)
+
+            return max(left_sum, right_sum, cross_sum)
+
+        return int(find_max_subarray(nums, 0, len(nums) - 1))
+
+    def _find_max_crossing_sum(self, arr, left, mid, right):
+        # Find max sum starting from mid and extending to the left
+        left_sum = -math.inf
+        current_sum = 0
+        for i in range(mid, left - 1, -1):
+            current_sum += arr[i]
+            if current_sum > left_sum:
+                left_sum = current_sum
+
+        # Find max sum starting from mid+1 and extending to the right
+        right_sum = -math.inf
+        current_sum = 0
+        for i in range(mid + 1, right + 1):
+            current_sum += arr[i]
+            if current_sum > right_sum:
+                right_sum = current_sum
+
+        return left_sum + right_sum
+
+# Run and print sample test cases
+if __name__ == "__main__":
+    solution = Solution()
+
+    # Test Case 1
+    nums1 = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+    print(f"Kadane's for {nums1}: {solution.kadanes_algorithm(nums1)}") # Output: 6
+    print(f"D&C for {nums1}: {solution.divide_and_conquer_solution(nums1)}") # Output: 6
+    print("-" * 20)
+
+    # Test Case 2
+    nums2 = [1]
+    print(f"Kadane's for {nums2}: {solution.kadanes_algorithm(nums2)}") # Output: 1
+    print(f"D&C for {nums2}: {solution.divide_and_conquer_solution(nums2)}") # Output: 1
+    print("-" * 20)
+
+    # Test Case 3
+    nums3 = [5, 4, -1, 7, 8]
+    print(f"Kadane's for {nums3}: {solution.kadanes_algorithm(nums3)}") # Output: 23
+    print(f"D&C for {nums3}: {solution.divide_and_conquer_solution(nums3)}") # Output: 23
+    print("-" * 20)
+```
+
+here is another example:
+
+1373. Maximum Sum BST in Binary Tree
+Hard
+Topics
+premium lock icon
+Companies
+Hint
+Given a binary tree root, return the maximum sum of all keys of any sub-tree which is also a Binary Search Tree (BST).
+
+Assume a BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+ 
+
+Example 1:
+
+
+
+Input: root = [1,4,3,2,4,2,5,null,null,null,null,null,null,4,6]
+Output: 20
+Explanation: Maximum sum in a valid Binary search tree is obtained in root node with key equal to 3.
+Example 2:
+
+
+
+Input: root = [4,3,null,1,2]
+Output: 2
+Explanation: Maximum sum in a valid Binary search tree is obtained in a single root node with key equal to 2.
+Example 3:
+
+Input: root = [-4,-2,-5]
+Output: 0
+Explanation: All values are negatives. Return an empty BST.
+ 
+
+Constraints:
+
+The number of nodes in the tree is in the range [1, 4 * 104].
+-4 * 104 <= Node.val <= 4 * 104
+ 
+Accepted
+116,245/252.9K
+Acceptance Rate
+46.0%
+Topics
+Dynamic Programming
+Tree
+Depth-First Search
+Binary Search Tree
+Binary Tree
+Biweekly Contest 21
+
+formatted output:
+
+```py
+# File: Leetcode/Solutions/1373_Maximum_Sum_BST_in_Binary_Tree.py
+
+"""
+Problem Number: 1373
+Problem Name: Maximum Sum BST in Binary Tree
+Difficulty: Hard
+Tags: Dynamic Programming, Tree, Depth-First Search, Binary Search Tree, Binary Tree
+Company (Frequency): Google (5), Amazon (3), Facebook (2)
+Leetcode Link: https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/description/
+
+DESCRIPTION
+
+Given a binary tree `root`, return the maximum sum of all keys of any sub-tree which is also a Binary Search Tree (BST).
+
+Assume a BST is defined as follows:
+- The left subtree of a node contains only nodes with keys less than the node's key.
+- The right subtree of a node contains only nodes with keys greater than the node's key.
+- Both the left and right subtrees must also be binary search trees.
+
+---
+
+#### Example 1:
+
+Input:
+root = [1,4,3,2,4,2,5,null,null,null,null,null,null,4,6]
+
+Output:
+
+20
+
+Explanation:
+Maximum sum in a valid Binary search tree is obtained in root node with key equal to 3.
+
+#### Example 2:
+
+Input:
+root = [4,3,null,1,2]
+
+Output:
+
+2
+
+Explanation:
+Maximum sum in a valid Binary search tree is obtained in a single root node with key equal to 2.
+
+#### Example 3:
+
+Input:
+root = [-4,-2,-5]
+
+Output:
+
+0
+
+Explanation:
+All values are negatives. Return an empty BST.
+
+#### Constraints:
+
+  - The number of nodes in the tree is in the range `[1, 4 * 10^4]`.
+  - `-4 * 10^4 <= Node.val <= 4 * 10^4`.
+"""
+
+from typing import Optional, Any
+from helpers import TreeNode, build_tree, tree_to_list
+
+class Solution:
+    """
+    Thought Process:
+    - This problem requires checking for BST properties and calculating sums for all subtrees.
+    - A naive approach would be to iterate through every node, and for each node, check if the subtree rooted at it is a BST. If it is, calculate its sum. This would be inefficient, likely O(N^2).
+    - A more efficient approach is to use a single post-order traversal. This allows us to gather information from children before processing the parent.
+    - For each node, we need to gather information from its left and right children to determine if the current subtree is a BST and, if so, what its sum is.
+    - The information we need from a child subtree is:
+      1. Is it a valid BST?
+      2. If it is, what is its minimum value?
+      3. If it is, what is its maximum value?
+      4. If it is, what is the sum of its nodes?
+    - We can define a recursive helper function that returns a tuple of these four values: `(is_bst, min_val, max_val, sum)`.
+    - The `min_val` and `max_val` are crucial for validating the BST property at the parent node.
+    - We'll maintain a global `max_sum` variable to keep track of the maximum sum found so far.
+    - The iterative approach for post-order traversal uses a stack to simulate recursion.
+
+    Input:
+        root: Optional[TreeNode] - The root of the binary tree.
+
+    Output:
+        int - The maximum sum of all keys of any BST subtree.
+    """
+
+    def maxSumBST_Recursive(self, root: Optional[TreeNode]) -> int:
+        """
+        Approach: Post-order DFS (Recursive)
+        - Use a recursive helper function that processes nodes from bottom up (post-order).
+        - The helper function returns `(is_bst, min_val, max_val, sum)`.
+        - Base case: For a null node, it's a valid BST with sum 0. The min/max values should be set to `inf` and `-inf` respectively to not interfere with parent checks.
+        - Recursive step for a node:
+          - Call the helper on its left and right children.
+          - Use the returned values to determine if the current node forms a valid BST.
+            - `is_current_bst` is true if:
+              - Left and right subtrees are BSTs.
+              - `left_max < node.val < right_min`.
+          - If it's a BST, calculate its sum (`left_sum + right_sum + node.val`) and update the global `max_sum`.
+          - If it's not a BST, we can return `(False, ...)` to signal failure up the call stack.
+
+        T.C.: O(N) - We visit each node exactly once.
+        S.C.: O(H) - For the recursion stack, where H is the height of the tree.
+        """
+        self.max_sum = 0
+        
+        def postorder_traversal(node: Optional[TreeNode]) -> tuple[bool, int, int, int]:
+            if not node:
+                return (True, float('inf'), float('-inf'), 0)
+            
+            is_left_bst, left_min, left_max, left_sum = postorder_traversal(node.left)
+            is_right_bst, right_min, right_max, right_sum = postorder_traversal(node.right)
+            
+            is_current_bst = (is_left_bst and is_right_bst and 
+                              left_max < node.val < right_min)
+            
+            if is_current_bst:
+                current_sum = left_sum + right_sum + node.val
+                self.max_sum = max(self.max_sum, current_sum)
+                
+                return (True, min(left_min, node.val), max(right_max, node.val), current_sum)
+            else:
+                return (False, 0, 0, 0)
+        
+        postorder_traversal(root)
+        return self.max_sum
+
+    def maxSumBST_Iterative(self, root: Optional[TreeNode]) -> int:
+        """
+        Approach: Iterative Post-order Traversal
+        - This approach simulates the recursive post-order DFS using a stack.
+        - Instead of returning a tuple, we'll store the results for each processed subtree in a hash map.
+        - We need to perform a post-order traversal, which can be done with a single stack by pushing
+          nodes twice or with two stacks. A simpler approach is to use a single stack and a `last_visited` node.
+        - The core logic remains the same: for each node, check if its children's subtrees were valid BSTs
+          and if the current node's value fits between their min/max values.
+
+        T.C.: O(N) - Each node is pushed and popped from the stack a constant number of times.
+        S.C.: O(N) - The stack and a dictionary to store subtree results can hold up to N elements.
+        """
+        if not root:
+            return 0
+        
+        max_sum = 0
+        # State map stores (is_bst, min_val, max_val, sum) for each node
+        state_map = {None: (True, float('inf'), float('-inf'), 0)}
+        stack = []
+        last_visited = None
+        current = root
+
+        while stack or current:
+            if current:
+                stack.append(current)
+                current = current.left
+            else:
+                peek_node = stack[-1]
+                # If right child exists and hasn't been visited yet, go right
+                if peek_node.right and peek_node.right != last_visited:
+                    current = peek_node.right
+                else:
+                    # Otherwise, process the node (post-order logic)
+                    node = stack.pop()
+                    
+                    is_left_bst, left_min, left_max, left_sum = state_map.get(node.left, (False, 0, 0, 0))
+                    is_right_bst, right_min, right_max, right_sum = state_map.get(node.right, (False, 0, 0, 0))
+                    
+                    is_current_bst = (is_left_bst and is_right_bst and
+                                      left_max < node.val < right_min)
+                    
+                    if is_current_bst:
+                        current_sum = left_sum + right_sum + node.val
+                        max_sum = max(max_sum, current_sum)
+                        
+                        current_min = min(left_min, node.val)
+                        current_max = max(right_max, node.val)
+                        state_map[node] = (True, current_min, current_max, current_sum)
+                    else:
+                        state_map[node] = (False, 0, 0, 0)
+                    
+                    last_visited = node
+        
+        return max_sum
+
+
+    def maxSumBST(self, root: Optional[TreeNode], use_recursive: Any = True) -> int:
+        """
+        Main entry point for the LeetCode problem.
+        Allows choosing between recursive (DFS) and iterative solutions.
+        """
+        if use_recursive:
+            return self.maxSumBST_Recursive(root)
+        else:
+            return self.maxSumBST_Iterative(root)
+
+# Run and print sample test cases
+
+if __name__ == "__main__":
+    solution = Solution()
+
+    # Test case 1
+    root1 = build_tree([1,4,3,2,4,2,5,None,None,None,None,None,None,4,6])
+    print(f"Test Case 1 Input: {tree_to_list(root1)}")
+    print(f"Test Case 1 Output (Recursive): {solution.maxSumBST(root1, use_recursive=True)}") # Expected: 20
+    print(f"Test Case 1 Output (Iterative): {solution.maxSumBST(root1, use_recursive=False)}") # Expected: 20
+    print("-" * 30)
+
+    # Test case 2
+    root2 = build_tree([4,3,None,1,2])
+    print(f"Test Case 2 Input: {tree_to_list(root2)}")
+    print(f"Test Case 2 Output (Recursive): {solution.maxSumBST(root2, use_recursive=True)}") # Expected: 2
+    print(f"Test Case 2 Output (Iterative): {solution.maxSumBST(root2, use_recursive=False)}") # Expected: 2
+    print("-" * 30)
+
+    # Test case 3
+    root3 = build_tree([-4,-2,-5])
+    print(f"Test Case 3 Input: {tree_to_list(root3)}")
+    print(f"Test Case 3 Output (Recursive): {solution.maxSumBST(root3, use_recursive=True)}") # Expected: 0
+    print(f"Test Case 3 Output (Iterative): {solution.maxSumBST(root3, use_recursive=False)}") # Expected: 0
+    print("-" * 30)
+    
+    # Test case 4: Single node BST
+    root4 = build_tree([10])
+    print(f"Test Case 4 Input: {tree_to_list(root4)}")
+    print(f"Test Case 4 Output (Recursive): {solution.maxSumBST(root4, use_recursive=True)}") # Expected: 10
+    print(f"Test Case 4 Output (Iterative): {solution.maxSumBST(root4, use_recursive=False)}") # Expected: 10
+    print("-" * 30)
+
+    # Test case 5: Tree is a valid BST
+    root5 = build_tree([2,1,3])
+    print(f"Test Case 5 Input: {tree_to_list(root5)}")
+    print(f"Test Case 5 Output (Recursive): {solution.maxSumBST(root5, use_recursive=True)}") # Expected: 6
+    print(f"Test Case 5 Output (Iterative): {solution.maxSumBST(root5, use_recursive=False)}") # Expected: 6
+    print("-" * 30)
+
+    # Test case 6: Large tree with mixed BSTs
+    root6 = build_tree([5, 3, 7, 2, 4, 6, 8]) # A full BST
+    print(f"Test Case 6 Input: {tree_to_list(root6)}")
+    print(f"Test Case 6 Output (Recursive): {solution.maxSumBST(root6, use_recursive=True)}") # Expected: 35
+    print(f"Test Case 6 Output (Iterative): {solution.maxSumBST(root6, use_recursive=False)}") # Expected: 35
+    print("-" * 30)
+```
+
+here are some of the helper functions that we use:
+
+import collections
+from typing import List, Optional
+
+############ Array Helper Functions ############
+# Helper function to pretty print a 2D matrix
+def print_matrix(matrix: List[List[int]]) -> None:
+    """
+    Helper function to print a 2D matrix.
+    
+    Args:
+        matrix (List[List[int]]): The matrix to print.
+    """
+    for row in matrix:
+        print(" ".join(map(str, row)))
+    print()
+
+############ Tree Helper Functions ############
+# Definition for a binary tree node.
+class TreeNode:
+    def __init__(self, val: int = 0, left: Optional['TreeNode'] = None, right: Optional['TreeNode'] = None):
+        self.val: int = val
+        self.left: Optional[TreeNode] = left
+        self.right: Optional[TreeNode] = right
+
+# Helper function to build a tree from a list (for testing purposes)
+def build_tree(nodes: List[Optional[int]]) -> Optional[TreeNode]:
+    if not nodes or nodes[0] is None: # Combine conditions for empty list or None root
+        return None
+
+    root = TreeNode(nodes[0])
+    # Use collections.deque for O(1) appends and pops
+    queue = collections.deque([root])
+    i = 1
+    while queue and i < len(nodes):
+        current = queue.popleft() # O(1) operation
+
+        # Left child
+        if i < len(nodes) and nodes[i] is not None:
+            current.left = TreeNode(nodes[i])
+            queue.append(current.left)
+        i += 1
+
+        # Right child
+        if i < len(nodes) and nodes[i] is not None:
+            current.right = TreeNode(nodes[i])
+            queue.append(current.right)
+        i += 1
+    return root
+
+# Helper function to print the tree in level order (for testing purposes)
+def print_tree(node: Optional[TreeNode]) -> None:
+    if not node:
+        print("None")
+        return
+
+    queue = collections.deque([node]) # O(1) operations
+    result_str = []
+
+    while queue:
+        current = queue.popleft()
+        if current:
+            result_str.append(str(current.val))
+            queue.append(current.left)
+            queue.append(current.right)
+        else:
+            result_str.append("None")
+
+    # Optional: Trim trailing 'None's if you want a LeetCode-like representation
+    # For a full visual representation including trailing Nones on the last level,
+    # you might keep them. The current implementation effectively does this.
+
+    print(" ".join(result_str))
+    # The extra print() in the original `print_matrix` and `print_graph`
+    # is for a newline. Here, `print(" ".join(result_str))` already adds a newline.
+    # If you want an *additional* newline like your other print functions, add print()
+    # print() 
+
+# Helper function to convert a tree to a list for verification
+def tree_to_list(root: Optional[TreeNode]) -> List[Optional[int]]:
+    if not root:
+        return []
+
+    result = []
+    q = collections.deque([root])
+
+    while q:
+        node = q.popleft()
+        if node:
+            result.append(node.val)
+            q.append(node.left)
+            q.append(node.right)
+        else:
+            result.append(None)
+            # If this is None, but there are still non-None nodes to be processed
+            # (i.e., this isn't the end of the useful part of the tree representation)
+            # we need to add its "children" (which are None) to maintain structure.
+            # Otherwise, if it's trailing Nones, we stop.
+            # This logic is a bit tricky; a simpler approach is to add all Nones and then trim.
+            q.append(None) # These Nones will be processed and ignored
+            q.append(None) # but they maintain queue size for a level if we did level_size logic
+
+    # Remove trailing None values to match LeetCode's compact representation
+    # Keep removing None from the end as long as there are Nones
+    while result and result[-1] is None:
+        result.pop()
+    
+    return result
+
+################ Graph Helper Functions ############
+# Helper function to print a graph represented as an adjacency list
+def print_graph(graph: List[List[int]]) -> None:
+    """
+    Helper function to print a graph represented as an adjacency list.
+    
+    Args:
+        graph (List[List[int]]): The graph to print.
+    """
+    for i, edges in enumerate(graph):
+        print(f"{i}: {' '.join(map(str, edges))}")
+    print()
+
+# Helper function to build a graph from a list of edges
+def build_graph(edges: List[List[int]]) -> List[List[int]]:
+    """
+    Helper function to build a graph from a list of edges.
+
+    Args:
+        edges (List[List[int]]): List of edges where each edge is represented as [u, v].
+
+    Returns:
+        List[List[int]]: Adjacency list representation of the graph.
+    """
+    if not edges:
+        return [] # Return empty list if no edges
+
+    # A more robust way to find max_node, in case nodes are not consecutive
+    # and to handle cases like [[0,1]] where max_node based on values could be small.
+    # This approach ensures all existing node indices are considered.
+    all_nodes = set()
+    for u, v in edges:
+        all_nodes.add(u)
+        all_nodes.add(v)
+
+    if not all_nodes: # This would happen only if edges was empty, already handled above
+        return []
+
+    max_node = max(all_nodes)
+
+    graph = [[] for _ in range(max_node + 1)]
+
+    for u, v in edges:
+        graph[u].append(v)
+        graph[v].append(u)  # Assuming undirected graph
+
+    return graph
+
+tell me when you are ready to start formatting leetocde answers.
