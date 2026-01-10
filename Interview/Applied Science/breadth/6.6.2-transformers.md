@@ -1,0 +1,472 @@
+# 6.6.2 Transformer Architecture
+
+---
+
+## Key Concepts
+
+### 6.6.2.1 The Transformer Architecture
+
+The Transformer, introduced in "Attention Is All You Need" (2017), revolutionized NLP by replacing recurrence with self-attention.
+
+#### High-Level Architecture
+
+```
+                    Outputs
+                       |
+                  [Linear]
+                       |
+                  [Softmax]
+                       |
+              +--------+--------+
+              |                 |
+         [Decoder]         [Decoder]
+              |                 |
+              +--------+--------+
+                       |
+                  [Encoder]
+                       |
+                    Inputs
+```
+
+#### Encoder Stack
+
+```
+Input Embeddings + Positional Encoding
+              |
+    +---------+---------+
+    |                   |
+    |   [Multi-Head     |
+    |    Self-Attention]|
+    |         |         |
+    +-----> [Add & Norm]|  (Residual + LayerNorm)
+              |         |
+    |   [Feed Forward]  |
+    |         |         |
+    +-----> [Add & Norm]|
+              |
+         (Repeat N times)
+              |
+       Encoder Output
+```
+
+#### Decoder Stack
+
+```
+Output Embeddings + Positional Encoding
+              |
+    +---------+---------+
+    |                   |
+    |   [Masked Multi-  |
+    |    Head Attention]|  (Causal: can't see future)
+    |         |         |
+    +-----> [Add & Norm]|
+              |         |
+    |   [Multi-Head     |
+    |    Cross-Attention]| (Attends to encoder output)
+    |         |         |
+    +-----> [Add & Norm]|
+              |         |
+    |   [Feed Forward]  |
+    |         |         |
+    +-----> [Add & Norm]|
+              |
+         (Repeat N times)
+              |
+        Decoder Output
+```
+
+---
+
+### 6.6.2.2 Transformer Components
+
+#### Input Embedding + Positional Encoding
+
+```python
+# Token embedding
+token_emb = Embedding(vocab_size, d_model)
+
+# Positional encoding (sinusoidal or learned)
+pos_enc = positional_encoding(max_len, d_model)
+
+# Combined input
+x = token_emb(tokens) + pos_enc[:seq_len]
+```
+
+#### Multi-Head Self-Attention
+
+```python
+def multi_head_attention(Q, K, V, mask=None):
+    # Project to multiple heads
+    Q = [W_Qi @ Q for i in range(num_heads)]
+    K = [W_Ki @ K for i in range(num_heads)]
+    V = [W_Vi @ V for i in range(num_heads)]
+    
+    # Scaled dot-product attention per head
+    heads = []
+    for q, k, v in zip(Q, K, V):
+        scores = q @ k.T / sqrt(d_k)
+        if mask is not None:
+            scores = scores.masked_fill(mask == 0, -inf)
+        attn = softmax(scores)
+        heads.append(attn @ v)
+    
+    # Concatenate and project
+    return W_O @ concat(heads)
+```
+
+#### Causal Masking (Decoder)
+
+Prevents attending to future positions during training:
+
+```
+Mask for sequence length 4:
+     pos 1  pos 2  pos 3  pos 4
+pos 1 [  1     0     0     0  ]
+pos 2 [  1     1     0     0  ]
+pos 3 [  1     1     1     0  ]
+pos 4 [  1     1     1     1  ]
+
+1 = can attend, 0 = masked (set to -inf before softmax)
+```
+
+#### Feed-Forward Network
+
+Position-wise fully connected network:
+
+```python
+def feed_forward(x):
+    # Two linear layers with activation
+    # Applied independently to each position
+    return W_2 @ relu(W_1 @ x + b_1) + b_2
+
+# Dimensions:
+# W_1: d_model -> d_ff (typically d_ff = 4 * d_model)
+# W_2: d_ff -> d_model
+```
+
+#### Layer Normalization
+
+```python
+def layer_norm(x):
+    mean = x.mean(dim=-1, keepdim=True)
+    std = x.std(dim=-1, keepdim=True)
+    return gamma * (x - mean) / (std + eps) + beta
+```
+
+**Pre-norm vs Post-norm:**
+```
+Post-norm (original):     Pre-norm (modern):
+x -> Attention -> Add -> LN    x -> LN -> Attention -> Add
+                               (more stable training)
+```
+
+#### Residual Connections
+
+```
+output = LayerNorm(x + Sublayer(x))
+
+Benefits:
+- Gradient flow through skip connections
+- Easier optimization
+- Can learn identity if needed
+```
+
+---
+
+### 6.6.2.3 Transformer Variants
+
+#### Encoder-Only (BERT-style)
+
+```
+Use case: Understanding, classification, NER
+Architecture: Stack of encoder blocks
+Attention: Bidirectional (see all positions)
+Training: Masked Language Model (MLM)
+
+Examples: BERT, RoBERTa, ALBERT, DistilBERT
+```
+
+#### Decoder-Only (GPT-style)
+
+```
+Use case: Text generation, language modeling
+Architecture: Stack of decoder blocks (no cross-attention)
+Attention: Causal (only see past)
+Training: Next token prediction
+
+Examples: GPT-2, GPT-3, GPT-4, LLaMA, Claude
+```
+
+#### Encoder-Decoder (T5-style)
+
+```
+Use case: Seq2seq tasks (translation, summarization)
+Architecture: Full encoder + decoder
+Attention: Bidirectional encoder, causal decoder + cross-attention
+Training: Various (span corruption for T5)
+
+Examples: T5, BART, mT5
+```
+
+---
+
+### 6.6.2.4 BERT (Bidirectional Encoder Representations from Transformers)
+
+#### Architecture
+
+```
+[CLS] token_1 token_2 ... token_n [SEP]
+              |
+    Transformer Encoder (12-24 layers)
+              |
+h_[CLS]  h_1    h_2  ...  h_n   h_[SEP]
+```
+
+#### Pre-training Objectives
+
+**1. Masked Language Model (MLM):**
+```
+Input:  "The [MASK] sat on the [MASK]"
+Target: "The  cat   sat on the  mat"
+
+- Randomly mask 15% of tokens
+- Predict masked tokens from context
+- Enables bidirectional understanding
+```
+
+**2. Next Sentence Prediction (NSP):**
+```
+Input: [CLS] Sentence A [SEP] Sentence B [SEP]
+Output: IsNext / NotNext
+
+- 50% real consecutive sentences
+- 50% random sentence pairs
+- Helps with sentence-pair tasks
+```
+
+#### Fine-tuning
+
+```
+Classification:     Token-level:         QA:
+[CLS] -> classifier  Each token -> tag   Start/End positions
+                     (NER, POS)          in passage
+```
+
+---
+
+### 6.6.2.5 GPT (Generative Pre-trained Transformer)
+
+#### Architecture
+
+```
+Decoder-only Transformer (no encoder, no cross-attention)
+Causal attention mask (can only see past tokens)
+
+token_1 -> token_2 -> token_3 -> ... -> token_n
+   |          |          |               |
+  h_1   ->   h_2   ->   h_3   -> ... -> h_n
+   |          |          |               |
+ pred_2    pred_3    pred_4          pred_{n+1}
+```
+
+#### Pre-training: Language Modeling
+
+```
+Objective: Predict next token
+P(token_t | token_1, ..., token_{t-1})
+
+Loss: Cross-entropy over vocabulary
+```
+
+#### Scaling Laws
+
+GPT models demonstrated that performance scales predictably with:
+- Model size (parameters)
+- Dataset size
+- Compute
+
+```
+GPT-2:  1.5B parameters
+GPT-3:  175B parameters
+GPT-4:  Estimated >1T parameters (multimodal)
+```
+
+#### In-Context Learning
+
+GPT-3 introduced few-shot learning without fine-tuning:
+
+```
+Prompt: "Translate English to French:
+         sea otter => loutre de mer
+         cheese => fromage
+         hello =>"
+         
+Model completes: "bonjour"
+```
+
+---
+
+### 6.6.2.6 T5 (Text-to-Text Transfer Transformer)
+
+#### Key Innovation: Everything as Text-to-Text
+
+```
+Classification:
+Input:  "sentiment: This movie was great!"
+Output: "positive"
+
+Translation:
+Input:  "translate English to German: Hello"
+Output: "Hallo"
+
+Summarization:
+Input:  "summarize: [long article]"
+Output: "[summary]"
+```
+
+#### Architecture
+
+Full encoder-decoder Transformer with:
+- Relative positional encoding
+- Simplified layer norm
+- No bias in dense layers
+
+#### Pre-training: Span Corruption
+
+```
+Original: "The quick brown fox jumps over the lazy dog"
+Corrupted: "The <X> brown <Y> over the lazy dog"
+Target: "<X> quick <Y> fox jumps"
+
+- Mask spans of tokens (not individual)
+- Predict masked spans
+```
+
+---
+
+### 6.6.2.7 Modern LLM Techniques
+
+#### Instruction Tuning
+
+Fine-tune on instruction-following examples:
+```
+Instruction: "Write a poem about cats"
+Response: "Soft paws and whiskers fine..."
+```
+
+#### RLHF (Reinforcement Learning from Human Feedback)
+
+```
+1. Supervised fine-tuning on demonstrations
+2. Train reward model on human preferences
+3. Optimize policy with PPO against reward model
+```
+
+#### Efficient Fine-tuning
+
+| Method | Description |
+|--------|-------------|
+| LoRA | Low-rank adaptation of weight matrices |
+| Prefix tuning | Learn continuous prompts |
+| Adapters | Small trainable modules between layers |
+| QLoRA | Quantized LoRA for memory efficiency |
+
+---
+
+## Questions & Answers
+
+### Q1: What are the advantages of Transformers over RNNs?
+
+**Answer:**
+
+Transformers offer several fundamental advantages over RNNs:
+
+**1. Parallelization**
+
+```
+RNN: Sequential processing
+x_1 -> h_1 -> x_2 -> h_2 -> x_3 -> h_3
+Must wait for h_{t-1} to compute h_t
+
+Transformer: Parallel processing
+x_1, x_2, x_3 -> [Self-Attention] -> y_1, y_2, y_3
+All positions computed simultaneously
+```
+
+Training speedup: 10-100x faster on modern hardware (GPUs/TPUs)
+
+**2. Long-Range Dependencies**
+
+```
+RNN: Information must flow through all intermediate states
+Distance 100 apart: gradient flows through 100 multiplications
+-> Vanishing gradients, information loss
+
+Transformer: Direct attention between any positions
+Distance 100 apart: single attention operation
+-> Constant path length O(1)
+```
+
+**3. No Vanishing Gradients**
+
+```
+RNN: dh_T/dh_0 = product of T matrices (vanishes/explodes)
+
+Transformer: 
+- Residual connections: direct gradient paths
+- Attention: gradients flow through softmax weights
+- Layer norm: stabilizes gradients
+```
+
+**4. Better Modeling of Dependencies**
+
+```
+RNN: Sequential bias - nearby tokens naturally related
+     Long-range requires information to "survive" many steps
+
+Transformer: No distance bias
+     Can learn arbitrary dependency patterns
+     Each head can specialize in different relationships
+```
+
+**5. Scalability**
+
+```
+Transformers scale better with:
+- More parameters
+- More data
+- More compute
+
+Scaling laws: predictable performance improvements
+GPT-3 (175B) >> GPT-2 (1.5B) in capability
+```
+
+**Comparison Table:**
+
+| Aspect | RNN/LSTM | Transformer |
+|--------|----------|-------------|
+| Parallelization | Sequential | Fully parallel |
+| Long-range deps | Difficult | Easy |
+| Training speed | Slow | Fast |
+| Gradient flow | Problematic | Stable |
+| Memory (inference) | O(1) | O(n) for KV cache |
+| Compute | O(n) | O(n^2) |
+| Position info | Implicit | Requires encoding |
+
+**Trade-offs:**
+
+Transformers have quadratic complexity O(n^2) in sequence length, while RNNs are O(n). For very long sequences, this can be problematic. Solutions:
+- Sparse attention
+- Linear attention
+- Sliding window attention
+- Flash Attention (memory-efficient)
+
+**Why Transformers Won:**
+
+1. Parallelization enables massive scaling
+2. Better performance on benchmarks
+3. Simpler architecture (no hidden state management)
+4. Transfer learning works exceptionally well
+5. Scaling laws show predictable improvements
+
+**Interview tip:** Mention that while Transformers dominate today, the quadratic attention complexity is a known limitation being actively researched. Also note that for streaming/online applications, RNNs or state-space models may still have advantages.

@@ -483,7 +483,30 @@ Wide conceptual coverage across ML paradigms. Questions marked with ⭐ are freq
 - How can we use ResNet models for regression tasks?
 - What are skip connections and why do they help?
 
-#### 6.3 Sequential Models (RNNs, LSTMs)
+#### 6.3 Computer Vision
+
+**Key Concepts**
+- Image classification, object detection
+- YOLO, Faster R-CNN
+- Face recognition: FaceNet, ArcFace
+
+**Questions**
+- How does YOLO work for object detection?
+- What is the difference between one-stage and two-stage detectors?
+
+#### 6.4 NLP Techniques
+
+**Key Concepts**
+- Word embeddings: Word2Vec, GloVe, FastText
+- Contextual embeddings: BERT, ELMo
+- Tasks: NER, POS tagging, sentiment analysis, QA
+
+**Questions**
+- How does Word2Vec work (skip-gram, CBOW)?
+- What is the difference between static and contextual embeddings?
+- What are common evaluation metrics for NLP tasks?
+
+#### 6.5 Sequential Models (RNNs, LSTMs)
 
 **Key Concepts**
 - RNN: sequential processing, hidden state
@@ -496,7 +519,7 @@ Wide conceptual coverage across ML paradigms. Questions marked with ⭐ are freq
 - ⭐ How do GRU cells work, and how do they address the vanishing gradient problem?
 - How does a BiLSTM work?
 
-#### 6.4 Attention & Transformers
+#### 6.6 Attention & Transformers
 
 **Key Concepts**
 - Self-attention, multi-head attention
@@ -508,29 +531,6 @@ Wide conceptual coverage across ML paradigms. Questions marked with ⭐ are freq
 - ⭐ What is Attention in machine learning models?
 - How does self-attention differ from RNN-based attention?
 - What are the advantages of Transformers over RNNs?
-
-#### 6.5 NLP Techniques
-
-**Key Concepts**
-- Word embeddings: Word2Vec, GloVe, FastText
-- Contextual embeddings: BERT, ELMo
-- Tasks: NER, POS tagging, sentiment analysis, QA
-
-**Questions**
-- How does Word2Vec work (skip-gram, CBOW)?
-- What is the difference between static and contextual embeddings?
-- What are common evaluation metrics for NLP tasks?
-
-#### 6.6 Computer Vision
-
-**Key Concepts**
-- Image classification, object detection
-- YOLO, Faster R-CNN
-- Face recognition: FaceNet, ArcFace
-
-**Questions**
-- How does YOLO work for object detection?
-- What is the difference between one-stage and two-stage detectors?
 
 ---
 
@@ -664,20 +664,6 @@ Wide conceptual coverage across ML paradigms. Questions marked with ⭐ are freq
 
 ---
 
-### 13. Applied ML & Business Problems
-
-**Questions**
-- ⭐ How would you design a recommendation system to suggest books to users?
-- If Amazon wants to send marketing emails to potential customers, how would you model this?
-- How would you model a warehouse inventory problem?
-- How would you measure the effectiveness of extra pay for delivery drivers during peak hours?
-- Create a function `rain_days` to calculate the probability of rain on the nth day (Markov chain).
-- Propose machine learning methods for two real-world use cases.
-- Give an example of how forecasting is applied in machine learning.
-- Can you walk me through building a machine learning model from scratch?
-
----
-
 ## ML Design
 
 Design end-to-end ML systems at scale. Focus on problem framing, data pipelines, model selection, and deployment.
@@ -720,11 +706,15 @@ Design end-to-end ML systems at scale. Focus on problem framing, data pipelines,
 - Design a recommendation system to suggest books/products to users
 - Design YouTube/Netflix video recommendations
 - Design a news feed ranking system
+- ⭐ How would you design a recommendation system to suggest books to users?
+- Ranking items for personalized recommendations
 
 **Fraud & Anomaly Detection**
 - Design a fraud detection system for marketplace transactions
 - Design an anomaly detection system for logistics
 - Design a spam detection system
+- Designing an anomaly detection system for Amazon Logistics
+- Identifying fraud in marketplace transactions
 
 **Search & Ranking**
 - Design a search ranking system
@@ -735,6 +725,7 @@ Design end-to-end ML systems at scale. Focus on problem framing, data pipelines,
 - Design Alexa/voice assistant from scratch
 - Design a sentiment analysis system
 - Design a chatbot
+- Design Alexa from scratch
 
 **Computer Vision**
 - Design an image classification system
@@ -745,6 +736,23 @@ Design end-to-end ML systems at scale. Focus on problem framing, data pipelines,
 - Improving conversion prediction for retail
 - Design a demand forecasting system
 - Design a delivery time estimation system
+
+**Infrastructure & Scale**
+- Design scalable systems for data processing and model training
+
+**Business & Operations**
+- If Amazon wants to send marketing emails to potential customers, how would you model this?
+- How would you model a warehouse inventory problem?
+- How would you measure the effectiveness of extra pay for delivery drivers during peak hours?
+- Improving conversion prediction for Amazon Retail
+
+**Probabilistic & Coding**
+- Create a function `rain_days` to calculate the probability of rain on the nth day (Markov chain)
+- Propose machine learning methods for two real-world use cases
+
+**General**
+- Give an example of how forecasting is applied in machine learning
+- Can you walk me through building a machine learning model from scratch?
 
 ### Key Considerations
 
@@ -802,13 +810,3 @@ Loss functions and objective design
 Model evaluation metrics (AUC, precision/recall, RMSE, NDGC, etc.)
 Hyperparameter tuning
 REMOVE_END
-
-## ML Design
-
-- Design scalable systems for data processing and model training
-- design Alexa from scratch
-- recommender system Fraud detection/Anomaly detection  Or vision/NLP
-- Designing an anomaly detection system for Amazon Logistics
-Improving conversion prediction for Amazon Retail
-Identifying fraud in marketplace transactions
-Ranking items for personalized recommendations
