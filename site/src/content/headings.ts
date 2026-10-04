@@ -101,8 +101,10 @@ export function collectMarkdownLinks(markdown: string): MarkdownLink[] {
   const tree = parse(markdown);
   const definitions = new Map<string, string>();
   visit(tree, (node) => {
-    if (node.type === 'definition')
-      definitions.set(node.identifier.toLowerCase(), node.url);
+    if (node.type === 'definition') {
+      const identifier = node.identifier.toLowerCase();
+      if (!definitions.has(identifier)) definitions.set(identifier, node.url);
+    }
   });
   const links: MarkdownLink[] = [];
   visit(tree, (node) => {

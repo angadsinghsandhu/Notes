@@ -1,4 +1,5 @@
 import { posix } from 'node:path';
+import { URLSearchParams } from 'node:url';
 import { publicationExclusion } from './discover.js';
 import { CONTENT_ROOTS } from './schema.js';
 import { assertUniqueRoutes } from './identifiers.js';
@@ -176,6 +177,22 @@ function validateRepositoryTarget(
     throw new Error(`Missing or unpublished repository target ${target}`);
 }
 
+function externalAssetUrl(
+  configured: string,
+  query: string,
+  fragment: string,
+): string {
+  if (!query && !fragment) return configured;
+  const url = new URL(configured);
+  if (query) {
+    const incoming = new URLSearchParams(query);
+    for (const key of new Set(incoming.keys())) url.searchParams.delete(key);
+    for (const [key, value] of incoming) url.searchParams.append(key, value);
+  }
+  if (fragment) url.hash = fragment.slice(1);
+  return url.href;
+}
+
 export function resolveLink(
   href: string,
   sourcePath: string,
@@ -278,8 +295,10 @@ export function resolveLink(
       !entry.anchors?.includes(decodeURIComponent(fragment.slice(1)))
     )
       throw new Error(`Missing fragment ${fragment} in ${resolvedPath}`);
-    if (asset?.mode === 'external')
+    if (asset?.mode === 'external') {
       validateRepositoryTarget(https(asset.url), catalog.policy, catalog);
+      return externalAssetUrl(asset.url, query, fragment);
+    }
     return `${entry?.route ?? asset?.url}${query}${fragment}`;
   } catch (error) {
     throw new Error(

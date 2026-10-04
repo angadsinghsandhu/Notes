@@ -352,3 +352,85 @@ it('preserves a valid self-referencing external asset URL without recursion', ()
     ),
   ).toBe(url);
 });
+
+describe('external asset suffix composition', () => {
+  function catalog(url: string) {
+    return createRouteCatalog(
+      [],
+      [
+        {
+          sourcePath: 'Tutorials/Group/a.pdf',
+          mode: 'external',
+          bytes: 1,
+          url,
+        },
+      ],
+      policy,
+    );
+  }
+  it.each([
+    [
+      'https://cdn.example.org/a.pdf?token=abc',
+      'a.pdf?download=1',
+      'https://cdn.example.org/a.pdf?token=abc&download=1',
+    ],
+    [
+      'https://cdn.example.org/a.pdf#default',
+      'a.pdf#page=2',
+      'https://cdn.example.org/a.pdf#page=2',
+    ],
+    [
+      'https://cdn.example.org/a.pdf?token=abc#default',
+      'a.pdf?download=1#page=2',
+      'https://cdn.example.org/a.pdf?token=abc&download=1#page=2',
+    ],
+    [
+      'https://cdn.example.org/a.pdf?token=abc#default',
+      'a.pdf?download=1',
+      'https://cdn.example.org/a.pdf?token=abc&download=1#default',
+    ],
+    [
+      'https://cdn.example.org/a.pdf?token=abc#default',
+      'a.pdf#page=2',
+      'https://cdn.example.org/a.pdf?token=abc#page=2',
+    ],
+    [
+      'https://cdn.example.org/a.pdf?token=abc#default',
+      'a.pdf#',
+      'https://cdn.example.org/a.pdf?token=abc',
+    ],
+  ])(
+    'composes configured %s with incoming %s',
+    (configured, href, expected) => {
+      expect(resolveLink(href, referring, catalog(configured))).toBe(expected);
+    },
+  );
+  it('replaces collided query keys while retaining other keys and incoming repeated values', () => {
+    const result = new URL(
+      resolveLink(
+        'a.pdf?mode=one&mode=two&extra=a&extra=b',
+        referring,
+        catalog(
+          'https://cdn.example.org/a.pdf?token=abc&mode=old&mode=older&keep=1&keep=2#default',
+        ),
+      ),
+    );
+    expect([...result.searchParams]).toEqual([
+      ['token', 'abc'],
+      ['keep', '1'],
+      ['keep', '2'],
+      ['mode', 'one'],
+      ['mode', 'two'],
+      ['extra', 'a'],
+      ['extra', 'b'],
+    ]);
+    expect(result.hash).toBe('#default');
+  });
+  it('preserves the exact configured URL when no incoming suffix exists', () => {
+    const configured =
+      'https://CDN.example.org/%7efile.pdf?token=a%20b&mode=1&mode=2#default';
+    expect(resolveLink('a.pdf', referring, catalog(configured))).toBe(
+      configured,
+    );
+  });
+});

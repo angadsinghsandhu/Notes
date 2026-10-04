@@ -1,4 +1,8 @@
 import { readFile } from 'node:fs/promises';
+import { toHast } from 'mdast-util-to-hast';
+import { toHtml } from 'hast-util-to-html';
+import remarkParse from 'remark-parse';
+import { unified } from 'unified';
 import { describe, expect, it } from 'vitest';
 import {
   collectHeadings,
@@ -75,4 +79,18 @@ describe('Markdown heading and authored link collection', () => {
       { id: 'real', text: 'Real', depth: 1 },
     ]);
   });
+});
+
+it('keeps the first normalized reference definition, matching CommonMark rendering', () => {
+  const markdown =
+    '[page][ ref  KEY ]\n\n![image][REF key]\n\n[REF key]: first.md\n\n[ref KEY]: second.md';
+  const html = toHtml(toHast(unified().use(remarkParse).parse(markdown)));
+  const links = collectMarkdownLinks(markdown);
+  expect(links).toEqual([
+    { href: 'first.md', image: false, wiki: false },
+    { href: 'first.md', image: true, wiki: false },
+  ]);
+  expect(html).toContain(`href="${links[0]!.href}"`);
+  expect(html).toContain(`src="${links[1]!.href}"`);
+  expect(html).not.toContain('second.md');
 });
