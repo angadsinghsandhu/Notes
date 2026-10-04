@@ -31,7 +31,7 @@ Review assumptions are public readership, rendered notebooks/code with PDF/slide
 
 - [x] Task 1: runtime and quality gates (reviewed; commits 7d6755d, 8dbda44).
 - [x] Task 2: automatic discovery and metadata/URL validation (reviewed; commit 497438f).
-- [ ] Task 3: links, headings, and assets.
+- [x] Task 3: links, headings, and assets (reviewed; commits d9c54e4, f7fbe87).
 - [ ] Task 4: safe Markdown/notebook/code rendering.
 - [ ] Task 5: content pipeline and development watcher.
 - [ ] Task 6: responsive reader and search.
