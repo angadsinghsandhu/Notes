@@ -1,0 +1,16 @@
+{
+  "extends": "astro/tsconfigs/strictest",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"],
+    "paths": { "@/*": ["./src/*"] }
+  },
+  "include": [
+    ".astro/types.d.ts",
+    "src/**/*",
+    "scripts/**/*",
+    "tests/**/*",
+    "*.ts"
+  ],
+  "exclude": ["dist", "node_modules", ".generated", "public"]
+}

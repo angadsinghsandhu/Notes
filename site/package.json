@@ -1,0 +1,39 @@
+{
+  "name": "notes-library",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.18.1"
+  },
+  "scripts": {
+    "dev": "astro dev --host 127.0.0.1",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings 0",
+    "check:boundaries": "eslint . --config eslint.boundaries.config.mjs --max-warnings 0",
+    "typecheck": "astro check && tsc --project tsconfig.tools.json --noEmit",
+    "check": "npm run format:check && npm run lint && npm run check:boundaries && npm run typecheck && npm run test:unit",
+    "build": "astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "test:unit": "vitest run --passWithNoTests",
+    "test:e2e": "playwright test",
+    "verify": "npm run check && npm run build && npm run test:e2e"
+  },
+  "dependencies": {
+    "astro": "7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.63.0",
+    "@types/node": "24.19.1",
+    "eslint": "10.12.0",
+    "eslint-plugin-astro": "3.2.1",
+    "eslint-plugin-jsx-a11y-x": "0.2.0",
+    "prettier": "3.9.9",
+    "prettier-plugin-astro": "1.1.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0",
+    "vitest": "5.0.3"
+  }
+}

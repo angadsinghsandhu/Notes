@@ -1,2 +1,15 @@
 # Diredtory
 .vscode
+
+# Notes Library application
+/site/node_modules/
+/site/dist/
+/site/.astro/
+/site/.generated/
+/site/public/content-assets/
+/site/coverage/
+/site/playwright-report/
+/site/test-results/
+
+# Local agent working files
+/.superpowers/
