@@ -29,7 +29,7 @@ Read-only inventory found 10,036 files excluding `.git`, approximately 1.9 GB of
 
 The six content roots are `Books`, `Classes`, `Courses`, `Interview`, `Languages`, and `Tutorials`. Notes contain mathematics, fenced code, tables, relative images, some raw HTML, and possible wiki-style links. No Markdown files currently start with YAML frontmatter. The root README has placeholders and obsolete `University`/`Youtube` links. The current branch is `master`; there is no root website application or shared quality-gate configuration.
 
-Examples that verification must use include the transformer note in `Interview/Applied Science/breadth/6.6.2-transformers.md`, the Japanese unit READMEs, GPU workshop notebooks, a PyTorch book notebook, and LeetCode solution source files.
+Examples that verification must use include the transformer note in `Interview/Applied Science/breadth/6.6.2-transformers.md`, the empty Japanese unit README placeholders plus an explicitly labeled Unicode rendering fixture, GPU workshop notebooks, a PyTorch book notebook, and LeetCode solution source files.
 
 ## 3. Architecture and hosting
 
@@ -166,7 +166,7 @@ Acceptance criteria:
 1. A new Markdown note in any allowed root appears in local browsing automatically and in production HTML/search after a build, with no hand-edited routing list.
 2. A published note changed, renamed with aliases, or deleted produces updated pages/indexes without stale routes/assets. Drafts are absent from production HTML, downloads, and search.
 3. Every file in the six roots is accounted for in the migration ledger; every selected entry renders and every internal page/asset/fragment link resolves.
-4. Real transformer/math notes, Japanese text, GPU/PyTorch notebooks, LeetCode code, local PDFs, slides, and an oversized resource have verified representations.
+4. Real transformer/math notes, Japanese placeholders and Unicode rendering, GPU/PyTorch notebooks, LeetCode code, local PDFs, slides, and an oversized resource have verified representations.
 5. Malformed metadata/notebooks, duplicate routes, ambiguous wiki links, excluded targets, escaping paths, and unsafe HTML/URLs fail or are sanitized as specified.
 6. At 320, 375, 768, 1024, and 1440 px, navigation, search, articles, code, math, tables, and resources remain usable with no page-wide horizontal scroll. Verify light and dark themes, keyboard operation, and reduced motion.
 7. A clean dependency installation passes format, lint, import boundaries, TypeScript/Astro checks, unit tests, production build, internal-output validation, accessibility checks, and browser tests. Establish a measured coverage floor; never hide reachable branches with suppressions or skipped tests.
