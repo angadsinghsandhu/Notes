@@ -21,6 +21,13 @@
   },
   "dependencies": {
     "astro": "7.3.5",
+    "github-slugger": "2.0.0",
+    "hast-util-from-html": "2.0.3",
+    "remark-gfm": "4.0.1",
+    "remark-parse": "11.0.0",
+    "saxes": "6.0.0",
+    "sharp": "0.35.5",
+    "unified": "11.0.5",
     "yaml": "2.9.1",
     "zod": "4.6.5"
   },

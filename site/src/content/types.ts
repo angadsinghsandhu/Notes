@@ -28,6 +28,7 @@ export type ContentEntry = Metadata & {
   groupSegments: string[];
   route: string;
   headings: Heading[];
+  anchors?: string[];
   bodyFile?: string;
   assetUrl?: string;
   sourceUrl?: string;
@@ -74,6 +75,7 @@ export type RouteCatalog = {
   sources: Map<string, ContentEntry>;
   routes: Map<string, ContentEntry>;
   assets: Map<string, AssetRecord>;
+  policy?: PublicationPolicy;
 };
 export type RenderContext = { sourcePath: string; catalog: RouteCatalog };
 export type RenderResult = { html: string; headings: Heading[] };

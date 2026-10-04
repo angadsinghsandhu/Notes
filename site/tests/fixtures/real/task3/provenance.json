@@ -1,0 +1,32 @@
+[
+  {
+    "fixture": "linux.md",
+    "original": "Courses/Programming with Mosh - Docker Tutorial for Beginners/5 Linux Basics/README.md",
+    "sha256": "d2ce047f2c59a8ba9dc4859852643ddf492ad1a3322085c049d9484396860832",
+    "bytes": 3955
+  },
+  {
+    "fixture": "Ubuntu-Reference.jpg",
+    "original": "Courses/Programming with Mosh - Docker Tutorial for Beginners/5 Linux Basics/imgs/Ubuntu-Reference.jpg",
+    "sha256": "208150bde4c8f6d1db0a4cc401fcb167e50b915b6429b972be81b5d115f7a33f",
+    "bytes": 589211
+  },
+  {
+    "fixture": "course-update-guide-udemy.md",
+    "original": "Courses/Udemy/React/other/course-update-guide-udemy.md",
+    "sha256": "d1949519991fc713d01a2a2c66fa5cfd1f6f132883f627b6fb60e6e4a1be0d07",
+    "bytes": 34326
+  },
+  {
+    "fixture": "pytorch-chapter-1.md",
+    "original": "Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 1 - Getting Started with Pytorch/ReadMe.md",
+    "sha256": "07cba7bab54fdf6e90e2d5db2345da4cf5257caf884c568f108cce53eda9a9d3",
+    "bytes": 11746
+  },
+  {
+    "fixture": "pytorch-chapter-2.md",
+    "original": "Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 2 - Image Clasification with Pytorch/ReadMe.md",
+    "sha256": "1b01bdf5d265b1a0e3a7c25e4e64c2c1cf907d4b9843cf79ea0993476de0ad9a",
+    "bytes": 35557
+  }
+]
