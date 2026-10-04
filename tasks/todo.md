@@ -30,7 +30,7 @@ Review assumptions are public readership, rendered notebooks/code with PDF/slide
 ## Implementation milestones
 
 - [x] Task 1: runtime and quality gates (reviewed; commits 7d6755d, 8dbda44).
-- [ ] Task 2: automatic discovery and metadata/URL validation.
+- [x] Task 2: automatic discovery and metadata/URL validation (reviewed; commit 497438f).
 - [ ] Task 3: links, headings, and assets.
 - [ ] Task 4: safe Markdown/notebook/code rendering.
 - [ ] Task 5: content pipeline and development watcher.
