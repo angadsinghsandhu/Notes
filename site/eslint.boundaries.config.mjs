@@ -1,6 +1,15 @@
 import astro from 'eslint-plugin-astro';
 import tseslint from 'typescript-eslint';
-import { ignores } from './eslint.config.mjs';
+export const ignores = [
+  'node_modules/**',
+  'dist/**',
+  '.astro/**',
+  '.generated/**',
+  'public/**',
+  'test-results/**',
+  'playwright-report/**',
+  'coverage/**',
+];
 
 const contentForbidden = {
   regex:
@@ -8,8 +17,8 @@ const contentForbidden = {
   message: 'Content is independent of UI, the catalog facade, and CLI modules.',
 };
 
-const dynamicImport = (restriction) => ({
-  selector: `ImportExpression[source.value=/${restriction.regex.replaceAll('/', '\\/')}/]`,
+const dynamicImport = (restriction, nodeType = 'ImportExpression') => ({
+  selector: `${nodeType}[source.value=/${restriction.regex.replaceAll('/', '\\/')}/]`,
   message: restriction.message,
 });
 
@@ -19,15 +28,16 @@ const cliForbidden = {
   message: 'CLI modules call content modules and must not import UI.',
 };
 
-export default [
-  { ignores },
-  { files: ['**/*.ts'], languageOptions: { parser: tseslint.parser } },
-  ...astro.configs.base,
+export const boundaryRules = [
   {
     files: ['src/content/**/*.ts', 'tests/src/content/**/*.ts'],
     rules: {
       'no-restricted-imports': ['error', { patterns: [contentForbidden] }],
-      'no-restricted-syntax': ['error', dynamicImport(contentForbidden)],
+      'no-restricted-syntax': [
+        'error',
+        dynamicImport(contentForbidden),
+        dynamicImport(contentForbidden, 'TSImportType'),
+      ],
     },
   },
   {
@@ -75,6 +85,14 @@ export default [
       ],
       'no-restricted-syntax': [
         'error',
+        dynamicImport(
+          {
+            regex:
+              '(^|/)(content/(?!index(?:\\.[jt]s)?$)|scripts(?:/|$)|\\.generated(?:/|$))|^(node:)?fs(?:/|$)',
+            message: 'UI imports content types only through the public barrel.',
+          },
+          'TSImportType',
+        ),
         dynamicImport({
           regex:
             '(^|/)(content(?:/|$)|scripts(?:/|$)|\\.generated(?:/|$))|^(node:)?fs(?:/|$)',
@@ -98,7 +116,18 @@ export default [
     files: ['scripts/**/*.ts', 'tests/scripts/**/*.ts'],
     rules: {
       'no-restricted-imports': ['error', { patterns: [cliForbidden] }],
-      'no-restricted-syntax': ['error', dynamicImport(cliForbidden)],
+      'no-restricted-syntax': [
+        'error',
+        dynamicImport(cliForbidden),
+        dynamicImport(cliForbidden, 'TSImportType'),
+      ],
     },
   },
+];
+
+export default [
+  { ignores },
+  { files: ['**/*.ts'], languageOptions: { parser: tseslint.parser } },
+  ...astro.configs.base,
+  ...boundaryRules,
 ];

@@ -1,17 +1,7 @@
 import js from '@eslint/js';
 import astro from 'eslint-plugin-astro';
 import tseslint from 'typescript-eslint';
-
-export const ignores = [
-  'node_modules/**',
-  'dist/**',
-  '.astro/**',
-  '.generated/**',
-  'public/**',
-  'test-results/**',
-  'playwright-report/**',
-  'coverage/**',
-];
+import { boundaryRules, ignores } from './eslint.boundaries.config.mjs';
 
 export default [
   { ignores },
@@ -19,6 +9,7 @@ export default [
   ...tseslint.configs.recommended,
   ...astro.configs.recommended,
   ...astro.configs['jsx-a11y-recommended'],
+  ...boundaryRules,
   {
     languageOptions: {
       globals: {
