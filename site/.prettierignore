@@ -6,3 +6,6 @@ public/content-assets/
 playwright-report/
 test-results/
 coverage/
+
+# Ground-truth copied inputs retain exact archive bytes.
+tests/fixtures/real/
