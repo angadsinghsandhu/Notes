@@ -1,0 +1,63 @@
+:root {
+  color-scheme: light;
+  --color-background: #f8fafc;
+  --color-surface: #ffffff;
+  --color-text: #172033;
+  --color-muted: #475569;
+  --color-link: #1d4ed8;
+  --color-focus: #1d4ed8;
+  --font-body:
+    system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --space-small: 0.5rem;
+  --space-medium: 1rem;
+  --space-large: 2rem;
+  --content-width: 72rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--color-text);
+  background: var(--color-background);
+  overflow-wrap: anywhere;
+}
+
+body {
+  margin: 0;
+}
+
+a {
+  color: var(--color-link);
+  text-underline-offset: 0.2em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 4px;
+}
+
+main {
+  width: min(100% - 2 * var(--space-medium), var(--content-width));
+  margin: var(--space-large) auto;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--space-medium);
+  left: var(--space-medium);
+  z-index: 10;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: calc(100% - 2 * var(--space-medium));
+  padding: var(--space-small) var(--space-medium);
+  background: var(--color-surface);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}

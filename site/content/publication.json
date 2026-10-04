@@ -1,0 +1,26 @@
+{
+  "roots": [
+    "Books",
+    "Classes",
+    "Courses",
+    "Interview",
+    "Languages",
+    "Tutorials"
+  ],
+  "exclude": [
+    "**/.git/**",
+    "**/.kiro/**",
+    "**/node_modules/**",
+    "**/__pycache__/**",
+    "**/.cache/**",
+    "**/.ipynb_checkpoints/**",
+    "**/.venv/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/.env*",
+    "**/env.json"
+  ],
+  "overrides": {},
+  "repositoryPublic": true,
+  "repositoryUrl": "https://github.com/angadsinghsandhu/Notes"
+}
