@@ -39,3 +39,7 @@ export {
   MAX_LOCAL_ASSET_BYTES,
 } from './assets.js';
 export type { RasterAsset } from './assets.js';
+export { renderMarkdown } from './render/markdown.js';
+export { renderNotebook } from './render/notebook.js';
+export { renderSource } from './render/source.js';
+export { sanitizeAuthorHtml } from './render/sanitize.js';

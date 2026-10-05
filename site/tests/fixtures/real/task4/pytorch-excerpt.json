@@ -1,0 +1,76 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": []
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Imports**"
+      ],
+      "metadata": {
+        "id": "kVrB3bXfiBgW"
+      }
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "2BZMYdNa8tW1"
+      },
+      "outputs": [],
+      "source": [
+        "import torch\n",
+        "import torch.nn as nn\n",
+        "import torch.nn.functional as F"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "**Defining a torch tensor**"
+      ],
+      "metadata": {
+        "id": "JpG2pR6GiTVY"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "state = torch.tensor([1,2,3]) # long by default\n",
+        "state"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "brc1tqmFiA5e",
+        "outputId": "60af8b32-1345-46ab-8b72-d724ba88fc60"
+      },
+      "execution_count": null,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "tensor([1, 2, 3])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 2
+        }
+      ]
+    }
+  ]
+}

@@ -77,7 +77,14 @@ export type RouteCatalog = {
   assets: Map<string, AssetRecord>;
   policy?: PublicationPolicy;
 };
-export type RenderContext = { sourcePath: string; catalog: RouteCatalog };
+export type RenderContext = {
+  sourcePath: string;
+  catalog: RouteCatalog;
+  extractAsset?: (
+    asset: AssetRecord,
+    bytes: Uint8Array,
+  ) => void | Promise<void>;
+};
 export type RenderResult = { html: string; headings: Heading[] };
 export type PreparationResult = {
   manifest: Manifest;
