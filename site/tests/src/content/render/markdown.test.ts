@@ -64,6 +64,18 @@ describe('safe shared Markdown rendering', () => {
       } else expect(result.html).toContain('class="katex');
     }
   });
+  it('keeps the actual heading ID after Markdown-looking display math', async () => {
+    const markdown = '$$\nx\n---\n$$\n\n# Actual heading';
+    const result = await renderMarkdown(markdown, context(markdown));
+    expect(result.headings).toEqual([
+      { id: 'actual-heading', text: 'Actual heading', depth: 1 },
+    ]);
+    expect(result.html).toContain(
+      '<h1 id="actual-heading">Actual heading</h1>',
+    );
+    expect(result.html).toContain('class="katex-display"');
+    expect(result.html).not.toContain('id="x"');
+  });
   it('preserves display semantics and numeric inline math without confusing currency', async () => {
     const markdown = String.raw`\[ x^2 \] and $$y^2$$ and $5 + 3$ and $5 n$. Cost $5 and $10. Also $20 for $x$.`;
     const result = await renderMarkdown(markdown, context(markdown));

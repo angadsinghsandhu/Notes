@@ -6,7 +6,7 @@ import {
   planRasterAsset,
   type RasterAsset,
 } from '../assets.js';
-import { createHeadingSlugger } from '../headings.js';
+import { createHeadingSlugger, collectMarkdownLinks } from '../headings.js';
 import type { RenderContext, RenderResult } from '../types.js';
 import { renderMarkdown } from './markdown.js';
 import { renderSource } from './source.js';
@@ -155,7 +155,17 @@ export async function renderNotebook(
       let html = '';
       if (cell.cell_type === 'markdown') {
         const attachments = new Map<string, RasterAsset>();
-        for (const [name, data] of Object.entries(cell.attachments ?? {})) {
+        const references = new Set(
+          collectMarkdownLinks(cell.source)
+            .filter((link) => link.href.startsWith('attachment:'))
+            .map((link) =>
+              decodeURIComponent(link.href.slice('attachment:'.length)),
+            ),
+        );
+        for (const name of references) {
+          if (!cell.attachments || !Object.hasOwn(cell.attachments, name))
+            throw new Error(`Missing notebook attachment ${name}`);
+          const data = cell.attachments[name]!;
           const mime = rasterMime(data);
           const key = createHash('sha256').update(name).digest('hex');
           const sourcePath = `${context.sourcePath}.assets/cell-${cellIndex}/attachment-${key}.${mime === 'image/jpeg' ? 'jpg' : 'png'}`;

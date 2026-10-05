@@ -5,6 +5,10 @@ import type {
   AssetRecord,
   RenderContext,
 } from '../../../../src/content/types.js';
+import {
+  collectHeadings,
+  createHeadingSlugger,
+} from '../../../../src/content/headings.js';
 import { createRouteCatalog } from '../../../../src/content/links.js';
 import { renderNotebook } from '../../../../src/content/render/notebook.js';
 
@@ -83,6 +87,30 @@ describe('validated notebook display', () => {
     expect(result.html).toContain('class="shiki');
     expect(result.html).not.toContain('outputId');
     expect('task4NotebookExecuted' in globalThis).toBe(false);
+  });
+  it('agrees with notebook collection after Markdown-looking math across cells', async () => {
+    const markdown = '$$\nx\n---\n$$\n\n# Actual heading';
+    const slugger = createHeadingSlugger();
+    const collected = [
+      ...collectHeadings(markdown, slugger),
+      ...collectHeadings('# Actual heading', slugger),
+    ];
+    expect(collected).toEqual([
+      { id: 'actual-heading', text: 'Actual heading', depth: 1 },
+      { id: 'actual-heading-1', text: 'Actual heading', depth: 1 },
+    ]);
+    const result = await renderNotebook(
+      notebook([markdownCell(markdown), markdownCell('# Actual heading')]),
+      context(),
+    );
+    expect(result.headings).toEqual(collected);
+    expect(result.html).toContain(
+      '<h1 id="actual-heading">Actual heading</h1>',
+    );
+    expect(result.html).toContain(
+      '<h1 id="actual-heading-1">Actual heading</h1>',
+    );
+    expect(result.html).not.toContain('id="x"');
   });
   it('shares heading IDs across cells and escapes stored stream, error and raw cells', async () => {
     const result = await renderNotebook(
@@ -172,6 +200,75 @@ describe('validated notebook display', () => {
     expect(result.html).toContain('Unsupported output (cell 0)');
     expect(result.html).not.toMatch(/<script|<svg|<b>plain|unused|data:image/);
   });
+  it.each([true, false])(
+    'does not publish unused attachments with sink=%s',
+    async (withSink) => {
+      const image = await raster();
+      const assets: AssetRecord[] = [];
+      const ctx: RenderContext = {
+        ...context(),
+        ...(withSink
+          ? {
+              extractAsset: (asset: AssetRecord) => {
+                assets.push(asset);
+              },
+            }
+          : {}),
+      };
+      const result = await renderNotebook(
+        notebook([
+          markdownCell('No image references.', {
+            'unused.png': { 'image/png': image.toString('base64') },
+          }),
+        ]),
+        ctx,
+      );
+      expect(result.html).toContain('No image references.');
+      expect(assets).toEqual([]);
+      expect(ctx.catalog.assets.size).toBe(0);
+      expect(result.html).not.toContain('/content-assets/');
+    },
+  );
+  it('extracts only real attachment references once and ignores code and math lookalikes', async () => {
+    const image = await raster();
+    const assets: AssetRecord[] = [];
+    const ctx = {
+      ...context(),
+      extractAsset: (asset: AssetRecord) => {
+        assets.push(asset);
+      },
+    };
+    const markdown =
+      '![first][plot] ![second](attachment:plot%20name.png) <img src="attachment:plot%20name.png">\n\n[plot]: attachment:plot%20name.png\n\n`![hidden](attachment:unused.png)`\n\n$$\n![hidden](attachment:unused.png)\n$$';
+    const result = await renderNotebook(
+      notebook([
+        markdownCell(markdown, {
+          'plot name.png': { 'image/png': image.toString('base64') },
+          'unused.png': { 'image/png': 'invalid unused base64' },
+        }),
+      ]),
+      ctx,
+    );
+    expect(assets).toHaveLength(1);
+    expect(ctx.catalog.assets.size).toBe(1);
+    expect(result.html.match(/<img/g)).toHaveLength(3);
+    expect(result.html).toContain('width="2" height="3"');
+  });
+  it.each(['missing', 'invalid'])(
+    'keeps a cell diagnostic for a referenced %s attachment',
+    async (kind) => {
+      const attachments =
+        kind === 'missing'
+          ? {}
+          : { 'plot.png': { 'image/png': 'invalid base64' } };
+      await expect(
+        renderNotebook(
+          notebook([markdownCell('![plot](attachment:plot.png)', attachments)]),
+          { ...context(), extractAsset: () => {} },
+        ),
+      ).rejects.toThrow(/Tutorials\/note.ipynb.*cell 0.*(plot.png|base64)/);
+    },
+  );
   it('extracts Markdown attachments before URL resolution and keeps cells isolated', async () => {
     const image = await raster();
     const assets: AssetRecord[] = [];

@@ -5,19 +5,19 @@ import type { Nodes, Root as HtmlRoot, RootContent as HtmlContent } from 'hast';
 import katex from 'katex';
 import type { Root, RootContent } from 'mdast';
 import rehypeRaw from 'rehype-raw';
-import remarkGfm from 'remark-gfm';
-import remarkMath from 'remark-math';
-import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import { unified } from 'unified';
 import type { RasterAsset } from '../assets.js';
-import { collectHeadings, type HeadingSlugger } from '../headings.js';
+import {
+  collectHeadings,
+  parseMarkdown,
+  type HeadingSlugger,
+} from '../headings.js';
 import { resolveLink } from '../links.js';
 import type { RenderContext, RenderResult } from '../types.js';
 import { sanitizeAuthorTree } from './sanitize.js';
 import { renderSource } from './source.js';
 
-const parser = unified().use(remarkParse).use(remarkGfm);
 function visit(
   node: Root | RootContent,
   callback: (node: RootContent) => void,
@@ -27,48 +27,6 @@ function visit(
     for (const child of node.children) visit(child, callback);
 }
 
-/** Normalize legacy math only outside author HTML and code source ranges. */
-function normalizeMath(markdown: string): string {
-  const protectedRanges: [number, number][] = [];
-  visit(parser.parse(markdown), (node) => {
-    if (['code', 'inlineCode', 'html'].includes(node.type)) {
-      const start = node.position?.start.offset;
-      const end = node.position?.end.offset;
-      if (start !== undefined && end !== undefined)
-        protectedRanges.push([start, end]);
-    }
-  });
-  function normalize(value: string): string {
-    return (
-      value
-        .replace(/\\\[([\s\S]*?)\\\]/g, (_, math: string) => `$$${math}$$`)
-        .replace(/\\\(([\s\S]*?)\\\)/g, (_, math: string) => `$${math}$`)
-        // A bare amount followed by prose is currency; an enclosed numeric equation is math.
-        .replace(
-          /(?<![\\$])\$(\d+(?:[.,]\d+)?)(?!\d)(?=\s|[,.;]|$)/g,
-          (match: string, amount: string, offset: number, input: string) => {
-            const rest = input.slice(offset + match.length);
-            const closing = /(?<!\\)\$/.exec(rest)?.index;
-            const enclosed =
-              closing !== undefined &&
-              !/[\r\n]/.test(rest.slice(0, closing)) &&
-              /^(?:$|\s|[.,;:!?)\]}])/.test(rest.slice(closing + 1));
-            return enclosed ? match : `\\$${amount}`;
-          },
-        )
-    );
-  }
-  let output = '';
-  let cursor = 0;
-  for (const [start, end] of protectedRanges.sort((a, b) => a[0] - b[0])) {
-    if (start < cursor) continue;
-    output +=
-      normalize(markdown.slice(cursor, start)) + markdown.slice(start, end);
-    cursor = end;
-  }
-  return output + normalize(markdown.slice(cursor));
-}
-
 /** The optional slugger is shared by notebook Markdown cells. */
 export async function renderMarkdown(
   markdown: string,
@@ -76,13 +34,8 @@ export async function renderMarkdown(
   slugger?: HeadingSlugger,
   attachments?: ReadonlyMap<string, RasterAsset>,
 ): Promise<RenderResult> {
-  const author = markdown
-    .replace(/^\uFEFF/, '')
-    .replace(/^---[ \t]*\r?\n[\s\S]*?\r?\n(?:---|\.\.\.)[ \t]*(?:\r?\n|$)/, '');
   const headings = collectHeadings(markdown, slugger);
-  const processor = unified().use(remarkParse).use(remarkGfm).use(remarkMath);
-  const normalized = normalizeMath(author);
-  const tree = processor.parse(normalized);
+  const tree = parseMarkdown(markdown);
   const slots = new Map<string, HtmlContent[]>();
   const headingIds = new Map<string, string>();
   let headingIndex = 0;
@@ -111,10 +64,7 @@ export async function renderMarkdown(
       const math = node.value;
       const displayMode =
         node.type === 'math' ||
-        normalized.slice(
-          node.position?.start.offset,
-          (node.position?.start.offset ?? 0) + 2,
-        ) === '$$';
+        node.data?.hProperties?.className?.includes('math-display') === true;
       slot(node, () =>
         katex.renderToString(math, {
           displayMode,

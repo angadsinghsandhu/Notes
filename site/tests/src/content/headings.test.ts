@@ -30,6 +30,24 @@ describe('Markdown heading and authored link collection', () => {
       { id: 'code--日本語', text: 'code & 日本語', depth: 1 },
     ]);
   });
+  it('does not collect Markdown-looking display math as headings across notebook cells', () => {
+    const slugger = createHeadingSlugger();
+    const markdown = '$$\nx\n---\n$$\n\n# Actual heading';
+    expect(collectHeadings(markdown, slugger)).toEqual([
+      { id: 'actual-heading', text: 'Actual heading', depth: 1 },
+    ]);
+    expect(collectHeadings('# Actual heading', slugger)).toEqual([
+      { id: 'actual-heading-1', text: 'Actual heading', depth: 1 },
+    ]);
+    expect(collectHeadings(String.raw`# Equation \(x^2\)`)).toEqual([
+      { id: 'equation-x2', text: 'Equation x^2', depth: 1 },
+    ]);
+    expect(
+      collectMarkdownLinks(
+        '$$\n![not an attachment](attachment:hidden.png)\n$$',
+      ),
+    ).toEqual([]);
+  });
   it('recognizes real summary anchors separately from headings', async () => {
     const guide = await readFile(
       'tests/fixtures/real/task3/course-update-guide-udemy.md',

@@ -3,20 +3,65 @@ import { fromHtml } from 'hast-util-from-html';
 import type { Element, Nodes } from 'hast';
 import remarkGfm from 'remark-gfm';
 import remarkParse from 'remark-parse';
+import remarkMath from 'remark-math';
 import { unified } from 'unified';
 import type { Root, RootContent } from 'mdast';
 import type { Heading } from './types.js';
 
 export type HeadingSlugger = Pick<GithubSlugger, 'slug'>;
 export type MarkdownLink = { href: string; image: boolean; wiki: boolean };
-const parser = unified().use(remarkParse).use(remarkGfm);
+const authorParser = unified().use(remarkParse).use(remarkGfm);
+const parser = unified().use(remarkParse).use(remarkGfm).use(remarkMath);
 
 export function createHeadingSlugger(): HeadingSlugger {
   return new GithubSlugger();
 }
 
-function parse(markdown: string): Root {
-  return parser.parse(
+/** Normalize legacy math only outside author HTML and code source ranges. */
+function normalizeMath(markdown: string): string {
+  const protectedRanges: [number, number][] = [];
+  visit(authorParser.parse(markdown), (node) => {
+    if (['code', 'inlineCode', 'html'].includes(node.type)) {
+      const start = node.position?.start.offset;
+      const end = node.position?.end.offset;
+      if (start !== undefined && end !== undefined)
+        protectedRanges.push([start, end]);
+    }
+  });
+  function normalize(value: string): string {
+    return (
+      value
+        .replace(/\\\[([\s\S]*?)\\\]/g, (_, math: string) => `$$${math}$$`)
+        .replace(/\\\(([\s\S]*?)\\\)/g, (_, math: string) => `$${math}$`)
+        // A bare amount followed by prose is currency; an enclosed numeric equation is math.
+        .replace(
+          /(?<![\\$])\$(\d+(?:[.,]\d+)?)(?!\d)(?=\s|[,.;]|$)/g,
+          (match: string, amount: string, offset: number, input: string) => {
+            const rest = input.slice(offset + match.length);
+            const closing = /(?<!\\)\$/.exec(rest)?.index;
+            const enclosed =
+              closing !== undefined &&
+              !/[\r\n]/.test(rest.slice(0, closing)) &&
+              /^(?:$|\s|[.,;:!?)\]}])/.test(rest.slice(closing + 1));
+            return enclosed ? match : `\\$${amount}`;
+          },
+        )
+    );
+  }
+  let output = '';
+  let cursor = 0;
+  for (const [start, end] of protectedRanges.sort((a, b) => a[0] - b[0])) {
+    if (start < cursor) continue;
+    output +=
+      normalize(markdown.slice(cursor, start)) + markdown.slice(start, end);
+    cursor = end;
+  }
+  return output + normalize(markdown.slice(cursor));
+}
+
+/** Shared math-aware AST convention for collection and controlled rendering. */
+export function parseMarkdown(markdown: string): Root {
+  const normalized = normalizeMath(
     markdown
       .replace(/^\uFEFF/, '')
       .replace(
@@ -24,6 +69,25 @@ function parse(markdown: string): Root {
         '',
       ),
   );
+  const tree = parser.parse(normalized);
+  visit(tree, (node) => {
+    if (
+      node.type === 'inlineMath' &&
+      normalized.slice(
+        node.position?.start.offset,
+        (node.position?.start.offset ?? 0) + 2,
+      ) === '$$'
+    ) {
+      node.data = {
+        ...node.data,
+        hProperties: {
+          ...node.data?.hProperties,
+          className: ['language-math', 'math-display'],
+        },
+      };
+    }
+  });
+  return tree;
 }
 
 function visit(
@@ -36,7 +100,13 @@ function visit(
 }
 
 function text(node: RootContent): string {
-  if (node.type === 'text' || node.type === 'inlineCode') return node.value;
+  if (
+    node.type === 'text' ||
+    node.type === 'inlineCode' ||
+    node.type === 'inlineMath' ||
+    node.type === 'math'
+  )
+    return node.value;
   if (node.type === 'image' || node.type === 'imageReference')
     return node.alt ?? '';
   return 'children' in node ? node.children.map(text).join('') : '';
@@ -47,7 +117,7 @@ export function collectHeadings(
   slugger: HeadingSlugger = createHeadingSlugger(),
 ): Heading[] {
   const headings: Heading[] = [];
-  visit(parse(markdown), (node) => {
+  visit(parseMarkdown(markdown), (node) => {
     if (node.type === 'heading') {
       const value = text(node);
       headings.push({
@@ -70,7 +140,7 @@ function visitHtml(html: string, callback: (element: Element) => void): void {
 
 export function collectExplicitAnchors(markdown: string): string[] {
   const anchors: string[] = [];
-  visit(parse(markdown), (node) => {
+  visit(parseMarkdown(markdown), (node) => {
     if (node.type !== 'html') return;
     visitHtml(node.value, (element) => {
       if (
@@ -98,7 +168,7 @@ export function collectExplicitAnchors(markdown: string): string[] {
 }
 
 export function collectMarkdownLinks(markdown: string): MarkdownLink[] {
-  const tree = parse(markdown);
+  const tree = parseMarkdown(markdown);
   const definitions = new Map<string, string>();
   visit(tree, (node) => {
     if (node.type === 'definition') {

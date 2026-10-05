@@ -29,6 +29,7 @@ export {
   collectExplicitAnchors,
   collectMarkdownLinks,
   createHeadingSlugger,
+  parseMarkdown,
 } from './headings.js';
 export type { HeadingSlugger, MarkdownLink } from './headings.js';
 export { createRouteCatalog, resolveLink, publicSourceUrl } from './links.js';
