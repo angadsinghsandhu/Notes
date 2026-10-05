@@ -12,7 +12,34 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
-import { afterEach, expect, it } from 'vitest';
+import { afterEach, expect, it, vi } from 'vitest';
+
+const faults = vi.hoisted(() => ({
+  afterRename: undefined as
+    undefined | ((from: string, to: string) => Promise<void>),
+  cleanup: false,
+  verification: false,
+}));
+vi.mock('node:fs/promises', async (original) => {
+  const fs = await original<typeof import('node:fs/promises')>();
+  return {
+    ...fs,
+    lstat: async (path: string) => {
+      if (faults.verification && path.includes('/.stage-'))
+        throw new Error('injected verification cleanup failure');
+      return fs.lstat(path);
+    },
+    rename: async (from: string, to: string) => {
+      await fs.rename(from, to);
+      await faults.afterRename?.(from, to);
+    },
+    rm: async (path: string, options: Parameters<typeof fs.rm>[1]) => {
+      if (faults.cleanup && /\.(?:snapshot|assets)-backup-|\.stage-/.test(path))
+        throw new Error('injected verified cleanup failure');
+      return fs.rm(path, options);
+    },
+  };
+});
 import { prepareContent } from '../../../src/content/prepare.js';
 import type { PublicationPolicy } from '../../../src/content/index.js';
 
@@ -43,6 +70,9 @@ async function put(root: string, path: string, value: string | Buffer) {
   await writeFile(join(root, path), value);
 }
 afterEach(async () => {
+  faults.afterRename = undefined;
+  faults.cleanup = false;
+  faults.verification = false;
   for (const root of roots.splice(0))
     await rm(root, { recursive: true, force: true });
 });
@@ -96,7 +126,14 @@ it('prepare_real_mixed_archive_subset with deterministic bodies, routes, metadat
     '/notes/courses/programming-with-mosh-docker-tutorial-for-beginners/5-linux-basics/',
   );
   expect(
-    await readFile(join(options.outputDir, 'current', note.bodyFile!), 'utf8'),
+    (
+      JSON.parse(
+        await readFile(
+          join(options.outputDir, 'current/manifest.json'),
+          'utf8',
+        ),
+      ) as { preparedBodies: Record<string, string> }
+    ).preparedBodies[note.bodyFile!],
   ).toContain('content-assets/');
   const pdf = first.manifest.entries.find((entry) => entry.kind === 'pdf')!;
   expect(pdf.assetUrl).toMatch(/^\/content-assets\/[a-f0-9]{64}\.pdf$/);
@@ -104,17 +141,19 @@ it('prepare_real_mixed_archive_subset with deterministic bodies, routes, metadat
   const bytes = await readFile(
     join(options.outputDir, 'current/manifest.json'),
   );
-  const body = await readFile(
-    join(options.outputDir, 'current', note.bodyFile!),
+  await put(
+    options.rootDir,
+    'site/.generated/current/bodies/obsolete.html',
+    'obsolete legacy body',
   );
   const second = await prepareContent(options);
   expect(second).toEqual(first);
+  await expect(
+    readFile(join(options.outputDir, 'current/bodies/obsolete.html')),
+  ).rejects.toMatchObject({ code: 'ENOENT' });
   expect(
     await readFile(join(options.outputDir, 'current/manifest.json')),
   ).toEqual(bytes);
-  expect(
-    await readFile(join(options.outputDir, 'current', note.bodyFile!)),
-  ).toEqual(body);
 });
 it('do_not_publish_draft_bodies_or_internal_ledger and fail links before author sanitization', async () => {
   const options = await archive();
@@ -137,9 +176,18 @@ it('do_not_publish_draft_bodies_or_internal_ledger and fail links before author 
   expect(
     await readdir(join(options.rootDir, 'site/public/content-assets')),
   ).toEqual([]);
-  expect(await readdir(join(options.outputDir, 'current/bodies'))).toHaveLength(
-    1,
-  );
+  expect(
+    Object.keys(
+      (
+        JSON.parse(
+          await readFile(
+            join(options.outputDir, 'current/manifest.json'),
+            'utf8',
+          ),
+        ) as { preparedBodies: Record<string, string> }
+      ).preparedBodies,
+    ),
+  ).toHaveLength(1);
   await expect(
     readFile(join(options.rootDir, 'site/dist/manifest.json')),
   ).rejects.toMatchObject({ code: 'ENOENT' });
@@ -391,5 +439,52 @@ it.each(notebookRepairs)(
     expect(createHash('sha256').update(restored).digest('hex')).toBe(
       originalSha256,
     );
+  },
+);
+
+it.each(['removal', 'verification'])(
+  'reports committed success after postcommit %s cleanup failure and recovers without accumulating backups',
+  async (failure) => {
+    const options = await archive();
+    await put(options.rootDir, 'Tutorials/note.md', '# Old');
+    expect((await prepareContent(options)).diagnostics).toEqual([]);
+    await put(options.rootDir, 'Tutorials/note.md', '# New');
+    if (failure === 'removal') faults.cleanup = true;
+    else
+      faults.afterRename = async (_from, to) => {
+        if (to.endsWith('/current/manifest.json')) faults.verification = true;
+      };
+    const warning = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      const result = await prepareContent(options);
+      expect(result.diagnostics).toEqual([]);
+      const committed = JSON.parse(
+        await readFile(
+          join(options.outputDir, 'current/manifest.json'),
+          'utf8',
+        ),
+      ) as { entries: { title: string }[] };
+      expect(committed.entries[0]?.title).toBe('New');
+      expect(warning.mock.calls.flat().join(' ')).toContain('cleanup');
+      faults.afterRename = undefined;
+      expect((await prepareContent(options)).diagnostics[0]?.message).toContain(
+        'cleanup failure',
+      );
+      expect(
+        (await readdir(options.outputDir)).filter((name) =>
+          name.startsWith('.stage-'),
+        ),
+      ).toHaveLength(1);
+      faults.cleanup = false;
+      faults.verification = false;
+      expect((await prepareContent(options)).diagnostics).toEqual([]);
+      expect(
+        (await readdir(options.outputDir)).filter(
+          (name) => name.startsWith('.stage-') || name.includes('-backup-'),
+        ),
+      ).toEqual([]);
+    } finally {
+      warning.mockRestore();
+    }
   },
 );

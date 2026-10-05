@@ -62,7 +62,7 @@ export async function startContentWatcher(
       while (pending && !closed) {
         pending = false;
         try {
-          const result = await prepare(options);
+          const result = await prepare({ ...options, development: true });
           if (closed) break;
           if (result.diagnostics.length) report(result.diagnostics);
           else {

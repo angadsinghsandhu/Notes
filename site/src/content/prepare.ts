@@ -1,14 +1,11 @@
 import { randomUUID } from 'node:crypto';
-import {
-  lstat,
-  mkdir,
-  readFile,
-  rename,
-  rm,
-  writeFile,
-  realpath,
-} from 'node:fs/promises';
+import { mkdir, readFile, writeFile, realpath } from 'node:fs/promises';
 import { extname, join } from 'node:path';
+import {
+  commitPublication,
+  discardPublication,
+  recoverPublications,
+} from './publication.js';
 import { discoverEntries } from './discover.js';
 import { readMetadata, readPolicy } from './schema.js';
 import { compareSourcePaths, createEntry } from './identifiers.js';
@@ -44,6 +41,8 @@ export type PrepareOptions = {
   policyPath: string;
   hosted: boolean;
   revision?: string;
+  /** Watcher only: retain exactly the preceding publication’s assets for handoff. */
+  development?: boolean;
 };
 type Document = {
   entry: ContentEntry;
@@ -102,56 +101,6 @@ function notebookExtraction(entry: ContentEntry, link: MarkdownLink): boolean {
   );
 }
 
-async function exists(path: string): Promise<boolean> {
-  try {
-    await lstat(path);
-    return true;
-  } catch (error) {
-    if (error instanceof Error && 'code' in error && error.code === 'ENOENT')
-      return false;
-    throw error;
-  }
-}
-
-/** Stage both trees first; swap the manifest last and roll back every completed rename on error. */
-async function commitSnapshot(
-  generated: string,
-  assetsTarget: string,
-  stage: string,
-): Promise<void> {
-  const token = randomUUID();
-  const current = join(generated, 'current');
-  const oldSnapshot = join(generated, `.snapshot-backup-${token}`);
-  const oldAssets = join(generated, `.assets-backup-${token}`);
-  await verifyGeneratedTree(current);
-  await verifyGeneratedTree(assetsTarget);
-  const hadSnapshot = await exists(current);
-  let movedAssets = false;
-  let installedAssets = false;
-  let movedSnapshot = false;
-  try {
-    await rename(assetsTarget, oldAssets);
-    movedAssets = true;
-    await rename(join(stage, 'assets'), assetsTarget);
-    installedAssets = true;
-    if (hadSnapshot) {
-      await rename(current, oldSnapshot);
-      movedSnapshot = true;
-    }
-    await rename(stage, current);
-  } catch (error) {
-    if (movedSnapshot) await rename(oldSnapshot, current);
-    if (installedAssets) await rename(assetsTarget, join(stage, 'assets'));
-    if (movedAssets) await rename(oldAssets, assetsTarget);
-    throw error;
-  }
-  // Only names created by this transaction can be cleaned, after checking their complete trees.
-  for (const backup of [oldSnapshot, oldAssets]) {
-    await verifyGeneratedTree(backup);
-    await rm(backup, { recursive: true, force: true });
-  }
-}
-
 export async function prepareContent(
   options: PrepareOptions,
 ): Promise<PreparationResult> {
@@ -176,6 +125,7 @@ export async function prepareContent(
       join(root, 'site/public/content-assets'),
       'site/public/content-assets',
     );
+    await recoverPublications(generated, assetsTarget);
     await verifyGeneratedTree(join(generated, 'current'));
     await verifyGeneratedTree(assetsTarget);
     const policy: PublicationPolicy = {
@@ -331,9 +281,7 @@ export async function prepareContent(
     if (bodies.size + deployedFiles.size + manifest.entries.length + 1 > 20_000)
       throw new Error('Generated publication exceeds the 20,000-file limit');
     stage = join(generated, `.stage-${randomUUID()}`);
-    await mkdir(join(stage, 'bodies'), { recursive: true });
-    await mkdir(join(stage, 'assets'));
-    for (const [name, html] of bodies) await writeFile(join(stage, name), html);
+    await mkdir(join(stage, 'assets'), { recursive: true });
     for (const asset of manifest.assets) {
       if (asset.mode !== 'local') continue;
       const bytes =
@@ -343,15 +291,24 @@ export async function prepareContent(
         bytes,
       );
     }
-    await writeManifest(manifest, stage);
-    await commitSnapshot(generated, assetsTarget, stage);
+    await writeManifest(manifest, stage, bodies);
+    await commitPublication(
+      generated,
+      assetsTarget,
+      stage,
+      manifest,
+      options.development ?? false,
+    );
     stage = undefined;
   } catch (error) {
     diagnostics.push(diagnostic('publication', error));
   } finally {
     if (stage) {
-      await verifyGeneratedTree(stage);
-      await rm(stage, { recursive: true, force: true });
+      try {
+        await discardPublication(options.outputDir, stage);
+      } catch (error) {
+        diagnostics.push(diagnostic('cleanup', error));
+      }
     }
   }
   return result;

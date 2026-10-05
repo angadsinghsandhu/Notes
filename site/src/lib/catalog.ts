@@ -75,7 +75,16 @@ function publicEntry(entry: ContentEntry): ContentEntry {
   };
 }
 
+const preparedBodies = new WeakMap<
+  ContentEntry,
+  { snapshot: string; id: string; bodyFile: string; html: string }
+>();
+
 export function loadCatalog(manifest: Manifest): Catalog {
+  return createCatalog(manifest);
+}
+
+function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
   const entries = manifest.entries
     .filter((entry) => !entry.draft)
     .map(publicEntry)
@@ -96,7 +105,7 @@ export function loadCatalog(manifest: Manifest): Catalog {
   return {
     getEntry: (route) => {
       const entry = routes.get(route);
-      return entry ? publicEntry(entry) : undefined;
+      return entry ? select(entry) : undefined;
     },
     listEntries: (filters = {}) =>
       entries
@@ -105,7 +114,7 @@ export function loadCatalog(manifest: Manifest): Catalog {
             (!filters.section || entry.section === filters.section) &&
             (!filters.kind || entry.kind === filters.kind),
         )
-        .map(publicEntry),
+        .map(select),
     getAdjacentNotes: (id) => {
       const entry = entries.find((item) => item.id === id);
       if (!entry || !['markdown', 'notebook'].includes(entry.kind)) return {};
@@ -119,8 +128,8 @@ export function loadCatalog(manifest: Manifest): Catalog {
       const previous = notes[index - 1];
       const next = notes[index + 1];
       return {
-        ...(previous ? { previous: publicEntry(previous) } : {}),
-        ...(next ? { next: publicEntry(next) } : {}),
+        ...(previous ? { previous: select(previous) } : {}),
+        ...(next ? { next: select(next) } : {}),
       };
     },
   };
@@ -154,21 +163,78 @@ export async function readPreparedCatalog(
   const stat = await lstat(file);
   if (!stat.isFile() || stat.isSymbolicLink())
     throw new Error('Unsafe generated manifest');
-  return loadCatalog(JSON.parse(await readFile(file, 'utf8')) as Manifest);
+  const manifest = JSON.parse(await readFile(file, 'utf8')) as Manifest & {
+    preparedBodies?: Record<string, string>;
+  };
+  const bodies = new Map<string, string>();
+  for (const entry of manifest.entries) {
+    if (entry.draft || !entry.bodyFile) continue;
+    assertBodyPath(entry);
+    const html = manifest.preparedBodies
+      ? manifest.preparedBodies[entry.bodyFile]
+      : await readPreparedBody(entry, snapshot);
+    if (typeof html !== 'string') throw new Error('Missing generated body');
+    bodies.set(entry.bodyFile, html);
+  }
+  return createCatalog(manifest, (entry) => {
+    const selected = publicEntry(entry);
+    if (selected.bodyFile)
+      preparedBodies.set(selected, {
+        snapshot,
+        id: selected.id,
+        bodyFile: selected.bodyFile,
+        html: bodies.get(selected.bodyFile)!,
+      });
+    return selected;
+  });
 }
 
+function assertBodyPath(entry: ContentEntry): void {
+  if (
+    !/^[a-f0-9]{64}$/.test(entry.id) ||
+    entry.bodyFile !== `bodies/${entry.id}.html`
+  )
+    throw new Error('Invalid generated body path');
+}
+
+/** Keep the selected entry object: its body stays bound to the catalog read that selected it. */
 export async function readPreparedBody(
   entry: ContentEntry,
   snapshotDir = resolve('.generated/current'),
 ): Promise<string> {
   if (entry.draft) throw new Error('Draft bodies are unavailable');
   if (!entry.bodyFile) return '';
-  if (
-    !/^[a-f0-9]{64}$/.test(entry.id) ||
-    entry.bodyFile !== `bodies/${entry.id}.html`
-  )
-    throw new Error('Invalid generated body path');
+  assertBodyPath(entry);
+  const bound = preparedBodies.get(entry);
+  if (bound) {
+    if (
+      bound.snapshot !== resolve(snapshotDir) ||
+      bound.id !== entry.id ||
+      bound.bodyFile !== entry.bodyFile
+    )
+      throw new Error('Selected body does not belong to this catalog snapshot');
+    return bound.html;
+  }
   const snapshot = await snapshotPath(snapshotDir);
+  const manifestFile = join(snapshot, 'manifest.json');
+  const manifestStat = await lstat(manifestFile);
+  if (!manifestStat.isFile() || manifestStat.isSymbolicLink())
+    throw new Error('Unsafe generated manifest');
+  const manifest = JSON.parse(
+    await readFile(manifestFile, 'utf8'),
+  ) as Manifest & { preparedBodies?: Record<string, string> };
+  if (manifest.preparedBodies) {
+    const published = manifest.entries.find(
+      (item) =>
+        item.id === entry.id && !item.draft && item.bodyFile === entry.bodyFile,
+    );
+    const html = published && manifest.preparedBodies[entry.bodyFile];
+    if (typeof html !== 'string')
+      throw new Error(
+        'Body is unavailable in the current snapshot; retain the catalog-selected entry',
+      );
+    return html;
+  }
   const directory = join(snapshot, 'bodies');
   const stat = await lstat(directory);
   if (!stat.isDirectory() || stat.isSymbolicLink())

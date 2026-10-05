@@ -54,3 +54,21 @@ it('refuses symlink output ancestors without replacing their contents', async ()
   ).rejects.toThrow(/symlink|symbolic/i);
   expect(await readFile(join(root, 'outside/keep'), 'utf8')).toBe('preserve');
 });
+
+it('keeps rendered bodies in the same internal file as their catalog without changing the public manifest', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'notes-manifest-'));
+  roots.push(root);
+  const output = join(root, 'site/.generated/current');
+  await writeManifest(
+    manifest,
+    output,
+    new Map([['bodies/note.html', '<p>Same generation</p>']]),
+  );
+  expect(
+    JSON.parse(await readFile(join(output, 'manifest.json'), 'utf8')),
+  ).toEqual({
+    ...manifest,
+    preparedBodies: { 'bodies/note.html': '<p>Same generation</p>' },
+  });
+  expect(manifest).not.toHaveProperty('preparedBodies');
+});

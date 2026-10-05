@@ -53,6 +53,7 @@ export async function verifyGeneratedTree(path: string): Promise<void> {
 export async function writeManifest(
   manifest: Manifest,
   outputDir: string,
+  preparedBodies?: ReadonlyMap<string, string>,
 ): Promise<void> {
   const output = resolve(outputDir);
   const base = dirname(output);
@@ -69,5 +70,17 @@ export async function writeManifest(
   await mkdir(output, { recursive: true });
   const path = join(output, 'manifest.json');
   await verifyGeneratedTree(path);
-  await writeFile(path, `${JSON.stringify(manifest, null, 2)}\n`);
+  await writeFile(
+    path,
+    `${JSON.stringify(
+      {
+        ...manifest,
+        ...(preparedBodies
+          ? { preparedBodies: Object.fromEntries(preparedBodies) }
+          : {}),
+      },
+      null,
+      2,
+    )}\n`,
+  );
 }

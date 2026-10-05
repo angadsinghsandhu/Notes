@@ -2,6 +2,19 @@ import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, expect, it, vi } from 'vitest';
+const faults = vi.hoisted(() => ({ cleanup: false }));
+vi.mock('node:fs/promises', async (original) => {
+  const fs = await original<typeof import('node:fs/promises')>();
+  return {
+    ...fs,
+    rm: async (path: string, options: Parameters<typeof fs.rm>[1]) => {
+      if (faults.cleanup && path.includes('/.stage-'))
+        throw new Error('injected cleanup failure');
+      return fs.rm(path, options);
+    },
+  };
+});
+
 import { startContentWatcher, startDevelopment } from '../../scripts/dev.js';
 import type {
   PreparationResult,
@@ -11,6 +24,7 @@ import type {
 const roots: string[] = [];
 const handles: { close(): Promise<void> }[] = [];
 afterEach(async () => {
+  faults.cleanup = false;
   for (const handle of handles.splice(0)) await handle.close();
   for (const root of roots.splice(0))
     await rm(root, { recursive: true, force: true });
@@ -244,4 +258,58 @@ it('replaces a root subscription when an allowed archive folder is recreated', a
     ),
   ).toHaveLength(2);
   expect(source.close).toHaveBeenCalledTimes(1);
+});
+
+it('development watcher retains the preceding assets and reports success after committed private cleanup fails', async () => {
+  const options = await archive();
+  const source = events();
+  await writeFile(
+    join(options.rootDir, 'Tutorials/note.md'),
+    '# Old\n![pixel](pixel.png)',
+  );
+  const image = await readFile('tests/fixtures/synthetic/task3/pixel.png');
+  await writeFile(join(options.rootDir, 'Tutorials/pixel.png'), image);
+  const diagnostics = vi.fn();
+  const warning = vi.spyOn(console, 'warn').mockImplementation(() => {});
+  let complete: () => void = () => {};
+  const completed = new Promise<void>((resolve) => {
+    complete = resolve;
+  });
+  const onSuccess = vi.fn(() => {
+    if (onSuccess.mock.calls.length === 2) complete();
+  });
+  try {
+    const watcher = await startContentWatcher(options, onSuccess, {
+      subscribe: source.subscribe,
+      onDiagnostics: (items) => {
+        diagnostics(items);
+        complete();
+      },
+    });
+    handles.push(watcher);
+    const before = JSON.parse(
+      await readFile(join(options.outputDir, 'current/manifest.json'), 'utf8'),
+    ) as { assets: { url: string }[] };
+    faults.cleanup = true;
+    await writeFile(join(options.rootDir, 'Tutorials/note.md'), '# New');
+    source.callbacks.get(join(options.rootDir, 'Tutorials'))!('note.md');
+    await completed;
+    expect(onSuccess).toHaveBeenCalledTimes(2);
+    expect(diagnostics).not.toHaveBeenCalled();
+    expect(
+      await readFile(
+        join(options.rootDir, 'site/public', before.assets[0]!.url.slice(1)),
+      ),
+    ).toEqual(image);
+    expect(
+      JSON.parse(
+        await readFile(
+          join(options.outputDir, 'current/manifest.json'),
+          'utf8',
+        ),
+      ).entries[0].title,
+    ).toBe('New');
+  } finally {
+    warning.mockRestore();
+  }
 });
