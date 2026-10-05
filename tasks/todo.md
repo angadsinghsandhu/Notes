@@ -37,3 +37,4 @@ Review assumptions are public readership, rendered notebooks/code with PDF/slide
 - [ ] Task 6: responsive reader and search.
 - [ ] Task 7: full archive migration and output verification.
 - [ ] Task 8: deployment and operating documentation.
+- [ ] Task 9: approved archived Pandas → Polars conversion (15 files; isolated real-data parity).

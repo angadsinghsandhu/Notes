@@ -196,6 +196,42 @@ type Manifest = {
 - [ ] Run `npm run verify`, inspect the workflow conditions, and confirm no credentials appear in tracked files or generated client output. Run `git status --short` and audit all source diffs for changes outside the dry-run migration list and application/docs/config scope.
 - [ ] Deliver the working local website, migration ledger, verification results, and deployment setup instructions. Provisioning/publishing to the user's account requires their explicit authorization and available credentials; perform no remote writes from a delegated worker. Report deployment as configured/unconfigured/published based on evidence, never inference.
 
+## Task 9: Convert archived Pandas examples to Polars (approved scope addition)
+
+The user explicitly approved converting archived examples and instructed resumption on 2026-10-05. This milestone follows Tasks 6–8 and is required before final acceptance. Earlier preservation requirements permit these specific conversions; unrelated course code, model training, datasets, copyright notices and historical ecosystem explanations remain intact.
+
+**Files:** Modify only the following 15 original files, including necessary dependent cells and adjacent explanatory text:
+
+- `Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 2 - Image Clasification with Pytorch/download.py`
+- `Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/Multi-Output.ipynb`
+- `Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-answer.ipynb`
+- `Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-question.ipynb`
+- `Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 4 - Models and Callbacks/ExploringCallbacks.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/data.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/feature_columns.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Exercises/TFDS_Week2_Exercise.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 4/Exercises/TFDS_Week4_Exercise.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/S+P_Week_1_Lesson_2.ipynb`
+- `Courses/Coursera/tf deployment/Course 3/Week 2/1_input_pipelines.py`
+- `Courses/Coursera/tf deployment/Course 3/Week 2/2_input_pipelines_custom.py`
+- `Courses/Coursera/tf deployment/Course 3/Week 4/publish_datasets.py`
+- `Interview/Applied Science/breadth/11-practical.md`
+- `Tutorials/GPU/nv-gpu-workshop/6.0_cuDF.ipynb`
+
+**Tests:** Python checks mirror each original path under the existing `site/tests/` tree, using unique `test_<stem>.py` basenames and stdlib unittest. Any reusable verification helper must be justified by duplication and have a mirrored test. Controlled input fixtures and provenance stay under `site/tests/fixtures/real/polars/`; do not vendor large datasets. Record the exact proposed test/fixture file list before implementation. Keep verification environments ignored; Pandas is allowed only as the isolated baseline oracle, never as converted example runtime. Document required Polars/Excel extras in the relevant teaching text and operating README rather than altering unrelated manifests.
+
+**Interfaces:** Preserve each example's model-facing column names, ordered feature arrays, labels, per-column NumPy dictionaries and teaching placeholders. Polars has no implicit index: retain explicit source row IDs or Date columns where labels matter. Use immutable feature selection; no target columns reach normalization/model inputs. Preserve first-duplicate ordering, sample standard deviation (`ddof=1`), and both null/NaN semantics.
+
+- [ ] Capture plain-file originals/hashes and list every proposed source, mirrored test and fixture path. Read the saved inventory and current primary Polars API documentation; inspect complete dependent cells, never perform a blind `pd` substitution.
+- [ ] Before each conversion, write and run its mirrored check RED against actual original snippets/data. Isolate pure tabular preprocessing; never execute complete notebooks, training, downloaders, GPU kernels or generated builder writes. Existing local images/pageview CSVs are mandatory real fixtures; controlled read-only acquisition may supply actual heart/wine/Excel/sunspot/MAT inputs. Clearly report unavailable actual integration separately from synthetic edge proof.
+- [ ] Convert simple reads, unused import and interview concat; then TensorFlow feature dictionaries/splits; then wine/Excel preprocessing; then MATLAB metadata/builder; then time series; then GPU CPU comparison. Preserve exercise TODOs and upstream notices. Keep truthful cuDF/Dask Pandas API/partition descriptions and provenance links.
+- [ ] Compare original Pandas and converted Polars transformations on identical inputs: columns/order/row counts/dtypes, source-index demonstrations, fixed split indices, feature/label separation, duplicate retention, missingness, sample statistics and normalized arrays. For MATLAB compare normalized nested filename/bbox/scalar records; for time series compare monthly calendar and both overlap-Pearson/global-centered ACF definitions. Record deliberate corrections to original label-aligned differencing instead of silently changing semantics.
+- [ ] Verify JSON/nbformat and affected code-cell syntax with notebook magics handled; preserve incomplete exercise placeholders and explicitly identify pre-existing unrelated invalid cells. Remove or clearly label only stale output from converted cells, preserving unrelated saved outputs. Rescan source imports/APIs and allowlist historical explanations with exact reasons.
+- [ ] Run each covering check GREEN and applicable site format/lint/boundary/type/build gates after each completed source edit. Run the full parity checks and serialized `npm run verify` before commit. Rendering gates supplement data parity; they never substitute for it.
+- [ ] Controller audits the exact source diff, commits verified conversion batches, opens frequent feature PRs, and obtains independent review of the complete Task 9 range. Update the authoring docs and durable project preference for Polars in byte-identical CLAUDE/codex together if Task 8 did not already capture it.
+
+Self-review: all 15 inventory conversion targets are listed; index/mutation/dedup/missingness/calendar/Excel risks have explicit proof requirements. Conversion affects original archive bodies only by the user's explicit newer approval; no full notebook execution is authorized. Tests use the existing test tree and serialized gates, with no skipped/suppressed checks or lowered website coverage.
+
 ## Final acceptance and execution handoff
 
 The first release is complete only when all nine specification acceptance criteria have direct evidence: new-note pickup, update/delete behavior, migration accounting, real artifact rendering, error/sanitization behavior, responsive usability, complete green gates, hosting limits/search, and local/deployment behavior. Where Cloudflare account access is unavailable, local and configuration verification can finish, but a live deployment is explicitly unverified.

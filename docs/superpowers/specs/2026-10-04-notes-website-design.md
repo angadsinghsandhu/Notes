@@ -188,3 +188,23 @@ Platform choices were checked against primary documentation on 2026-10-04:
 - [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits): alternative hosting constraints.
 
 Self-review checked intent, scope, publication assumptions, artifact fallback behavior, local search limitations, hosting limits, URL collisions, failure modes, and acceptance criteria. The user subsequently approved implementation with subagents, commits after each task, and frequent feature PRs. That authorization supersedes earlier no-commit instructions. Merging and live publication remain outside the authorized scope.
+
+## 11. Scope boundaries
+
+This release includes discovery, validated rendering, metadata migration, browsing, search, responsive design, authoring documentation, and deployment configuration. It excludes accounts, browser editing, a database, notebook execution, PDF OCR/text extraction, slide-to-HTML conversion, AI chat, comments, cloud object-storage provisioning, and automatic execution/deployment of course demo projects. Those require separate requirements rather than being hidden inside this migration.
+
+## 12. Sources and review record
+
+Platform choices were checked against primary documentation on 2026-10-04:
+
+- [Astro content collections](https://docs.astro.build/en/guides/content-collections/): filesystem loading and structured content.
+- [Astro Markdown](https://docs.astro.build/en/guides/markdown-content/): Markdown processing and integrations.
+- [Pagefind documentation](https://pagefind.app/docs/): indexes generated HTML after a build; static search output.
+- [Cloudflare Pages limits](https://developers.cloudflare.com/pages/platform/limits/): free plan and asset limits.
+- [GitHub Pages limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits): alternative hosting constraints.
+
+Self-review checked intent, scope, publication assumptions, artifact fallback behavior, local search limitations, hosting limits, URL collisions, failure modes, and acceptance criteria. The user subsequently approved implementation with subagents, commits after each task, and frequent feature PRs. That authorization supersedes earlier no-commit instructions. Merging and live publication remain outside the authorized scope.
+
+## 11. Approved Polars scope addition (2026-10-05)
+
+The user explicitly requested both new Python tooling and archived Pandas examples use Polars. Convert the 15 executable/example targets inventoried during implementation, preserving teaching intent, exercises and model-facing tabular behavior with real-data parity checks. Historical cuDF/Dask ecosystem explanations and original upstream provenance remain truthful. This specific authorization permits changes to those archive bodies beyond metadata/link migration. The separate Task 9 milestone is required before final acceptance; never execute complete notebooks or unrelated course programs to verify it.
