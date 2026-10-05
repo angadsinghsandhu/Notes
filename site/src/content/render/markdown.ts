@@ -128,9 +128,12 @@ export async function renderMarkdown(
         attachments &&
         key &&
         typeof href === 'string' &&
-        href.startsWith('attachment:')
+        (href.startsWith('attachment:') ||
+          (node.tagName === 'img' && href.startsWith('data:image/')))
       ) {
-        const name = decodeURIComponent(href.slice('attachment:'.length));
+        const name = href.startsWith('attachment:')
+          ? decodeURIComponent(href.slice('attachment:'.length))
+          : href;
         const image = attachments.get(name);
         if (!image) throw new Error(`Missing notebook attachment ${name}`);
         node.properties[key] = image.asset.url;

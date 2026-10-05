@@ -301,6 +301,30 @@ async function generatedDirectory(
   return expected;
 }
 
+export async function readPlannedLocalAsset(
+  rootDir: string,
+  asset: AssetRecord,
+): Promise<Buffer> {
+  const root = await realpath(rootDir);
+  if (
+    asset.mode !== 'local' ||
+    !/^\/content-assets\/[a-f0-9]{64}\.(?:png|jpg|gif|webp|avif|svg|ico|pdf|ppt|pptx)$/.test(
+      asset.url,
+    ) ||
+    !extensions.has(extname(asset.sourcePath).toLowerCase())
+  )
+    throw new Error(`${asset.sourcePath}: invalid generated asset URL`);
+  const data = await localBytes(root, asset.sourcePath);
+  if (
+    data.originalSize !== asset.bytes ||
+    assetUrl(asset.sourcePath, data.bytes) !== asset.url
+  )
+    throw new Error(
+      `${asset.sourcePath}: asset changed or hash mismatch; re-plan assets`,
+    );
+  return data.bytes;
+}
+
 export async function copyLocalAssets(
   rootDir: string,
   assets: AssetRecord[],
@@ -309,26 +333,8 @@ export async function copyLocalAssets(
   const root = await realpath(rootDir);
   const target = await generatedDirectory(root, targetDir, rootDir);
   const local = assets.filter((asset) => asset.mode === 'local');
-  async function content(asset: AssetRecord): Promise<Buffer> {
-    if (
-      !/^\/content-assets\/[a-f0-9]{64}\.(?:png|jpg|gif|webp|avif|svg|ico|pdf|ppt|pptx)$/.test(
-        asset.url,
-      ) ||
-      !extensions.has(extname(asset.sourcePath).toLowerCase())
-    )
-      throw new Error(`${asset.sourcePath}: invalid generated asset URL`);
-    const data = await localBytes(root, asset.sourcePath);
-    if (
-      data.originalSize !== asset.bytes ||
-      assetUrl(asset.sourcePath, data.bytes) !== asset.url
-    )
-      throw new Error(
-        `${asset.sourcePath}: asset changed or hash mismatch; re-plan assets`,
-      );
-    return data.bytes;
-  }
   // Validate all sources and existing outputs before replacing or deleting output.
-  for (const asset of local) await content(asset);
+  for (const asset of local) await readPlannedLocalAsset(root, asset);
   const previous = await readdir(target);
   for (const name of previous) {
     const stat = await lstat(join(target, name));
@@ -339,7 +345,10 @@ export async function copyLocalAssets(
   for (const asset of local) {
     const name = asset.url.slice('/content-assets/'.length);
     if (written.has(name)) continue;
-    await writeFile(join(target, name), await content(asset));
+    await writeFile(
+      join(target, name),
+      await readPlannedLocalAsset(root, asset),
+    );
     written.add(name);
   }
   for (const name of previous)

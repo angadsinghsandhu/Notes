@@ -16,6 +16,7 @@ import {
   planAssets,
   copyLocalAssets,
   planRasterAsset,
+  readPlannedLocalAsset,
 } from '../../../src/content/assets.js';
 import type { PublicationPolicy } from '../../../src/content/types.js';
 
@@ -259,5 +260,37 @@ describe('bounded extracted notebook raster assets', () => {
         planRasterAsset('Tutorials/example.ipynb#cell-1', bytes, mime),
       ).rejects.toThrow('example.ipynb#cell-1');
     }
+  });
+});
+
+describe('read-only validated planned asset bytes', () => {
+  it('returns the exact sanitized planned bytes without touching the live output', async () => {
+    const root = await archive();
+    await writeFile(
+      join(root, 'Tutorials/images/a.svg'),
+      '<svg><script>bad()</script><path d="M0 0"/></svg>',
+    );
+    const [asset] = await planAssets(root, ['Tutorials/images/a.svg'], policy);
+    const bytes = await readPlannedLocalAsset(root, asset!);
+    expect(bytes.toString()).not.toContain('script');
+    expect(asset!.url).toContain(
+      createHash('sha256').update(bytes).digest('hex'),
+    );
+    await expect(readdir(join(root, 'site'))).rejects.toMatchObject({
+      code: 'ENOENT',
+    });
+    await writeFile(join(root, 'Tutorials/images/a.svg'), '<svg/>');
+    await expect(readPlannedLocalAsset(root, asset!)).rejects.toThrow(
+      /changed|hash/i,
+    );
+    await expect(
+      readPlannedLocalAsset(root, {
+        ...asset!,
+        url: '/content-assets/../../bad.svg',
+      }),
+    ).rejects.toThrow();
+    await expect(
+      readPlannedLocalAsset(root, { ...asset!, mode: 'external' }),
+    ).rejects.toThrow();
   });
 });

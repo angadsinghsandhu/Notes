@@ -105,12 +105,14 @@ async function extract(
   const base64 = original.replace(/[\r\n]/g, '');
   if (
     !base64 ||
-    !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(
-      base64,
-    )
+    base64.length % 4 !== 0 ||
+    /[^A-Za-z0-9+/=]/.test(base64) ||
+    /=[^=]|={3}/.test(base64)
   )
     throw new Error('Invalid raster base64');
   const bytes = Buffer.from(base64, 'base64');
+  if (bytes.toString('base64') !== base64)
+    throw new Error('Invalid raster base64');
   const image = await planRasterAsset(sourcePath, bytes, mime);
   await context.extractAsset(image.asset, bytes);
   context.catalog.assets.set(sourcePath, image.asset);
@@ -155,8 +157,9 @@ export async function renderNotebook(
       let html = '';
       if (cell.cell_type === 'markdown') {
         const attachments = new Map<string, RasterAsset>();
+        const links = collectMarkdownLinks(cell.source);
         const references = new Set(
-          collectMarkdownLinks(cell.source)
+          links
             .filter((link) => link.href.startsWith('attachment:'))
             .map((link) =>
               decodeURIComponent(link.href.slice('attachment:'.length)),
@@ -171,6 +174,30 @@ export async function renderNotebook(
           const sourcePath = `${context.sourcePath}.assets/cell-${cellIndex}/attachment-${key}.${mime === 'image/jpeg' ? 'jpg' : 'png'}`;
           const image = await extract(data, sourcePath, context);
           attachments.set(name, image);
+        }
+        // Legacy notebooks also embed PNG/JPEG directly in Markdown image URLs.
+        // Only referenced image nodes get this exception; generic data URLs remain forbidden.
+        const inline = new Set(
+          links
+            .filter(
+              (link) =>
+                link.image &&
+                /^data:image\/(?:png|jpeg);base64,/.test(link.href),
+            )
+            .map((link) => link.href),
+        );
+        for (const href of inline) {
+          const mime = href.startsWith('data:image/jpeg;')
+            ? 'image/jpeg'
+            : 'image/png';
+          const key = createHash('sha256').update(href).digest('hex');
+          const path = `${context.sourcePath}.assets/cell-${cellIndex}/inline-${key}.${mime === 'image/jpeg' ? 'jpg' : 'png'}`;
+          const image = await extract(
+            { [mime]: href.slice(href.indexOf(',') + 1) },
+            path,
+            context,
+          );
+          attachments.set(href, image);
         }
         const rendered = await renderMarkdown(
           cell.source,

@@ -2,7 +2,7 @@ Throughout this section, I'll use quite a few **Tailwind CSS** classes to style 
 
 - If you want to follow along, and you're interested in **exploring Tailwind CSS in greater depth**, the [official docs](https://tailwindcss.com/docs/installation) are a great place to learn more.
 - **If you want to focus on React** and you're not interested in finding the right Tailwind CSS classes on your own, you'll find a list of the core classes I'll use throughout this section below.
-- You can, of course, also always **check out the [code attachments](https://github.com/academind/react-complete-guide-course-resources/tree/main/code/09%20Practice%20Project%20-%20Project%20Management)** that belong to this section to find the components (with their styles) that I'll build & use throughout this section!
+- You can, of course, also always **check out the [code attachments](/code/09%20Practice%20Project%20-%20Project%20Management/)** that belong to this section to find the components (with their styles) that I'll build & use throughout this section!
 
 # Important Tailwind CSS Classes Used Throughout This Section
 

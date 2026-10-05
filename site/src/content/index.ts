@@ -44,3 +44,8 @@ export { renderMarkdown } from './render/markdown.js';
 export { renderNotebook } from './render/notebook.js';
 export { renderSource } from './render/source.js';
 export { sanitizeAuthorHtml } from './render/sanitize.js';
+
+export { prepareContent } from './prepare.js';
+export type { PrepareOptions } from './prepare.js';
+export { writeManifest } from './manifest.js';
+export { readPlannedLocalAsset } from './assets.js';

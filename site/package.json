@@ -7,17 +7,18 @@
     "node": "24.18.1"
   },
   "scripts": {
-    "dev": "astro dev --host 127.0.0.1",
+    "dev": "tsx scripts/dev.ts",
     "format:check": "prettier --check .",
     "lint": "eslint . --max-warnings 0",
     "check:boundaries": "eslint . --config eslint.boundaries.config.mjs --max-warnings 0",
     "typecheck": "astro check && tsc --project tsconfig.tools.json --noEmit",
     "check": "npm run format:check && npm run lint && npm run check:boundaries && npm run typecheck && npm run test:unit",
-    "build": "astro build",
+    "build": "npm run content:check && astro build",
     "preview": "astro preview --host 127.0.0.1",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
-    "verify": "npm run check && npm run build && npm run test:e2e"
+    "verify": "npm run check && npm run build && npm run test:e2e",
+    "content:check": "tsx scripts/content.ts"
   },
   "dependencies": {
     "astro": "7.3.5",
@@ -49,6 +50,7 @@
     "eslint-plugin-jsx-a11y-x": "0.2.0",
     "prettier": "3.9.9",
     "prettier-plugin-astro": "1.1.0",
+    "tsx": "4.23.15",
     "typescript": "6.0.3",
     "typescript-eslint": "8.71.0",
     "vitest": "5.0.3"

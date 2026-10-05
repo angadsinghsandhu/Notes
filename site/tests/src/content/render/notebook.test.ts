@@ -1,3 +1,4 @@
+import { randomBytes } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 import sharp from 'sharp';
@@ -361,4 +362,94 @@ describe('validated notebook display', () => {
       ).rejects.toThrow(/cell 0.*(raster|base64)/i);
     }
   });
+});
+
+it('extracts the real DL tools notebook inline PNG without changing its original pixels', async () => {
+  const json = JSON.parse(
+    await readFile(
+      'tests/fixtures/real/task5/inline-raster-excerpt.json',
+      'utf8',
+    ),
+  ) as { cells: { source: string[] }[] };
+  const source = json.cells[0]!.source.join('');
+  const base64 = /data:image\/png;base64,([A-Za-z0-9+/=]+)/.exec(source)![1]!;
+  const original = Buffer.from(base64, 'base64');
+  const extracted: { asset: AssetRecord; bytes: Uint8Array }[] = [];
+  const ctx = context();
+  ctx.extractAsset = (asset, bytes) => {
+    extracted.push({ asset, bytes });
+  };
+  const result = await renderNotebook(json, ctx);
+  expect(extracted).toHaveLength(1);
+  expect(Buffer.from(extracted[0]!.bytes)).toEqual(original);
+  expect(result.html).toContain('width="878" height="172"');
+  expect(result.html).toContain(extracted[0]!.asset.url);
+  expect(result.html).not.toContain('data:image');
+});
+it('bounds notebook inline rasters, rejects malformed payloads, and never extracts unused data lookalikes', async () => {
+  const png = await raster();
+  const data = `data:image/png;base64,${png.toString('base64')}`;
+  const ctx = context();
+  const sink = (ctx.extractAsset = () => {});
+  const rendered = await renderNotebook(
+    notebook([
+      markdownCell(
+        `![one](${data})\n![two](${data})\n\n\`![unused](data:image/png;base64,bad)\``,
+      ),
+    ]),
+    ctx,
+  );
+  expect(rendered.html.match(/<img/g)).toHaveLength(2);
+  expect(ctx.catalog.assets.size).toBe(1);
+  expect(sink).toBeDefined();
+  for (const href of [
+    'data:image/png;base64,!!',
+    `data:image/png;base64,${Buffer.from('invalid').toString('base64')}`,
+    `data:image/jpeg;base64,${png.toString('base64')}`,
+    `data:image/png;base64,${'A'.repeat(36_000_000)}`,
+  ])
+    await expect(
+      renderNotebook(notebook([markdownCell(`![bad](${href})`)]), {
+        ...context(),
+        extractAsset: () => {},
+      }),
+    ).rejects.toThrow(/cell 0/);
+  const untouched = context();
+  let calls = 0;
+  untouched.extractAsset = () => {
+    calls++;
+  };
+  await renderNotebook(
+    notebook([markdownCell(`\`![unused](${data})\``)]),
+    untouched,
+  );
+  expect(calls).toBe(0);
+}, 60_000);
+
+it('accepts a genuine PNG above five megabytes inside the stated 25 MiB raster budget', async () => {
+  const png = await sharp(randomBytes(1400 * 1400 * 3), {
+    raw: { width: 1400, height: 1400, channels: 3 },
+  })
+    .png({ compressionLevel: 0 })
+    .toBuffer();
+  expect(png.length).toBeGreaterThan(5_000_000);
+  const ctx = context();
+  let extracted = 0;
+  ctx.extractAsset = () => {
+    extracted++;
+  };
+  const result = await renderNotebook(
+    notebook([
+      codeCell([
+        {
+          output_type: 'display_data',
+          data: { 'image/png': png.toString('base64') },
+          metadata: {},
+        },
+      ]),
+    ]),
+    ctx,
+  );
+  expect(extracted).toBe(1);
+  expect(result.html).toContain('width="1400" height="1400"');
 });

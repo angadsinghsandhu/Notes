@@ -1,0 +1,120 @@
+[
+  {
+    "sourcePath": "Classes/Johns Hopkins/Sem 1/ML-DL/ReadMe.md",
+    "fixture": "repair-0.txt",
+    "replacements": [
+      [
+        "[Main Website]()",
+        "Main Website \u2014 URL not supplied in original note"
+      ]
+    ]
+  },
+  {
+    "sourcePath": "Classes/Johns Hopkins/Sem 1/MT/ReadMe.md",
+    "fixture": "repair-1.txt",
+    "replacements": [
+      [
+        "[Main Website]()",
+        "Main Website \u2014 URL not supplied in original note"
+      ]
+    ]
+  },
+  {
+    "sourcePath": "Classes/Johns Hopkins/Sem 3/AA/ReadMe.md",
+    "fixture": "repair-2.txt",
+    "replacements": [
+      [
+        "[Presentation Template](template_ppt.pptx)",
+        "Presentation Template \u2014 unavailable in this archive (original expected file: `template_ppt.pptx`)"
+      ],
+      [
+        "(www.cs.jhu.edu/~vandurme)",
+        "(https://www.cs.jhu.edu/~vandurme)"
+      ]
+    ]
+  },
+  {
+    "sourcePath": "Classes/Stanford/Stanford CS234 - Reinforcement Learning (2019)/README.md",
+    "fixture": "repair-3.txt",
+    "replacements": [
+      [
+        "https://github.com/angadsinghsandhu/notes/blob/master/Stanford%20Online/Stanford%20CS234%20-%20Reinforcement%20Learning%20(2019)/books/SuttonBartoIPRLBook2ndEd.pdf",
+        "books/SuttonBartoIPRLBook2ndEd.pdf"
+      ]
+    ]
+  },
+  {
+    "sourcePath": "Courses/Scrimba/Learn React/notes/01 static pages.md",
+    "fixture": "repair-4.txt",
+    "replacements": [
+      [
+        "src\\projects\\01-first-react\\README.md",
+        "../src/projects/01-first-react/README.md"
+      ],
+      [
+        "src\\projects\\02-ReactFacts\\README.md",
+        "../src/projects/02-ReactFacts/README.md"
+      ],
+      [
+        "src\\projects\\03-ReactFacts\\src\\assets\\components\\Navbar\\Navbar.tsx",
+        "../src/projects/02-ReactFacts/src/assets/components/Navbar/Navbar.tsx"
+      ]
+    ]
+  },
+  {
+    "sourcePath": "Courses/Udemy/React/notes/09 Practice Project - Project Management/tailwind-css-classes-used.md",
+    "fixture": "repair-5.txt",
+    "replacements": [
+      [
+        "/code/09%20Practice%20Project%20-%20Project%20Management/",
+        "https://github.com/academind/react-complete-guide-course-resources/tree/main/code/09%20Practice%20Project%20-%20Project%20Management"
+      ]
+    ]
+  },
+  {
+    "sourcePath": "Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md",
+    "fixture": "repair-6.txt",
+    "replacements": [
+      [
+        "(../papers/1706.03762.pdf)",
+        "(../papers/attention%20is%20all%20you%20need.pdf)"
+      ],
+      [
+        "![Training Loop]()",
+        "Image unavailable: Training Loop \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ],
+      [
+        "![All variables used]()",
+        "Image unavailable: All variables used \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ],
+      [
+        "![Estimate Loss Function]()",
+        "Image unavailable: Estimate Loss Function \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ],
+      [
+        "![avg attention example]()",
+        "Image unavailable: avg attention example \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ],
+      [
+        "![Attention Diagram]()",
+        "Image unavailable: Attention Diagram \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ],
+      [
+        "![Softmax result, diffused vs sharpened inputs]()",
+        "Image unavailable: Softmax result, diffused vs sharpened inputs \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ],
+      [
+        "![diagram for multi-head attention]()",
+        "Image unavailable: diagram for multi-head attention \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ],
+      [
+        "![Feed Forward Class Inplementation]()",
+        "Image unavailable: Feed Forward Class Inplementation \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ],
+      [
+        "![Skip Connections]()",
+        "Image unavailable: Skip Connections \u2014 original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`."
+      ]
+    ]
+  }
+]

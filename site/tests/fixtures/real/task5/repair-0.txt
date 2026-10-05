@@ -10,7 +10,7 @@ Deep learning (DL) has emerged as a powerful tool for solving data-intensive lea
 
 ## Some more important links
 
-- Main Website — URL not supplied in original note
+- [Main Website]()
 - [Github Repo](https://github.com/falloutdurham/beginners-pytorch-deep-learning)
 
 ## Metadata
