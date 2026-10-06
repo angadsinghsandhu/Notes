@@ -1,5 +1,6 @@
 import { createHash } from 'node:crypto';
 import { posix } from 'node:path';
+import { CONTENT_ROOTS } from './schema.js';
 import type { ContentEntry, Metadata, SourceEntry } from './types.js';
 
 const naturalOrder = new Intl.Collator('en', {
@@ -60,16 +61,51 @@ export function createEntry(
 
 export function assertUniqueRoutes(entries: ContentEntry[]): void {
   const owners = new Map<string, string>();
-  for (const entry of entries) {
-    for (const route of [entry.route, ...entry.aliases]) {
-      const key = `${route.replace(/\/+$/, '').toLowerCase()}/`;
-      const previous = owners.get(key);
-      if (previous !== undefined) {
+  const files = new Map<string, string>();
+  const directories = new Map<string, string>();
+  function claim(route: string, owner: string, endpoint = false): void {
+    const key = `${route.replace(/\/+$/, '').toLowerCase()}/`;
+    const previous = owners.get(key);
+    if (previous !== undefined)
+      throw new Error(`Route collision at ${route}: ${previous} and ${owner}`);
+    const file = endpoint ? key.slice(0, -1) : `${key}index.html`;
+    const fileOwner = files.get(file) ?? directories.get(file);
+    if (fileOwner !== undefined)
+      throw new Error(`Output collision at ${file}: ${fileOwner} and ${owner}`);
+    let directory = posix.dirname(file);
+    while (directory !== '/') {
+      const directoryOwner = files.get(directory);
+      if (directoryOwner !== undefined)
         throw new Error(
-          `Route collision at ${route}: ${previous} and ${entry.sourcePath}`,
+          `Output collision at ${directory}: ${directoryOwner} and ${owner} (${route})`,
         );
-      }
-      owners.set(key, entry.sourcePath);
+      directories.set(directory, owner);
+      directory = posix.dirname(directory);
+    }
+    owners.set(key, owner);
+    files.set(file, owner);
+  }
+  for (const route of [
+    '/',
+    '/library/',
+    '/search/',
+    '/404.html',
+    '/sitemap.xml',
+    ...CONTENT_ROOTS.map((root) => `/library/${root.toLowerCase()}/`),
+  ])
+    claim(route, `reserved website route ${route}`, !route.endsWith('/'));
+  for (const entry of entries) {
+    claim(entry.route, entry.sourcePath);
+    for (const alias of entry.aliases) {
+      const path = alias.replace(/\/+$/, '').toLowerCase();
+      const namespace = ['/content-assets', '/pagefind', '/_astro'].find(
+        (value) => path === value || path.startsWith(`${value}/`),
+      );
+      if (namespace)
+        throw new Error(
+          `${entry.sourcePath}: alias ${alias} shadows reserved website namespace ${namespace}/`,
+        );
+      claim(alias, entry.sourcePath);
     }
   }
 }

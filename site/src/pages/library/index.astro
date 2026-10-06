@@ -1,0 +1,87 @@
+---
+import LibraryLayout from '../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Navigation from '../../components/Navigation.astro';
+import { readPreparedCatalog, sectionLabels } from '../../lib/catalog.js';
+const entries = (await readPreparedCatalog()).listEntries();
+const notes = entries.filter((entry) =>
+  ['markdown', 'notebook'].includes(entry.kind),
+);
+const resources = entries.filter(
+  (entry) => !['markdown', 'notebook'].includes(entry.kind),
+);
+---
+
+<LibraryLayout
+  title="Library"
+  description="Browse learning notes by subject, with course code and resources available separately."
+>
+  <Breadcrumbs title="Browse all" />
+  <h1>Library</h1>
+  <p>
+    {notes.length} learning notes, organized by subject. Open resources when you
+    need course code, PDFs, or slides.
+  </p>
+  <nav aria-label="Browse by section" class="library-section-links">
+    {Object.entries(sectionLabels).map(([section, label]) => (
+      <a class="action" href={`/library/${section}/`}>
+        {label}
+      </a>
+    ))}
+  </nav>
+  <section data-library-notes aria-labelledby="notes-title">
+    <h2 id="notes-title">Learning notes</h2>
+    {Object.entries(sectionLabels).map(([section, label]) => (
+      <section class="browse-section" aria-label={label}>
+        <h3>
+          <a href={`/library/${section}/`}>{label}</a>
+        </h3>
+        {['markdown', 'notebook'].map((kind) => {
+          const selected = notes.filter(
+            (entry) => entry.section === section && entry.kind === kind,
+          );
+          return (
+            selected.length > 0 && (
+              <details open class="group-disclosure">
+                <summary>
+                  {kind === 'markdown' ? 'Markdown notes' : 'Notebook notes'} (
+                  {selected.length})
+                </summary>
+                <Navigation treeEntries={selected} />
+              </details>
+            )
+          );
+        })}
+      </section>
+    ))}
+  </section>
+  <details class="resource-disclosure">
+    <summary>Course code &amp; resources</summary>
+    <div data-library-resources>
+      <p>
+        {resources.length} resources. Open a kind and directory to browse its
+        files.
+      </p>
+      {Object.entries(sectionLabels).map(([section, label]) => (
+        <section class="browse-section" aria-label={`${label} resources`}>
+          <h3>{label}</h3>
+          {['code', 'pdf', 'slides'].map((kind) => {
+            const selected = resources.filter(
+              (entry) => entry.section === section && entry.kind === kind,
+            );
+            return (
+              selected.length > 0 && (
+                <details class="group-disclosure">
+                  <summary>
+                    {kind} ({selected.length})
+                  </summary>
+                  <Navigation treeEntries={selected} />
+                </details>
+              )
+            );
+          })}
+        </section>
+      ))}
+    </div>
+  </details>
+</LibraryLayout>

@@ -488,3 +488,32 @@ it.each(['removal', 'verification'])(
     }
   },
 );
+
+it('invalid fixed/output/namespace aliases preserve the last successful snapshot before publication', async () => {
+  const options = await archive();
+  await put(options.rootDir, 'Tutorials/example.md', '# Last successful body');
+  expect((await prepareContent(options)).diagnostics).toEqual([]);
+  const file = join(options.outputDir, 'current/manifest.json');
+  const before = await readFile(file);
+  for (const alias of [
+    '/search',
+    '/LIBRARY/',
+    '/search/index.html',
+    '/index.html',
+    '/notes/tutorials/example/index.html',
+    '/pagefind/pagefind.js',
+    '/content-assets/unsafe/',
+    '/_astro/unsafe/',
+  ]) {
+    await put(
+      options.rootDir,
+      'Tutorials/example.md',
+      `---\ntitle: Invalid alias proof\naliases: [${alias}]\n---\n# Invalid new body`,
+    );
+    const result = await prepareContent(options);
+    expect(await readFile(file)).toEqual(before);
+    expect(result.diagnostics.map((item) => item.message).join(' ')).toContain(
+      'Tutorials/example.md',
+    );
+  }
+});

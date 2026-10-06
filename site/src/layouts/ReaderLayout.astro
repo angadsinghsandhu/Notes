@@ -1,0 +1,128 @@
+---
+import 'katex/dist/katex.min.css';
+import '../styles/reader.css';
+import { fromHtml } from 'hast-util-from-html';
+import { toHtml } from 'hast-util-to-html';
+import type { Element, Root } from 'hast';
+import type { ContentEntry } from '../content/index.js';
+import { sectionLabels } from '../lib/catalog.js';
+import LibraryLayout from './LibraryLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import TableOfContents from '../components/TableOfContents.astro';
+import ResourceViewer from '../components/ResourceViewer.astro';
+interface Props {
+  entry: ContentEntry;
+  html: string;
+  navItems?: ContentEntry[];
+  previous?: ContentEntry;
+  next?: ContentEntry;
+}
+const { entry, html, navItems = [], previous, next } = Astro.props;
+// Only Task4's sanitized/rendered body enters this tree. Add native scroll regions
+// server-side so keyboard scrolling and accessible labels survive without JS.
+const tree = fromHtml(html, { fragment: true });
+function wrap(node: Root | Element): void {
+  node.children = node.children.map((child) => {
+    if (child.type !== 'element') return child;
+    wrap(child);
+    const math =
+      Array.isArray(child.properties.className) &&
+      child.properties.className.includes('katex-display');
+    const label =
+      child.tagName === 'pre'
+        ? 'Code or stored notebook output'
+        : child.tagName === 'table'
+          ? 'Data table'
+          : math
+            ? 'Mathematical formula'
+            : undefined;
+    if (!label) return child;
+    if (child.tagName === 'pre') delete child.properties.tabIndex;
+    return {
+      type: 'element',
+      tagName: 'div',
+      properties: {
+        className: ['scroll-region', ...(math ? ['math-scroll'] : [])],
+        role: 'region',
+        ariaLabel: label,
+        tabIndex: 0,
+      },
+      children: [child],
+    } satisfies Element;
+  });
+}
+wrap(tree);
+const body = toHtml(tree);
+const breadcrumb = [sectionLabels[entry.section], ...entry.groupSegments].join(
+  ' / ',
+);
+const note = ['markdown', 'notebook'].includes(entry.kind);
+---
+
+<LibraryLayout
+  title={entry.title}
+  description={
+    entry.description ||
+    `Read ${entry.title} in ${sectionLabels[entry.section]}.`
+  }
+  entry={entry}
+  navItems={navItems}
+>
+  <Breadcrumbs entry={entry} />
+  <div class="reader-grid">
+    <div class="reader-column">
+      <TableOfContents headings={entry.headings} variant="disclosure" />
+      <article
+        data-pagefind-body
+        data-section={entry.section}
+        data-kind={entry.kind}
+        data-breadcrumb={breadcrumb}
+        data-pagefind-filter="section[data-section], kind[data-kind]"
+        data-pagefind-meta="breadcrumb[data-breadcrumb], kind[data-kind]"
+      >
+        <header class="reader-header">
+          <p class="entry-meta">
+            {sectionLabels[entry.section]} · {entry.kind}
+            {entry.updated && ` · Updated ${entry.updated}`}
+          </p>
+          <h1 data-pagefind-meta="title">{entry.title}</h1>
+          {entry.description && <p>{entry.description}</p>}
+          {entry.sourceUrl && (
+            <div class="actions" data-pagefind-ignore>
+              <a class="action" href={entry.sourceUrl}>
+                View original source
+              </a>
+            </div>
+          )}
+        </header>
+        {!note && <ResourceViewer entry={entry} />}
+        <div class="reader-body" set:html={body} />
+      </article>
+      {note && (previous || next) && (
+        <nav
+          class="adjacent-notes"
+          aria-label="Previous and next notes"
+          data-pagefind-ignore
+        >
+          {previous && (
+            <a href={previous.route}>
+              <span class="muted">Previous</span>
+              <strong>{previous.title}</strong>
+            </a>
+          )}
+          {next && (
+            <a href={next.route}>
+              <span class="muted">Next</span>
+              <strong>{next.title}</strong>
+            </a>
+          )}
+        </nav>
+      )}
+    </div>
+    <TableOfContents headings={entry.headings} variant="rail" />
+  </div>
+</LibraryLayout>
+<script>
+  import { initCopyCode } from '../client/copy-code.js';
+  initCopyCode(document);
+</script>

@@ -1,0 +1,79 @@
+---
+import LibraryLayout from '../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Navigation from '../../components/Navigation.astro';
+import { readPreparedCatalog, sectionLabels } from '../../lib/catalog.js';
+import type { ContentEntry, Section } from '../../content/index.js';
+export async function getStaticPaths() {
+  const catalog = await readPreparedCatalog();
+  return (Object.keys(sectionLabels) as Section[]).map((section) => ({
+    params: { section },
+    props: { section, entries: catalog.listEntries({ section }) },
+  }));
+}
+interface Props {
+  section: Section;
+  entries: ContentEntry[];
+}
+const { section, entries } = Astro.props;
+const notes = entries.filter((entry) =>
+  ['markdown', 'notebook'].includes(entry.kind),
+);
+const resources = entries.filter(
+  (entry) => !['markdown', 'notebook'].includes(entry.kind),
+);
+const title = sectionLabels[section];
+---
+
+<LibraryLayout
+  title={title}
+  description={`Browse ${title.toLowerCase()} learning notes and resources.`}
+>
+  <Breadcrumbs title={title} />
+  <h1>{title}</h1>
+  <p>
+    {notes.length} learning notes · {resources.length} resources
+  </p>
+  <section data-library-notes aria-labelledby="notes-title">
+    <h2 id="notes-title">Learning notes</h2>
+    {notes.length === 0 && (
+      <p>No learning notes have been published in this section yet.</p>
+    )}
+    {['markdown', 'notebook'].map((kind) => {
+      const selected = notes.filter((entry) => entry.kind === kind);
+      return (
+        selected.length > 0 && (
+          <details open class="group-disclosure">
+            <summary>
+              {kind === 'markdown' ? 'Markdown notes' : 'Notebook notes'} (
+              {selected.length})
+            </summary>
+            <Navigation treeEntries={selected} />
+          </details>
+        )
+      );
+    })}
+  </section>
+  <details class="resource-disclosure">
+    <summary>Course code &amp; resources</summary>
+    <div data-library-resources>
+      <p>Open a kind and directory to browse resources.</p>
+      {resources.length === 0 && (
+        <p>No resources have been published in this section yet.</p>
+      )}
+      {['code', 'pdf', 'slides'].map((kind) => {
+        const selected = resources.filter((entry) => entry.kind === kind);
+        return (
+          selected.length > 0 && (
+            <details class="group-disclosure">
+              <summary>
+                {kind} ({selected.length})
+              </summary>
+              <Navigation treeEntries={selected} />
+            </details>
+          )
+        );
+      })}
+    </div>
+  </details>
+</LibraryLayout>

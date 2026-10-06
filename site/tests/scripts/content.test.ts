@@ -62,6 +62,6 @@ it('prepares archive content before dev and production build through explicit pa
   expect(packageJson.scripts.dev).toBe('tsx scripts/dev.ts');
   expect(packageJson.scripts['content:check']).toBe('tsx scripts/content.ts');
   expect(packageJson.scripts.build).toBe(
-    'npm run content:check && astro build',
+    'npm run content:check && astro build && pagefind --site dist',
   );
 });

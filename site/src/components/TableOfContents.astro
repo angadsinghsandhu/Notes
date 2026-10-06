@@ -1,0 +1,39 @@
+---
+import type { Heading } from '../content/index.js';
+interface Props {
+  headings: Heading[];
+  variant: 'disclosure' | 'rail';
+}
+const { headings, variant } = Astro.props;
+---
+
+{headings.length > 0 &&
+  (variant === 'disclosure' ? (
+    <details class="contents contents-disclosure" data-pagefind-ignore>
+      <summary>On this page</summary>
+      <nav aria-label="On this page">
+        <ol>
+          {headings.map((heading) => (
+            <li class:list={{ 'contents-child': heading.depth > 2 }}>
+              <a href={`#${heading.id}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </details>
+  ) : (
+    <aside class="contents contents-rail" data-pagefind-ignore>
+      <p>
+        <strong>On this page</strong>
+      </p>
+      <nav aria-label="On this page">
+        <ol>
+          {headings.map((heading) => (
+            <li class:list={{ 'contents-child': heading.depth > 2 }}>
+              <a href={`#${heading.id}`}>{heading.text}</a>
+            </li>
+          ))}
+        </ol>
+      </nav>
+    </aside>
+  ))}

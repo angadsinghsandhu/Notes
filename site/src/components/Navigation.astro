@@ -1,0 +1,105 @@
+---
+import { sectionLabels } from '../lib/catalog.js';
+import type { ContentEntry } from '../content/index.js';
+interface Props {
+  entry?: ContentEntry;
+  items?: ContentEntry[];
+  treeEntries?: ContentEntry[];
+  depth?: number;
+}
+const { entry, items = [], treeEntries, depth = 0 } = Astro.props;
+const direct =
+  treeEntries?.filter((item) => item.groupSegments.length <= depth) ?? [];
+const groups = new Map<string, ContentEntry[]>();
+for (const item of treeEntries ?? []) {
+  const group = item.groupSegments[depth];
+  if (group !== undefined)
+    groups.set(group, [...(groups.get(group) ?? []), item]);
+}
+const notes = treeEntries?.every((item) =>
+  ['markdown', 'notebook'].includes(item.kind),
+);
+---
+
+{!treeEntries && (
+  <nav
+    aria-label="Library sections"
+    class="section-navigation"
+    data-pagefind-ignore
+  >
+    <a href="/library/" class="nav-overview">
+      All notes
+    </a>
+    <ul class="section-links">
+      {Object.entries(sectionLabels).map(([section, label]) => (
+        <li>
+          <a
+            href={`/library/${section}/`}
+            aria-current={
+              entry?.section === section ||
+              Astro.url.pathname === `/library/${section}/`
+                ? 'true'
+                : undefined
+            }
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M3 6h7l2 2h9v12H3z" />
+            </svg>
+            <span>{label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    {entry && items.length > 0 && (
+      <details open class="group-navigation">
+        <summary>
+          {entry.groupSegments.join(' / ') || sectionLabels[entry.section]}
+        </summary>
+        <ul>
+          {items.map((item) => (
+            <li>
+              <a
+                href={item.route}
+                aria-current={item.id === entry.id ? 'page' : undefined}
+              >
+                {item.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </details>
+    )}
+    <a href="/search/">Search all content</a>
+  </nav>
+)}
+{treeEntries && (
+  <>
+    {direct.length > 0 && (
+      <ul class="entry-list">
+        {direct.map((item) => (
+          <li>
+            <a href={item.route}>{item.title}</a>
+            <p class="entry-meta">
+              {item.kind}
+              {item.description && ` · ${item.description}`}
+            </p>
+          </li>
+        ))}
+      </ul>
+    )}
+    {[...groups].map(([group, children]) => (
+      <details class="group-disclosure" open={notes}>
+        <summary>{group}</summary>
+        <Astro.self treeEntries={children} depth={depth + 1} />
+      </details>
+    ))}
+  </>
+)}

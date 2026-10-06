@@ -1,12 +1,21 @@
 import { lstat, readFile } from 'node:fs/promises';
 import { basename, dirname, join, resolve } from 'node:path';
-import { compareSourcePaths } from '../content/identifiers.js';
+import { assertUniqueRoutes, compareSourcePaths } from '../content/index.js';
 import type {
   ContentEntry,
   ContentKind,
   Manifest,
   Section,
 } from '../content/index.js';
+
+export const sectionLabels = {
+  books: 'Books',
+  classes: 'Classes',
+  courses: 'Courses',
+  interview: 'Interview',
+  languages: 'Languages',
+  tutorials: 'Tutorials',
+} satisfies Record<Section, string>;
 
 export type Catalog = {
   getEntry(route: string): ContentEntry | undefined;
@@ -98,6 +107,7 @@ function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
         (a.order ?? Infinity) - (b.order ?? Infinity) ||
         compareSourcePaths(a.sourcePath, b.sourcePath),
     );
+  assertUniqueRoutes(entries);
   const routes = new Map<string, ContentEntry>();
   for (const entry of entries)
     for (const route of [entry.route, ...entry.aliases])
@@ -154,6 +164,10 @@ async function snapshotPath(snapshotDir: string): Promise<string> {
   return snapshot;
 }
 
+let cached:
+  | { snapshot: string; generation: string; catalog: Promise<Catalog> }
+  | undefined;
+
 /** Server-side facade: pages never import the internal manifest or scan the archive. */
 export async function readPreparedCatalog(
   snapshotDir = resolve('.generated/current'),
@@ -163,6 +177,23 @@ export async function readPreparedCatalog(
   const stat = await lstat(file);
   if (!stat.isFile() || stat.isSymbolicLink())
     throw new Error('Unsafe generated manifest');
+  const generation = `${stat.ino}:${stat.mtimeMs}:${stat.ctimeMs}:${stat.size}`;
+  if (cached?.snapshot === snapshot && cached.generation === generation)
+    return cached.catalog;
+  const catalog = readCatalogFile(file, snapshot);
+  cached = { snapshot, generation, catalog };
+  try {
+    return await catalog;
+  } catch (error) {
+    if (cached.catalog === catalog) cached = undefined;
+    throw error;
+  }
+}
+
+async function readCatalogFile(
+  file: string,
+  snapshot: string,
+): Promise<Catalog> {
   const manifest = JSON.parse(await readFile(file, 'utf8')) as Manifest & {
     preparedBodies?: Record<string, string>;
   };

@@ -106,3 +106,76 @@ describe('canonical identifiers', () => {
     expect(compareSourcePaths('Tutorials/A.md', 'Tutorials/a.md')).not.toBe(0);
   });
 });
+
+const fixedRoutes = [
+  '/',
+  '/search/',
+  '/library/',
+  '/404.html',
+  '/sitemap.xml',
+  '/library/books/',
+  '/library/classes/',
+  '/library/courses/',
+  '/library/interview/',
+  '/library/languages/',
+  '/library/tutorials/',
+];
+it.each(
+  fixedRoutes.flatMap((route) => {
+    const file = route.endsWith('/') ? `${route}index.html` : route;
+    return [
+      ...new Set([
+        route.replace(/\/+$/, '') || '/',
+        route.toUpperCase(),
+        file,
+        `${file}/child/`,
+      ]),
+    ].map((alias) => [alias, route]);
+  }),
+)(
+  'rejects fixed route/output alias %s owned by %s with source diagnostics',
+  (alias, reserved) => {
+    const entry = createEntry(source('Tutorials/alias.md'), {
+      ...metadata,
+      aliases: [alias!],
+    });
+    const check = () => assertUniqueRoutes([entry]);
+    expect(check).toThrow('Tutorials/alias.md');
+    expect(check).toThrow(`reserved website route ${reserved}`);
+  },
+);
+it.each([
+  '/pagefind/pagefind.js',
+  '/PAGEFIND/unsafe/',
+  '/content-assets/abc.pdf',
+  '/content-assets/unsafe/',
+  '/_astro/entry.js',
+  '/_ASTRO/unsafe/',
+])('rejects alias %s in an existing deployed support namespace', (alias) => {
+  const check = () =>
+    assertUniqueRoutes([
+      createEntry(source('Tutorials/alias.md'), {
+        ...metadata,
+        aliases: [alias],
+      }),
+    ]);
+  expect(check).toThrow('Tutorials/alias.md');
+  expect(check).toThrow('reserved website namespace');
+});
+it.each([false, true])(
+  'rejects real content output file/directory collision in either order (reverse=%s)',
+  (reverse) => {
+    const entries = [
+      createEntry(source('Tutorials/example.md'), metadata),
+      createEntry(source('Tutorials/alias.md'), {
+        ...metadata,
+        aliases: ['/notes/tutorials/example/index.html'],
+      }),
+    ];
+    if (reverse) entries.reverse();
+    const check = () => assertUniqueRoutes(entries);
+    expect(check).toThrow('/notes/tutorials/example/index.html');
+    expect(check).toThrow('Tutorials/example.md');
+    expect(check).toThrow('Tutorials/alias.md');
+  },
+);
