@@ -1,0 +1,436 @@
+[
+  {
+    "sourcePath": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 1/Examples/TFLite_Week1_Transfer_Learning.ipynb",
+    "originalSha256": "a5dc61d2f8d53c22b5d46c1261109d0414401b7ba78338f0655c61fcf6b861e7",
+    "rawReplacements": [
+      {
+        "cellIndex": 11,
+        "sourceLine": 2,
+        "original": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](../load_data/images.ipynb)\\n\"",
+        "replacement": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](https://www.tensorflow.org/tutorials/load_data/images)\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../load_data/images.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/images",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 2/Exercise/TFLite_Week2_Exercise.ipynb",
+    "originalSha256": "4b3c6c83cac3609f9f7b6baa2796e8a4428168d2906a606c4f63a095cf72b767",
+    "rawReplacements": [
+      {
+        "cellIndex": 10,
+        "sourceLine": 2,
+        "original": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](../load_data/images.ipynb)\\n\"",
+        "replacement": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](https://www.tensorflow.org/tutorials/load_data/images)\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../load_data/images.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/images",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 2/Exercise/TFLite_Week2_Exercise_Answer.ipynb",
+    "originalSha256": "cb2a85bb8a720b63ef4b7ee0bb8829c5a347043f41f109374bb4d6473ac0a713",
+    "rawReplacements": [
+      {
+        "cellIndex": 10,
+        "sourceLine": 2,
+        "original": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](../load_data/images.ipynb)\\n\"",
+        "replacement": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](https://www.tensorflow.org/tutorials/load_data/images)\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../load_data/images.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/images",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 3/Exercise/TFLite_Week3_Exercise.ipynb",
+    "originalSha256": "4696623be8793cca0b040e81edaa13dbc53f65d0e897479973421e2675854b05",
+    "rawReplacements": [
+      {
+        "cellIndex": 10,
+        "sourceLine": 2,
+        "original": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](../load_data/images.ipynb)\\n\"",
+        "replacement": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](https://www.tensorflow.org/tutorials/load_data/images)\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../load_data/images.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/images",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 3/Exercise/TFLite_Week3_Exercise_Answer.ipynb",
+    "originalSha256": "1d0cf0fcbabb9852308930e2c181d4798f001cddf9815f9ed81f26323fb20e3f",
+    "rawReplacements": [
+      {
+        "cellIndex": 10,
+        "sourceLine": 2,
+        "original": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](../load_data/images.ipynb)\\n\"",
+        "replacement": "\"This `tfds` package is the easiest way to load pre-defined data. If you have your own data, and are interested in importing using it with TensorFlow see [loading image data](https://www.tensorflow.org/tutorials/load_data/images)\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../load_data/images.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/images",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/data.ipynb",
+    "originalSha256": "163c4f04b6a7762d257f689ba87d2da13d1e115a0d800dd6371f6b909105bab6",
+    "rawReplacements": [
+      {
+        "cellIndex": 30,
+        "sourceLine": 2,
+        "original": "\"See [Loading NumPy arrays](../tutorials/load_data/numpy.ipynb) for more examples.\\n\"",
+        "replacement": "\"See [Loading NumPy arrays](https://www.tensorflow.org/tutorials/load_data/numpy) for more examples.\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../tutorials/load_data/numpy.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/numpy",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 54,
+        "sourceLine": 2,
+        "original": "\"See [Loading TFRecords](../tutorials/load_data/tf_records.ipynb) for an end-to-end example.\\n\"",
+        "replacement": "\"See [Loading TFRecords](https://www.tensorflow.org/tutorials/load_data/tfrecord) for an end-to-end example.\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../tutorials/load_data/tf_records.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/tfrecord",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 61,
+        "sourceLine": 2,
+        "original": "\"See [Loading Text](../tutorials/load_data/text.ipynb) for an end to end example.\\n\"",
+        "replacement": "\"See [Loading Text](https://www.tensorflow.org/tutorials/load_data/text) for an end to end example.\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../tutorials/load_data/text.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/text",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 74,
+        "sourceLine": 0,
+        "original": "\"See [Loading CSV Files](../tutorials/load_data/csv.ipynb), and [Loading Pandas DataFrames](../tutorials/load_data/pandas.ipynb) for more examples. \\n\"",
+        "replacement": "\"See [Loading CSV Files](https://www.tensorflow.org/tutorials/load_data/csv), and [Loading Pandas DataFrames](https://www.tensorflow.org/tutorials/load_data/pandas_dataframe) for more examples. \\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../tutorials/load_data/csv.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/csv",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          },
+          {
+            "originalDestination": "../tutorials/load_data/pandas.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/load_data/pandas_dataframe",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 162,
+        "sourceLine": 0,
+        "original": "\"For an end to end time series example see: [Time series forecasting](../../tutorials/text/time_series.ipynb).\"",
+        "replacement": "\"For an end to end time series example see: [Time series forecasting](https://www.tensorflow.org/tutorials/structured_data/time_series).\"",
+        "destinations": [
+          {
+            "originalDestination": "../../tutorials/text/time_series.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/structured_data/time_series",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 186,
+        "sourceLine": 4,
+        "original": "\"Note: See [Imbalanced Data](../tutorials/keras/imbalanced_data.ipynb) for a full tutorial.\\n\"",
+        "replacement": "\"Note: See [Imbalanced Data](https://www.tensorflow.org/tutorials/structured_data/imbalanced_data) for a full tutorial.\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../tutorials/keras/imbalanced_data.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/tutorials/structured_data/imbalanced_data",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 1/Examples/rest_simple.ipynb",
+    "originalSha256": "0e8bb9ef7974e9c533fb449f2db07642a7c3e5c79367132c689f0291711ed237",
+    "rawReplacements": [
+      {
+        "cellIndex": 13,
+        "sourceLine": 2,
+        "original": "\"We'll use the command line utility `saved_model_cli` to look at the [MetaGraphDefs](https://www.tensorflow.org/versions/r1.15/api_docs/python/tf/MetaGraphDef) (the models) and [SignatureDefs](../signature_defs) (the methods you can call) in our SavedModel.  See [this discussion of the SavedModel CLI](https://github.com/tensorflow/docs/blob/master/site/en/r1/guide/saved_model.md#cli-to-inspect-and-execute-savedmodel) in the TensorFlow Guide.\"",
+        "replacement": "\"We'll use the command line utility `saved_model_cli` to look at the [MetaGraphDefs](https://www.tensorflow.org/versions/r1.15/api_docs/python/tf/MetaGraphDef) (the models) and [SignatureDefs](https://www.tensorflow.org/tfx/serving/signature_defs) (the methods you can call) in our SavedModel.  See [this discussion of the SavedModel CLI](https://github.com/tensorflow/docs/blob/master/site/en/r1/guide/saved_model.md#cli-to-inspect-and-execute-savedmodel) in the TensorFlow Guide.\"",
+        "destinations": [
+          {
+            "originalDestination": "../signature_defs",
+            "replacementDestination": "https://www.tensorflow.org/tfx/serving/signature_defs",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 4/Examples/Custom_Federated_Algorithms,_Part_1_Introduction_to_the_Federated_Core.ipynb",
+    "originalSha256": "437695e1a6631083ae786235621f6b25b3c8844b545830ade322f396306b5e68",
+    "rawReplacements": [
+      {
+        "cellIndex": 4,
+        "sourceLine": 2,
+        "original": "\"using the [Federated Core (FC)](../federated_core.md) - a set of lower-level\\n\"",
+        "replacement": "\"using the [Federated Core (FC)](https://www.tensorflow.org/federated/federated_core) - a set of lower-level\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../federated_core.md",
+            "replacementDestination": "https://www.tensorflow.org/federated/federated_core",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 4,
+        "sourceLine": 4,
+        "original": "\"[Federated Learning (FL)](../federated_learning.md) layer.\\n\"",
+        "replacement": "\"[Federated Learning (FL)](https://www.tensorflow.org/federated/federated_learning) layer.\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../federated_learning.md",
+            "replacementDestination": "https://www.tensorflow.org/federated/federated_learning",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 4,
+        "sourceLine": 9,
+        "original": "\"[the second part of this series](custom_federated_alrgorithms_2.ipynb), we use\\n\"",
+        "replacement": "\"[the second part of this series](https://www.tensorflow.org/federated/tutorials/custom_federated_algorithms_2), we use\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "custom_federated_alrgorithms_2.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/federated/tutorials/custom_federated_algorithms_2",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 4,
+        "sourceLine": 22,
+        "original": "\"[image classification](federated_learning_for_image_classification.ipynb) and\\n\"",
+        "replacement": "\"[image classification](https://www.tensorflow.org/federated/tutorials/federated_learning_for_image_classification) and\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "federated_learning_for_image_classification.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/federated/tutorials/federated_learning_for_image_classification",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 4,
+        "sourceLine": 23,
+        "original": "\"[text generation](federated_learning_for_text_generation.ipynb) for a\\n\"",
+        "replacement": "\"[text generation](https://www.tensorflow.org/federated/tutorials/federated_learning_for_text_generation) for a\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "federated_learning_for_text_generation.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/federated/tutorials/federated_learning_for_text_generation",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 4,
+        "sourceLine": 25,
+        "original": "\"and the [Federated Learning](../federated_learning.md) APIs (`tff.learning`), as\\n\"",
+        "replacement": "\"and the [Federated Learning](https://www.tensorflow.org/federated/federated_learning) APIs (`tff.learning`), as\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "../federated_learning.md",
+            "replacementDestination": "https://www.tensorflow.org/federated/federated_learning",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 6,
+        "sourceLine": 4,
+        "original": "\"please refer to the [Installation](../install.md) guide for instructions.\"",
+        "replacement": "\"please refer to the [Installation](https://www.tensorflow.org/federated/install) guide for instructions.\"",
+        "destinations": [
+          {
+            "originalDestination": "../install.md",
+            "replacementDestination": "https://www.tensorflow.org/federated/install",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      },
+      {
+        "cellIndex": 68,
+        "sourceLine": 1,
+        "original": "\"to the [second part](custom_federated_algorithms_2.ipynb).\"",
+        "replacement": "\"to the [second part](https://www.tensorflow.org/federated/tutorials/custom_federated_algorithms_2).\"",
+        "destinations": [
+          {
+            "originalDestination": "custom_federated_algorithms_2.ipynb",
+            "replacementDestination": "https://www.tensorflow.org/federated/tutorials/custom_federated_algorithms_2",
+            "evidence": "Notebook authored TensorFlow.org / tensorflow GitHub source link identifies imported document. Official primary destination and matching tutorial title verified 2026-10-04; Pandas rename corroborated by controller GitHub GET."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Tutorials/GPU/nv-gpu-workshop/1.0_CPU_GPU_Comparison.ipynb",
+    "originalSha256": "061ac5d7f9cb2cc0c9680ed98571ad81d105b5ed4df7cb54ea58202beb138271",
+    "rawReplacements": [
+      {
+        "cellIndex": 2,
+        "sourceLine": 2,
+        "original": "\"![CPU GPU Comparison](images/cpu-gpu.png)\\n\"",
+        "replacement": "\"Image unavailable: CPU GPU Comparison — original archive file `images/cpu-gpu.png` is absent.\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "images/cpu-gpu.png",
+            "replacementDestination": "Image unavailable: CPU GPU Comparison — original archive file `images/cpu-gpu.png` is absent.",
+            "evidence": "Actual archive image file is absent; full-archive preparation reported missing target. Controller approved explicit unavailable image label."
+          }
+        ]
+      },
+      {
+        "cellIndex": 7,
+        "sourceLine": 6,
+        "original": "\"![CPU GPU Comparison](images/two-computers-network.png)\"",
+        "replacement": "\"Image unavailable: CPU GPU Comparison — original archive file `images/two-computers-network.png` is absent.\"",
+        "destinations": [
+          {
+            "originalDestination": "images/two-computers-network.png",
+            "replacementDestination": "Image unavailable: CPU GPU Comparison — original archive file `images/two-computers-network.png` is absent.",
+            "evidence": "Actual archive image file is absent; full-archive preparation reported missing target. Controller approved explicit unavailable image label."
+          }
+        ]
+      },
+      {
+        "cellIndex": 8,
+        "sourceLine": 4,
+        "original": "\"![CPU GPU Comparison](images/computer-gpu-cuda.png)\"",
+        "replacement": "\"Image unavailable: CPU GPU Comparison — original archive file `images/computer-gpu-cuda.png` is absent.\"",
+        "destinations": [
+          {
+            "originalDestination": "images/computer-gpu-cuda.png",
+            "replacementDestination": "Image unavailable: CPU GPU Comparison — original archive file `images/computer-gpu-cuda.png` is absent.",
+            "evidence": "Actual archive image file is absent; full-archive preparation reported missing target. Controller approved explicit unavailable image label."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Tutorials/GPU/nv-gpu-workshop/2.0_Numba.ipynb",
+    "originalSha256": "2819b6d1a250e8769396e7fd5620a15374a343c98a5161edb81348ddc2c43066",
+    "rawReplacements": [
+      {
+        "cellIndex": 2,
+        "sourceLine": 8,
+        "original": "\"![CPU GPU Comparison](images/threads-blocks-warps.png)\\n\"",
+        "replacement": "\"Image unavailable: CPU GPU Comparison — original archive file `images/threads-blocks-warps.png` is absent.\\n\"",
+        "destinations": [
+          {
+            "originalDestination": "images/threads-blocks-warps.png",
+            "replacementDestination": "Image unavailable: CPU GPU Comparison — original archive file `images/threads-blocks-warps.png` is absent.",
+            "evidence": "Actual archive image file is absent; full-archive preparation reported missing target. Controller approved explicit unavailable image label."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Tutorials/GPU/nv-gpu-workshop/4.0_pyNVML.ipynb",
+    "originalSha256": "c250ddc81ed6d5331062ecd5f90b6e9ee6ca47397c1a721dc8a947428c9efa84",
+    "rawReplacements": [
+      {
+        "cellIndex": 0,
+        "sourceLine": 6,
+        "original": "\"![](images/nvdashboard.gif)\"",
+        "replacement": "\"Image unavailable: (unlabeled image) — original archive file `images/nvdashboard.gif` is absent.\"",
+        "destinations": [
+          {
+            "originalDestination": "images/nvdashboard.gif",
+            "replacementDestination": "Image unavailable: (unlabeled image) — original archive file `images/nvdashboard.gif` is absent.",
+            "evidence": "Actual archive image file is absent; full-archive preparation reported missing target. Controller approved explicit unavailable image label."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Tutorials/GPU/nv-gpu-workshop/4.1_CUDA_Array_Interface.ipynb",
+    "originalSha256": "4b330b4ec60df76deb430ed61c8d16fe8584acfbabe78c9df221ed15da2bc6aa",
+    "rawReplacements": [
+      {
+        "cellIndex": 0,
+        "sourceLine": 12,
+        "original": "\"![](images/array-interface.png)\"",
+        "replacement": "\"Image unavailable: (unlabeled image) — original archive file `images/array-interface.png` is absent.\"",
+        "destinations": [
+          {
+            "originalDestination": "images/array-interface.png",
+            "replacementDestination": "Image unavailable: (unlabeled image) — original archive file `images/array-interface.png` is absent.",
+            "evidence": "Actual archive image file is absent; full-archive preparation reported missing target. Controller approved explicit unavailable image label."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "sourcePath": "Tutorials/GPU/nv-gpu-workshop/6.0_cuDF.ipynb",
+    "originalSha256": "19fd08517c59adbacc41b2a25b1aea383640c5131210d69ba8721902e43cd8fe",
+    "rawReplacements": [
+      {
+        "cellIndex": 29,
+        "sourceLine": 4,
+        "original": "\"![](images/rolling-windows.png)\"",
+        "replacement": "\"Image unavailable: (unlabeled image) — original archive file `images/rolling-windows.png` is absent.\"",
+        "destinations": [
+          {
+            "originalDestination": "images/rolling-windows.png",
+            "replacementDestination": "Image unavailable: (unlabeled image) — original archive file `images/rolling-windows.png` is absent.",
+            "evidence": "Actual archive image file is absent; full-archive preparation reported missing target. Controller approved explicit unavailable image label."
+          }
+        ]
+      }
+    ]
+  }
+]

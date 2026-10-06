@@ -167,7 +167,7 @@ npm run dev
 
 This will start a **live server** at `http://localhost:5173/` where you can see your React app in action.
 
-To test this out, go to the [First React Project](src\projects\01-first-react\README.md).
+To test this out, go to the [First React Project](../src/projects/01-first-react/README.md).
 
 ### Exploring the Project Structure
 
@@ -437,7 +437,7 @@ JSX requires exactly one parent element when rendering multiple elements:
 
 ## ReactFacts Project - Markup
 
-To test this out, go to the [02-ReactFacts](src\projects\02-ReactFacts\README.md).
+To test this out, go to the [02-ReactFacts](../src/projects/02-ReactFacts/README.md).
 
 ## Pop Quiz
 
@@ -1444,7 +1444,7 @@ Your page should correctly display the Navbar and Main placeholder components.
 
 ### NavBars & Styling
 
-Go to the [02-ReactFacts](src\projects\03-ReactFacts\src\assets\components\Navbar\Navbar.tsx) to see this implementation.
+Go to the [02-ReactFacts](../src/projects/02-ReactFacts/src/assets/components/Navbar/Navbar.tsx) to see this implementation.
 
 Throughout the upcoming challenges, we'll primarily focus on CSS styling. Styling is a fundamental part of frontend development, making these exercises particularly valuable. If you're already comfortable with CSS, feel free to skip ahead. However, if you're less confident or unfamiliar with closely following a Figma design, it's strongly recommended to complete these styling challenges for good practice.
 

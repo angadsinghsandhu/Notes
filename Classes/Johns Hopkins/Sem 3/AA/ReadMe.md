@@ -22,7 +22,7 @@ This course focuses on advanced topics in Artificial Intelligence, specifically 
 
 - [Course Website on Courselore](https://courselore.org/courses/6761788125/invitations/0381403113) - for course materials and discussions.
 - [Gradescope](https://www.gradescope.com/courses/815514) - for submission and grading of assignments.
-- [Presentation Template](template_ppt.pptx) - template to be used for presentations.
+- Presentation Template — unavailable in this archive (original expected file: `template_ppt.pptx`) - template to be used for presentations.
 - [Syllabus](https://livejohnshopkins-my.sharepoint.com/:w:/g/personal/bvandur1_jh_edu/EUgvIpgSb5dJg9HZqH0P6bcBK0h-bIISRZg5C0MiDsBkzw?e=5ASDg1&CID=a536373b-fed6-8b17-b4f1-d05cb28f41f6&clickParams=eyJYLUFwcE5hbWUiOiJNaWNyb3NvZnQgT3V0bG9vayBXZWIgQXBwIiwiWC1BcHBWZXJzaW9uIjoiMjAyNDA4MjIwNTcuMDkiLCJPUyI6IldpbmRvd3MgMTEifQ%3D%3D)
 - [Presentation Schedule](https://livejohnshopkins-my.sharepoint.com/:x:/g/personal/bvandur1_jh_edu/EU7jxAp3GWBDhBOz2OD_xvoBVlVkjmxD4tMwMBexHaThuQ?CID=b875d2b7-a9b0-980e-c947-15eb82754eb5&clickParams=eyJYLUFwcE5hbWUiOiJNaWNyb3NvZnQgT3V0bG9vayBXZWIgQXBwIiwiWC1BcHBWZXJzaW9uIjoiMjAyNDA4MjIwNTcuMDkiLCJPUyI6IldpbmRvd3MgMTEifQ%3D%3D)
   
@@ -57,7 +57,7 @@ This course focuses on advanced topics in Artificial Intelligence, specifically 
 | Attribute             | Value                                                 |
 |-----------------------|------------------------------------------------------ |
 | Name                  | Artificial Agents (EN.601.470/670)                    |
-| Instructor            | [Benjamin Van Durme](www.cs.jhu.edu/~vandurme)        |
+| Instructor            | [Benjamin Van Durme](https://www.cs.jhu.edu/~vandurme)        |
 | Link                  | [Course Website](https://courselore.org/courses/6761788125/invitations/0381403113) |
 | Teaching Assistant    | Kate Sanders                                          |
 | Course Location       | Hodson 210                                            |

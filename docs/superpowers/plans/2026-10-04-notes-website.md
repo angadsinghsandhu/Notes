@@ -118,12 +118,12 @@ type Manifest = {
 
 **Interfaces:** `collectHeadings(markdown: string): Heading[]`; `planAssets(rootDir: string, sources: string[], policy: PublicationPolicy): Promise<AssetRecord[]>`; `createRouteCatalog(entries: ContentEntry[], assets: AssetRecord[]): RouteCatalog`; `resolveLink(href: string, sourcePath: string, catalog: RouteCatalog): string`; `copyLocalAssets(rootDir: string, assets: AssetRecord[], targetDir: string): Promise<void>`. Use one shared heading slugger implementation for collection/rendering, including duplicate headings and notebook-wide ordering.
 
-- [ ] Write `rewrite_real_relative_links_and_fragments`: retain a real linked-note/image pair and assert page/asset rewriting, percent-encoded names, query/fragment preservation, duplicate heading anchors, and directory README links. Missing targets and fragments must name the referring source and target.
-- [ ] Write `resolve_wikilink_only_when_unique`: a unique source/title match resolves, while duplicate titles list candidates. Add external HTTP/mailto passthrough and javascript/data scheme rejection tests. Known repository HTTP links are resolved against publication policy too, so a draft/excluded target is rejected rather than bypassing the local-link check. Notebook-generated image data becomes an extracted asset rather than an arbitrary URL.
-- [ ] Write asset tests asserting a referenced file of 26,214,400 bytes can be local, one of 26,214,401 bytes becomes external, equal bytes deduplicate by hash, unreferenced images are not copied, and excluded/symlink targets fail. Use sparse temporary files to test size boundaries without large fixtures.
-- [ ] Write `require_accessible_source_url_for_external_resource`: a missing/private public-source configuration cannot silently produce a valid hosted action; explicit HTTPS resource URLs work. Test source URL path encoding and immutable revision handling.
-- [ ] Run these targeted unit tests, observe the intended failures, then implement the resolvers and asset planner. Preserve external links without probing third-party availability.
-- [ ] Run targeted tests, `npm run check`, and `npm run build`. Expected: valid rewrites and no asset copied outside the designated generated asset directory.
+- [x] Write `rewrite_real_relative_links_and_fragments`: retain a real linked-note/image pair and assert page/asset rewriting, percent-encoded names, query/fragment preservation, duplicate heading anchors, and directory README links. Missing targets and fragments must name the referring source and target.
+- [x] Write `resolve_wikilink_only_when_unique`: a unique source/title match resolves, while duplicate titles list candidates. Add external HTTP/mailto passthrough and javascript/data scheme rejection tests. Known repository HTTP links are resolved against publication policy too, so a draft/excluded target is rejected rather than bypassing the local-link check. Notebook-generated image data becomes an extracted asset rather than an arbitrary URL.
+- [x] Write asset tests asserting a referenced file of 26,214,400 bytes can be local, one of 26,214,401 bytes becomes external, equal bytes deduplicate by hash, unreferenced images are not copied, and excluded/symlink targets fail. Use sparse temporary files to test size boundaries without large fixtures.
+- [x] Write `require_accessible_source_url_for_external_resource`: a missing/private public-source configuration cannot silently produce a valid hosted action; explicit HTTPS resource URLs work. Test source URL path encoding and immutable revision handling.
+- [x] Run these targeted unit tests, observe the intended failures, then implement the resolvers and asset planner. Preserve external links without probing third-party availability.
+- [x] Run targeted tests, `npm run check`, and `npm run build`. Expected: valid rewrites and no asset copied outside the designated generated asset directory.
 
 ## Task 4: Render Markdown, notebooks, and code safely
 
@@ -131,12 +131,12 @@ type Manifest = {
 
 **Interfaces:** `renderMarkdown(markdown: string, context: RenderContext): Promise<RenderResult>`; `renderNotebook(json: unknown, context: RenderContext): Promise<RenderResult>`; `renderSource(code: string, language: string): Promise<RenderResult>`; `sanitizeAuthorHtml(html: string): string`. Notebook parsing/schema validation belongs to the notebook module. Attachment extraction adds known asset targets to the context before Markdown link resolution.
 
-- [ ] Write `render_transformer_note_with_math_and_code` from the actual transformer note and another real math-bearing note: headings agree with collection, fenced code is highlighted, equations render through KaTeX, and tables/details remain usable. Assert Japanese characters in the labeled Unicode fixture survive unchanged; the actual Japanese README placeholders are empty.
-- [ ] Write `preserve_gpu_and_pytorch_notebook_cells` using real archived notebooks: Markdown and code order is preserved and no execution occurs. Add regression inputs for stored output, attachment images, unsupported MIME-only output, invalid nbformat, malformed cell/source fields, unknown cell type, and error output with escaped text.
-- [ ] Write sanitization tests asserting script tags, event attributes, unsafe URLs, active SVG content, iframes, and executable notebook HTML are absent; supported details/summary/images remain. Verify trusted KaTeX/Shiki output is generated after sanitizing author HTML rather than stripped accidentally.
-- [ ] Write source rendering tests using `Interview/leetcode/Solutions/78_Subsets.py` and literal HTML/JS input: displayed code is escaped and highlighted, and no source is executed. Do not import the code fixture as a program.
-- [ ] Run renderer tests and observe red. Implement unified AST processing, a narrow HTML allowlist, controlled KaTeX/Shiki transforms, nbformat-4 cell rendering, and the MIME preference from the spec. Unsupported rich output receives a visible placeholder with the cell index.
-- [ ] Run renderer tests, `npm run check`, and `npm run build`. Expected: all pass and collected/rendered heading IDs agree.
+- [x] Write `render_transformer_note_with_math_and_code` from the actual transformer note and another real math-bearing note: headings agree with collection, fenced code is highlighted, equations render through KaTeX, and tables/details remain usable. Assert Japanese characters in the labeled Unicode fixture survive unchanged; the actual Japanese README placeholders are empty.
+- [x] Write `preserve_gpu_and_pytorch_notebook_cells` using real archived notebooks: Markdown and code order is preserved and no execution occurs. Add regression inputs for stored output, attachment images, unsupported MIME-only output, invalid nbformat, malformed cell/source fields, unknown cell type, and error output with escaped text.
+- [x] Write sanitization tests asserting script tags, event attributes, unsafe URLs, active SVG content, iframes, and executable notebook HTML are absent; supported details/summary/images remain. Verify trusted KaTeX/Shiki output is generated after sanitizing author HTML rather than stripped accidentally.
+- [x] Write source rendering tests using `Interview/leetcode/Solutions/78_Subsets.py` and literal HTML/JS input: displayed code is escaped and highlighted, and no source is executed. Do not import the code fixture as a program.
+- [x] Run renderer tests and observe red. Implement unified AST processing, a narrow HTML allowlist, controlled KaTeX/Shiki transforms, nbformat-4 cell rendering, and the MIME preference from the spec. Unsupported rich output receives a visible placeholder with the cell index.
+- [x] Run renderer tests, `npm run check`, and `npm run build`. Expected: all pass and collected/rendered heading IDs agree.
 
 ## Task 5: Assemble a deterministic pipeline and local watcher
 
@@ -144,13 +144,13 @@ type Manifest = {
 
 **Interfaces:** `prepareContent(options: { rootDir: string; outputDir: string; policyPath: string; hosted: boolean }): Promise<PreparationResult>`; `writeManifest(manifest: Manifest, outputDir: string): Promise<void>`; `loadCatalog(manifest: Manifest): Catalog`, exposing `getEntry(route: string)`, `listEntries(filters?: { section?: Section; kind?: ContentKind })`, and `getAdjacentNotes(id: string)`. `startContentWatcher(options: PrepareOptions, onSuccess: () => void): Promise<{ close(): Promise<void> }>` serializes builds and coalesces intervening changes. CLI exits nonzero on diagnostics.
 
-- [ ] Write `prepare_real_mixed_archive_subset`: assert all selected Markdown/notebook/code/PDF/slide inputs produce the correct kind/route/body/resource metadata, and every original file has an internal ledger row. Repeated preparation with fixed inputs/revision produces identical manifest/body bytes.
-- [ ] Write `do_not_publish_draft_bodies_or_internal_ledger`: drafts have no rendered body/assets and the full manifest/ledger is not emitted into `dist` or imported by client modules. Published links to drafts fail. Public page props cannot contain absolute filesystem paths.
-- [ ] Write `remove_deleted_pages_assets_and_aliases`: prepare, delete/rename a fixture with declared aliases, prepare again, and assert stale outputs are gone while the explicit alias resolves. Cleanup must reject any output directory outside `site/.generated` and `site/public/content-assets`.
-- [ ] Write watcher tests with deterministic events, not sleeps: concurrent file changes serialize; a failed rebuild keeps the prior successful manifest; fixing the source triggers the latest successful update. Verify `close()` terminates watchers/server children.
-- [ ] Write catalog tests asserting sections/groups and natural numeric ordering, note-only previous/next adjacency, and draft exclusion. Run all targeted tests to observe red.
-- [ ] Implement a two-pass pipeline: discover/normalize all entries and collect document headings; construct the complete route/asset catalog; render/validate all bodies; atomically replace generated output only after success. Keep source files unchanged. Build commands re-create the exact publishable asset set.
-- [ ] Run targeted tests, `npm run content:check`, `npm run check`, and `npm run build`. Add a new temporary note locally and prove the development URL appears without restarting; remove only that explicitly created temporary note afterward.
+- [x] Write `prepare_real_mixed_archive_subset`: assert all selected Markdown/notebook/code/PDF/slide inputs produce the correct kind/route/body/resource metadata, and every original file has an internal ledger row. Repeated preparation with fixed inputs/revision produces identical manifest/body bytes.
+- [x] Write `do_not_publish_draft_bodies_or_internal_ledger`: drafts have no rendered body/assets and the full manifest/ledger is not emitted into `dist` or imported by client modules. Published links to drafts fail. Public page props cannot contain absolute filesystem paths.
+- [x] Write `remove_deleted_pages_assets_and_aliases`: prepare, delete/rename a fixture with declared aliases, prepare again, and assert stale outputs are gone while the explicit alias resolves. Cleanup must reject any output directory outside `site/.generated` and `site/public/content-assets`.
+- [x] Write watcher tests with deterministic events, not sleeps: concurrent file changes serialize; a failed rebuild keeps the prior successful manifest; fixing the source triggers the latest successful update. Verify `close()` terminates watchers/server children.
+- [x] Write catalog tests asserting sections/groups and natural numeric ordering, note-only previous/next adjacency, and draft exclusion. Run all targeted tests to observe red.
+- [x] Implement a two-pass pipeline: discover/normalize all entries and collect document headings; construct the complete route/asset catalog; render/validate all bodies; atomically replace generated output only after success. Keep source files unchanged. Build commands re-create the exact publishable asset set.
+- [x] Run targeted tests, `npm run content:check`, `npm run check`, and `npm run build`. Add a new temporary note locally and prove the generated catalog/body updates without restarting Astro (direct reader HTTP URL proof belongs to Task 6); remove only that explicitly created temporary note afterward.
 
 ## Task 6: Build the responsive library, reader, resources, and search
 
@@ -195,6 +195,42 @@ type Manifest = {
 - [ ] Add the placement and command rules to project steering only. Check `CLAUDE.md` and `codex.md` byte equality and the AGENTS symlink. No global steering edits are needed for this feature.
 - [ ] Run `npm run verify`, inspect the workflow conditions, and confirm no credentials appear in tracked files or generated client output. Run `git status --short` and audit all source diffs for changes outside the dry-run migration list and application/docs/config scope.
 - [ ] Deliver the working local website, migration ledger, verification results, and deployment setup instructions. Provisioning/publishing to the user's account requires their explicit authorization and available credentials; perform no remote writes from a delegated worker. Report deployment as configured/unconfigured/published based on evidence, never inference.
+
+## Task 9: Convert archived Pandas examples to Polars (approved scope addition)
+
+The user explicitly approved converting archived examples and instructed resumption on 2026-10-05. This milestone follows Tasks 6–8 and is required before final acceptance. Earlier preservation requirements permit these specific conversions; unrelated course code, model training, datasets, copyright notices and historical ecosystem explanations remain intact.
+
+**Files:** Modify only the following 15 original files, including necessary dependent cells and adjacent explanatory text:
+
+- `Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 2 - Image Clasification with Pytorch/download.py`
+- `Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/Multi-Output.ipynb`
+- `Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-answer.ipynb`
+- `Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-question.ipynb`
+- `Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 4 - Models and Callbacks/ExploringCallbacks.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/data.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/feature_columns.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Exercises/TFDS_Week2_Exercise.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 4/Exercises/TFDS_Week4_Exercise.ipynb`
+- `Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/S+P_Week_1_Lesson_2.ipynb`
+- `Courses/Coursera/tf deployment/Course 3/Week 2/1_input_pipelines.py`
+- `Courses/Coursera/tf deployment/Course 3/Week 2/2_input_pipelines_custom.py`
+- `Courses/Coursera/tf deployment/Course 3/Week 4/publish_datasets.py`
+- `Interview/Applied Science/breadth/11-practical.md`
+- `Tutorials/GPU/nv-gpu-workshop/6.0_cuDF.ipynb`
+
+**Tests:** Python checks mirror each original path under the existing `site/tests/` tree, using unique `test_<stem>.py` basenames and stdlib unittest. Any reusable verification helper must be justified by duplication and have a mirrored test. Controlled input fixtures and provenance stay under `site/tests/fixtures/real/polars/`; do not vendor large datasets. Record the exact proposed test/fixture file list before implementation. Keep verification environments ignored; Pandas is allowed only as the isolated baseline oracle, never as converted example runtime. Document required Polars/Excel extras in the relevant teaching text and operating README rather than altering unrelated manifests.
+
+**Interfaces:** Preserve each example's model-facing column names, ordered feature arrays, labels, per-column NumPy dictionaries and teaching placeholders. Polars has no implicit index: retain explicit source row IDs or Date columns where labels matter. Use immutable feature selection; no target columns reach normalization/model inputs. Preserve first-duplicate ordering, sample standard deviation (`ddof=1`), and both null/NaN semantics.
+
+- [ ] Capture plain-file originals/hashes and list every proposed source, mirrored test and fixture path. Read the saved inventory and current primary Polars API documentation; inspect complete dependent cells, never perform a blind `pd` substitution.
+- [ ] Before each conversion, write and run its mirrored check RED against actual original snippets/data. Isolate pure tabular preprocessing; never execute complete notebooks, training, downloaders, GPU kernels or generated builder writes. Existing local images/pageview CSVs are mandatory real fixtures; controlled read-only acquisition may supply actual heart/wine/Excel/sunspot/MAT inputs. Clearly report unavailable actual integration separately from synthetic edge proof.
+- [ ] Convert simple reads, unused import and interview concat; then TensorFlow feature dictionaries/splits; then wine/Excel preprocessing; then MATLAB metadata/builder; then time series; then GPU CPU comparison. Preserve exercise TODOs and upstream notices. Keep truthful cuDF/Dask Pandas API/partition descriptions and provenance links.
+- [ ] Compare original Pandas and converted Polars transformations on identical inputs: columns/order/row counts/dtypes, source-index demonstrations, fixed split indices, feature/label separation, duplicate retention, missingness, sample statistics and normalized arrays. For MATLAB compare normalized nested filename/bbox/scalar records; for time series compare monthly calendar and both overlap-Pearson/global-centered ACF definitions. Record deliberate corrections to original label-aligned differencing instead of silently changing semantics.
+- [ ] Verify JSON/nbformat and affected code-cell syntax with notebook magics handled; preserve incomplete exercise placeholders and explicitly identify pre-existing unrelated invalid cells. Remove or clearly label only stale output from converted cells, preserving unrelated saved outputs. Rescan source imports/APIs and allowlist historical explanations with exact reasons.
+- [ ] Run each covering check GREEN and applicable site format/lint/boundary/type/build gates after each completed source edit. Run the full parity checks and serialized `npm run verify` before commit. Rendering gates supplement data parity; they never substitute for it.
+- [ ] Controller audits the exact source diff, commits verified conversion batches, opens frequent feature PRs, and obtains independent review of the complete Task 9 range. Update the authoring docs and durable project preference for Polars in byte-identical CLAUDE/codex together if Task 8 did not already capture it.
+
+Self-review: all 15 inventory conversion targets are listed; index/mutation/dedup/missingness/calendar/Excel risks have explicit proof requirements. Conversion affects original archive bodies only by the user's explicit newer approval; no full notebook execution is authorized. Tests use the existing test tree and serialized gates, with no skipped/suppressed checks or lowered website coverage.
 
 ## Final acceptance and execution handoff
 

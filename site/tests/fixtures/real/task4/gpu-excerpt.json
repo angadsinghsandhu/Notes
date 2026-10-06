@@ -1,0 +1,89 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "id": "ff189fc2-802c-42d7-a299-8b8224f0d025",
+      "metadata": {},
+      "source": [
+        "# CPU and GPU Comparison"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "216bd640-6104-45e8-a7c6-09ce9af20f1c",
+      "metadata": {},
+      "source": [
+        "The CPU is the most common type of processor for execurting your code. CPUs have one or more serial processors which each take single intructions from a stack and **execute them sequentially**.\n",
+        "\n",
+        "GPUs are a form of coprocessor which are commonly used for video and image rendering, but are not extremely popular in machine learning and data science fields too. GPUs have one or more streaming multiprocessors which take in arrays of instructions and **execute them in parallel**."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "afdb98ac-89dc-44a6-a3fc-bd5a8374daf7",
+      "metadata": {},
+      "source": [
+        "<figure>\n",
+        "\n",
+        "![CPU GPU Comparison](images/cpu-gpu.png)\n",
+        "\n",
+        "<figcaption style=\"text-align: center;\"> \n",
+        "    \n",
+        "Image source <a href=\"https://docs.nvidia.com/cuda/cuda-c-programming-guide/\">https://docs.nvidia.com/cuda/cuda-c-programming-guide/</a>\n",
+        "    \n",
+        "</figcaption>\n",
+        "</figure>\n"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "85278019-6617-43dd-9928-9571a683ea6a",
+      "metadata": {},
+      "source": [
+        "## Mythbusters explaination"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "id": "fb6bad2c-63ee-4c28-a42f-9323b1e689d2",
+      "metadata": {},
+      "source": [
+        "This video may help explain the concept visually."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "id": "85961642-b01c-4ce2-9872-31c3f2186072",
+      "metadata": {
+        "tags": []
+      },
+      "outputs": [],
+      "source": [
+        "from IPython.display import YouTubeVideo\n",
+        "YouTubeVideo(id='-P28LKWTzrI',width=1000,height=600)"
+      ]
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3 (ipykernel)",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.10.14"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

@@ -31,9 +31,10 @@ Review assumptions are public readership, rendered notebooks/code with PDF/slide
 
 - [x] Task 1: runtime and quality gates (reviewed; commits 7d6755d, 8dbda44).
 - [x] Task 2: automatic discovery and metadata/URL validation (reviewed; commit 497438f).
-- [ ] Task 3: links, headings, and assets.
-- [ ] Task 4: safe Markdown/notebook/code rendering.
-- [ ] Task 5: content pipeline and development watcher.
+- [x] Task 3: links, headings, and assets (reviewed; commits d9c54e4, f7fbe87).
+- [x] Task 4: safe Markdown/notebook/code rendering (reviewed; commits 681bf6b, 80e4759).
+- [x] Task 5: content pipeline and development watcher (reviewed; commits 99c9718, 0272436; 188 units and all gates pass).
 - [ ] Task 6: responsive reader and search.
 - [ ] Task 7: full archive migration and output verification.
 - [ ] Task 8: deployment and operating documentation.
+- [ ] Task 9: approved archived Pandas → Polars conversion (15 files; isolated real-data parity).

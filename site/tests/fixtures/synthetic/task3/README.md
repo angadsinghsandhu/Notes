@@ -1,0 +1,1 @@
+`pixel.png` is a synthetic 1 × 1 red RGB PNG. It was constructed with PNG signature, IHDR/IDAT/IEND chunks, zlib compression, and CRC32 checksums. It is not archive content. Other synthetic inputs are constructed in tests in temporary directories; size-limit tests use sparse files.

@@ -13,7 +13,7 @@ all the important information can be accessed on their official webpage [HERE](h
 
 - [Class Schedule](https://web.stanford.edu/class/cs234/CS234Win2019/schedule.html)
 - [CS234 Repo by Tarek Allam Jr.](https://github.com/tallamjr/stanford-cs234)
-- [Reference Book: Sutton & Barto "Reinforcement Learning: An Introduction"](https://github.com/angadsinghsandhu/notes/blob/master/Stanford%20Online/Stanford%20CS234%20-%20Reinforcement%20Learning%20(2019)/books/SuttonBartoIPRLBook2ndEd.pdf)
+- [Reference Book: Sutton & Barto "Reinforcement Learning: An Introduction"](books/SuttonBartoIPRLBook2ndEd.pdf)
 - [ICML 2018 Talks](https://www.reddit.com/r/reinforcementlearning/comments/90aqcs/d_icml_2018_reinforcement_learning_talks/)
 - [RL - DeepMind (UCL)](https://www.youtube.com/playlist?list=PLTrPwBmRciYBs4a8qQVuFz3zByUqqoStG)
 - [NIPS 2018 RL Talks](https://www.reddit.com/r/reinforcementlearning/comments/a8q7y9/nueroips_2018_talks_on_reinforcement_learning/)

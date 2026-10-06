@@ -11,7 +11,7 @@ Same material as 601.468, for graduate students. Google translate can instantly 
 
 ## Some more important links
 
-- [Main Website]()
+- Main Website — URL not supplied in original note
 - [Github Repo](https://github.com/falloutdurham/beginners-pytorch-deep-learning)
 
 ## Metadata

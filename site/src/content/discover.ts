@@ -76,23 +76,32 @@ const EXCLUDED_ARCHIVES = new Set([
   '.rar',
 ]);
 
-function exclusion(
+export function publicationExclusion(
   sourcePath: string,
   policy: PublicationPolicy,
 ): string | undefined {
   const segments = sourcePath.split('/');
   if (segments.some((segment) => EXCLUDED_DIRECTORIES.has(segment)))
     return 'Excluded dependency, cache, build, or internal path';
-  const filename = segments.at(-1) ?? '';
   if (
-    /^(?:\.env(?:\..*)?|env\.json|credentials?(?:[._-].*)?|secrets?(?:[._-].*)?|\.ds_store)$/i.test(
-      filename,
+    segments.some((filename) =>
+      /^(?:\.env(?:\..*)?|env\.json|credentials?(?:[._-].*)?|secrets?(?:[._-].*)?|\.ds_store)$/i.test(
+        filename,
+      ),
     )
   )
     return 'Excluded environment or credential file';
-  if (EXCLUDED_ARCHIVES.has(extname(filename).toLowerCase()))
+  if (
+    segments.some((filename) =>
+      EXCLUDED_ARCHIVES.has(extname(filename).toLowerCase()),
+    )
+  )
     return 'Excluded binary archive';
-  const pattern = policy.exclude.find((glob) => matchesGlob(sourcePath, glob));
+  const pattern = policy.exclude.find((glob) =>
+    segments.some((_, index) =>
+      matchesGlob(segments.slice(0, index + 1).join('/'), glob),
+    ),
+  );
   return pattern ? `Excluded by publication policy: ${pattern}` : undefined;
 }
 
@@ -120,7 +129,8 @@ export async function discoverEntries(
     inheritedExclusion?: string,
   ): Promise<void> {
     const stat = await lstat(absolutePath);
-    const reason = inheritedExclusion ?? exclusion(sourcePath, policy);
+    const reason =
+      inheritedExclusion ?? publicationExclusion(sourcePath, policy);
     if (stat.isSymbolicLink()) {
       // Never follow links, including links to excluded in-root content.
       ledger.push({

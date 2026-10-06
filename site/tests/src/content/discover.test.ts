@@ -9,7 +9,10 @@ import {
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
-import { discoverEntries } from '../../../src/content/discover.js';
+import {
+  discoverEntries,
+  publicationExclusion,
+} from '../../../src/content/discover.js';
 import type { PublicationPolicy } from '../../../src/content/types.js';
 const dirs: string[] = [];
 const policy: PublicationPolicy = {
@@ -202,4 +205,35 @@ describe('automatic content discovery', () => {
       result.sources.filter((source) => source.kind === 'code'),
     ).toHaveLength(extensions.length);
   });
+});
+
+it('shares ancestor policy exclusions for direct source actions', () => {
+  const policy: PublicationPolicy = {
+    roots: [
+      'Books',
+      'Classes',
+      'Courses',
+      'Interview',
+      'Languages',
+      'Tutorials',
+    ],
+    exclude: ['Tutorials/hidden'],
+    overrides: {},
+    repositoryPublic: false,
+  };
+  expect(publicationExclusion('Tutorials/hidden/image.png', policy)).toContain(
+    'Tutorials/hidden',
+  );
+  expect(
+    publicationExclusion('Tutorials/visible/image.png', policy),
+  ).toBeUndefined();
+  expect(publicationExclusion('Tutorials/.env', policy)).toContain(
+    'credential',
+  );
+});
+
+it('applies built-in credential exclusions to ancestor directories', () => {
+  expect(publicationExclusion('Tutorials/secrets/image.png', policy)).toContain(
+    'credential',
+  );
 });

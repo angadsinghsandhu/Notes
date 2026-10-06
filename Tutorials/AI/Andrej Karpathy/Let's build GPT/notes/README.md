@@ -8,7 +8,7 @@ This is what we call a ==**language system**== as it models the sequence of word
 
 ### Under the Hood
 
-the underlying technology that makes ChatGPT possible is a ==**transformer**==. First described in 2017 in the paper [Attention Is All You Need](../papers/1706.03762.pdf) by Google. GPT stands for *Generatively Pre-trainded Transformer* thus the transformer is the inherent neural network that does all the heavy lifting of the chatbot.
+the underlying technology that makes ChatGPT possible is a ==**transformer**==. First described in 2017 in the paper [Attention Is All You Need](../papers/attention%20is%20all%20you%20need.pdf) by Google. GPT stands for *Generatively Pre-trainded Transformer* thus the transformer is the inherent neural network that does all the heavy lifting of the chatbot.
 
 The transformer model was initially built for machine translation, but in the half-decade after its release, it has taken over AI with minor changes to its Architecture. To understand the model better we need to look at the model architecture itself.
 
@@ -78,7 +78,7 @@ Inside each loop we get the predictions (from embeddings table) of our indicies 
 
 The above model generates grabage values as we have not trained this, also in terms of the biram model at each step of the loop we input the entire character sequence which is not needed in a Bigram Model as it produces predictions by only seeing the last character in our indicies. But we make this general function for he future when we exten this model to a transformer that taken in the history of the sequence to produce coherent sequences.
 
-To trin or model construct a basic training loop. Choosing to use the `AdamW Optimizer` we set our batch size to 32. Then in s loop: zero-out all the gradients from the previous step, conduct the backward step on our loss and conducting the optimizer step function. To finally get our loss at the end of training. ![Training Loop]()
+To trin or model construct a basic training loop. Choosing to use the `AdamW Optimizer` we set our batch size to 32. Then in s loop: zero-out all the gradients from the previous step, conduct the backward step on our loss and conducting the optimizer step function. To finally get our loss at the end of training. Image unavailable: Training Loop — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 Now we age going to extend this model so that the previous context (history) of the sequence plays a vital role in prdicting the next character, not ONLY the last character.
 
@@ -88,13 +88,13 @@ Now we take all our code from the python notebook to a runnable script where mos
 
 We introduce some global variabes such as `device`, `eval_iters`. `device` to help run the model on GPU devices, if GPU device is available then we have to move the data to these devices on loading similarly we want to move the model parameters to the device as well when we create the model (example: moving the `nn.Embeding().weight` table to the device which stores the lookup table). This is done so that all the calculation be done on the GPU in a higly optimized manner.
 
-We also want a less noisy version of esuring the loss, rather than just printing it every time, we want to stimate it using a `estimate_loss()` function which averages out the loss over multiple batches to give us a better idea of where the model is headed. This averaging out is done over a number of iterations which is stored in the `eval_iters` variable. Hence estimate_loss() averages the loss by multiple batches over the `train` and `validation` sets. ![All variables used]()
+We also want a less noisy version of esuring the loss, rather than just printing it every time, we want to stimate it using a `estimate_loss()` function which averages out the loss over multiple batches to give us a better idea of where the model is headed. This averaging out is done over a number of iterations which is stored in the `eval_iters` variable. Hence estimate_loss() averages the loss by multiple batches over the `train` and `validation` sets. Image unavailable: All variables used — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 NOTE: The `@torch.no_grad()` context manager decorator over the `estimate_loss()` function tells PyTorch that `.backward()` does not need to be called on anything inside the function.
 
 NOTE: it is a good idea to switch the model model from `training` to `inference` where necessary as the training layers (example: `BatchNorm`, `Dropout`) behave differently in such different modes. This can be done by calling the `model.eval()` and `model.train()` methods.
 
-![Estimate Loss Function]()
+Image unavailable: Estimate Loss Function — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 ## Example: Mathematical Trick in Self-Attention
 
@@ -106,7 +106,7 @@ The simplest way to do this is to take an average of all the previous steps that
 
 Thus, what we are going to do is for every sequence in the B dimention we are going to calculate the average of the previous T tokens for each T^th^ token.
 
-![avg attention example]()
+Image unavailable: avg attention example — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 In the above example every row in the *orignal tensor* corresponds to a row in the averaged out tensor. The first rows in bot tensors are the same as they have no values behind them. In the second row `(0.1 + 0.2) / 2 = 0.15` as seen in the 2^nd^ row of the 1^st^ column of the average tensor. Similarly, the 3^rd^ row of the 1^st^ column of the average tensor would be `(0.1 + 0.2 + 0.3) / 3 = 0.2` and so on...
 
@@ -130,7 +130,7 @@ Self-attention solves the problem of getting the contextual data from the past i
 
 After transposing the key vector and doing the dot product, we will get a `(B, T, T)` matrix i.e. the affinities that will become our weights. FInally, we will create a value vector as well wich will become our outut vector after we dot-product our weights and values.
 
-![Attention Diagram]()
+Image unavailable: Attention Diagram — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 ### Further Information
 
@@ -168,7 +168,7 @@ This is important as `wei` is given as input to a `Softmax` funcion, which conve
 
 This normalization would help the model from getting extremly peaky.
 
-![Softmax result, diffused vs sharpened inputs]()
+Image unavailable: Softmax result, diffused vs sharpened inputs — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 ### Creating Self-Attention Block Class
 
@@ -198,7 +198,7 @@ In the `forward` method we het the input `x` which we send to each head in the o
 
 In the `__init__()` method of the `BigramLanguageModel` Class we update the `sa_head`(self-attention head) parameter. Where earlier it was the instantiated `Head` class, now is the instantiated `MultiHeadAttention` Class with its first arg as the `num_heads` and the second arg as the `n_embed` divided by `num_heads` (number of communication channels are conserved).
 
-![diagram for multi-head attention]()
+Image unavailable: diagram for multi-head attention — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 ### Adding FeedForward Layer
 
@@ -208,7 +208,7 @@ We add simple multi-layer perceptron to increase computation on a per-nodel leve
 
 In the `__init__()` method of the `BigramLanguageModel` Class we define a new `ffwd` parameter with is the instantiation of the `FeedForward` Class. This `ffwd` arameter is called directly after the self attention head `sa_head()`.
 
-![Feed Forward Class Inplementation]()
+Image unavailable: Feed Forward Class Inplementation — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 ## Creating Transformer Block
 
@@ -225,7 +225,7 @@ Deep neural netwoks suffer from optimization issues, to counterac these the tran
 - **Residual Connections** or **Skip Connections**
 - **LayerNorm**
 
-![Skip Connections]()
+Image unavailable: Skip Connections — original image destination is empty in `Tutorials/AI/Andrej Karpathy/Let's build GPT/notes/README.md`.
 
 In skip connections the gradiends are added from computation to the orignal values. Addition distributes gradients equally to both of its pathways. This makes the gradients from the loss skip directly to the input unimeded, rather than going through all the aditional comutation of the transformer.
 
