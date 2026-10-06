@@ -1,0 +1,56 @@
+---
+import { sectionLabels } from '../lib/catalog.js';
+const development = import.meta.env.DEV;
+---
+
+{development && (
+  <p class="development-search-notice">
+    Development search uses the last built production index when available. It
+    does not update with note edits. Run <code>npm run build</code> and{' '}
+    <code>npm run preview</code> to search the latest content.
+  </p>
+)}
+<noscript>
+  <p>
+    Search requires JavaScript. <a href="/library/">Browse the library</a> to
+    read without it.
+  </p>
+</noscript>
+<form class="search-form" role="search" data-search-form>
+  <label class="search-field">
+    Search notes and resources
+    <input type="search" name="q" autocomplete="off" />
+  </label>
+  <div class="search-filters">
+    <label>
+      Section
+      <select name="section">
+        <option value="">All sections</option>
+        {Object.entries(sectionLabels).map(([value, label]) => (
+          <option value={value}>{label}</option>
+        ))}
+      </select>
+    </label>
+    <label>
+      Kind
+      <select name="kind">
+        <option value="">All kinds</option>
+        {['markdown', 'notebook', 'code', 'pdf', 'slides'].map((kind) => (
+          <option value={kind}>{kind}</option>
+        ))}
+      </select>
+    </label>
+  </div>
+  <button type="submit">Search</button>
+</form>
+<p role="status" aria-live="polite" data-search-status>
+  Enter a phrase to search notes and resources.
+</p>
+<ol class="search-results" data-search-results></ol>
+<button type="button" data-search-more hidden>
+  Load more results
+</button>
+<script>
+  import { initSearch } from '../client/search.js';
+  initSearch(document);
+</script>

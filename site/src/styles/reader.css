@@ -1,0 +1,216 @@
+.reader-grid,
+.reader-column {
+  min-width: 0;
+}
+.reader-column {
+  max-width: 72ch;
+  margin: 0 auto;
+}
+.reader-header {
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 1rem;
+  margin-bottom: 2rem;
+}
+.reader-header .entry-meta {
+  margin: 0.5rem 0;
+}
+.reader-body {
+  min-width: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.reader-body > :first-child {
+  margin-top: 0;
+}
+.reader-body h1,
+.reader-body h2,
+.reader-body h3,
+.reader-body h4 {
+  scroll-margin-top: 6rem;
+  margin-top: 2rem;
+}
+.reader-body ul,
+.reader-body ol {
+  padding-left: 1.5rem;
+}
+.reader-body li {
+  margin: 0.35rem 0;
+}
+.reader-body img,
+.reader-body svg {
+  max-width: 100%;
+  height: auto;
+}
+.reader-body figure {
+  margin: 1rem 0;
+}
+.reader-body blockquote {
+  margin: 1.5rem 0;
+  padding: 0.5rem 1rem;
+  border-left: 3px solid var(--color-link);
+  color: var(--color-muted);
+}
+.reader-body code {
+  font-family: var(--font-code);
+  font-size: 1em;
+}
+.reader-body :not(pre) > code {
+  background: var(--color-surface);
+  padding: 0.1rem 0.25rem;
+}
+.scroll-region {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-border);
+  border-radius: 0.4rem;
+}
+.scroll-region pre {
+  width: max-content;
+  min-width: 100%;
+  margin: 0;
+  padding: 1rem;
+  font-family: var(--font-code);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.shiki {
+  background: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+.shiki span[style*='color:#6A737D'] {
+  color: #cbd5e1 !important;
+}
+.code-controls {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.5rem;
+  background: var(--color-surface);
+  position: sticky;
+  left: 0;
+}
+.copy-status {
+  color: var(--color-muted);
+}
+.scroll-region table {
+  border-collapse: collapse;
+  min-width: max(100%, 32rem);
+}
+.reader-body td,
+.reader-body th {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  text-align: left;
+}
+.reader-body th {
+  background: var(--color-surface);
+}
+.math-scroll {
+  padding: 0.5rem;
+}
+.math-scroll .katex-display {
+  margin: 0.5rem 0;
+}
+.reader-body .katex {
+  font-size: 1.15em;
+}
+.contents {
+  color: var(--color-muted);
+}
+.contents ol {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.contents a {
+  padding: 0.5rem 0;
+  text-decoration: none;
+  width: 100%;
+}
+.contents a:hover {
+  text-decoration: underline;
+}
+.contents-child {
+  padding-left: 0.75rem;
+}
+.contents-disclosure {
+  margin: 1rem 0 2rem;
+  border: 1px solid var(--color-border);
+  padding: 0.5rem;
+  border-radius: 0.4rem;
+}
+.contents-rail {
+  display: none;
+}
+.resource-details {
+  display: grid;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+.resource-details div {
+  display: grid;
+  grid-template-columns: minmax(0, 8rem) minmax(0, 1fr);
+  gap: 1rem;
+}
+.resource-details dt {
+  color: var(--color-muted);
+}
+.resource-details dd {
+  margin: 0;
+}
+.pdf-preview {
+  display: none;
+  width: 100%;
+  height: 70vh;
+  border: 1px solid var(--color-border);
+}
+.adjacent-notes {
+  display: grid;
+  gap: 1rem;
+  margin-top: 3rem;
+  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+}
+.adjacent-notes a {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0.75rem;
+  text-decoration: none;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.4rem;
+}
+.adjacent-notes a:hover {
+  text-decoration: underline;
+}
+@media (min-width: 768px) {
+  .pdf-preview {
+    display: block;
+  }
+  .adjacent-notes {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+@media (min-width: 1200px) {
+  .reader-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 12rem;
+    gap: 2rem;
+  }
+  .contents-disclosure {
+    display: none;
+  }
+  .contents-rail {
+    display: block;
+    align-self: start;
+    position: sticky;
+    top: 1rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    padding: 0.5rem;
+  }
+}

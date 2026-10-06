@@ -1,0 +1,18 @@
+---
+import LibraryLayout from '../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Search from '../components/Search.astro';
+---
+
+<LibraryLayout
+  title="Search"
+  description="Search the published notes and displayed resource content by phrase, section, and kind."
+>
+  <Breadcrumbs title="Search" />
+  <h1>Search</h1>
+  <p>
+    Find a phrase in learning notes, notebooks, or displayed source code. PDF
+    and slide results include their metadata.
+  </p>
+  <Search />
+</LibraryLayout>

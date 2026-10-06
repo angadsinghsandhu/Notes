@@ -1,0 +1,81 @@
+---
+import type { ContentEntry } from '../content/index.js';
+interface Props {
+  entry: ContentEntry;
+}
+const { entry } = Astro.props;
+const local =
+  entry.assetUrl?.startsWith('/content-assets/') && entry.bytes <= 26_214_400;
+const source = entry.assetUrl?.startsWith('https://')
+  ? entry.assetUrl
+  : entry.sourceUrl;
+const size =
+  entry.bytes >= 1_048_576
+    ? `${(entry.bytes / 1_048_576).toFixed(1)} MiB`
+    : `${(entry.bytes / 1024).toFixed(1)} KiB`;
+---
+
+<section aria-label="Resource information" class="resource-information">
+  <dl class="resource-details">
+    <div>
+      <dt>Kind</dt>
+      <dd>{entry.kind}</dd>
+    </div>
+    <div>
+      <dt>Original filename</dt>
+      <dd>{entry.sourcePath.split('/').at(-1)}</dd>
+    </div>
+    <div>
+      <dt>Size</dt>
+      <dd>{size}</dd>
+    </div>
+  </dl>
+  {local && entry.kind === 'pdf' && (
+    <>
+      <div class="actions">
+        <a class="action" href={entry.assetUrl}>
+          Open PDF
+        </a>
+      </div>
+      <p class="muted">
+        Desktop preview below. If the preview is unavailable, use Open PDF.
+      </p>
+      {/* Only prepared local PDFs reach this browser-native viewer; iframe sandbox blocks it. */}
+      <iframe
+        class="pdf-preview"
+        title="PDF preview"
+        src={entry.assetUrl}
+        loading="lazy"
+        data-pagefind-ignore
+      />
+    </>
+  )}
+  {local && entry.kind === 'slides' && (
+    <>
+      <p>Download these slides to open them in a presentation application.</p>
+      <div class="actions">
+        <a class="action" href={entry.assetUrl} download>
+          Download slides
+        </a>
+      </div>
+    </>
+  )}
+  {!local && ['pdf', 'slides'].includes(entry.kind) && (
+    <>
+      <p>
+        This resource is larger than the local download limit. Open the original
+        external source.
+      </p>
+      {source && (
+        <div class="actions">
+          <a class="action" href={source}>
+            Open external source
+          </a>
+        </div>
+      )}
+    </>
+  )}
+  {entry.kind === 'code' && (
+    <p class="muted">Source code is shown below as text. It is not executed.</p>
+  )}
+</section>

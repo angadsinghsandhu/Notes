@@ -1,0 +1,34 @@
+---
+import type { ContentEntry } from '../content/index.js';
+import { sectionLabels } from '../lib/catalog.js';
+interface Props {
+  entry?: ContentEntry;
+  title?: string;
+}
+const { entry, title } = Astro.props;
+---
+
+<nav aria-label="Breadcrumbs" class="breadcrumbs" data-pagefind-ignore>
+  <ol>
+    <li>
+      <a href="/">Home</a>
+    </li>
+    <li>
+      <a href="/library/">Library</a>
+    </li>
+    {entry && (
+      <>
+        <li>
+          <a href={`/library/${entry.section}/`}>
+            {sectionLabels[entry.section]}
+          </a>
+        </li>
+        {entry.groupSegments.map((segment) => (
+          <li>{segment}</li>
+        ))}
+        <li aria-current="page">{entry.title}</li>
+      </>
+    )}
+    {!entry && title && <li aria-current="page">{title}</li>}
+  </ol>
+</nav>

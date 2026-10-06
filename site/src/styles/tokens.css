@@ -2,62 +2,38 @@
   color-scheme: light;
   --color-background: #f8fafc;
   --color-surface: #ffffff;
-  --color-text: #172033;
+  --color-text: #1e293b;
   --color-muted: #475569;
-  --color-link: #1d4ed8;
-  --color-focus: #1d4ed8;
+  --color-link: #2563eb;
+  --color-focus: #2563eb;
+  --color-border: #e2e8f0;
   --font-body:
     system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-code: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
   --space-small: 0.5rem;
   --space-medium: 1rem;
   --space-large: 2rem;
-  --content-width: 72rem;
+  --content-width: 72ch;
 }
-
-* {
-  box-sizing: border-box;
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --color-background: #0f172a;
+  --color-surface: #1e293b;
+  --color-text: #f1f5f9;
+  --color-muted: #cbd5e1;
+  --color-link: #93c5fd;
+  --color-focus: #93c5fd;
+  --color-border: #475569;
 }
-
-html {
-  font-family: var(--font-body);
-  line-height: 1.6;
-  color: var(--color-text);
-  background: var(--color-background);
-  overflow-wrap: anywhere;
-}
-
-body {
-  margin: 0;
-}
-
-a {
-  color: var(--color-link);
-  text-underline-offset: 0.2em;
-}
-
-:focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 4px;
-}
-
-main {
-  width: min(100% - 2 * var(--space-medium), var(--content-width));
-  margin: var(--space-large) auto;
-}
-
-.skip-link {
-  position: absolute;
-  top: var(--space-medium);
-  left: var(--space-medium);
-  z-index: 10;
-  min-width: 44px;
-  min-height: 44px;
-  max-width: calc(100% - 2 * var(--space-medium));
-  padding: var(--space-small) var(--space-medium);
-  background: var(--color-surface);
-  transform: translateY(-200%);
-}
-
-.skip-link:focus {
-  transform: translateY(0);
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']):not([data-theme='dark']) {
+    color-scheme: dark;
+    --color-background: #0f172a;
+    --color-surface: #1e293b;
+    --color-text: #f1f5f9;
+    --color-muted: #cbd5e1;
+    --color-link: #93c5fd;
+    --color-focus: #93c5fd;
+    --color-border: #475569;
+  }
 }

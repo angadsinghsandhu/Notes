@@ -1,28 +1,47 @@
 ---
-import '../styles/tokens.css';
+import LibraryLayout from '../layouts/LibraryLayout.astro';
+import { readPreparedCatalog, sectionLabels } from '../lib/catalog.js';
+const catalog = await readPreparedCatalog();
+const entries = catalog.listEntries();
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta
-      name="description"
-      content="A library of notes from books, classes, courses, interviews, languages, and tutorials."
-    />
-    <title>Notes Library</title>
-  </head>
-  <body>
-    <a class="skip-link" href="#main">
-      Skip to content
+<LibraryLayout
+  title="Notes Library"
+  description="A library of notes from books, classes, courses, interviews, languages, and tutorials."
+>
+  <h1>Notes Library</h1>
+  <p>
+    Notes from books, classes, courses, interviews, languages, and tutorials.
+  </p>
+  <div class="actions">
+    <a class="action" href="/search/">
+      Search the notes
     </a>
-    <main id="main" tabindex="-1">
-      <h1>Notes Library</h1>
-      <p>
-        Notes from books, classes, courses, interviews, languages, and
-        tutorials.
-      </p>
-    </main>
-  </body>
-</html>
+    <a class="action" href="/library/">
+      Browse the library
+    </a>
+  </div>
+  <section aria-labelledby="sections-title" class="browse-section">
+    <h2 id="sections-title">Browse by subject</h2>
+    <div class="section-cards">
+      {Object.entries(sectionLabels).map(([section, label]) => {
+        const selected = entries.filter((entry) => entry.section === section);
+        const notes = selected.filter((entry) =>
+          ['markdown', 'notebook'].includes(entry.kind),
+        ).length;
+        return (
+          <a class="section-card" href={`/library/${section}/`}>
+            <h2>{label}</h2>
+            <p>
+              {notes} learning notes · {selected.length - notes} resources
+            </p>
+          </a>
+        );
+      })}
+    </div>
+  </section>
+  <p class="muted">
+    Start with learning notes. Course code, PDFs, and slides are available in
+    each subject’s resources.
+  </p>
+</LibraryLayout>

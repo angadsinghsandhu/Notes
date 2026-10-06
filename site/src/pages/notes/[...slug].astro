@@ -1,0 +1,35 @@
+---
+import ReaderLayout from '../../layouts/ReaderLayout.astro';
+import { readPreparedBody, readPreparedCatalog } from '../../lib/catalog.js';
+import type { ContentEntry } from '../../content/index.js';
+export async function getStaticPaths() {
+  const catalog = await readPreparedCatalog();
+  const notes = catalog
+    .listEntries()
+    .filter((entry) => ['markdown', 'notebook'].includes(entry.kind));
+  return Promise.all(
+    notes.map(async (entry) => ({
+      params: { slug: entry.route.slice('/notes/'.length).replace(/\/$/, '') },
+      props: {
+        entry,
+        html: await readPreparedBody(entry),
+        ...catalog.getAdjacentNotes(entry.id),
+        navItems: notes.filter(
+          (item) =>
+            item.section === entry.section &&
+            item.groupSegments.join('/') === entry.groupSegments.join('/'),
+        ),
+      },
+    })),
+  );
+}
+interface Props {
+  entry: ContentEntry;
+  html: string;
+  navItems: ContentEntry[];
+  previous?: ContentEntry;
+  next?: ContentEntry;
+}
+---
+
+<ReaderLayout {...Astro.props} />

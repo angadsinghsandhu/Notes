@@ -375,3 +375,56 @@ it('rolls back asset additions and retired assets when the single publication re
     ),
   ).toEqual(image);
 });
+
+it('reuses one prepared catalog per file generation and invalidates after atomic replacement', async () => {
+  const options = await archive();
+  await put(options.rootDir, 'Tutorials/cache.md', '# First body');
+  await prepareContent(options);
+  const snapshot = join(options.outputDir, 'current');
+  const first = await readPreparedCatalog(snapshot);
+  expect(await readPreparedCatalog(snapshot)).toBe(first);
+  const selected = first.listEntries()[0]!;
+  await put(options.rootDir, 'Tutorials/cache.md', '# Second body');
+  await prepareContent(options);
+  const second = await readPreparedCatalog(snapshot);
+  expect(second).not.toBe(first);
+  expect(await readPreparedBody(selected, snapshot)).toContain('First body');
+  expect(await readPreparedBody(second.listEntries()[0]!, snapshot)).toContain(
+    'Second body',
+  );
+});
+
+it.each([
+  '/',
+  '/search/',
+  '/library/',
+  '/library/books/',
+  '/404.html',
+  '/sitemap.xml',
+])('rejects an alias shadowing fixed website route %s', (alias) => {
+  expect(() =>
+    loadCatalog({
+      ...manifest,
+      entries: [entry('reserved', { aliases: [alias] })],
+    }),
+  ).toThrow(/reserved website route/);
+});
+
+it.each([
+  '/search',
+  '/LIBRARY/',
+  '/search/index.html',
+  '/index.html',
+  '/sitemap.xml/x',
+  '/pagefind/unsafe/',
+])(
+  'facade independently rejects unsafe alias %s with owner diagnostics',
+  (alias) => {
+    expect(() =>
+      loadCatalog({
+        ...manifest,
+        entries: [entry('reserved', { aliases: [alias] })],
+      }),
+    ).toThrow('Tutorials/Group/reserved.md');
+  },
+);

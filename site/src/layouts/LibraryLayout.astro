@@ -1,0 +1,121 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import Navigation from '../components/Navigation.astro';
+import type { ContentEntry } from '../content/index.js';
+interface Props {
+  title: string;
+  description: string;
+  entry?: ContentEntry;
+  navItems?: ContentEntry[];
+  noindex?: boolean;
+}
+const {
+  title,
+  description,
+  entry,
+  navItems = [],
+  noindex = false,
+} = Astro.props;
+const canonical =
+  !noindex && Astro.site
+    ? new URL(Astro.url.pathname, Astro.site).href
+    : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <title>{title === 'Notes Library' ? title : `${title} · Notes Library`}</title>
+    {noindex && <meta name="robots" content="noindex" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('notes-theme');
+        if (['system', 'light', 'dark'].includes(theme))
+          document.documentElement.dataset.theme = theme;
+      } catch {
+        /* CSS system preference is the storage-free fallback. */
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">
+      Skip to content
+    </a>
+    <header class="site-header" data-pagefind-ignore>
+      <a class="brand" href="/">
+        Notes Library
+      </a>
+      <button
+        type="button"
+        data-drawer-open
+        hidden
+        aria-haspopup="dialog"
+        aria-controls="navigation-drawer"
+      >
+        Browse sections
+      </button>
+      <a class="header-search" href="/search/">
+        <svg
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          aria-hidden="true"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+        >
+          <circle cx="10.5" cy="10.5" r="6.5" />
+          <path d="m16 16 5 5" />
+        </svg>
+        Search
+      </a>
+      <label class="theme-control" data-theme-control hidden>
+        Theme
+        <select data-theme-select>
+          <option value="system">System</option>
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
+    </header>
+    <div class="site-shell">
+      <aside class="sidebar">
+        <Navigation {...(entry ? { entry } : {})} items={navItems} />
+      </aside>
+      <main id="main" tabindex="-1">
+        <details class="no-js-navigation" data-pagefind-ignore>
+          <summary>Browse sections</summary>
+          <Navigation {...(entry ? { entry } : {})} items={navItems} />
+        </details>
+        <slot />
+      </main>
+    </div>
+    <footer class="site-footer" data-pagefind-ignore>
+      Personal learning notes · <a href="/library/">Library</a>
+    </footer>
+    <dialog
+      id="navigation-drawer"
+      aria-labelledby="drawer-title"
+      data-pagefind-ignore
+    >
+      <div class="drawer-heading">
+        <h2 id="drawer-title">Browse sections</h2>
+        <button type="button" data-drawer-close>
+          Close navigation
+        </button>
+      </div>
+      <Navigation {...(entry ? { entry } : {})} items={navItems} />
+    </dialog>
+    <script>
+      import { initNavigation } from '../client/navigation.js';
+      import { initTheme } from '../client/theme.js';
+      initNavigation(document);
+      initTheme(document);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+---
+import '../styles/tokens.css';
+import '../styles/global.css';
+import { readPreparedCatalog } from '../lib/catalog.js';
+export async function getStaticPaths() {
+  const catalog = await readPreparedCatalog();
+  return catalog.listEntries().flatMap((entry) =>
+    entry.aliases.map((alias) => ({
+      params: { alias: alias.replace(/^\//, '').replace(/\/$/, '') },
+      props: { target: entry.route, title: entry.title },
+    })),
+  );
+}
+interface Props {
+  target: string;
+  title: string;
+}
+const { target, title } = Astro.props;
+const canonical = Astro.site ? new URL(target, Astro.site).href : undefined;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <title>{title} has moved · Notes Library</title>
+  </head>
+  <body data-pagefind-ignore>
+    <main style="padding: 1rem; max-width: 72ch">
+      <h1>This note has moved</h1>
+      <p>
+        <a class="action" href={target}>
+          Continue to {title}
+        </a>
+      </p>
+    </main>
+  </body>
+</html>
