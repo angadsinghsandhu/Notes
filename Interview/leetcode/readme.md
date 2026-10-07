@@ -1,3 +1,6 @@
+---
+title: "Leetcode Game Plan (fall 2024 - spring 2025)"
+---
 # Leetcode Game Plan (fall 2024 - spring 2025)
 
 ## Data Structures and Algorithms Theory Refresher

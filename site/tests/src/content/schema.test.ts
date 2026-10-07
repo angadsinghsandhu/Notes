@@ -168,3 +168,41 @@ describe('metadata schema', () => {
     }
   });
 });
+
+it('preserves literal trailing hashes while removing Markdown closing hashes', async () => {
+  for (const [body, title] of [
+    ['# C#\n', 'C#'],
+    ['# C# ###\n', 'C#'],
+    ['# Topic###\n', 'Topic###'],
+  ]) {
+    expect((await readMetadata(await note(body!), policy)).title).toBe(title);
+  }
+});
+it('accepts only the supplemental role and preserves the real upstream title', async () => {
+  const source = await note('');
+  await copyFile(
+    new URL(
+      '../../../../Courses/Scrimba/Learn React/src/projects/01-first-react/README.md',
+      import.meta.url,
+    ),
+    source.absolutePath,
+  );
+  expect(
+    await readMetadata(source, {
+      ...policy,
+      overrides: { [source.sourcePath]: { role: 'supplemental' } },
+    }),
+  ).toMatchObject({ title: 'React + Vite', role: 'supplemental' });
+  await expect(
+    readMetadata(await note('---\ntitle: Note\nrole: primary\n---\n'), policy),
+  ).rejects.toThrow('role');
+});
+
+it.each(['---\ntitle: Missing close', '---\ntitle: One\ntitle: Two\n---\n'])(
+  'rejects actual malformed YAML frontmatter %j',
+  async (body) => {
+    await expect(readMetadata(await note(body), policy)).rejects.toThrow(
+      /frontmatter|unique/i,
+    );
+  },
+);

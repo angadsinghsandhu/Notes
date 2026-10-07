@@ -1,3 +1,6 @@
+---
+title: "1.11 Best, Worst, and Average Case Analysis"
+---
 # 1.11 Best, Worst, and Average Case Analysis
 
 ## Overview

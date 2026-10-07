@@ -1,3 +1,6 @@
+---
+title: "Learn React"
+---
 # Learn React
 
 React is the most popular front-end library today. It is used to build user interfaces for web applications. This course teaches React by building projects. Learning React unlocks opportunities for front-end web development. React is a powerful tool for building interactive user interfaces.

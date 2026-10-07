@@ -1,3 +1,6 @@
+---
+title: "Ethereum"
+---
 # Ethereum
 
 This chapter covers Ethereum, a decentralized platform that enables smart contracts and decentralized applications. It introduces the concept of Ethereum, its history, and how it is used in decentralized systems.

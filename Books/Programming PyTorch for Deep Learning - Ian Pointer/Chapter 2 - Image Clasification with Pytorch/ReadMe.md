@@ -1,3 +1,6 @@
+---
+title: "Image Classification with PyTorch"
+---
 # Image Classification with PyTorch
 
 After setting up PyTorch, we will work through an example that can easily be expanded as you get more comfortable working with PyTorch.

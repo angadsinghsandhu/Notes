@@ -8,6 +8,7 @@ export default defineConfig({
     'src/components/**/*.test.ts',
     'src/lib/**/*.browser.test.ts',
   ],
+  testIgnore: '**/*.unit.test.ts',
   workers: 1,
   forbidOnly: Boolean(process.env['CI']),
   retries: process.env['CI'] ? 2 : 0,

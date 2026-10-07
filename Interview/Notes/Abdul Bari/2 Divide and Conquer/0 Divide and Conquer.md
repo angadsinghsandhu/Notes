@@ -1,3 +1,6 @@
+---
+title: "2.0 Divide and Conquer"
+---
 # 2.0 Divide and Conquer
 
 ## Overview

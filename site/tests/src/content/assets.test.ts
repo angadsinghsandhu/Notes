@@ -294,3 +294,43 @@ describe('read-only validated planned asset bytes', () => {
     ).rejects.toThrow();
   });
 });
+
+it('sanitizes SVG CDATA and local fragment paints while discarding escaped paints and foreign attributes', async () => {
+  const root = await archive();
+  const path = 'Tutorials/images/boundary.svg';
+  await writeFile(
+    join(root, path),
+    '<svg xmlns:x="urn:foreign"><text><![CDATA[Safe < &]]></text><script><![CDATA[Hidden]]>Hidden text</script><path fill="url(#gradient)" stroke="url( #other )" x:width="1"/></svg>',
+  );
+  const [asset] = await planAssets(root, [path], policy);
+  const bytes = (await readPlannedLocalAsset(root, asset!)).toString();
+  expect(bytes).toContain('Safe &lt; &amp;');
+  expect(bytes).toContain('fill="url(#gradient)"');
+  expect(bytes).not.toMatch(/Hidden|stroke=|x:width/);
+});
+it('rechecks planned source boundaries for traversal, symlinks, directories and oversized files', async () => {
+  const root = await archive();
+  const image = await readFile('tests/fixtures/synthetic/task3/pixel.png');
+  const path = 'Tutorials/images/a.png';
+  await writeFile(join(root, path), image);
+  const [asset] = await planAssets(root, [path], policy);
+  for (const sourcePath of [
+    '../private.png',
+    'Tutorials/../private.png',
+    'Tutorials\\private.png',
+  ])
+    await expect(
+      readPlannedLocalAsset(root, { ...asset!, sourcePath }),
+    ).rejects.toThrow('escapes');
+  await rm(join(root, path));
+  await symlink(join(root, 'Tutorials/images'), join(root, path));
+  await expect(readPlannedLocalAsset(root, asset!)).rejects.toThrow('symbolic');
+  await rm(join(root, path));
+  await mkdir(join(root, path));
+  await expect(readPlannedLocalAsset(root, asset!)).rejects.toThrow('regular');
+  await rm(join(root, path), { recursive: true });
+  await sparse(join(root, path), 26_214_401);
+  await expect(readPlannedLocalAsset(root, asset!)).rejects.toThrow(
+    'size limit',
+  );
+});

@@ -1,3 +1,6 @@
+---
+title: "Docker WorkFlow"
+---
 # Docker WorkFlow
 
 To work with Docker we take an application and `"dockerize it"` which means we make a small change so that it can be run by docker i.e we add a `Dockerfile` to it. A docker file is a plain text file that includes instructions that docker uses to package up this application into an `Docker Image`. This image contains everything our application needs to run.

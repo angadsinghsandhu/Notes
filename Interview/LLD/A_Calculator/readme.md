@@ -1,3 +1,6 @@
+---
+title: "Simple Calculator Lower System Design"
+---
 # Simple Calculator Lower System Design
 
 Below is an example Low-Level Design (LLD) for a **Basic Calculator** system. This design breaks down the calculator into several components that work together to perform arithmetic operations, handle user inputs, and provide error handling. In this example, we use an object‐oriented approach with SOLID principles in mind. We’ve separated concerns into operation classes, a calculator orchestrator, and a simple user interface (demo). You can extend this design with additional operations (e.g., exponentiation or modulus) or features (e.g., memory functions) as needed.

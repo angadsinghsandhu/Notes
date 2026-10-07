@@ -49,3 +49,5 @@ export { prepareContent } from './prepare.js';
 export type { PrepareOptions } from './prepare.js';
 export { writeManifest } from './manifest.js';
 export { readPlannedLocalAsset } from './assets.js';
+export { applyMigration, planMigration } from './migrate.js';
+export type { MigrationPlan } from './migrate.js';

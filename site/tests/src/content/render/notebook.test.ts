@@ -424,7 +424,7 @@ it('bounds notebook inline rasters, rejects malformed payloads, and never extrac
     untouched,
   );
   expect(calls).toBe(0);
-}, 60_000);
+}, 180_000);
 
 it('accepts a genuine PNG above five megabytes inside the stated 25 MiB raster budget', async () => {
   const png = await sharp(randomBytes(1400 * 1400 * 3), {

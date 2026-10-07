@@ -46,3 +46,26 @@ it('handles documents without code blocks', () => {
   document.body.innerHTML = '';
   expect(() => initCopyCode(document)).not.toThrow();
 });
+
+it('copies an actual empty Element as empty text and handles a detached document without a view', async () => {
+  const writeText = vi.fn().mockResolvedValue(undefined);
+  Object.defineProperty(navigator, 'clipboard', {
+    configurable: true,
+    value: { writeText },
+  });
+  document.body.innerHTML = '<pre></pre>';
+  expect(document.querySelector('pre')!.textContent).toBe('');
+  initCopyCode(document);
+  document.querySelector('button')!.click();
+  await vi.waitFor(() => expect(writeText).toHaveBeenCalledWith(''));
+  const detached = document.implementation.createHTMLDocument();
+  detached.body.innerHTML = '<pre>Detached source</pre>';
+  expect(detached.defaultView).toBeNull();
+  initCopyCode(detached);
+  detached.querySelector('button')!.click();
+  await vi.waitFor(() =>
+    expect(detached.querySelector('[role="status"]')!.textContent).toContain(
+      'Copy failed',
+    ),
+  );
+});

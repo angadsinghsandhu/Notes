@@ -1,3 +1,6 @@
+---
+title: "Section 2: JavaScript Refresher"
+---
 # Section 2: JavaScript Refresher
 
 ## 12. Module Introduction

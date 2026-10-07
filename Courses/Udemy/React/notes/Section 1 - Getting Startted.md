@@ -1,3 +1,6 @@
+---
+title: "Section 1: Getting Started"
+---
 # Section 1: Getting Started
 
 ## 1. Welcome to the Course

@@ -18,7 +18,7 @@ export function initCopyCode(document: Document): void {
       try {
         const clipboard = document.defaultView?.navigator.clipboard;
         if (!clipboard) throw new Error('Clipboard unavailable');
-        await clipboard.writeText(pre.textContent ?? '');
+        await clipboard.writeText(pre.textContent);
         status.textContent = 'Code copied.';
       } catch {
         status.textContent = 'Copy failed; select the code and copy manually.';

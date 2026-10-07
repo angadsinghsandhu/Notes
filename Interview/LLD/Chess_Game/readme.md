@@ -1,3 +1,6 @@
+---
+title: "Designing a Chess Game"
+---
 # Designing a Chess Game
 
 ## Requirements

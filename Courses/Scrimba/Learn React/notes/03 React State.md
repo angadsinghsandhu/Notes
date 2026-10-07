@@ -1,3 +1,6 @@
+---
+title: "React State"
+---
 # React State
 
 State management is a core concept in React that allows components to keep track of information between renders. In this section, we will explore how to manage state effectively using `useState`, updating state correctly, and handling complex state objects.

@@ -1,3 +1,6 @@
+---
+title: "Tic Tac Toe Game"
+---
 # Tic Tac Toe Game
 
 ## Key Points and SOLID Application:

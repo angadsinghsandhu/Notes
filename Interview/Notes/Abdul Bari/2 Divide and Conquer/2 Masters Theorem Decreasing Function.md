@@ -1,3 +1,6 @@
+---
+title: "2.2 Master's Theorem for Decreasing Functions"
+---
 # 2.2 Master's Theorem for Decreasing Functions
 
 ## Overview

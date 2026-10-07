@@ -17,6 +17,13 @@ export const sectionLabels = {
   tutorials: 'Tutorials',
 } satisfies Record<Section, string>;
 
+export function isLearningNote(entry: ContentEntry): boolean {
+  return (
+    ['markdown', 'notebook'].includes(entry.kind) &&
+    entry.role !== 'supplemental'
+  );
+}
+
 export type Catalog = {
   getEntry(route: string): ContentEntry | undefined;
   listEntries(filters?: {
@@ -34,6 +41,7 @@ function publicEntry(entry: ContentEntry): ContentEntry {
   const {
     id,
     title,
+    role,
     description,
     tags,
     draft,
@@ -74,6 +82,7 @@ function publicEntry(entry: ContentEntry): ContentEntry {
     groupSegments: [...groupSegments],
     route,
     headings: headings.map((heading) => ({ ...heading })),
+    ...(role ? { role } : {}),
     ...(slug !== undefined ? { slug } : {}),
     ...(order !== undefined ? { order } : {}),
     ...(updated !== undefined ? { updated } : {}),
@@ -127,12 +136,12 @@ function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
         .map(select),
     getAdjacentNotes: (id) => {
       const entry = entries.find((item) => item.id === id);
-      if (!entry || !['markdown', 'notebook'].includes(entry.kind)) return {};
+      if (!entry || !isLearningNote(entry)) return {};
       const notes = entries.filter(
         (item) =>
           item.section === entry.section &&
           item.groupSegments.join('/') === entry.groupSegments.join('/') &&
-          ['markdown', 'notebook'].includes(item.kind),
+          isLearningNote(item),
       );
       const index = notes.findIndex((item) => item.id === id);
       const previous = notes[index - 1];

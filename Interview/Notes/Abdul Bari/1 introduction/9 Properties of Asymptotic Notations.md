@@ -1,3 +1,6 @@
+---
+title: "1.9 Properties of Asymptotic Notations"
+---
 # 1.9 Properties of Asymptotic Notations
 
 ## Overview

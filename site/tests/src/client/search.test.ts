@@ -149,3 +149,67 @@ it.each(['/\\external.test/', '/\n/external.test/', '/\t/external.test/'])(
     ).toEqual([data.url]);
   },
 );
+
+it('uses the native default index importer and reports unavailable local output', async () => {
+  initSearch(document);
+  submit();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('Search is unavailable'),
+  );
+});
+it('renders absent metadata with readable defaults and reports a failed next page', async () => {
+  const results = Array.from({ length: 21 }, (_, i) => ({
+    data: async () => {
+      if (i === 20) throw new Error('Missing fragment');
+      return { url: '/notes/test/', meta: {}, plain_excerpt: 'Excerpt' };
+    },
+  }));
+  initSearch(document, async () => ({ search: async () => ({ results }) }));
+  submit();
+  await vi.waitFor(() =>
+    expect(document.querySelectorAll('li')).toHaveLength(20),
+  );
+  expect(document.querySelector('a')!.textContent).toBe('Untitled');
+  document.querySelector<HTMLButtonElement>('[data-search-more]')!.click();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('More results could not load'),
+  );
+  expect(
+    document.querySelector<HTMLButtonElement>('[data-search-more]')!.disabled,
+  ).toBe(false);
+});
+it('discards a superseded result body and a superseded loader rejection', async () => {
+  let reject!: (reason: Error) => void;
+  const pending = new Promise<SearchIndex>((_, fail) => {
+    reject = fail;
+  });
+  initSearch(document, () => pending);
+  submit();
+  submit('');
+  reject(new Error('Old index failure'));
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('Enter a phrase'),
+  );
+  document.querySelector('form')!.removeAttribute('data-ready');
+  let resolve!: (value: typeof data) => void;
+  const body = new Promise<typeof data>((done) => {
+    resolve = done;
+  });
+  initSearch(document, async () => ({
+    search: async () => ({ results: [{ data: () => body }] }),
+  }));
+  submit();
+  await Promise.resolve();
+  await Promise.resolve();
+  submit('');
+  resolve(data);
+  await Promise.resolve();
+  await Promise.resolve();
+  expect(document.querySelectorAll('li')).toHaveLength(0);
+});
