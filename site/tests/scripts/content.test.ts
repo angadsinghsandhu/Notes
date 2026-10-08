@@ -62,6 +62,40 @@ it('prepares archive content before dev and production build through explicit pa
   expect(packageJson.scripts.dev).toBe('tsx scripts/dev.ts');
   expect(packageJson.scripts['content:check']).toBe('tsx scripts/content.ts');
   expect(packageJson.scripts.build).toBe(
-    'npm run content:check && astro build && pagefind --site dist',
+    'npm run content:check && astro build && pagefind --site dist && npm run check:output',
   );
+});
+
+it('wires reviewed dry-run migration and output verification commands', async () => {
+  const value = JSON.parse(await readFile('package.json', 'utf8'));
+  expect(value.scripts['content:migrate']).toBe('tsx scripts/migrate.ts');
+  expect(value.scripts['check:output']).toBe('tsx scripts/verify-output.ts');
+});
+
+it('rejects mutable revision configuration and the actual CLI reports a failing policy with nonzero status', async () => {
+  const { site } = await archive();
+  vi.stubEnv('SOURCE_REVISION', 'master');
+  await expect(contentOptions(site)).rejects.toThrow('immutable commit hash');
+  vi.unstubAllEnvs();
+  const argv = process.argv;
+  const exitCode = process.exitCode;
+  vi.spyOn(console, 'error').mockImplementation(() => {});
+  vi.spyOn(process, 'cwd').mockReturnValue(join(site, 'missing'));
+  process.argv = [process.execPath, join(process.cwd(), 'scripts/content.ts')];
+  // Use the real module URL for its executable guard, with an isolated failing cwd.
+  process.argv[1] = new URL(
+    '../../scripts/content.ts',
+    import.meta.url,
+  ).pathname;
+  vi.resetModules();
+  try {
+    await import('../../scripts/content.js');
+    expect(process.exitCode).toBe(1);
+    expect(console.error).toHaveBeenCalledWith(
+      expect.stringContaining('publication.json'),
+    );
+  } finally {
+    process.argv = argv;
+    process.exitCode = exitCode;
+  }
 });

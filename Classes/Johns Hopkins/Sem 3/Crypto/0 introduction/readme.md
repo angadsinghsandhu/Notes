@@ -1,3 +1,6 @@
+---
+title: "Introduction to Blockchains"
+---
 # Introduction to Blockchains
 
 This chapter covers the basics of blockchains and their applications. It introduces the concept of blockchains, their structure, and how they are used in cryptocurrencies and other decentralized systems.

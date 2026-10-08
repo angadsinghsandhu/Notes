@@ -2,14 +2,14 @@
 import LibraryLayout from '../../layouts/LibraryLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Navigation from '../../components/Navigation.astro';
-import { readPreparedCatalog, sectionLabels } from '../../lib/catalog.js';
+import {
+  readPreparedCatalog,
+  sectionLabels,
+  isLearningNote,
+} from '../../lib/catalog.js';
 const entries = (await readPreparedCatalog()).listEntries();
-const notes = entries.filter((entry) =>
-  ['markdown', 'notebook'].includes(entry.kind),
-);
-const resources = entries.filter(
-  (entry) => !['markdown', 'notebook'].includes(entry.kind),
-);
+const notes = entries.filter(isLearningNote);
+const resources = entries.filter((entry) => !isLearningNote(entry));
 ---
 
 <LibraryLayout
@@ -65,7 +65,7 @@ const resources = entries.filter(
       {Object.entries(sectionLabels).map(([section, label]) => (
         <section class="browse-section" aria-label={`${label} resources`}>
           <h3>{label}</h3>
-          {['code', 'pdf', 'slides'].map((kind) => {
+          {['markdown', 'notebook', 'code', 'pdf', 'slides'].map((kind) => {
             const selected = resources.filter(
               (entry) => entry.section === section && entry.kind === kind,
             );
@@ -73,7 +73,12 @@ const resources = entries.filter(
               selected.length > 0 && (
                 <details class="group-disclosure">
                   <summary>
-                    {kind} ({selected.length})
+                    {kind === 'markdown'
+                      ? 'Supplemental documents'
+                      : kind === 'notebook'
+                        ? 'Supplemental notebooks'
+                        : kind}{' '}
+                    ({selected.length})
                   </summary>
                   <Navigation treeEntries={selected} />
                 </details>

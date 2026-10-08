@@ -1,3 +1,6 @@
+---
+title: "Text Classification"
+---
 # Text Classification
 
 ## Recurrent Neural Networks

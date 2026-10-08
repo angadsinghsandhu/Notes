@@ -1,3 +1,6 @@
+---
+title: "Leadership Principle"
+---
 # Leadership Principle
 
 ## 1. Customer Obsession

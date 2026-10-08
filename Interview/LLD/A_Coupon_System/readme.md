@@ -1,3 +1,6 @@
+---
+title: "Coupon System"
+---
 # Coupon System
 
 ## Proposed Directory Structure

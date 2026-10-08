@@ -1,3 +1,6 @@
+---
+title: "Static Pages"
+---
 # Static Pages
 
 Building static pages is a common task in web development. In this chapter, we will learn how to create static pages using React. We will also learn how to organize the static pages in a React project.

@@ -10,3 +10,17 @@ test('test_homepage_is_a_readable_document', async ({ page }) => {
     'Notes Library',
   );
 });
+
+test('homepage counts the actual primary archive without supplemental templates', async ({
+  page,
+}) => {
+  await page.goto('/');
+  const counts = await page.locator('.section-card p').allTextContents();
+  expect(
+    counts.reduce(
+      (sum, count) =>
+        sum + Number(/(\d+) learning notes/.exec(count)?.[1] ?? 0),
+      0,
+    ),
+  ).toBe(325);
+});

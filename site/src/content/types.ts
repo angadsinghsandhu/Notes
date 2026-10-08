@@ -10,6 +10,7 @@ export type SourceEntry = {
   bytes: number;
 };
 export type Metadata = {
+  role?: 'supplemental';
   title: string;
   description: string;
   tags: string[];

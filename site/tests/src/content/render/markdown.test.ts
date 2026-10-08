@@ -142,3 +142,43 @@ describe('safe shared Markdown rendering', () => {
     expect((result.html.match(/class="katex"/g) ?? []).length).toBe(3);
   });
 });
+
+it('resolves labeled wiki text through the shared catalog and rejects missing attachment maps', async () => {
+  const markdown = '[[Note|Readable label]]';
+  expect((await renderMarkdown(markdown, context(markdown))).html).toContain(
+    'Readable label</a>',
+  );
+  await expect(
+    renderMarkdown(
+      '![plot](attachment:missing.png)',
+      context(''),
+      undefined,
+      new Map(),
+    ),
+  ).rejects.toThrow('Missing notebook attachment');
+});
+
+it('rejects missing, ambiguous and draft wiki targets through the actual renderer', async () => {
+  const ctx = context('');
+  await expect(renderMarkdown('[[Missing|Label]]', ctx)).rejects.toThrow(
+    /Missing|Unresolved/,
+  );
+  const existing = [...ctx.catalog.sources.values()][0]!;
+  for (const [draft, title] of [
+    [true, 'Private'],
+    [false, 'Note'],
+  ] as const) {
+    const entry = {
+      ...existing,
+      id: `other-${title}`,
+      sourcePath: `Interview/${title}.md`,
+      route: `/notes/interview/other-${title.toLowerCase()}/`,
+      draft,
+      title,
+    };
+    const catalog = createRouteCatalog([existing, entry], []);
+    await expect(
+      renderMarkdown(`[[${title}|Readable label]]`, { ...ctx, catalog }),
+    ).rejects.toThrow(draft ? /unresolved|unpublished|Missing/i : /ambiguous/i);
+  }
+});

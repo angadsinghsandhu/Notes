@@ -1,3 +1,6 @@
+---
+title: "Designing a Logging Framework"
+---
 # Designing a Logging Framework
 
 ## Requirements

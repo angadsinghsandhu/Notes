@@ -1,3 +1,6 @@
+---
+title: "601.664 Artificial Intelligence – Spring 2025"
+---
 # 601.664 Artificial Intelligence – Spring 2025
 
 **Instructor:** Philipp Koehn (<phi@jhu.edu>)  

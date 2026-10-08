@@ -1,6 +1,10 @@
 ---
 import LibraryLayout from '../layouts/LibraryLayout.astro';
-import { readPreparedCatalog, sectionLabels } from '../lib/catalog.js';
+import {
+  readPreparedCatalog,
+  sectionLabels,
+  isLearningNote,
+} from '../lib/catalog.js';
 const catalog = await readPreparedCatalog();
 const entries = catalog.listEntries();
 ---
@@ -26,9 +30,7 @@ const entries = catalog.listEntries();
     <div class="section-cards">
       {Object.entries(sectionLabels).map(([section, label]) => {
         const selected = entries.filter((entry) => entry.section === section);
-        const notes = selected.filter((entry) =>
-          ['markdown', 'notebook'].includes(entry.kind),
-        ).length;
+        const notes = selected.filter(isLearningNote).length;
         return (
           <a class="section-card" href={`/library/${section}/`}>
             <h2>{label}</h2>

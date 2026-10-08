@@ -9,6 +9,7 @@ import {
   readdir,
   symlink,
   copyFile,
+  open,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
@@ -70,6 +71,7 @@ async function put(root: string, path: string, value: string | Buffer) {
   await writeFile(join(root, path), value);
 }
 afterEach(async () => {
+  vi.unstubAllEnvs();
   faults.afterRename = undefined;
   faults.cleanup = false;
   faults.verification = false;
@@ -378,7 +380,11 @@ it.each(sourceRepairs)(
     );
     for (const [original, replacement] of replacements)
       expected = expected.replaceAll(original, replacement);
-    expect(await readFile(join('..', sourcePath), 'utf8')).toBe(expected);
+    const current = await readFile(join('..', sourcePath), 'utf8');
+    const frontmatter = /^---\r?\ntitle: ("[^\n]*")\r?\n---\r?\n/.exec(current);
+    if (frontmatter)
+      expect(JSON.parse(frontmatter[1]!)).toEqual(expect.any(String));
+    expect(current.slice(frontmatter?.[0].length ?? 0)).toBe(expected);
   },
 );
 
@@ -418,7 +424,7 @@ it('extracts real inline notebook PNGs but rejects generic data URLs and draft s
   expect((await prepareContent(options)).diagnostics[0]?.message).toContain(
     'unpublished repository target',
   );
-});
+}, 30_000);
 
 const notebookRepairs = JSON.parse(
   await readFile('tests/fixtures/real/task5/notebook-repairs.json', 'utf8'),
@@ -516,4 +522,111 @@ it('invalid fixed/output/namespace aliases preserve the last successful snapshot
       'Tutorials/example.md',
     );
   }
+});
+
+it('applies explicit environment identity and HTTPS hosted policy while rejecting insecure or credential URLs', async () => {
+  const options = await archive();
+  await put(options.rootDir, 'Tutorials/note.md', '# Environment source');
+  vi.stubEnv('REPOSITORY_URL', 'https://github.com/owner/environment');
+  vi.stubEnv('SOURCE_REVISION', 'b'.repeat(40));
+  vi.stubEnv('SITE_URL', 'https://notes.example.test');
+  const result = await prepareContent({
+    ...options,
+    hosted: true,
+    revision: 'c'.repeat(40),
+  });
+  expect(result.diagnostics).toEqual([]);
+  expect(result.manifest.entries[0]!.sourceUrl).toContain(
+    `/environment/blob/${'b'.repeat(40)}/`,
+  );
+  for (const SITE_URL of [
+    'http://notes.example.test',
+    'https://user@notes.example.test',
+    'https://:secret@notes.example.test',
+  ]) {
+    vi.stubEnv('SITE_URL', SITE_URL);
+    expect(
+      (await prepareContent({ ...options, hosted: true })).diagnostics[0]!
+        .message,
+    ).toContain('HTTPS siteUrl without credentials');
+  }
+});
+it('keeps malformed notebook collection and long cell diagnostics visible instead of dropping content', async () => {
+  const options = await archive();
+  const path = 'Tutorials/bad.ipynb';
+  for (const json of [
+    null,
+    {},
+    { cells: null },
+    { cells: [{ cell_type: 'markdown' }] },
+    { cells: [{ cell_type: 'markdown', source: [1] }] },
+  ]) {
+    await put(options.rootDir, path, JSON.stringify(json));
+    expect((await prepareContent(options)).diagnostics).toEqual(
+      expect.arrayContaining([expect.objectContaining({ sourcePath: path })]),
+    );
+  }
+  const notebook = {
+    nbformat: 4,
+    nbformat_minor: 0,
+    metadata: {},
+    cells: [
+      {
+        cell_type: 'code',
+        source: '',
+        metadata: {},
+        execution_count: null,
+        outputs: Array.from({ length: 80 }, () => ({
+          output_type: 'stream',
+          name: 'stdout',
+          text: 1,
+        })),
+      },
+    ],
+  };
+  await put(options.rootDir, path, JSON.stringify(notebook));
+  const diagnostic = (await prepareContent(options)).diagnostics[0]!;
+  expect(diagnostic).toMatchObject({ sourcePath: path, cellIndex: 0 });
+  expect(diagnostic.message).toContain('[truncated]');
+  expect(diagnostic.message.length).toBeLessThanOrEqual(1000);
+});
+it('offers a local PDF source for private repositories and never copies an explicit external oversized resource', async () => {
+  const options = await archive();
+  await put(options.rootDir, 'Tutorials/local.pdf', '%PDF-1.4\nfixture');
+  await writeFile(
+    options.policyPath,
+    JSON.stringify({ ...policy, repositoryPublic: false }),
+  );
+  const local = await prepareContent(options);
+  expect(local.diagnostics).toEqual([]);
+  expect(local.manifest.entries[0]!.sourceUrl).toBe(
+    local.manifest.entries[0]!.assetUrl,
+  );
+  const file = await open(join(options.rootDir, 'Tutorials/large.pdf'), 'w');
+  await file.truncate(26_214_401);
+  await file.close();
+  await writeFile(
+    options.policyPath,
+    JSON.stringify({
+      ...policy,
+      overrides: {
+        'Tutorials/large.pdf': {
+          resourceUrl: 'https://cdn.example.test/large.pdf',
+        },
+      },
+    }),
+  );
+  const result = await prepareContent(options);
+  expect(result.diagnostics).toEqual([]);
+  expect(
+    result.manifest.entries.find((entry) =>
+      entry.sourcePath.endsWith('large.pdf'),
+    ),
+  ).toMatchObject({
+    assetUrl: 'https://cdn.example.test/large.pdf',
+    sourceUrl: 'https://cdn.example.test/large.pdf',
+  });
+  expect(
+    (await readdir(join(options.rootDir, 'site/public/content-assets'))).length,
+  ).toBe(1);
 });

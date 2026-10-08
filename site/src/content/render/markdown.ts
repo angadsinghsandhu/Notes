@@ -94,7 +94,7 @@ export async function renderMarkdown(
         else
           children.push({
             type: 'link',
-            url: match[0],
+            url: resolveLink(match[0], context.sourcePath, context.catalog),
             children: [
               { type: 'text', value: match[2]?.split('|').at(-1) ?? '' },
             ],

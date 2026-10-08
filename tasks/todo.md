@@ -35,6 +35,8 @@ Review assumptions are public readership, rendered notebooks/code with PDF/slide
 - [x] Task 4: safe Markdown/notebook/code rendering (reviewed; commits 681bf6b, 80e4759).
 - [x] Task 5: content pipeline and development watcher (reviewed; commits 99c9718, 0272436; 188 units and all gates pass).
 - [x] Task 6: responsive reader and search (reviewed; commit 1fb53b5; 270 units/all gates/52 browsers; 2 minor follow-ups recorded).
-- [ ] Task 7: full archive migration and output verification.
+- [x] Task 7: full archive migration and output verification (reviewed; commits bef12de, 992e0f6; 398 units/all gates/56 browsers).
 - [ ] Task 8: deployment and operating documentation.
 - [ ] Task 9: approved archived Pandas → Polars conversion (15 files; isolated real-data parity).
+
+Task 7 migrated 171 authored titles without changing source bodies, classified 49 upstream supplemental documents, and accounted for all 10,031 archive files. Production validation checks routes, assets, source actions, exclusions and native Pagefind output. Source polling and serialized watcher readiness passed the original live HTTP lifecycle. Fresh controller verification passed 398 units, all four per-file coverage floors of at least 90%, all static/build/output gates and 56 browser tests. Independent review and scoped re-review resolved all three P2 findings; two Zod deprecation hints remain deferred for final review. No deployment was performed.
