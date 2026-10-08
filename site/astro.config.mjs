@@ -1,5 +1,6 @@
 import { defineConfig } from 'astro/config';
 import { fileURLToPath } from 'node:url';
+import { watchFile, unwatchFile } from 'node:fs';
 import { lstat, readFile, realpath } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
@@ -38,10 +39,11 @@ export default defineConfig({
           );
           // The snapshot is an explicit facade dependency. Vite's normal
           // source-change path invalidates the facade and its SSR importers.
-          server.watcher.add(manifest);
-          const refresh = (path) => {
-            if (path === manifest) server.watcher.emit('change', catalog);
+          // Atomic manifest replacements must remain observable after inode changes.
+          const refresh = (current) => {
+            if (current.isFile()) server.watcher.emit('change', catalog);
           };
+          watchFile(manifest, { interval: 1000, persistent: false }, refresh);
           const indexRoot = fileURLToPath(
             new URL('./dist/pagefind', import.meta.url),
           );
@@ -93,9 +95,8 @@ export default defineConfig({
               }
             },
           );
-          server.watcher.on('add', refresh).on('change', refresh);
           server.httpServer?.once('close', () => {
-            server.watcher.off('add', refresh).off('change', refresh);
+            unwatchFile(manifest, refresh);
           });
         },
       },

@@ -192,7 +192,8 @@ test('built known alias and an actual owned draft are excluded from Pagefind and
   const publicBytes = `---\ntitle: Task 6 synthetic alias proof\naliases: [${alias}]\n---\n# Public alias proof\n\nSynthetic Unicode UI fixture: 日本語 · café · λ.\n`;
   const draftBytes = `---\ntitle: Task 6 synthetic draft proof\ndraft: true\n---\n# ${phrase}\n`;
   const owned: [string, string][] = [];
-  const env = { ...process.env, SITE_URL: 'https://notes.example.test' };
+  const incoming = { ...process.env };
+  const env = { ...incoming, SITE_URL: 'https://notes.example.test' };
   const logs: string[] = [];
   try {
     await writeFile(published, publicBytes, { flag: 'wx' });
@@ -273,13 +274,11 @@ test('built known alias and an actual owned draft are excluded from Pagefind and
       );
       await unlink(file);
     }
-    const cleanEnv = { ...process.env };
-    delete cleanEnv['SITE_URL'];
     logs.push(
       (
         await execute('npm', ['run', 'build'], {
           cwd: site,
-          env: cleanEnv,
+          env: incoming,
           maxBuffer: 32 * 1024 * 1024,
         })
       ).stdout,
@@ -288,10 +287,25 @@ test('built known alias and an actual owned draft are excluded from Pagefind and
   }
 });
 
-test('unconfigured production build emits no sitemap file', async () => {
-  await expect(access('dist/sitemap.xml')).rejects.toMatchObject({
-    code: 'ENOENT',
-  });
+test('production cleanup preserves incoming sitemap and canonical configuration', async ({
+  request,
+}) => {
+  const configured = process.env['SITE_URL'];
+  const response = await request.get('/sitemap.xml');
+  const home = await (await request.get('/')).text();
+  if (configured) {
+    expect(response.status()).toBe(200);
+    expect(await readFile('dist/sitemap.xml', 'utf8')).toContain(
+      new URL('/library/', configured).href,
+    );
+    expect(home).toContain(`href="${new URL('/', configured).href}"`);
+  } else {
+    expect(response.status()).toBe(404);
+    await expect(access('dist/sitemap.xml')).rejects.toMatchObject({
+      code: 'ENOENT',
+    });
+    expect(home).not.toContain('rel="canonical"');
+  }
 });
 
 test('development serves the last built real Pagefind index and displays its update limitation', async ({

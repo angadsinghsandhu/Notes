@@ -10,6 +10,7 @@ export default defineConfig({
     },
     exclude: ['**/*.browser.test.ts', '**/node_modules/**'],
     include: [
+      'tests/astro.config.test.ts',
       'tests/src/content/**/*.test.ts',
       'tests/src/lib/**/*.test.ts',
       'tests/scripts/**/*.test.ts',

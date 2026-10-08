@@ -1,15 +1,20 @@
 import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, delimiter } from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { afterEach, expect, it, vi } from 'vitest';
 import { contentOptions, runContent } from '../../scripts/content.js';
 const roots: string[] = [];
 afterEach(async () => {
+  vi.unstubAllEnvs();
   vi.restoreAllMocks();
   for (const root of roots.splice(0))
     await rm(root, { recursive: true, force: true });
 });
 async function archive() {
+  vi.stubEnv('SOURCE_REVISION', undefined);
+  vi.stubEnv('SITE_URL', undefined);
   const root = await mkdtemp(join(tmpdir(), 'notes-cli-'));
   roots.push(root);
   const site = join(root, 'site');
@@ -42,12 +47,14 @@ it('returns nonzero for source diagnostics and zero for a repaired source', asyn
     '# Note\n[broken](missing.md)',
   );
   const options = await contentOptions(site);
+  expect(options.revision).toBe('b'.repeat(40));
   expect(await runContent(options)).toBe(1);
   expect(error.mock.calls.flat().join(' ')).toContain('Tutorials/note.md');
   await writeFile(join(root, 'Tutorials/note.md'), '# Note');
   expect(await runContent(options)).toBe(0);
 });
 it('uses immutable local HEAD when neither policy nor environment supplies a revision', async () => {
+  vi.stubEnv('SOURCE_REVISION', undefined);
   const options = await contentOptions(process.cwd());
   expect(options.revision).toMatch(/^[a-f0-9]{40}$/);
   expect(options.rootDir).toBe(
@@ -97,5 +104,43 @@ it('rejects mutable revision configuration and the actual CLI reports a failing 
   } finally {
     process.argv = argv;
     process.exitCode = exitCode;
+  }
+});
+
+it('executes verification with build fixtures first, final output validation and failure propagation', async () => {
+  const { scripts } = JSON.parse(await readFile('package.json', 'utf8')) as {
+    scripts: Record<string, string>;
+  };
+  const root = await mkdtemp(join(tmpdir(), 'notes-verify-order-'));
+  roots.push(root);
+  const log = join(root, 'order.log');
+  await writeFile(
+    join(root, 'npm'),
+    `#!/bin/sh
+printf '%s\n' "$*" >> "$TASK_8_ORDER_LOG"
+if [ "$*" = "$TASK_8_FAIL_COMMAND" ]; then exit 23; fi
+`,
+    { mode: 0o755 },
+  );
+  const order = ['run build', 'run check', 'run test:e2e', 'run check:output'];
+  for (const failAt of [-1, 0, 1, 2, 3]) {
+    await writeFile(log, '');
+    let code = 0;
+    try {
+      await promisify(execFile)('sh', ['-c', scripts.verify!], {
+        env: {
+          ...process.env,
+          PATH: `${root}${delimiter}${process.env['PATH'] ?? ''}`,
+          TASK_8_ORDER_LOG: log,
+          TASK_8_FAIL_COMMAND: order[failAt] ?? '',
+        },
+      });
+    } catch (error) {
+      code = (error as { code: number }).code;
+    }
+    expect(code).toBe(failAt === -1 ? 0 : 23);
+    expect((await readFile(log, 'utf8')).trim().split('\n')).toEqual(
+      order.slice(0, failAt === -1 ? order.length : failAt + 1),
+    );
   }
 });

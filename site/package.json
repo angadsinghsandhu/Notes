@@ -17,7 +17,7 @@
     "preview": "astro preview --host 127.0.0.1",
     "test:unit": "vitest run --coverage --coverage.thresholds.perFile --coverage.thresholds.lines 90 --coverage.thresholds.functions 90 --coverage.thresholds.statements 90 --coverage.thresholds.branches 90",
     "test:e2e": "playwright test",
-    "verify": "npm run check && npm run build && npm run test:e2e",
+    "verify": "npm run build && npm run check && npm run test:e2e && npm run check:output",
     "content:check": "tsx scripts/content.ts",
     "content:migrate": "tsx scripts/migrate.ts",
     "check:output": "tsx scripts/verify-output.ts"

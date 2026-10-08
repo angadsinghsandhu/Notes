@@ -54,6 +54,8 @@ const policy: PublicationPolicy = {
   revision: 'a'.repeat(40),
 };
 async function archive() {
+  vi.stubEnv('SOURCE_REVISION', undefined);
+  vi.stubEnv('SITE_URL', undefined);
   const root = await mkdtemp(join(tmpdir(), 'notes-prepare-'));
   roots.push(root);
   await mkdir(join(root, 'site/content'), { recursive: true });
