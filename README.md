@@ -1,130 +1,96 @@
-# NOTES. [![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/sindresorhus/awesome) [![Made With Love](https://img.shields.io/badge/Made%20With-Love-orange.svg)](https://github.com/chetanraj/awesome-github-badges)
+# Notes Library
 
-<!-- TODO : Add DSA to main README -->
-<!-- TODO : Edit Coursera Courses -->
-<!-- ![MLOps. You Desing It. Your Train It. You Run It.](awesome-mlops-intro.png)
+Personal learning notes, notebooks, code, books and course resources. The static website lives in `site/`; the archive remains the source of truth.
 
-*A list of notes/books/resorces/code that I've written over the years :point_right: [ml-ops.org](https://ml-ops.org/)* -->
+| Subject               | Repository              | Website               |
+| --------------------- | ----------------------- | --------------------- |
+| Books                 | [Books](Books/)         | `/library/books/`     |
+| Classes               | [Classes](Classes/)     | `/library/classes/`   |
+| Courses               | [Courses](Courses/)     | `/library/courses/`   |
+| Interview preparation | [Interview](Interview/) | `/library/interview/` |
+| Languages             | [Languages](Languages/) | `/library/languages/` |
+| Tutorials             | [Tutorials](Tutorials/) | `/library/tutorials/` |
 
-![Twitter Follow](https://img.shields.io/twitter/follow/visenger?style=social)
+## Local operation
 
-## Table of Contents
+Use **Node 24.18.1** and npm (the current local runtime uses npm 11.16.0). Run application commands from `site/`:
 
-1. [Books](#book)
-2. [Classes](#class)
-3. [Courses](#course)
-4. [Languages](#lang)
-5. [Leetcode](#leet)
-6. [Tutorials](#tut)
+```sh
+cd site
+npm ci
+npx playwright install --with-deps chromium
+npm run dev
+```
 
-<a name="book"></a>
+Full Chromium is required for the native PDF viewer tests; do not install only the headless shell. The development command prepares content before starting Astro. It polls source paths every second, awaits watcher readiness, and refreshes open readers after successful publication. A failed content rebuild reports the offending source paths and keeps the last successful snapshot; repair the source to recover without restarting. Polling costs O(watched paths) per second. Development retains one previous asset publication for open readers; production removes stale assets.
 
-## Important Books
+```sh
+npm run build
+npm run preview -- --port 4321 --ignore-lock
+npm run verify
+```
 
-<details>
+`build` validates content, builds static pages, generates Pagefind, and verifies the deployed output. `preview` serves the built site. Development search uses the last production index if present and does not refresh on note edits; use `build` then `preview` to search current content. Plain Astro preview does not apply Cloudflare `_headers`. The browser gate separately applies the built header policy to real local responses and verifies compatibility; it is not a live Cloudflare test.
 
-<summary>Click to Expand</summary>
+`verify` builds the real output fixtures first, then runs formatting, lint, import boundaries, Astro/TypeScript checks, unit coverage and browser tests, followed by read-only validation of the final artifact. Browser scenario cleanup preserves the incoming production URL and revision. Every covered source file must meet **90% statements, branches, functions and lines**. Browser verification owns port 4328; keep it free. Run gates serially. For foreground Astro dev/preview invocations use `--ignore-lock` so the caller owns shutdown; `npm run dev` already supplies it.
 
-1. lorem ipsum
+## Authoring
 
-</details>
+Add UTF-8 Markdown under one of the six archive roots. Directory paths define subject and hierarchy; `README.md` is the directory landing note. New notes require a nonempty frontmatter title:
 
+```yaml
 ---
-
-<a name="class"></a>
-
-## University Courses from around the world
-
-<details>
-
-<summary>Click to Expand</summary>
-
-1. Stanford
-   1. [CS 234: Reinforcement Learning](https://github.com/angadsinghsandhu/notes/tree/master/University/Stanford/Stanford%20CS234%20-%20Reinforcement%20Learning%20(2019))
-   2. [CS 224n: NLP with Deep Learning](https://github.com/angadsinghsandhu/Notes/tree/master/Classes/Stanford/CS%20224n%20-%20NLP%20with%20Deep%20Learning)
-2. Harward
-
-</details>
-
+title: Attention mechanisms
+description: Scaled dot-product attention
+tags: [transformers]
 ---
+```
 
-<a name="course"></a>
+Optional fields are `description` (string), `tags` (unique strings), `draft` (boolean), `slug` (section-relative lowercase ASCII path), `order` (finite number), `updated` (real ISO date, `YYYY-MM-DD`), `aliases` (previous absolute site paths), and `role: supplemental`. Omitted tags/aliases are empty and omitted draft is false. Omitted role means a primary learning note; supplemental course/template documents retain readers, full-text search and source links while leaving default study-note browsing, navigation and adjacency. No other role value is accepted. Legacy notes derive titles from their first H1 or filename; do not invent updated dates.
 
-## Courses from Educational Websites
+Edit `site/content/publication.json` for exclusions and path-specific overrides. Course/vendor text and notebook/resource metadata use overrides rather than rewriting upstream text. Frontmatter takes precedence over descriptive overrides; a draft in either location prevents publication. Exclusions always win, including over overrides and links. Aliases cannot shadow existing page/output paths or application assets, including `/_headers`. Markdown/notebook readers use `/notes/<section>/<path>/`; code/PDF/slides use `/resources/<section>/<path>/`.
 
-<details>
+Relative note/image/resource links are resolved from the source directory and rewritten to published routes; invalid targets, ambiguous wiki links and missing heading fragments fail with source diagnostics. Markdown supports safe HTML, tables, task lists, fenced code and math. Author scripts, event handlers, arbitrary iframes and executable MDX are forbidden. Notebooks display stored Markdown, code and supported output **without execution**. Code resources are highlighted text; course programs and their package dependencies are not run or deployed.
 
-<summary>Click to Expand</summary>
+Referenced images and eligible PDF/slide assets are content-addressed. An individual deployed file may not exceed **25 MiB (26,214,400 bytes)**; output may not exceed **20,000 files**. Local PDFs provide a desktop native preview and an Open PDF fallback at every viewport. Slides provide downloads, not a slide renderer. Oversized resources use an immutable public repository source URL or explicit HTTPS `resourceUrl` override. Declare `repositoryPublic: true` only for a genuinely public repository and configure its HTTPS `repositoryUrl`; `SOURCE_REVISION` must be an immutable commit hash (CI uses `github.sha`). Private or unavailable external sources need an explicit public resource URL or exclusion. No additional object-storage service is provisioned.
 
-1. lorem ipsum
+## Migration and internal reports
 
-</details>
+The reviewed metadata migration is complete and preserves original authored bodies. Its tracked audit is `site/content/migration-report.json`; generated disposition accounting is the `ledger` field in `site/.generated/current/manifest.json` and records pages, supporting assets, external resources, drafts/exclusions and unsupported files. These reports and publication configuration are not served or indexed.
 
----
+For future metadata migrations, inspect the default dry-run before applying:
 
-<a name="lang"></a>
+```sh
+npm run content:migrate -- --dry-run
+# Inspect site/content/migration-report.json from the repository root.
+npm run content:migrate -- --apply
+```
 
-## Language Courses that I have completed
+Apply requires the exact reviewed plan and unchanged original hashes; it validates each file's body, metadata, route, render and build before proceeding. A repeated completed migration proposes zero changes. Migration does not execute notebooks. The separately approved archived Pandas-to-Polars conversion is Task 9 and remains a separate pending milestone.
 
-<details>
+## Cloudflare Direct Upload setup
 
-<summary>Click to Expand</summary>
+Hosting configuration is supplied in `.github/workflows/notes-site.yml`. **This work has not provisioned a Cloudflare account/project or verified a live publication.** An account owner must separately authorize setup/publication and confirm an existing Direct Upload project with production branch **master**. Direct Upload takes prebuilt files; it cannot later switch to Git integration. A command for an authorized owner to create a project is:
 
-1. [French](https://github.com/angadsinghsandhu/Notes/tree/master/Languages/French)
-2. [German](https://github.com/angadsinghsandhu/Notes/tree/master/Languages/German)
-3. [Japanese](https://github.com/angadsinghsandhu/Notes/tree/master/Languages/Japanese)
+```sh
+npx --yes wrangler@4.147.0 pages project create PROJECT --production-branch master
+```
 
-</details>
+Confirm the actual project production branch and public HTTPS URL. Deploying with `--branch master` does not change a project's production branch. For an existing project with a different production branch, follow Cloudflare's documented API setup rather than assuming a dashboard switch.
 
----
+Configure the GitHub repository:
 
-<a name="leet"></a>
+| Kind     | Name                       | Purpose                                                            |
+| -------- | -------------------------- | ------------------------------------------------------------------ |
+| Secret   | `CLOUDFLARE_API_TOKEN`     | Account-scoped token with Account / Cloudflare Pages / Edit        |
+| Variable | `CLOUDFLARE_ACCOUNT_ID`    | Intended Cloudflare account ID                                     |
+| Variable | `CLOUDFLARE_PAGES_PROJECT` | Existing Direct Upload project name                                |
+| Variable | `SITE_URL`                 | Actual production HTTPS URL without credentials, query or fragment |
 
-## Leetcode Notes for Interview Prep and Competitive Programming
+Tokens stay in trusted readiness/publication process environments; never put them in source files, client output, build variables, command arguments or logs. Pull requests verify without a deployment token. Missing settings visibly disable publication while verification remains usable. Production URL/revision inputs are fixed during verification, so canonical/source/sitemap output matches the uploaded artifact.
 
-<details>
+Only a trusted `push` to `refs/heads/master` with successful verification and complete settings can publish. Verification uses Node 24.18.1, `npm ci`, full Chromium and `npm run verify` in `site/`. It uploads only the verified `dist`. A separate job checks its exact artifact ID and SHA-256 digest, downloads it with digest mismatch treated as an error, and uses pinned Wrangler 4.147.0 without rebuilding or installing course dependencies. PRs and other branches cannot publish. Publishing runs in a workspace without checked-out course projects or a `functions` directory.
 
-<summary>Click to Expand</summary>
+The `_headers` policy allows the exact inline theme-bootstrap hash, same-origin scripts/fonts/assets/PDF frames, Pagefind WebAssembly compilation and controlled KaTeX/Shiki inline styles. Changing bootstrap bytes requires updating the hash and passing the actual-header browser gate. It permits same-origin framing for native PDF resources and sanitized HTTPS archive images. Historical HTTP image URLs use native HTTPS upgrading; the local compatibility test uses deterministic image transport and does not establish upstream availability. Local tests cannot establish Cloudflare parsing, project existence, token permissions or a published URL; after authorized publication, check the actual hosted responses and reader/search/PDF behavior.
 
-1. lorem ipsum
-
-</details>
-
----
-
-<a name="tut"></a>
-
-## Sigle Video Tutorials
-
-<details>
-
-<summary>Click to Expand</summary>
-
-1. Andrej Karpahy
-   1. [nn-zero-to-hero: ChatGPT from Scratch](https://github.com/angadsinghsandhu/notes/tree/master/Youtube/Andrej%20Karpathy/Let's%20build%20GPT)
-2. freeCodeCamp
-   1. lorem ipsum
-3. Programming with Mosh
-   1. lorem ipsum
-
-</details>
-
----
-
-## Table of Notes: In Progess
-
-| <!-- -->                         | <!-- -->                         |
-| -------------------------------- | -------------------------------- |
-| [ChatGPT from Scratch](https://github.com/angadsinghsandhu/notes/tree/master/Youtube/Andrej%20Karpathy/Let's%20build%20GPT) | [Deep Learning at VU Amsterdam - Lecture 12: Transformers](https://www.youtube.com/playlist?list=PLIXJ-Sacf8u60G1TwcznBmK6rEL3gmZmV) |
-
-## Table of Notes: To be Done
-
-| <!-- -->                         | <!-- -->                         |
-| -------------------------------- | -------------------------------- |
-| ML books | Documentation |
-| ART of WAR | Adding CS Labs from undergrad |
-| [Machine Learning for Audio](https://www.youtube.com/playlist?list=PLo2EIpI_JMQtOQK_B4G97yn1QWZ4Xi4Tu) | [Reinforcement Learning from Human Feedback From Zero to ChatGPT](https://www.youtube.com/playlist?list=PLo2EIpI_JMQtycKADxAmr47KL_uOPKmz3) |
-| [Hugging Face Course](https://www.youtube.com/playlist?list=PLo2EIpI_JMQvWfQndUesu0nPBAtZ9gP1o) |  |
-
-![Twitter Follow](https://img.shields.io/twitter/follow/visenger?style=social)
-[![Twitter URL](https://img.shields.io/twitter/follow/?style=social)](https://twitter.com/angadsandhuwork)
+Cloudflare Free's 500 builds/month is a managed-build quota, not a measured Direct Upload deployment quota. See [Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/), [CI setup](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/), [headers](https://developers.cloudflare.com/pages/configuration/headers/) and [limits](https://developers.cloudflare.com/pages/platform/limits/).

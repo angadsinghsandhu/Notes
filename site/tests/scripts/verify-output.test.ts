@@ -19,6 +19,7 @@ import { verifyOutput } from '../../scripts/verify-output.js';
 import type { ContentEntry, Manifest } from '../../src/content/index.js';
 const roots: string[] = [];
 afterEach(async () => {
+  vi.unstubAllEnvs();
   for (const root of roots.splice(0))
     await rm(root, { recursive: true, force: true });
 });
@@ -28,6 +29,7 @@ async function put(path: string, text: string | Buffer) {
 }
 // Explicitly synthetic output fixture for validator boundaries and corruptions.
 async function output(entries: ContentEntry[] = []) {
+  vi.stubEnv('SITE_URL', undefined);
   const root = await mkdtemp(join(tmpdir(), 'notes-output-'));
   roots.push(root);
   const site = join(root, 'site');

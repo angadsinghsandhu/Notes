@@ -9,12 +9,20 @@ test('sitemap and canonical output require an explicit HTTPS production URL', as
   page,
 }) => {
   test.setTimeout(180_000);
-  expect((await request.get('/sitemap.xml')).status()).toBe(404);
-  expect(await (await request.get('/')).text()).not.toContain(
-    'rel="canonical"',
-  );
-  const configured = { ...process.env, SITE_URL: 'https://notes.example.test' };
+  const incoming = { ...process.env };
+  const unconfigured = { ...incoming };
+  delete unconfigured['SITE_URL'];
+  const configured = { ...incoming, SITE_URL: 'https://notes.example.test' };
   try {
+    await execute('npm', ['exec', 'astro', 'build'], {
+      cwd: resolve('.'),
+      env: unconfigured,
+      maxBuffer: 32 * 1024 * 1024,
+    });
+    expect((await request.get('/sitemap.xml')).status()).toBe(404);
+    expect(await (await request.get('/')).text()).not.toContain(
+      'rel="canonical"',
+    );
     await execute('npm', ['run', 'build'], {
       cwd: resolve('.'),
       env: configured,
@@ -52,13 +60,22 @@ test('sitemap and canonical output require an explicit HTTPS production URL', as
       ).rejects.toThrow();
     }
   } finally {
-    const env = { ...process.env };
-    delete env['SITE_URL'];
     await execute('npm', ['run', 'build'], {
       cwd: resolve('.'),
-      env,
+      env: incoming,
       maxBuffer: 32 * 1024 * 1024,
     });
   }
-  expect((await request.get('/sitemap.xml')).status()).toBe(404);
+  const response = await request.get('/sitemap.xml');
+  const home = await (await request.get('/')).text();
+  if (incoming['SITE_URL']) {
+    expect(response.status()).toBe(200);
+    expect(await response.text()).toContain(
+      new URL('/library/', incoming['SITE_URL']).href,
+    );
+    expect(home).toContain(`href="${new URL('/', incoming['SITE_URL']).href}"`);
+  } else {
+    expect(response.status()).toBe(404);
+    expect(home).not.toContain('rel="canonical"');
+  }
 });

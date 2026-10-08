@@ -7,6 +7,7 @@ export default defineConfig({
     'src/layouts/**/*.test.ts',
     'src/components/**/*.test.ts',
     'src/lib/**/*.browser.test.ts',
+    'public/**/*.test.ts',
   ],
   testIgnore: '**/*.unit.test.ts',
   workers: 1,
