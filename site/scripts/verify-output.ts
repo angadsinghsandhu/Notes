@@ -5,6 +5,7 @@ import { fromHtml } from 'hast-util-from-html';
 import type { Element, Nodes } from 'hast';
 import { verifyPagefind } from './verify-pagefind.js';
 import {
+  publicationExclusion,
   readPolicy,
   type Diagnostic,
   type Manifest,
@@ -101,7 +102,24 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
   await walk(dist);
   if (files.size > MAX_FILES)
     fail('.', `Output has ${files.size} files; maximum is ${MAX_FILES}`);
-  const published = manifest.entries.filter((entry) => !entry.draft);
+  const published = manifest.entries.filter((entry) => {
+    const excluded = publicationExclusion(entry.sourcePath, policy);
+    if (excluded)
+      fail(
+        entry.sourcePath,
+        `Excluded entry leaked into prepared publication: ${excluded}`,
+      );
+    return !entry.draft && !excluded;
+  });
+  const publishedAssets = manifest.assets.filter((asset) => {
+    const excluded = publicationExclusion(asset.sourcePath, policy);
+    if (excluded)
+      fail(
+        asset.sourcePath,
+        `Excluded asset leaked into prepared publication: ${excluded}`,
+      );
+    return !excluded;
+  });
   for (const entry of manifest.entries.filter((entry) => entry.draft))
     fail(entry.sourcePath, 'Draft entry leaked into prepared publication');
   const fixed = [
@@ -119,7 +137,7 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
   ]);
   if (siteUrl) expected.add('sitemap.xml');
   const assets = new Set(
-    manifest.assets
+    publishedAssets
       .filter((asset) => asset.mode === 'local')
       .map((asset) => asset.url.slice(1)),
   );
@@ -202,11 +220,20 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
       (node) =>
         node.tagName === 'a' && text(node).trim() === 'View original source',
     );
+    const localSource = publishedAssets.some(
+      (asset) =>
+        asset.mode === 'local' &&
+        asset.sourcePath === entry.sourcePath &&
+        asset.url === entry.sourceUrl &&
+        asset.url === entry.assetUrl &&
+        /^\/content-assets\/[a-f0-9]{64}\.(?:pdf|ppt|pptx)$/.test(asset.url) &&
+        files.has(asset.url.slice(1)),
+    );
     if (
       entry.sourceUrl &&
       (actions.length !== 1 ||
         actions[0]?.properties['href'] !== entry.sourceUrl ||
-        !/^https:\/\//.test(entry.sourceUrl))
+        (!/^https:\/\//.test(entry.sourceUrl) && !localSource))
     )
       fail(entry.sourcePath, 'Malformed or missing original source action');
     if (!parsed.nodes.some((node) => 'dataPagefindBody' in node.properties))

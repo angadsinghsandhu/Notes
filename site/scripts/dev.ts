@@ -181,11 +181,14 @@ export async function startContentWatcher(
         if (!filename || filename === basename(options.policyPath)) rebuild();
       }),
     );
-    await watchRoots();
+    refreshing = refreshing.then(watchRoots);
+    await refreshing;
     initialized = true;
     rebuild();
     await running;
   } catch (error) {
+    closed = true;
+    await refreshing.catch(() => undefined);
     for (const watcher of watchers.values()) await watcher.close();
     throw error;
   }

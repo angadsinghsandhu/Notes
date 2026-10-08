@@ -541,3 +541,188 @@ it.each(['success', 'diagnostic', 'exception'])(
     }
   },
 );
+
+async function privateResourceFixture(kind: 'pdf' | 'slides') {
+  const actual = JSON.parse(
+    await readFile('.generated/current/manifest.json', 'utf8'),
+  ) as Manifest;
+  const resource = actual.entries.find(
+    (entry) =>
+      entry.kind === kind && entry.assetUrl?.startsWith('/content-assets/'),
+  )!;
+  const asset = {
+    ...actual.assets.find((asset) => asset.sourcePath === resource.sourcePath)!,
+  };
+  const fixture = await pageFixture({ ...resource, sourceUrl: asset.url });
+  fixture.manifest.assets = [asset];
+  await put(
+    join(fixture.site, '.generated/current/manifest.json'),
+    JSON.stringify(fixture.manifest),
+  );
+  const policyPath = join(fixture.site, 'content/publication.json');
+  const policy = JSON.parse(await readFile(policyPath, 'utf8'));
+  await put(policyPath, JSON.stringify({ ...policy, repositoryPublic: false }));
+  await put(
+    join(fixture.dist, asset.url.slice(1)),
+    await readFile(join(process.cwd(), 'dist', asset.url.slice(1))),
+  );
+  return { ...fixture, asset };
+}
+
+it.each(['pdf', 'slides'] as const)(
+  'accepts a private %s source action pointing to its real published local asset',
+  async (kind) => {
+    const { dist } = await privateResourceFixture(kind);
+    expect(await verifyOutput(dist)).toEqual([]);
+  },
+);
+
+it.each([
+  'different-source',
+  'external-mode',
+  'missing-file',
+  'unhashed-url',
+  'reader-asset-mismatch',
+])(
+  'rejects a local original-source action with an invalid matching asset: %s',
+  async (fault) => {
+    const { site, dist, entry, html, manifest, asset } =
+      await privateResourceFixture('pdf');
+    if (fault === 'different-source') asset.sourcePath = 'Books/another.pdf';
+    else if (fault === 'external-mode') asset.mode = 'external';
+    else if (fault === 'missing-file') await rm(join(dist, asset.url.slice(1)));
+    else if (fault === 'unhashed-url') {
+      await put(
+        join(dist, 'content-assets/unhashed.pdf'),
+        await readFile(join(dist, asset.url.slice(1))),
+      );
+      const originalUrl = asset.url;
+      asset.url = '/content-assets/unhashed.pdf';
+      entry.sourceUrl = asset.url;
+      entry.assetUrl = asset.url;
+      await put(
+        join(dist, entry.route, 'index.html'),
+        html.replaceAll(originalUrl, asset.url),
+      );
+    } else entry.assetUrl = '/content-assets/' + 'f'.repeat(64) + '.pdf';
+    await put(
+      join(site, '.generated/current/manifest.json'),
+      JSON.stringify(manifest),
+    );
+    expect(await verifyOutput(dist)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          sourcePath: entry.sourcePath,
+          message: 'Malformed or missing original source action',
+        }),
+      ]),
+    );
+  },
+);
+
+it('rejects retained real reader, alias and native search records when current exclusions win over an override', async () => {
+  const actual = JSON.parse(
+    await readFile('.generated/current/manifest.json', 'utf8'),
+  ) as Manifest;
+  const resource = actual.entries.find((entry) => entry.kind === 'markdown')!;
+  const { site, dist, entry } = await pageFixture({
+    ...resource,
+    aliases: ['/excluded-real-note/'],
+  });
+  await put(
+    join(dist, 'excluded-real-note/index.html'),
+    `<meta name="robots" content="noindex"><meta http-equiv="refresh" content="0;url=${entry.route}"><a href="${entry.route}">Continue</a>`,
+  );
+  expect(await verifyOutput(dist)).toEqual([]);
+  const policyPath = join(site, 'content/publication.json');
+  const policy = JSON.parse(await readFile(policyPath, 'utf8'));
+  await put(
+    policyPath,
+    JSON.stringify({
+      ...policy,
+      exclude: [entry.sourcePath],
+      overrides: {
+        [entry.sourcePath]: { title: entry.title, aliases: entry.aliases },
+      },
+    }),
+  );
+  const diagnostics = await verifyOutput(dist);
+  expect(diagnostics).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        sourcePath: entry.sourcePath,
+        message: expect.stringContaining('Excluded entry'),
+      }),
+      expect.objectContaining({
+        sourcePath: entry.route.slice(1) + 'index.html',
+        message: expect.stringContaining('Unexpected output'),
+      }),
+      expect.objectContaining({
+        sourcePath: 'excluded-real-note/index.html',
+        message: expect.stringContaining('Unexpected output'),
+      }),
+      expect.objectContaining({
+        message: expect.stringContaining('Stale Pagefind URL'),
+      }),
+      expect.objectContaining({
+        message: expect.stringContaining('Pagefind count mismatch'),
+      }),
+    ]),
+  );
+});
+
+it.each(['policy', 'mandatory'])(
+  'rejects a retained local manifest asset excluded by %s even with an override',
+  async (kind) => {
+    const actual = JSON.parse(
+      await readFile('.generated/current/manifest.json', 'utf8'),
+    ) as Manifest;
+    const originalAsset = actual.assets.find(
+      (asset) => asset.mode === 'local' && asset.url.endsWith('.png'),
+    )!;
+    const { site, dist, manifest } = await pageFixture();
+    const asset = {
+      ...originalAsset,
+      sourcePath:
+        kind === 'mandatory'
+          ? 'Books/node_modules/retained.png'
+          : originalAsset.sourcePath,
+    };
+    manifest.assets = [asset];
+    await put(
+      join(site, '.generated/current/manifest.json'),
+      JSON.stringify(manifest),
+    );
+    await put(
+      join(dist, asset.url.slice(1)),
+      await readFile(join(process.cwd(), 'dist', originalAsset.url.slice(1))),
+    );
+    if (kind === 'policy') expect(await verifyOutput(dist)).toEqual([]);
+    const policyPath = join(site, 'content/publication.json');
+    const policy = JSON.parse(await readFile(policyPath, 'utf8'));
+    await put(
+      policyPath,
+      JSON.stringify({
+        ...policy,
+        exclude: kind === 'policy' ? [asset.sourcePath] : [],
+        overrides: {
+          [asset.sourcePath]: {
+            resourceUrl: 'https://cdn.example.test/retained.png',
+          },
+        },
+      }),
+    );
+    expect(await verifyOutput(dist)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          sourcePath: asset.sourcePath,
+          message: expect.stringContaining('Excluded asset'),
+        }),
+        expect.objectContaining({
+          sourcePath: asset.url.slice(1),
+          message: expect.stringContaining('Unexpected output'),
+        }),
+      ]),
+    );
+  },
+);

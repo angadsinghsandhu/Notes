@@ -7,7 +7,7 @@ import {
   rename,
 } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 import { afterEach, expect, it, vi } from 'vitest';
 const faults = vi.hoisted(() => ({
   cleanup: false,
@@ -813,3 +813,73 @@ it('closes a root subscription that becomes ready while shutdown is pending', as
   await closing;
   expect(source.close).toHaveBeenCalledTimes(4);
 });
+
+it.each([false, true])(
+  'serializes a real archive parent event during initial readiness and closes every allocated handle (startup failure=%s)',
+  async (failure) => {
+    const rootDir = resolve('..');
+    const options: PrepareOptions = {
+      rootDir,
+      policyPath: join(rootDir, 'site/content/publication.json'),
+      outputDir: join(rootDir, 'site/.generated'),
+      hosted: false,
+    };
+    const allocated: { path: string; close: ReturnType<typeof vi.fn> }[] = [];
+    let parentEvent!: (filename: string | null) => void;
+    let release!: () => void;
+    const held = new Promise<void>((done) => {
+      release = done;
+    });
+    let begin!: () => void;
+    const began = new Promise<void>((done) => {
+      begin = done;
+    });
+    let books = 0;
+    const prepare = vi.fn(async () => success);
+    const startup = startContentWatcher(options, () => {}, {
+      prepare,
+      onDiagnostics: () => {},
+      subscribe: async (path, recursive, callback) => {
+        const handle = {
+          path,
+          close: vi.fn(async () => {
+            await Promise.resolve();
+          }),
+        };
+        allocated.push(handle);
+        if (path === rootDir) parentEvent = callback;
+        if (recursive && path === join(rootDir, 'Books') && ++books === 1) {
+          begin();
+          await held;
+        }
+        if (failure && path === join(rootDir, 'Classes')) {
+          await handle.close();
+          throw new Error('Initial recursive readiness failed');
+        }
+        return handle;
+      },
+    });
+    const result = startup.then(
+      (watcher) => ({ watcher }),
+      (error: unknown) => ({ error }),
+    );
+    await began;
+    parentEvent('Books');
+    // Let the queued refresh enter its first awaits before releasing initial Books readiness.
+    await Promise.resolve();
+    await Promise.resolve();
+    release();
+    const completed = await result;
+    if ('watcher' in completed) await completed.watcher.close();
+    else
+      expect(completed.error).toEqual(
+        new Error('Initial recursive readiness failed'),
+      );
+    expect(allocated.length).toBeGreaterThanOrEqual(4);
+    expect(
+      allocated.every((handle) => handle.close.mock.calls.length === 1),
+    ).toBe(true);
+    if (failure) expect(prepare).not.toHaveBeenCalled();
+  },
+  10000,
+);
