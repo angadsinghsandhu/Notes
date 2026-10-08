@@ -40,46 +40,78 @@ If execution uses subagents, give each agent an explicit assigned file list. For
 
 All application paths below are relative to `site/` unless a root path is explicitly shown. Tests mirror the relative source/script path under `tests/`; browser tests mirror their component/page/client files too. Configuration is verified by the gates and integration tests, not by tautological tests of its contents. Keep non-vendored source modules below approximately 500 lines.
 
-| Files | Ownership |
-| --- | --- |
-| `package.json`, `package-lock.json`, `.node-version`, Astro/TypeScript/Vitest/Playwright/ESLint/Prettier configs | Task 1 runtime and quality gates |
-| `src/content/types.ts`, `schema.ts`, `discover.ts`, `identifiers.ts`; `content/publication.json` | Task 2 canonical data contract and discovery |
-| `src/content/assets.ts`, `links.ts`, `headings.ts` | Task 3 URL and asset preparation |
-| `src/content/render/markdown.ts`, `notebook.ts`, `source.ts`, `sanitize.ts` | Task 4 content rendering |
-| `src/content/prepare.ts`, `manifest.ts`; `scripts/content.ts`, `dev.ts`; `src/lib/catalog.ts` | Task 5 pipeline, watcher, and reader query API |
-| `src/layouts/LibraryLayout.astro`, `ReaderLayout.astro`; components/pages/styles/client modules | Task 6 reading interface and routes |
-| `src/content/migrate.ts`; `scripts/migrate.ts`, `verify-output.ts`; `content/migration-report.json` | Task 7 archive migration and output validation |
+| Files                                                                                                                                            | Ownership                                      |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------- |
+| `package.json`, `package-lock.json`, `.node-version`, Astro/TypeScript/Vitest/Playwright/ESLint/Prettier configs                                 | Task 1 runtime and quality gates               |
+| `src/content/types.ts`, `schema.ts`, `discover.ts`, `identifiers.ts`; `content/publication.json`                                                 | Task 2 canonical data contract and discovery   |
+| `src/content/assets.ts`, `links.ts`, `headings.ts`                                                                                               | Task 3 URL and asset preparation               |
+| `src/content/render/markdown.ts`, `notebook.ts`, `source.ts`, `sanitize.ts`                                                                      | Task 4 content rendering                       |
+| `src/content/prepare.ts`, `manifest.ts`; `scripts/content.ts`, `dev.ts`; `src/lib/catalog.ts`                                                    | Task 5 pipeline, watcher, and reader query API |
+| `src/layouts/LibraryLayout.astro`, `ReaderLayout.astro`; components/pages/styles/client modules                                                  | Task 6 reading interface and routes            |
+| `src/content/migrate.ts`; `scripts/migrate.ts`, `verify-output.ts`; `content/migration-report.json`                                              | Task 7 archive migration and output validation |
 | Root `.github/workflows/notes-site.yml`, `README.md`, `.gitignore`, `CLAUDE.md`, `codex.md`, `AGENTS.md`; `public/_headers`, `scripts/deploy.ts` | Task 8 delivery/documentation/project steering |
 
 Define and export these shared types in Task 2; later tasks use the same names:
 
 ```ts
-type Section = 'books' | 'classes' | 'courses' | 'interview' | 'languages' | 'tutorials';
-type ContentKind = 'markdown' | 'notebook' | 'code' | 'pdf' | 'slides';
+type Section =
+  "books" | "classes" | "courses" | "interview" | "languages" | "tutorials";
+type ContentKind = "markdown" | "notebook" | "code" | "pdf" | "slides";
 type Heading = { id: string; text: string; depth: number };
 type SourceEntry = {
-  sourcePath: string; absolutePath: string; section: Section;
-  kind: ContentKind; bytes: number;
+  sourcePath: string;
+  absolutePath: string;
+  section: Section;
+  kind: ContentKind;
+  bytes: number;
 };
 type Metadata = {
-  title: string; description: string; tags: string[]; draft: boolean;
-  slug?: string; order?: number; updated?: string; aliases: string[];
+  title: string;
+  description: string;
+  tags: string[];
+  draft: boolean;
+  slug?: string;
+  order?: number;
+  updated?: string;
+  aliases: string[];
 };
 type ContentEntry = Metadata & {
-  id: string; sourcePath: string; section: Section; kind: ContentKind;
-  bytes: number; groupSegments: string[]; route: string; headings: Heading[];
-  bodyFile?: string; assetUrl?: string; sourceUrl?: string;
+  id: string;
+  sourcePath: string;
+  section: Section;
+  kind: ContentKind;
+  bytes: number;
+  groupSegments: string[];
+  route: string;
+  headings: Heading[];
+  bodyFile?: string;
+  assetUrl?: string;
+  sourceUrl?: string;
 };
 type Diagnostic = { sourcePath: string; message: string; cellIndex?: number };
-type Disposition = 'page' | 'supporting-asset' | 'external-resource' | 'excluded' | 'unsupported';
+type Disposition =
+  | "page"
+  | "supporting-asset"
+  | "external-resource"
+  | "excluded"
+  | "unsupported";
 type MigrationRow = {
-  sourcePath: string; disposition: Disposition; reason: string; destination?: string;
+  sourcePath: string;
+  disposition: Disposition;
+  reason: string;
+  destination?: string;
 };
 type AssetRecord = {
-  sourcePath: string; bytes: number; url: string; mode: 'local' | 'external';
+  sourcePath: string;
+  bytes: number;
+  url: string;
+  mode: "local" | "external";
 };
 type Manifest = {
-  version: 1; entries: ContentEntry[]; assets: AssetRecord[]; ledger: MigrationRow[];
+  version: 1;
+  entries: ContentEntry[];
+  assets: AssetRecord[];
+  ledger: MigrationRow[];
 };
 ```
 
@@ -173,13 +205,13 @@ type Manifest = {
 
 **Interfaces:** `planMigration(rootDir: string, policy: PublicationPolicy): Promise<MigrationPlan>` where `MigrationPlan` contains `changes: { sourcePath: string; originalHash: string; proposedText: string }[]` and `ledger: MigrationRow[]`; `applyMigration(plan: MigrationPlan): Promise<void>` rejects a source whose hash changed after planning. `verifyOutput(distDir: string): Promise<Diagnostic[]>` verifies deployed size/count, page/asset/fragment links, aliases, source-action structure, and exclusion rules using the generated manifest.
 
-- [ ] Write migration tests proving a real legacy note gets metadata without body changes; obsolete internal links are repaired against actual targets; protected course examples get overrides; dry run writes no source; a second apply has zero changes; and concurrent source edits fail rather than being overwritten.
-- [ ] Write output tests asserting the exact 20,000/20,001 file and 26,214,400/26,214,401 byte boundaries, missing assets/fragments, excluded content, malformed source actions, and stale search/page remnants. Generated cleanup must stay within the application output tree.
-- [ ] Run targeted tests to observe red; implement migration and output validation. Wire `content:migrate`, `content:check`, and `check:output` commands; make output validation the final `build` step.
-- [ ] Run `npm run content:migrate -- --dry-run`; inspect dispositions and the full proposed source-file list. Fix misclassified authored/vendor content in policy before applying. Apply only the scoped changes with `npm run content:migrate -- --apply` and verify each edited note via content validation/build before moving to the next source edit.
-- [ ] Run migration again and require zero proposed changes. Run the complete archive build; compare discovery inventory with the internal ledger so every original file is accounted for, and review all unsupported/excluded reasons. The full ledger stays out of deployed output.
-- [ ] Run `npm run verify` serially. Establish line/function/statement/branch coverage floors of at least 90% for behavior-bearing application TypeScript; improve tests until met. Measure twice serially before pinning the measured floors on the actual `test:unit` gate. Do not use suppressions or skipped tests to meet them; do not demand coverage of course/vendor source.
-- [ ] Produce screenshot/verification evidence for real Markdown, Japanese placeholders plus labeled Unicode fixture, both notebook families, LeetCode source, PDF, slide, and oversized source resource. Confirm every selected page builds and all local targets/fragments resolve. Preserve original artifacts and model files in the repo.
+- [x] Write migration tests proving a real legacy note gets metadata without body changes; obsolete internal links are repaired against actual targets; protected course examples get overrides; dry run writes no source; a second apply has zero changes; and concurrent source edits fail rather than being overwritten.
+- [x] Write output tests asserting the exact 20,000/20,001 file and 26,214,400/26,214,401 byte boundaries, missing assets/fragments, excluded content, malformed source actions, and stale search/page remnants. Generated cleanup must stay within the application output tree.
+- [x] Run targeted tests to observe red; implement migration and output validation. Wire `content:migrate`, `content:check`, and `check:output` commands; make output validation the final `build` step.
+- [x] Run `npm run content:migrate -- --dry-run`; inspect dispositions and the full proposed source-file list. Fix misclassified authored/vendor content in policy before applying. Apply only the scoped changes with `npm run content:migrate -- --apply` and verify each edited note via content validation/build before moving to the next source edit.
+- [x] Run migration again and require zero proposed changes. Run the complete archive build; compare discovery inventory with the internal ledger so every original file is accounted for, and review all unsupported/excluded reasons. The full ledger stays out of deployed output.
+- [x] Run `npm run verify` serially. Establish line/function/statement/branch coverage floors of at least 90% for behavior-bearing application TypeScript; improve tests until met. Measure twice serially before pinning the measured floors on the actual `test:unit` gate. Do not use suppressions or skipped tests to meet them; do not demand coverage of course/vendor source.
+- [x] Produce screenshot/verification evidence for real Markdown, Japanese placeholders plus labeled Unicode fixture, both notebook families, LeetCode source, PDF, slide, and oversized source resource. Confirm every selected page builds and all local targets/fragments resolve. Preserve original artifacts and model files in the repo.
 
 ## Task 8: Configure verified deployment and document operation
 
