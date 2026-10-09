@@ -1,0 +1,149 @@
+{
+  "format": 1,
+  "files": [
+    {
+      "path": "Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 2 - Image Clasification with Pytorch/download.py",
+      "bytes": 1742,
+      "original_sha256": "ebe16af39a112e7e5d36cb9e617aa1f07af8a868a9043e1fd7dec151e7b55d3f",
+      "converted_sha256": "5ba49707b5994ae28592273df003a2fb3da85c867b29c5f0e7686f938be4c43e",
+      "replacements": [
+        {
+          "old": "import pandas as pd",
+          "new": "import polars as pl",
+          "intent": "tabular import"
+        },
+        {
+          "old": "pd.read_csv(\"./images.csv\")",
+          "new": "pl.read_csv(\"./images.csv\")",
+          "intent": "CSV read"
+        },
+        {
+          "old": "zip(\n            imagesDF[\"url\"], imagesDF[\"class\"], imagesDF[\"type\"]\n        )",
+          "new": "imagesDF.select(\"url\", \"class\", \"type\").iter_rows()",
+          "intent": "ordered url/class/type tuple iteration"
+        }
+      ]
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/Multi-Output.ipynb",
+      "bytes": 7051,
+      "original_sha256": "899fa19bc53adb1fdb7a4235cd9c21e791056167135d1de6e3332f2e9a7b90f5",
+      "converted_sha256": "899fa19bc53adb1fdb7a4235cd9c21e791056167135d1de6e3332f2e9a7b90f5",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-answer.ipynb",
+      "bytes": 25014,
+      "original_sha256": "f4f562896ca209a43d294571efeb46a712994e1d67cc4fa22e3897714a4dde81",
+      "converted_sha256": "f4f562896ca209a43d294571efeb46a712994e1d67cc4fa22e3897714a4dde81",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-question.ipynb",
+      "bytes": 25102,
+      "original_sha256": "c7a0678291954ef19b53699d3ab5e863b09f2c949b8d655f40acba6fe33ced8b",
+      "converted_sha256": "c7a0678291954ef19b53699d3ab5e863b09f2c949b8d655f40acba6fe33ced8b",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 4 - Models and Callbacks/ExploringCallbacks.ipynb",
+      "bytes": 30630,
+      "original_sha256": "7818e5532748749694eb976b94dad969682e28956e3305ed89d1aa102b0008b3",
+      "converted_sha256": "2fccbc563f7f2a464936af8aa7fa717338237ad60461bee869905eb570bf09c7",
+      "replacements": [
+        {
+          "old": "\"import pandas as pd\\n\"",
+          "new": "\"import polars as pl\\n\"",
+          "intent": "cell 3 source tabular import"
+        },
+        {
+          "old": "\"pd.read_csv(csv_file).head()\"",
+          "new": "\"pl.read_csv(csv_file).head()\"",
+          "intent": "cell 24 source CSV head"
+        }
+      ]
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/data.ipynb",
+      "bytes": 98445,
+      "original_sha256": "1e8902a0116e83a44dba7260131a4a0ea08ce156bb864bf8e3fa3cfbdf110597",
+      "converted_sha256": "1e8902a0116e83a44dba7260131a4a0ea08ce156bb864bf8e3fa3cfbdf110597",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/feature_columns.ipynb",
+      "bytes": 28091,
+      "original_sha256": "edbf00fb9c4e94af7409d0b1a9787d75f0245385beb9d80f44fa628a94245398",
+      "converted_sha256": "edbf00fb9c4e94af7409d0b1a9787d75f0245385beb9d80f44fa628a94245398",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Exercises/TFDS_Week2_Exercise.ipynb",
+      "bytes": 25121,
+      "original_sha256": "c8aec3216c90f25926d1ba450bd6acd36f5633824e112ff4d81a61625cea2547",
+      "converted_sha256": "c8aec3216c90f25926d1ba450bd6acd36f5633824e112ff4d81a61625cea2547",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 4/Exercises/TFDS_Week4_Exercise.ipynb",
+      "bytes": 40402,
+      "original_sha256": "59140dc0281b017b0e0911f00a3b8063fd96f6136567819871ca4f81716b39b5",
+      "converted_sha256": "59140dc0281b017b0e0911f00a3b8063fd96f6136567819871ca4f81716b39b5",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/S+P_Week_1_Lesson_2.ipynb",
+      "bytes": 219017,
+      "original_sha256": "45e8c5fb46b384d680342f9536667d3d674c70d3c01ca325054f32e9fdebd5cb",
+      "converted_sha256": "45e8c5fb46b384d680342f9536667d3d674c70d3c01ca325054f32e9fdebd5cb",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/tf deployment/Course 3/Week 2/1_input_pipelines.py",
+      "bytes": 5337,
+      "original_sha256": "1148e323f9084d3ef49efb453cd8e486a9b06961fa46ace4510b2eaefc1306b1",
+      "converted_sha256": "1148e323f9084d3ef49efb453cd8e486a9b06961fa46ace4510b2eaefc1306b1",
+      "replacements": []
+    },
+    {
+      "path": "Courses/Coursera/tf deployment/Course 3/Week 2/2_input_pipelines_custom.py",
+      "bytes": 280,
+      "original_sha256": "6452c5c77ec62a9dd50b85dff342ce72e5d96908aca1f338341220a6e621c029",
+      "converted_sha256": "df01a1c73e8dfcce650c2326f5011818f8b23023677eecf399a77198e786892f",
+      "replacements": [
+        {
+          "old": "import numpy as np\nimport pandas as pd\nimport tensorflow as tf\n",
+          "new": "import numpy as np\nimport tensorflow as tf\n",
+          "intent": "remove unused import only; context keeps reversal unique"
+        }
+      ]
+    },
+    {
+      "path": "Courses/Coursera/tf deployment/Course 3/Week 4/publish_datasets.py",
+      "bytes": 2199,
+      "original_sha256": "2dd607b0afd7167a970c67dafa23c11c14aea1caf4556b546ef0a86d268a8deb",
+      "converted_sha256": "2dd607b0afd7167a970c67dafa23c11c14aea1caf4556b546ef0a86d268a8deb",
+      "replacements": []
+    },
+    {
+      "path": "Interview/Applied Science/breadth/11-practical.md",
+      "bytes": 24151,
+      "original_sha256": "f7c9b998b9f09de962cf7f1a9a22e2166ad9cfa6c90635775eba0c99d89743a7",
+      "converted_sha256": "486620d84973aafeeba776760198b32e7ced2ca7ba02cf578dfcd18efd5f81ab",
+      "replacements": [
+        {
+          "old": "# Domain classifier\ncombined = pd.concat([\n    train.assign(source=0),\n    production.assign(source=1)\n])\n\nclassifier = RandomForestClassifier()\ncv_score = cross_val_score(classifier, combined[features], combined['source'])",
+          "new": "# Domain classifier\nimport polars as pl\n\ncombined = pl.concat([\n    train.select(features).with_columns(pl.lit(0, dtype=pl.Int64).alias(\"source\")),\n    production.select(features).with_columns(pl.lit(1, dtype=pl.Int64).alias(\"source\"))\n], how=\"vertical_relaxed\")\n\nclassifier = RandomForestClassifier()\ncv_score = cross_val_score(\n    classifier, combined.select(features).to_numpy(), combined[\"source\"].to_numpy()\n)",
+          "intent": "selected immutable domain features, source labels and NumPy sklearn boundary only"
+        }
+      ]
+    },
+    {
+      "path": "Tutorials/GPU/nv-gpu-workshop/6.0_cuDF.ipynb",
+      "bytes": 10094,
+      "original_sha256": "9240ecd16cf5f58cbc4b8c64d42fc3ff2187206d7aecbbc86836a6f330c934f1",
+      "converted_sha256": "9240ecd16cf5f58cbc4b8c64d42fc3ff2187206d7aecbbc86836a6f330c934f1",
+      "replacements": []
+    }
+  ]
+}

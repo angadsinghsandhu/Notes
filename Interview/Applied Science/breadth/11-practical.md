@@ -909,13 +909,17 @@ def calculate_psi(expected, actual, bins=10):
 **3. Model-Based:**
 ```python
 # Domain classifier
-combined = pd.concat([
-    train.assign(source=0),
-    production.assign(source=1)
-])
+import polars as pl
+
+combined = pl.concat([
+    train.select(features).with_columns(pl.lit(0, dtype=pl.Int64).alias("source")),
+    production.select(features).with_columns(pl.lit(1, dtype=pl.Int64).alias("source"))
+], how="vertical_relaxed")
 
 classifier = RandomForestClassifier()
-cv_score = cross_val_score(classifier, combined[features], combined['source'])
+cv_score = cross_val_score(
+    classifier, combined.select(features).to_numpy(), combined["source"].to_numpy()
+)
 
 # High accuracy (> 0.6) indicates drift
 ```
