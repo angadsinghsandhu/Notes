@@ -35,6 +35,15 @@ jobs:
           cache-dependency-path: site/package-lock.json
       - run: npm ci
       - run: npx playwright install --with-deps chromium
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: 3.12.14
+      - name: Install isolated archive parity dependencies
+        run: |
+          cd "$GITHUB_WORKSPACE/site" || exit 1
+          python -m venv ../.superpowers/polars-venv
+          ../.superpowers/polars-venv/bin/python -m pip install -r tests/requirements-polars.txt
+          echo "$GITHUB_WORKSPACE/.superpowers/polars-venv/bin" >> "$GITHUB_PATH"
       - run: npm run verify
       - id: artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

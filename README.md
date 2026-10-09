@@ -24,6 +24,18 @@ npm run dev
 
 Full Chromium is required for the native PDF viewer tests; do not install only the headless shell. The development command prepares content before starting Astro. It polls source paths every second, awaits watcher readiness, and refreshes open readers after successful publication. A failed content rebuild reports the offending source paths and keeps the last successful snapshot; repair the source to recover without restarting. Polling costs O(watched paths) per second. Development retains one previous asset publication for open readers; production removes stale assets.
 
+Before `npm run check` or `npm run verify`, select **Python 3.12.14** and install the pinned archive parity dependencies in an isolated environment. Run this setup from the repository root:
+
+```sh
+python3 -m venv .superpowers/polars-venv
+source .superpowers/polars-venv/bin/activate
+python -m pip install -r site/tests/requirements-polars.txt
+cd site
+npm run test:polars
+```
+
+Keep that environment active for subsequent verification commands. `test:polars` rejects a base interpreter and runs explicit mirrored stdlib tests without importing whole course programs, fitting models, downloading datasets or executing GPU code. Pandas is only the original-source baseline oracle; converted examples and new Python tabular tooling use Polars. The pinned environment includes `fastexcel` for Polars' default Excel engine and `openpyxl` for the Excel baseline; running Excel examples separately requires the optional `polars[excel]` dependencies.
+
 ```sh
 npm run build
 npm run preview -- --port 4321 --ignore-lock
@@ -32,7 +44,7 @@ npm run verify
 
 `build` validates content, builds static pages, generates Pagefind, and verifies the deployed output. `preview` serves the built site. Development search uses the last production index if present and does not refresh on note edits; use `build` then `preview` to search current content. Plain Astro preview does not apply Cloudflare `_headers`. The browser gate separately applies the built header policy to real local responses and verifies compatibility; it is not a live Cloudflare test.
 
-`verify` builds the real output fixtures first, then runs formatting, lint, import boundaries, Astro/TypeScript checks, unit coverage and browser tests, followed by read-only validation of the final artifact. Browser scenario cleanup preserves the incoming production URL and revision. Every covered source file must meet **90% statements, branches, functions and lines**. Browser verification owns port 4328; keep it free. Run gates serially. For foreground Astro dev/preview invocations use `--ignore-lock` so the caller owns shutdown; `npm run dev` already supplies it.
+`verify` builds the real output fixtures first, then runs formatting, lint, import boundaries, Astro/TypeScript checks, archive parity, unit coverage and browser tests, followed by read-only validation of the final artifact. Browser scenario cleanup preserves the incoming production URL and revision. Every covered source file must meet **90% statements, branches, functions and lines**. Browser verification owns port 4328; keep it free. Run gates serially. For foreground Astro dev/preview invocations use `--ignore-lock` so the caller owns shutdown; `npm run dev` already supplies it.
 
 ## Authoring
 
@@ -66,7 +78,7 @@ npm run content:migrate -- --dry-run
 npm run content:migrate -- --apply
 ```
 
-Apply requires the exact reviewed plan and unchanged original hashes; it validates each file's body, metadata, route, render and build before proceeding. A repeated completed migration proposes zero changes. Migration does not execute notebooks. The separately approved archived Pandas-to-Polars conversion is Task 9 and remains a separate pending milestone.
+Apply requires the exact reviewed plan and unchanged original hashes; it validates each file's body, metadata, route, render and build before proceeding. A repeated completed migration proposes zero changes. Migration does not execute notebooks. The separately approved archived Pandas-to-Polars conversion is Task 9: its first four examples (image CSV reader, callback CSV head, unused pipeline import and interview domain concat) have mirrored parity checks; the remaining eleven conversions are pending. The image check uses all 1,393 real local CSV records. Callback and domain-boundary checks use explicitly synthetic inputs because the original training log and external caller frames are unavailable; they do not establish real training/classifier integration. Checks consume local inputs and never acquire datasets.
 
 ## Cloudflare Direct Upload setup
 
@@ -89,7 +101,7 @@ Configure the GitHub repository:
 
 Tokens stay in trusted readiness/publication process environments; never put them in source files, client output, build variables, command arguments or logs. Pull requests verify without a deployment token. Missing settings visibly disable publication while verification remains usable. Production URL/revision inputs are fixed during verification, so canonical/source/sitemap output matches the uploaded artifact.
 
-Only a trusted `push` to `refs/heads/master` with successful verification and complete settings can publish. Verification uses Node 24.18.1, `npm ci`, full Chromium and `npm run verify` in `site/`. It uploads only the verified `dist`. A separate job checks its exact artifact ID and SHA-256 digest, downloads it with digest mismatch treated as an error, and uses pinned Wrangler 4.147.0 without rebuilding or installing course dependencies. PRs and other branches cannot publish. Publishing runs in a workspace without checked-out course projects or a `functions` directory.
+Only a trusted `push` to `refs/heads/master` with successful verification and complete settings can publish. Verification uses Node 24.18.1, `npm ci`, full Chromium, Python 3.12.14 with isolated pinned parity dependencies and `npm run verify` in `site/`. It uploads only the verified `dist`. A separate job checks its exact artifact ID and SHA-256 digest, downloads it with digest mismatch treated as an error, and uses pinned Wrangler 4.147.0 without rebuilding or installing course dependencies. PRs and other branches cannot publish. Publishing runs in a workspace without checked-out course projects or a `functions` directory.
 
 The `_headers` policy allows the exact inline theme-bootstrap hash, same-origin scripts/fonts/assets/PDF frames, Pagefind WebAssembly compilation and controlled KaTeX/Shiki inline styles. Changing bootstrap bytes requires updating the hash and passing the actual-header browser gate. It permits same-origin framing for native PDF resources and sanitized HTTPS archive images. Historical HTTP image URLs use native HTTPS upgrading; the local compatibility test uses deterministic image transport and does not establish upstream availability. Local tests cannot establish Cloudflare parsing, project existence, token permissions or a published URL; after authorized publication, check the actual hosted responses and reader/search/PDF behavior.
 

@@ -120,6 +120,52 @@ it('separates PR verification from trusted configured artifact-only publication'
       if (step.uses) expect(step.uses).toMatch(/@[a-f0-9]{40}$/);
 });
 
+it('installs pinned isolated parity dependencies only before the verification job gate', async () => {
+  const { jobs } = await workflow();
+  const steps = jobs.verify.steps;
+  const setup = steps.findIndex((step) =>
+    step.uses?.startsWith('actions/setup-python@'),
+  );
+  const install = steps.findIndex((step) =>
+    step.run?.includes('requirements-polars.txt'),
+  );
+  const verify = steps.findIndex((step) => step.run === 'npm run verify');
+  expect(setup).toBeGreaterThanOrEqual(0);
+  expect(install).toBeGreaterThan(setup);
+  expect(verify).toBeGreaterThan(install);
+  expect(steps[setup]?.uses).toBe(
+    'actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97',
+  );
+  expect(steps[setup]?.with?.['python-version']).toBe('3.12.14');
+  expect(steps[install]?.run).toContain(
+    'python -m venv ../.superpowers/polars-venv',
+  );
+  expect(steps[install]?.run).toContain(
+    '../.superpowers/polars-venv/bin/python -m pip install -r tests/requirements-polars.txt',
+  );
+  expect(steps[install]?.run).toContain(
+    'echo "$GITHUB_WORKSPACE/.superpowers/polars-venv/bin" >> "$GITHUB_PATH"',
+  );
+  const requirements = (await readFile('tests/requirements-polars.txt', 'utf8'))
+    .split('\n')
+    .filter((line) => line && !line.startsWith('#'));
+  expect(requirements.map((line) => line.split('==')[0]).sort()).toEqual([
+    'fastexcel',
+    'nbformat',
+    'numpy',
+    'openpyxl',
+    'pandas',
+    'polars',
+    'scipy',
+  ]);
+  for (const line of requirements)
+    expect(line).toMatch(/^[a-z]+==\d+\.\d+\.\d+$/);
+  for (const job of [jobs.readiness, jobs.deploy])
+    expect(JSON.stringify(job)).not.toMatch(
+      /setup-python|requirements-polars|polars-venv/,
+    );
+});
+
 it('actual workflow readiness rejects incomplete/invalid settings without exposing values', async () => {
   const { jobs } = await workflow();
   const script = jobs.readiness.steps.find(
