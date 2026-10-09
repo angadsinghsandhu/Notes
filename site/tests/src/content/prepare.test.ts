@@ -435,10 +435,44 @@ const notebookRepairs = JSON.parse(
   originalSha256: string;
   rawReplacements: { original: string; replacement: string }[];
 }[];
+const task9Deltas = JSON.parse(
+  await readFile('tests/fixtures/real/polars/source-deltas.json', 'utf8'),
+) as {
+  files: {
+    path: string;
+    original_sha256: string;
+    converted_sha256: string;
+    replacements: { old: string; new: string }[];
+  }[];
+};
+function reverseTask9Notebook(actual: string, sourcePath: string): string {
+  const record = task9Deltas.files.find((file) => file.path === sourcePath);
+  if (!record) return actual;
+  if (
+    createHash('sha256').update(actual).digest('hex') !==
+    record.converted_sha256
+  )
+    throw new Error('Unapproved Task 9 notebook bytes');
+  let restored = actual;
+  for (const delta of [...record.replacements].reverse()) {
+    if (!delta.new || restored.split(delta.new).length !== 2)
+      throw new Error('Ambiguous Task 9 notebook delta');
+    restored = restored.replace(delta.new, delta.old);
+  }
+  if (
+    createHash('sha256').update(restored).digest('hex') !==
+    record.original_sha256
+  )
+    throw new Error('Task 9 notebook original mismatch');
+  return restored;
+}
 it.each(notebookRepairs)(
   'preserves notebook bytes outside reviewed Markdown source tokens: $sourcePath',
   async ({ sourcePath, originalSha256, rawReplacements }) => {
-    const actual = await readFile(join('..', sourcePath), 'utf8');
+    const actual = reverseTask9Notebook(
+      await readFile(join('..', sourcePath), 'utf8'),
+      sourcePath,
+    );
     let restored = actual;
     for (const { original, replacement } of rawReplacements) {
       expect(actual).toContain(replacement);
@@ -446,6 +480,22 @@ it.each(notebookRepairs)(
     }
     expect(createHash('sha256').update(restored).digest('hex')).toBe(
       originalSha256,
+    );
+  },
+);
+
+it.each(['source', 'outputs', 'metadata'])(
+  'rejects unapproved notebook %s bytes before reversing Task 9 and Task 5',
+  async (field) => {
+    const { sourcePath } = notebookRepairs.find((repair) =>
+      repair.sourcePath.endsWith('/Examples/data.ipynb'),
+    )!;
+    const actual = await readFile(join('..', sourcePath), 'utf8');
+    const token = `"${field}":`;
+    expect(actual).toContain(token);
+    const tampered = actual.replace(token, `"unapproved_${field}":`);
+    expect(() => reverseTask9Notebook(tampered, sourcePath)).toThrow(
+      'Unapproved Task 9 notebook bytes',
     );
   },
 );

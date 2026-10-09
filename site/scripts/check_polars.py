@@ -15,6 +15,10 @@ TEST_FILES = [
     'site/tests/Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 4 - Models and Callbacks/test_ExploringCallbacks.py',
     'site/tests/Courses/Coursera/tf deployment/Course 3/Week 2/test_2_input_pipelines_custom.py',
     'site/tests/Interview/Applied Science/breadth/test_11_practical.py',
+    'site/tests/Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/test_data.py',
+    'site/tests/Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/test_feature_columns.py',
+    'site/tests/Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Exercises/test_TFDS_Week2_Exercise.py',
+    'site/tests/Courses/Coursera/tf deployment/Course 3/Week 2/test_1_input_pipelines.py',
 ]
 
 

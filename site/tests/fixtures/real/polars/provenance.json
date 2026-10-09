@@ -1,0 +1,123 @@
+{
+  "format": 1,
+  "inputs": [
+    {
+      "filename": "heart.csv",
+      "url": "https://storage.googleapis.com/download.tensorflow.org/data/heart.csv",
+      "acquisition_utc": "2026-10-09T19:49:55.374800+00:00",
+      "cap_bytes": 2097152,
+      "evidence": "primary TensorFlow candidate; historical heart.csv equality unknown",
+      "status": 200,
+      "final_url": "https://storage.googleapis.com/download.tensorflow.org/data/heart.csv",
+      "headers": {
+        "Content-Type": "text/csv",
+        "X-GUploader-UploadID": "AP6rU81SzIFUZ_6yyrEb4pkEcW9JERh3hR3SFDq34jt8yQU5a8lDIzXox7xxFzpcE8Qn0YdWTC_a-ss",
+        "Expires": "Fri, 09 Oct 2026 20:49:55 GMT",
+        "Date": "Fri, 09 Oct 2026 19:49:55 GMT",
+        "Cache-Control": "public, max-age=3600",
+        "Last-Modified": "Thu, 09 Jul 2020 20:06:21 GMT",
+        "ETag": "\"27f992ebe453960ae977ce0edc0317f2\"",
+        "x-goog-generation": "1594325181541097",
+        "x-goog-metageneration": "2",
+        "x-goog-stored-content-encoding": "identity",
+        "x-goog-stored-content-length": "13273",
+        "x-goog-hash": "md5=J/mS6+RTlgrpd84O3AMX8g==",
+        "x-goog-storage-class": "STANDARD",
+        "Accept-Ranges": "bytes",
+        "Content-Length": "13273",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Expose-Headers": "Content-Type",
+        "Server": "UploadServer",
+        "Alt-Svc": "h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000",
+        "Connection": "close"
+      },
+      "header": [
+        "age",
+        "sex",
+        "cp",
+        "trestbps",
+        "chol",
+        "fbs",
+        "restecg",
+        "thalach",
+        "exang",
+        "oldpeak",
+        "slope",
+        "ca",
+        "thal",
+        "target"
+      ],
+      "records": 303,
+      "row_widths": [
+        14
+      ],
+      "first": [
+        "63",
+        "1",
+        "1",
+        "145",
+        "233",
+        "1",
+        "2",
+        "150",
+        "0",
+        "2.3",
+        "3",
+        "0",
+        "fixed",
+        "0"
+      ],
+      "last": [
+        "63",
+        "0",
+        "4",
+        "150",
+        "407",
+        "0",
+        "2",
+        "154",
+        "0",
+        "4",
+        "2",
+        "3",
+        "reversible",
+        "1"
+      ],
+      "bytes": 13273,
+      "sha256": "a91c81831bb2126e5fde6ce4ebde147a78429da12005108a6677ba57ecde9244",
+      "result": "acquired",
+      "historical_url": "https://storage.googleapis.com/applied-dl/heart.csv",
+      "historical_status": "404 previously verified; not requested again",
+      "historical_equality": "unknown",
+      "schema": {
+        "age": "Int64",
+        "sex": "Int64",
+        "cp": "Int64",
+        "trestbps": "Int64",
+        "chol": "Int64",
+        "fbs": "Int64",
+        "restecg": "Int64",
+        "thalach": "Int64",
+        "exang": "Int64",
+        "oldpeak": "Float64",
+        "slope": "Int64",
+        "ca": "Int64",
+        "thal": "String",
+        "target": "Int64"
+      },
+      "null_count": 0
+    }
+  ],
+  "unavailable_integrations": [
+    {
+      "input": "Titanic CSV",
+      "historical_url": "https://storage.googleapis.com/tf-datasets/titanic/train.csv",
+      "status": "authentic bytes unavailable; prior endpoint 403, no new request",
+      "proof": "inline synthetic Titanic schema boundary only; no historical or authentic integration claim"
+    }
+  ],
+  "synthetic_checks": [
+    "Titanic schema with numeric null; not authentic Titanic records",
+    "typed heart edge frames for empty and numeric missingness; not downloaded records"
+  ]
+}
