@@ -1,4 +1,7 @@
 """Test-only comparisons/recorders; callers select their exact archive statements."""
+import ast
+from pathlib import Path
+
 import numpy as np
 import pandas as pd
 
@@ -33,12 +36,29 @@ class SplitRecorder:
         return ids[order[count:]].tolist(), ids[order[:count]].tolist()
 
 
+def pandas_histogram_values(series):
+    """Execute the installed hist_series dropna assignment, never plotting imports."""
+    path = Path(pd.__file__).parent / 'plotting/_matplotlib/hist.py'
+    tree = ast.parse(path.read_text())
+    function = next(node for node in tree.body
+                    if isinstance(node, ast.FunctionDef) and node.name == 'hist_series')
+    # Exact pinned Pandas 3.0.6 by=None boundary: hist_series.body[2].body[4].
+    assignment = function.body[2].body[4]
+    if ast.unparse(assignment) != 'values = self.dropna().values':
+        raise ValueError('installed Pandas histogram filter boundary changed')
+    scope = {'self': series}
+    exec(compile(ast.Module(body=[assignment], type_ignores=[]), str(path), 'exec'), scope)
+    return scope['values']
+
+
 class HistogramRecorder:
     def __init__(self):
         self.calls = []
+        self.histograms = []
 
     def hist(self, values, **kwargs):
         self.calls.append((np.asarray(values).copy(), kwargs))
+        self.histograms.append(np.histogram(values, **kwargs))
 
 
 def assert_model_arrays(test, old, new, features, splits):

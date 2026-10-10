@@ -41,7 +41,7 @@
       "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-answer.ipynb",
       "bytes": 25014,
       "original_sha256": "f4f562896ca209a43d294571efeb46a712994e1d67cc4fa22e3897714a4dde81",
-      "converted_sha256": "a304ae7b1e966bab4c0337a32eccb8282c0b1e206952111b78adc165b946ae4a",
+      "converted_sha256": "111b4dcf0e8d0522d4f911f42bf79587a75dbdcd8b6ff14cb667bc32aa59d24d",
       "replacements": [
         {
           "old": "[\n        \"try:\\n\",\n        \"  # %tensorflow_version only exists in Colab.\\n\",\n        \"  %tensorflow_version 2.x\\n\",\n        \"except Exception:\\n\",\n        \"  pass\\n\",\n        \"  \\n\",\n        \"import tensorflow as tf\\n\",\n        \"from tensorflow.keras.models import Model\\n\",\n        \"from tensorflow.keras.layers import Dense, Input\\n\",\n        \"\\n\",\n        \"import numpy as np\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import pandas as pd\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"from sklearn.metrics import confusion_matrix\\n\",\n        \"import itertools\\n\",\n        \"\\n\",\n        \"\\n\"\n      ]",
@@ -65,12 +65,12 @@
         },
         {
           "old": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"df['quality'].hist(bins=20) \"\n      ]",
-          "new": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].to_numpy(), bins=20)\"\n      ]",
+          "new": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].drop_nulls().drop_nans().to_numpy(), bins=20)\"\n      ]",
           "intent": "cell 15 source only (unchanged metadata context anchors duplicate source if needed)"
         },
         {
           "old": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"df['quality'].hist(bins=20) \"\n      ]",
-          "new": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].to_numpy(), bins=20)\"\n      ]",
+          "new": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].drop_nulls().drop_nans().to_numpy(), bins=20)\"\n      ]",
           "intent": "cell 20 source only (unchanged metadata context anchors duplicate source if needed)"
         },
         {
@@ -154,7 +154,7 @@
       "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-question.ipynb",
       "bytes": 25102,
       "original_sha256": "c7a0678291954ef19b53699d3ab5e863b09f2c949b8d655f40acba6fe33ced8b",
-      "converted_sha256": "a329de8b2cdf759d468e2e1bb0158bb3a666b38c45a2f884d4a29dd057ed54f4",
+      "converted_sha256": "dac0af6e028b722f629694396e96e27cc95d2af0baecdcf90c911fe79a09e61a",
       "replacements": [
         {
           "old": "[\n        \"try:\\n\",\n        \"  # %tensorflow_version only exists in Colab.\\n\",\n        \"  %tensorflow_version 2.x\\n\",\n        \"except Exception:\\n\",\n        \"  pass\\n\",\n        \"  \\n\",\n        \"import tensorflow as tf\\n\",\n        \"from tensorflow.keras.models import Model\\n\",\n        \"from tensorflow.keras.layers import Dense, Input\\n\",\n        \"\\n\",\n        \"import numpy as np\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import pandas as pd\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"from sklearn.metrics import confusion_matrix\\n\",\n        \"import itertools\\n\",\n        \"\\n\",\n        \"\\n\"\n      ]",
@@ -178,12 +178,12 @@
         },
         {
           "old": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"df['quality'].hist(bins=20) \"\n      ]",
-          "new": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].to_numpy(), bins=20)\"\n      ]",
+          "new": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].drop_nulls().drop_nans().to_numpy(), bins=20)\"\n      ]",
           "intent": "cell 15 source only (unchanged metadata context anchors duplicate source if needed)"
         },
         {
           "old": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"df['quality'].hist(bins=20) \"\n      ]",
-          "new": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].to_numpy(), bins=20)\"\n      ]",
+          "new": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].drop_nulls().drop_nans().to_numpy(), bins=20)\"\n      ]",
           "intent": "cell 20 source only (unchanged metadata context anchors duplicate source if needed)"
         },
         {

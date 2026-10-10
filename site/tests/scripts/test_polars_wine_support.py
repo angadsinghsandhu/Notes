@@ -54,6 +54,29 @@ class WineSupportTest(unittest.TestCase):
         self.assertEqual(recorder.calls[0][1], {'bins': 20})
         np.testing.assert_array_equal(recorder.calls[0][0], [5, 6, 5])
 
+    def test_numeric_histogram_boundary_rejects_nan_and_keeps_empty_counts(self):
+        recorder = self.helper.HistogramRecorder()
+        with self.assertRaisesRegex(ValueError, 'not finite'):
+            recorder.hist(np.array([5., np.nan, 7., np.nan]), bins=20)
+        recorder.hist(np.array([], dtype=float), bins=20)
+        np.testing.assert_array_equal(recorder.histograms[-1][0], np.zeros(20, dtype=int))
+        for value in (np.inf, -np.inf):
+            with self.assertRaisesRegex(ValueError, 'not finite'):
+                recorder.hist(np.array([5., value]), bins=20)
+            self.assertEqual(recorder.calls[-1][0][-1], value)
+
+    def test_actual_pandas_hist_filter_drops_only_missing_values(self):
+        boundary = getattr(self.helper, 'pandas_histogram_values', None)
+        self.assertTrue(callable(boundary), 'actual Pandas hist_series filter AST is missing')
+        for values, expected in (([5., None, 7., np.nan], [5., 7.]), ([], []),
+                                 ([None, np.nan], []), ([5., np.inf, -np.inf, np.nan], [5., np.inf, -np.inf])):
+            series = pd.Series(values, dtype=float)
+            saved = series.copy()
+            actual = boundary(series)
+            np.testing.assert_array_equal(actual, expected)
+            pd.testing.assert_series_equal(series, saved)
+            self.assertEqual(actual.dtype, np.dtype('float64'))
+
     def test_model_assertion_rejects_target_swap_and_feature_leak(self):
         frame = pd.DataFrame({'x': [1., 3.], 'quality': [5, 6], 'is_red': [0, 1]})
         data = pl.DataFrame({n: frame[n].to_numpy() for n in frame})

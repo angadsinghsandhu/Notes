@@ -17,7 +17,7 @@ SITE = next(p for p in Path(__file__).resolve().parents if p.name == 'site')
 sys.path.insert(0, str(SITE / 'scripts'))
 from check_polars import cell_source, read_source, selected_code
 from polars_wine_support import (HistogramRecorder, SplitRecorder, assert_frame,
-                                 assert_model_arrays)
+                                 assert_model_arrays, pandas_histogram_values)
 
 BASE = 'Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/'
 FIXTURES = SITE / 'tests/fixtures/real/polars'
@@ -101,7 +101,7 @@ class WineAnswerTest(unittest.TestCase):
             if cell in (12, 18):
                 histogram_cell = 15 if cell == 12 else 20
                 before_plot, after_plot = HistogramRecorder(), HistogramRecorder()
-                with patch.object(pd.Series, 'hist', lambda series, **kwargs: before_plot.hist(series.to_numpy(), **kwargs)):
+                with patch.object(pd.Series, 'hist', lambda series, **kwargs: before_plot.hist(pandas_histogram_values(series), **kwargs)):
                     exec(a[histogram_cell], old)
                 new['plt'] = after_plot
                 exec(b[histogram_cell], new)
@@ -125,6 +125,46 @@ class WineAnswerTest(unittest.TestCase):
         assert_model_arrays(self, old, new, FEATURES, ['train', 'val', 'test'])
         for name in saved: self.assertTrue(new[name].equals(saved[name]), 'outputs/norm mutated source features')
         self.assertFalse(np.allclose(list(new['train_stats']['mean'].values()), new['df'].select(FEATURES).mean().row(0)))
+
+    def test_histogram_missing_empty_and_infinity_matches_actual_pandas_boundary(self):
+        original = self.codes(read_source(self.PATH, original=True), False)
+        converted = self.codes(read_source(self.PATH), True)
+        for cell in (15, 20):
+            for values, expected in (([5., None, 7., np.nan], [5., 7.]), ([], []),
+                                     ([None, np.nan], [])):
+                with self.subTest(source=self.PATH, cell=cell, quality=values):
+                    before = pd.DataFrame({'quality': pd.Series(values, dtype=float)})
+                    after = pl.DataFrame({'quality': pl.Series(values, dtype=pl.Float64)})
+                    saved_before, saved_after = before.copy(), after.clone()
+                    old_plot, new_plot = HistogramRecorder(), HistogramRecorder()
+                    with patch.object(pd.Series, 'hist', lambda series, **kwargs: old_plot.hist(pandas_histogram_values(series), **kwargs)):
+                        exec(original[cell], {'df': before})
+                    try:
+                        exec(converted[cell], {'df': after, 'plt': new_plot})
+                    except ValueError as error:
+                        self.fail(f'{self.PATH} cell {cell} histogram must filter null/NaN: {error}')
+                    np.testing.assert_array_equal(old_plot.calls[0][0], expected)
+                    np.testing.assert_array_equal(new_plot.calls[0][0], expected)
+                    self.assertEqual(new_plot.calls[0][1], {'bins': 20})
+                    for old_array, new_array in zip(old_plot.histograms[0], new_plot.histograms[0]):
+                        np.testing.assert_array_equal(old_array, new_array)
+                    self.assertEqual(new_plot.histograms[0][0].sum(), len(expected))
+                    pd.testing.assert_frame_equal(before, saved_before)
+                    self.assertTrue(after.equals(saved_after), 'histogram mutated original quality missingness')
+            # Pandas dropna retains infinities, so both original and converted must fail.
+            for infinity in (np.inf, -np.inf):
+                with self.subTest(source=self.PATH, cell=cell, infinity=infinity):
+                    before = pd.DataFrame({'quality': [5., infinity, np.nan]})
+                    after = pl.DataFrame({'quality': [5., infinity, np.nan]})
+                    old_plot, new_plot = HistogramRecorder(), HistogramRecorder()
+                    with patch.object(pd.Series, 'hist', lambda series, **kwargs: old_plot.hist(pandas_histogram_values(series), **kwargs)):
+                        with self.assertRaisesRegex(ValueError, 'not finite'):
+                            exec(original[cell], {'df': before})
+                    with self.assertRaisesRegex(ValueError, 'not finite'):
+                        exec(converted[cell], {'df': after, 'plt': new_plot})
+                    np.testing.assert_array_equal(old_plot.calls[0][0], [5., infinity])
+                    np.testing.assert_array_equal(new_plot.calls[0][0], [5., infinity])
+                    self.assertTrue(np.isnan(after['quality'][-1]))
 
     def test_synthetic_missing_duplicate_and_normalization_edges(self):
         original, a = self.load_wines(False)
