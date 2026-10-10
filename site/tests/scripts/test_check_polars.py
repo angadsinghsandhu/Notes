@@ -106,6 +106,10 @@ class CheckPolarsTest(unittest.TestCase):
             'site/tests/Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/test_feature_columns.py',
             'site/tests/Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Exercises/test_TFDS_Week2_Exercise.py',
             'site/tests/Courses/Coursera/tf deployment/Course 3/Week 2/test_1_input_pipelines.py',
+            'site/tests/scripts/test_polars_wine_support.py',
+            'site/tests/Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/test_Multi_Output.py',
+            'site/tests/Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/test_exercise_answer.py',
+            'site/tests/Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/test_exercise_question.py',
         ])
 
     def test_isolated_environment_required_with_raw_nonzero_exit(self):
