@@ -67,22 +67,110 @@
       "path": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/data.ipynb",
       "bytes": 98445,
       "original_sha256": "1e8902a0116e83a44dba7260131a4a0ea08ce156bb864bf8e3fa3cfbdf110597",
-      "converted_sha256": "1e8902a0116e83a44dba7260131a4a0ea08ce156bb864bf8e3fa3cfbdf110597",
-      "replacements": []
+      "converted_sha256": "13baf4bfe2207bcfef3434bccc1af0afc028409fc0970f4dcd4759004fbec2e0",
+      "replacements": [
+        {
+          "old": "[\n        \"import pathlib\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import pandas as pd\\n\",\n        \"import numpy as np\\n\",\n        \"\\n\",\n        \"np.set_printoptions(precision=4)\"\n      ]",
+          "new": "[\n        \"import pathlib\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import polars as pl\\n\",\n        \"import numpy as np\\n\",\n        \"\\n\",\n        \"np.set_printoptions(precision=4)\"\n      ]",
+          "intent": "cell 9 source only"
+        },
+        {
+          "old": "[\n        \"See [Loading CSV Files](https://www.tensorflow.org/tutorials/load_data/csv), and [Loading Pandas DataFrames](https://www.tensorflow.org/tutorials/load_data/pandas_dataframe) for more examples. \\n\",\n        \"\\n\",\n        \"The CSV file format is a popular format for storing tabular data in plain text.\\n\",\n        \"\\n\",\n        \"For example:\"\n      ]",
+          "new": "[\n        \"See [Loading CSV Files](https://www.tensorflow.org/tutorials/load_data/csv), and [Loading Pandas DataFrames](https://www.tensorflow.org/tutorials/load_data/pandas_dataframe) for more examples. \\n\",\n        \"\\n\",\n        \"The Pandas link is upstream provenance; this example uses Polars (`pip install polars`) and converts each column to a NumPy array at the TensorFlow boundary.\\n\",\n        \"\\n\",\n        \"The CSV file format is a popular format for storing tabular data in plain text.\\n\",\n        \"\\n\",\n        \"For example:\"\n      ]",
+          "intent": "cell 74 source only"
+        },
+        {
+          "old": "[\n        \"df = pd.read_csv(titanic_file, index_col=None)\\n\",\n        \"df.head()\"\n      ]",
+          "new": "[\n        \"df = pl.read_csv(titanic_file)\\n\",\n        \"df.head()\"\n      ]",
+          "intent": "cell 76 source only"
+        },
+        {
+          "old": "[\n        \"titanic_slices = tf.data.Dataset.from_tensor_slices(dict(df))\\n\",\n        \"\\n\",\n        \"for feature_batch in titanic_slices.take(1):\\n\",\n        \"  for key, value in feature_batch.items():\\n\",\n        \"    print(\\\"  {!r:20s}: {}\\\".format(key, value))\"\n      ]",
+          "new": "[\n        \"titanic_slices = tf.data.Dataset.from_tensor_slices(\\n\",\n        \"    {name: df[name].to_numpy() for name in df.columns})\\n\",\n        \"\\n\",\n        \"for feature_batch in titanic_slices.take(1):\\n\",\n        \"  for key, value in feature_batch.items():\\n\",\n        \"    print(\\\"  {!r:20s}: {}\\\".format(key, value))\"\n      ]",
+          "intent": "cell 78 source only"
+        }
+      ]
     },
     {
       "path": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/feature_columns.ipynb",
       "bytes": 28091,
       "original_sha256": "edbf00fb9c4e94af7409d0b1a9787d75f0245385beb9d80f44fa628a94245398",
-      "converted_sha256": "edbf00fb9c4e94af7409d0b1a9787d75f0245385beb9d80f44fa628a94245398",
-      "replacements": []
+      "converted_sha256": "ae8d473be3cce5fd1ebc9522fe841c6f97fa219322462b7df098146673174211",
+      "replacements": [
+        {
+          "old": "[\n        \"This tutorial demonstrates how to classify structured data (e.g. tabular data in a CSV). We will use [Keras](https://www.tensorflow.org/guide/keras) to define the model, and [feature columns](https://www.tensorflow.org/guide/feature_columns) as a bridge to map from columns in a CSV to features used to train the model. This tutorial contains complete code to:\\n\",\n        \"\\n\",\n        \"* Load a CSV file using [Pandas](https://pandas.pydata.org/).\\n\",\n        \"* Build an input pipeline to batch and shuffle the rows using [tf.data](https://www.tensorflow.org/guide/datasets).\\n\",\n        \"* Map from columns in the CSV to features used to train the model using feature columns.\\n\",\n        \"* Build, train, and evaluate a model using Keras.\\n\",\n        \"\\n\",\n        \"## The Dataset\\n\",\n        \"\\n\",\n        \"We will use a small [dataset](https://archive.ics.uci.edu/ml/datasets/heart+Disease) provided by the Cleveland Clinic Foundation for Heart Disease. There are several hundred rows in the CSV. Each row describes   a patient, and each column describes an attribute. We will use this information to predict whether a patient has heart disease, which in this dataset is a binary classification task.\\n\",\n        \"\\n\",\n        \"Following is a [description](https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/heart-disease.names) of this dataset. Notice there are both numeric and categorical columns.\\n\",\n        \"\\n\",\n        \">Column| Description| Feature Type | Data Type\\n\",\n        \">------------|--------------------|----------------------|-----------------\\n\",\n        \">Age | Age in years | Numerical | integer\\n\",\n        \">Sex | (1 = male; 0 = female) | Categorical | integer\\n\",\n        \">CP | Chest pain type (0, 1, 2, 3, 4) | Categorical | integer\\n\",\n        \">Trestbpd | Resting blood pressure (in mm Hg on admission to the hospital) | Numerical | integer\\n\",\n        \">Chol | Serum cholestoral in mg/dl | Numerical | integer\\n\",\n        \">FBS | (fasting blood sugar > 120 mg/dl) (1 = true; 0 = false) | Categorical | integer\\n\",\n        \">RestECG | Resting electrocardiographic results (0, 1, 2) | Categorical | integer\\n\",\n        \">Thalach | Maximum heart rate achieved | Numerical | integer\\n\",\n        \">Exang | Exercise induced angina (1 = yes; 0 = no) | Categorical | integer\\n\",\n        \">Oldpeak | ST depression induced by exercise relative to rest | Numerical | integer\\n\",\n        \">Slope | The slope of the peak exercise ST segment | Numerical | float\\n\",\n        \">CA | Number of major vessels (0-3) colored by flourosopy | Numerical | integer\\n\",\n        \">Thal | 3 = normal; 6 = fixed defect; 7 = reversable defect | Categorical | string\\n\",\n        \">Target | Diagnosis of heart disease (1 = true; 0 = false) | Classification | integer\"\n      ]",
+          "new": "[\n        \"This tutorial demonstrates how to classify structured data (e.g. tabular data in a CSV). We will use [Keras](https://www.tensorflow.org/guide/keras) to define the model, and [feature columns](https://www.tensorflow.org/guide/feature_columns) as a bridge to map from columns in a CSV to features used to train the model. This tutorial contains complete code to:\\n\",\n        \"\\n\",\n        \"* Load a CSV file using [Polars](https://pola.rs/).\\n\",\n        \"* Build an input pipeline to batch and shuffle the rows using [tf.data](https://www.tensorflow.org/guide/datasets).\\n\",\n        \"* Map from columns in the CSV to features used to train the model using feature columns.\\n\",\n        \"* Build, train, and evaluate a model using Keras.\\n\",\n        \"\\n\",\n        \"## The Dataset\\n\",\n        \"\\n\",\n        \"We will use a small [dataset](https://archive.ics.uci.edu/ml/datasets/heart+Disease) provided by the Cleveland Clinic Foundation for Heart Disease. There are several hundred rows in the CSV. Each row describes   a patient, and each column describes an attribute. We will use this information to predict whether a patient has heart disease, which in this dataset is a binary classification task.\\n\",\n        \"\\n\",\n        \"Following is a [description](https://archive.ics.uci.edu/ml/machine-learning-databases/heart-disease/heart-disease.names) of this dataset. Notice there are both numeric and categorical columns.\\n\",\n        \"\\n\",\n        \">Column| Description| Feature Type | Data Type\\n\",\n        \">------------|--------------------|----------------------|-----------------\\n\",\n        \">Age | Age in years | Numerical | integer\\n\",\n        \">Sex | (1 = male; 0 = female) | Categorical | integer\\n\",\n        \">CP | Chest pain type (0, 1, 2, 3, 4) | Categorical | integer\\n\",\n        \">Trestbpd | Resting blood pressure (in mm Hg on admission to the hospital) | Numerical | integer\\n\",\n        \">Chol | Serum cholestoral in mg/dl | Numerical | integer\\n\",\n        \">FBS | (fasting blood sugar > 120 mg/dl) (1 = true; 0 = false) | Categorical | integer\\n\",\n        \">RestECG | Resting electrocardiographic results (0, 1, 2) | Categorical | integer\\n\",\n        \">Thalach | Maximum heart rate achieved | Numerical | integer\\n\",\n        \">Exang | Exercise induced angina (1 = yes; 0 = no) | Categorical | integer\\n\",\n        \">Oldpeak | ST depression induced by exercise relative to rest | Numerical | integer\\n\",\n        \">Slope | The slope of the peak exercise ST segment | Numerical | float\\n\",\n        \">CA | Number of major vessels (0-3) colored by flourosopy | Numerical | integer\\n\",\n        \">Thal | 3 = normal; 6 = fixed defect; 7 = reversable defect | Categorical | string\\n\",\n        \">Target | Diagnosis of heart disease (1 = true; 0 = false) | Classification | integer\"\n      ]",
+          "intent": "cell 4 source only"
+        },
+        {
+          "old": "[\n        \"from __future__ import absolute_import, division, print_function, unicode_literals\\n\",\n        \"\\n\",\n        \"import numpy as np\\n\",\n        \"import pandas as pd\\n\",\n        \"\\n\",\n        \"try:\\n\",\n        \"  # %tensorflow_version only exists in Colab.\\n\",\n        \"  %tensorflow_version 2.x\\n\",\n        \"except Exception:\\n\",\n        \"  pass\\n\",\n        \"import tensorflow as tf\\n\",\n        \"\\n\",\n        \"from tensorflow import feature_column\\n\",\n        \"from tensorflow.keras import layers\\n\",\n        \"from sklearn.model_selection import train_test_split\"\n      ]",
+          "new": "[\n        \"from __future__ import absolute_import, division, print_function, unicode_literals\\n\",\n        \"\\n\",\n        \"import numpy as np\\n\",\n        \"import polars as pl\\n\",\n        \"\\n\",\n        \"try:\\n\",\n        \"  # %tensorflow_version only exists in Colab.\\n\",\n        \"  %tensorflow_version 2.x\\n\",\n        \"except Exception:\\n\",\n        \"  pass\\n\",\n        \"import tensorflow as tf\\n\",\n        \"\\n\",\n        \"from tensorflow import feature_column\\n\",\n        \"from tensorflow.keras import layers\\n\",\n        \"from sklearn.model_selection import train_test_split\"\n      ]",
+          "intent": "cell 7 source only"
+        },
+        {
+          "old": "[\n        \"## Use Pandas to create a dataframe\\n\",\n        \"\\n\",\n        \"[Pandas](https://pandas.pydata.org/) is a Python library with many helpful utilities for loading and working with structured data. We will use Pandas to download the dataset from a URL, and load it into a dataframe.\"\n      ]",
+          "new": "[\n        \"## Use Polars to create a dataframe\\n\",\n        \"\\n\",\n        \"[Polars](https://pola.rs/) loads structured data into a dataframe (`pip install polars`). The historical `https://storage.googleapis.com/applied-dl/heart.csv` URL is unavailable. This example uses the primary TensorFlow heart.csv candidate below; equality to the historical file is unknown.\"\n      ]",
+          "intent": "cell 8 source only"
+        },
+        {
+          "old": "[\n        \"URL = 'https://storage.googleapis.com/applied-dl/heart.csv'\\n\",\n        \"dataframe = pd.read_csv(URL)\\n\",\n        \"dataframe.head()\"\n      ]",
+          "new": "[\n        \"URL = 'https://storage.googleapis.com/download.tensorflow.org/data/heart.csv'\\n\",\n        \"dataframe = pl.read_csv(URL)\\n\",\n        \"dataframe.head()\"\n      ]",
+          "intent": "cell 9 source only"
+        },
+        {
+          "old": "[\n        \"train, test = train_test_split(dataframe, test_size=0.2)\\n\",\n        \"train, val = train_test_split(train, test_size=0.2)\\n\",\n        \"print(len(train), 'train examples')\\n\",\n        \"print(len(val), 'validation examples')\\n\",\n        \"print(len(test), 'test examples')\"\n      ]",
+          "new": "[\n        \"train_indices, test_indices = train_test_split(range(len(dataframe)), test_size=0.2)\\n\",\n        \"train_indices, val_indices = train_test_split(train_indices, test_size=0.2)\\n\",\n        \"train = dataframe[train_indices]\\n\",\n        \"test = dataframe[test_indices]\\n\",\n        \"val = dataframe[val_indices]\\n\",\n        \"print(len(train), 'train examples')\\n\",\n        \"print(len(val), 'validation examples')\\n\",\n        \"print(len(test), 'test examples')\"\n      ]",
+          "intent": "cell 11 source only"
+        },
+        {
+          "old": "[\n        \"## Create an input pipeline using tf.data\\n\",\n        \"\\n\",\n        \"Next, we will wrap the dataframes with [tf.data](https://www.tensorflow.org/guide/datasets). This will enable us  to use feature columns as a bridge to map from the columns in the Pandas dataframe to features used to train the model. If we were working with a very large CSV file (so large that it does not fit into memory), we would use tf.data to read it from disk directly. That is not covered in this tutorial.\"\n      ]",
+          "new": "[\n        \"## Create an input pipeline using tf.data\\n\",\n        \"\\n\",\n        \"Next, we will convert each feature column to a NumPy array, keeping target labels separate, and wrap the dataframes with [tf.data](https://www.tensorflow.org/guide/datasets). This will enable us  to use feature columns as a bridge to map from the columns in the Polars dataframe to features used to train the model. If we were working with a very large CSV file (so large that it does not fit into memory), we would use tf.data to read it from disk directly. That is not covered in this tutorial.\"\n      ]",
+          "intent": "cell 12 source only"
+        },
+        {
+          "old": "[\n        \"# A utility method to create a tf.data dataset from a Pandas Dataframe\\n\",\n        \"def df_to_dataset(dataframe, shuffle=True, batch_size=32):\\n\",\n        \"  dataframe = dataframe.copy()\\n\",\n        \"  labels = dataframe.pop('target')\\n\",\n        \"  ds = tf.data.Dataset.from_tensor_slices((dict(dataframe), labels))\\n\",\n        \"  if shuffle:\\n\",\n        \"    ds = ds.shuffle(buffer_size=len(dataframe))\\n\",\n        \"  ds = ds.batch(batch_size)\\n\",\n        \"  return ds\"\n      ]",
+          "new": "[\n        \"# A utility method to create a tf.data dataset from a Polars DataFrame\\n\",\n        \"def df_to_dataset(dataframe, shuffle=True, batch_size=32):\\n\",\n        \"  labels = dataframe['target'].to_numpy()\\n\",\n        \"  features = dataframe.drop('target')\\n\",\n        \"  ds = tf.data.Dataset.from_tensor_slices(\\n\",\n        \"      ({name: features[name].to_numpy() for name in features.columns}, labels))\\n\",\n        \"  if shuffle:\\n\",\n        \"    ds = ds.shuffle(buffer_size=len(dataframe))\\n\",\n        \"  ds = ds.batch(batch_size)\\n\",\n        \"  return ds\"\n      ]",
+          "intent": "cell 13 source only"
+        }
+      ]
     },
     {
       "path": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Exercises/TFDS_Week2_Exercise.ipynb",
       "bytes": 25121,
       "original_sha256": "c8aec3216c90f25926d1ba450bd6acd36f5633824e112ff4d81a61625cea2547",
-      "converted_sha256": "c8aec3216c90f25926d1ba450bd6acd36f5633824e112ff4d81a61625cea2547",
-      "replacements": []
+      "converted_sha256": "6f0ec6a8e3942fb98ed8e92222811c339540073fad6f5cfabad0583857c70481",
+      "replacements": [
+        {
+          "old": "[\n        \"import pandas as pd\\n\",\n        \"import tensorflow as tf\\n\",\n        \"\\n\",\n        \"from tensorflow.keras import layers\\n\",\n        \"from tensorflow import feature_column\\n\",\n        \"\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"\\n\",\n        \"print(\\\"\\\\u2022 Using TensorFlow Version:\\\", tf.__version__)\"\n      ]",
+          "new": "[\n        \"import polars as pl\\n\",\n        \"import tensorflow as tf\\n\",\n        \"\\n\",\n        \"from tensorflow.keras import layers\\n\",\n        \"from tensorflow import feature_column\\n\",\n        \"\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"\\n\",\n        \"print(\\\"\\\\u2022 Using TensorFlow Version:\\\", tf.__version__)\"\n      ]",
+          "intent": "cell 5 source only"
+        },
+        {
+          "old": "[\n        \"## Use Pandas to Create a Dataframe\\n\",\n        \"\\n\",\n        \"[Pandas](https://pandas.pydata.org/) is a Python library with many helpful utilities for loading and working with structured data. We will use Pandas to download the dataset from a URL and load it into a dataframe.\"\n      ]",
+          "new": "[\n        \"## Use Polars to Create a Dataframe\\n\",\n        \"\\n\",\n        \"[Polars](https://pola.rs/) loads structured data into a dataframe (`pip install polars`). The historical `https://storage.googleapis.com/applied-dl/heart.csv` URL is unavailable. This example uses the primary TensorFlow heart.csv candidate below; equality to the historical file is unknown.\"\n      ]",
+          "intent": "cell 6 source only"
+        },
+        {
+          "old": "[\n        \"URL = 'https://storage.googleapis.com/applied-dl/heart.csv'\\n\",\n        \"dataframe = pd.read_csv(URL)\\n\",\n        \"dataframe.head()\"\n      ]",
+          "new": "[\n        \"URL = 'https://storage.googleapis.com/download.tensorflow.org/data/heart.csv'\\n\",\n        \"dataframe = pl.read_csv(URL)\\n\",\n        \"dataframe.head()\"\n      ]",
+          "intent": "cell 7 source only"
+        },
+        {
+          "old": "[\n        \"train, test = train_test_split(dataframe, test_size=0.2)\\n\",\n        \"train, val = train_test_split(train, test_size=0.2)\\n\",\n        \"print(len(train), 'train examples')\\n\",\n        \"print(len(val), 'validation examples')\\n\",\n        \"print(len(test), 'test examples')\"\n      ]",
+          "new": "[\n        \"train_indices, test_indices = train_test_split(range(len(dataframe)), test_size=0.2)\\n\",\n        \"train_indices, val_indices = train_test_split(train_indices, test_size=0.2)\\n\",\n        \"train = dataframe[train_indices]\\n\",\n        \"test = dataframe[test_indices]\\n\",\n        \"val = dataframe[val_indices]\\n\",\n        \"print(len(train), 'train examples')\\n\",\n        \"print(len(val), 'validation examples')\\n\",\n        \"print(len(test), 'test examples')\"\n      ]",
+          "intent": "cell 9 source only"
+        },
+        {
+          "old": "[\n        \"## Create an Input Pipeline Using `tf.data`\\n\",\n        \"\\n\",\n        \"Next, we will wrap the dataframes with [tf.data](https://www.tensorflow.org/guide/datasets). This will enable us  to use feature columns as a bridge to map from the columns in the Pandas dataframe to features used to train the model. If we were working with a very large CSV file (so large that it does not fit into memory), we would use tf.data to read it from disk directly.\"\n      ]",
+          "new": "[\n        \"## Create an Input Pipeline Using `tf.data`\\n\",\n        \"\\n\",\n        \"Next, we will convert each feature column to a NumPy array, keeping target labels separate, and wrap the dataframes with [tf.data](https://www.tensorflow.org/guide/datasets). This will enable us  to use feature columns as a bridge to map from the columns in the Polars dataframe to features used to train the model. If we were working with a very large CSV file (so large that it does not fit into memory), we would use tf.data to read it from disk directly.\"\n      ]",
+          "intent": "cell 10 source only"
+        },
+        {
+          "old": "[\n        \"# EXERCISE: A utility method to create a tf.data dataset from a Pandas Dataframe.\\n\",\n        \"\\n\",\n        \"def df_to_dataset(dataframe, shuffle=True, batch_size=32):\\n\",\n        \"    dataframe = dataframe.copy()\\n\",\n        \"    \\n\",\n        \"    # Use Pandas dataframe's pop method to get the list of targets.\\n\",\n        \"    labels = # YOUR CODE HERE\\n\",\n        \"    \\n\",\n        \"    # Create a tf.data.Dataset from the dataframe and labels.\\n\",\n        \"    ds = # YOUR CODE HERE\\n\",\n        \"    \\n\",\n        \"    if shuffle:\\n\",\n        \"        # Shuffle dataset.\\n\",\n        \"        ds = # YOUR CODE HERE\\n\",\n        \"        \\n\",\n        \"    # Batch dataset with specified batch_size parameter.\\n\",\n        \"    ds = # YOUR CODE HERE\\n\",\n        \"    \\n\",\n        \"    return ds\"\n      ]",
+          "new": "[\n        \"# EXERCISE: A utility method to create a tf.data dataset from a Polars DataFrame.\\n\",\n        \"\\n\",\n        \"def df_to_dataset(dataframe, shuffle=True, batch_size=32):\\n\",\n        \"    features = dataframe.drop('target')\\n\",\n        \"    \\n\",\n        \"    # Read the Polars dataframe's target column as a NumPy label array.\\n\",\n        \"    labels = # YOUR CODE HERE\\n\",\n        \"    \\n\",\n        \"    # Create a tf.data.Dataset from a per-column NumPy dictionary of features and labels.\\n\",\n        \"    ds = # YOUR CODE HERE\\n\",\n        \"    \\n\",\n        \"    if shuffle:\\n\",\n        \"        # Shuffle dataset.\\n\",\n        \"        ds = # YOUR CODE HERE\\n\",\n        \"        \\n\",\n        \"    # Batch dataset with specified batch_size parameter.\\n\",\n        \"    ds = # YOUR CODE HERE\\n\",\n        \"    \\n\",\n        \"    return ds\"\n      ]",
+          "intent": "cell 11 source only"
+        }
+      ]
     },
     {
       "path": "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 4/Exercises/TFDS_Week4_Exercise.ipynb",
@@ -102,8 +190,39 @@
       "path": "Courses/Coursera/tf deployment/Course 3/Week 2/1_input_pipelines.py",
       "bytes": 5337,
       "original_sha256": "1148e323f9084d3ef49efb453cd8e486a9b06961fa46ace4510b2eaefc1306b1",
-      "converted_sha256": "1148e323f9084d3ef49efb453cd8e486a9b06961fa46ace4510b2eaefc1306b1",
-      "replacements": []
+      "converted_sha256": "a24a20945ce70e739fcc68fb8d73fec3cc281562805c501f1931bec6a510ef64",
+      "replacements": [
+        {
+          "old": "import pandas as pd",
+          "new": "import polars as pl",
+          "intent": "tabular import"
+        },
+        {
+          "old": "# creating dataframe from pandas\nURL = 'https://storage.googleapis.com/applied-dl/heart.csv'\ndf = pd.read_csv(URL)",
+          "new": "# creating dataframe from Polars (pip install polars)\n# The historical applied-dl/heart.csv is unavailable; equality to that file is unknown.\nURL = 'https://storage.googleapis.com/download.tensorflow.org/data/heart.csv'\ndf = pl.read_csv(URL)",
+          "intent": "primary candidate read and historical limitation"
+        },
+        {
+          "old": "data_len = df.shape[0]",
+          "new": "data_len = df.height",
+          "intent": "row count for original round-based contiguous split"
+        },
+        {
+          "old": "train, test = df.iloc[:train_len], df.iloc[train_len:]\ntrain, val = train.iloc[:val_len], train.iloc[val_len:]",
+          "new": "train, test = df[:train_len], df[train_len:]\ntrain, val = train[:val_len], train[val_len:]",
+          "intent": "preserve ordered contiguous slices"
+        },
+        {
+          "old": "# A utility method to create a tf.data dataset from a Pandas Dataframe",
+          "new": "# A utility method to create a tf.data dataset from a Polars DataFrame",
+          "intent": "boundary comment"
+        },
+        {
+          "old": "    dataframe = dataframe.copy()\n    labels = dataframe.pop('target')\n    ds = tf.data.Dataset.from_tensor_slices((dict(dataframe), labels))",
+          "new": "    labels = dataframe['target'].to_numpy()\n    features = dataframe.drop('target')\n    ds = tf.data.Dataset.from_tensor_slices(\n        ({name: features[name].to_numpy() for name in features.columns}, labels))",
+          "intent": "immutable ordered per-column features and NumPy labels"
+        }
+      ]
     },
     {
       "path": "Courses/Coursera/tf deployment/Course 3/Week 2/2_input_pipelines_custom.py",
