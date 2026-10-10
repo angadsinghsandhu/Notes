@@ -106,6 +106,273 @@
         "target": "Int64"
       },
       "null_count": 0
+    },
+    {
+      "filename": "winequality-red.csv",
+      "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv",
+      "acquisition_utc": "2026-10-09T19:49:55.742902+00:00",
+      "cap_bytes": 2097152,
+      "evidence": "original UCI data",
+      "status": 200,
+      "final_url": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv",
+      "headers": {
+        "Server": "nginx/1.31.4",
+        "Date": "Fri, 09 Oct 2026 19:49:55 GMT",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close"
+      },
+      "header": [
+        "fixed acidity",
+        "volatile acidity",
+        "citric acid",
+        "residual sugar",
+        "chlorides",
+        "free sulfur dioxide",
+        "total sulfur dioxide",
+        "density",
+        "pH",
+        "sulphates",
+        "alcohol",
+        "quality"
+      ],
+      "records": 1599,
+      "row_widths": [
+        12
+      ],
+      "first": [
+        "7.4",
+        "0.7",
+        "0",
+        "1.9",
+        "0.076",
+        "11",
+        "34",
+        "0.9978",
+        "3.51",
+        "0.56",
+        "9.4",
+        "5"
+      ],
+      "last": [
+        "6",
+        "0.31",
+        "0.47",
+        "3.6",
+        "0.067",
+        "18",
+        "42",
+        "0.99549",
+        "3.39",
+        "0.66",
+        "11",
+        "6"
+      ],
+      "bytes": 84199,
+      "sha256": "4a402cf041b025d4566d954c3b9ba8635a3a8a01e039005d97d6a710278cf05e",
+      "result": "acquired",
+      "schema": {
+        "fixed acidity": "Float64",
+        "volatile acidity": "Float64",
+        "citric acid": "Float64",
+        "residual sugar": "Float64",
+        "chlorides": "Float64",
+        "free sulfur dioxide": "Float64",
+        "total sulfur dioxide": "Float64",
+        "density": "Float64",
+        "pH": "Float64",
+        "sulphates": "Float64",
+        "alcohol": "Float64",
+        "quality": "Int64"
+      },
+      "shape": [
+        1599,
+        12
+      ],
+      "duplicate_rows_after_first": 240,
+      "deduplicated_rows": 1359,
+      "null_count": 0,
+      "nan_count": 0,
+      "inference": "full schema infer_schema_length=None",
+      "parity": "complete original UCI bytes; selected preprocessing, prescribed splits and ordered model arrays"
+    },
+    {
+      "filename": "winequality-white.csv",
+      "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv",
+      "acquisition_utc": "2026-10-09T19:49:56.020493+00:00",
+      "cap_bytes": 2097152,
+      "evidence": "original UCI data",
+      "status": 200,
+      "final_url": "https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv",
+      "headers": {
+        "Server": "nginx/1.31.4",
+        "Date": "Fri, 09 Oct 2026 19:49:56 GMT",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close"
+      },
+      "header": [
+        "fixed acidity",
+        "volatile acidity",
+        "citric acid",
+        "residual sugar",
+        "chlorides",
+        "free sulfur dioxide",
+        "total sulfur dioxide",
+        "density",
+        "pH",
+        "sulphates",
+        "alcohol",
+        "quality"
+      ],
+      "records": 4898,
+      "row_widths": [
+        12
+      ],
+      "first": [
+        "7",
+        "0.27",
+        "0.36",
+        "20.7",
+        "0.045",
+        "45",
+        "170",
+        "1.001",
+        "3",
+        "0.45",
+        "8.8",
+        "6"
+      ],
+      "last": [
+        "6",
+        "0.21",
+        "0.38",
+        "0.8",
+        "0.02",
+        "22",
+        "98",
+        "0.98941",
+        "3.26",
+        "0.32",
+        "11.8",
+        "6"
+      ],
+      "bytes": 264426,
+      "sha256": "76c3f809815c17c07212622f776311faeb31e87610d52c26d87d6e361b169836",
+      "result": "acquired",
+      "schema": {
+        "fixed acidity": "Float64",
+        "volatile acidity": "Float64",
+        "citric acid": "Float64",
+        "residual sugar": "Float64",
+        "chlorides": "Float64",
+        "free sulfur dioxide": "Float64",
+        "total sulfur dioxide": "Float64",
+        "density": "Float64",
+        "pH": "Float64",
+        "sulphates": "Float64",
+        "alcohol": "Float64",
+        "quality": "Int64"
+      },
+      "shape": [
+        4898,
+        12
+      ],
+      "duplicate_rows_after_first": 937,
+      "deduplicated_rows": 3961,
+      "null_count": 0,
+      "nan_count": 0,
+      "inference": "full schema infer_schema_length=None",
+      "parity": "complete original UCI bytes; selected preprocessing, prescribed splits and ordered model arrays"
+    },
+    {
+      "filename": "ENB2012_data.xlsx",
+      "url": "https://archive.ics.uci.edu/ml/machine-learning-databases/00242/ENB2012_data.xlsx",
+      "acquisition_utc": "2026-10-09T19:49:56.326955+00:00",
+      "cap_bytes": 2097152,
+      "evidence": "original UCI workbook",
+      "status": 200,
+      "final_url": "https://archive.ics.uci.edu/ml/machine-learning-databases/00242/ENB2012_data.xlsx",
+      "headers": {
+        "Server": "nginx/1.31.4",
+        "Date": "Fri, 09 Oct 2026 19:49:56 GMT",
+        "Transfer-Encoding": "chunked",
+        "Connection": "close"
+      },
+      "bytes": 76189,
+      "sha256": "0089fcffc1415e41e2ff63730cca5280efe54fc43d722dfde1b0aaa808e35dc4",
+      "result": "acquired",
+      "worksheets": [
+        {
+          "title": "Φύλλο1",
+          "max_row": 1297,
+          "max_column": 12,
+          "first_row": [
+            "X1",
+            "X2",
+            "X3",
+            "X4",
+            "X5",
+            "X6",
+            "X7",
+            "X8",
+            "Y1",
+            "Y2",
+            null,
+            null
+          ],
+          "nonempty_row_count": 769,
+          "last_nonempty_row": 769,
+          "fully_empty_columns_1_based": [
+            11,
+            12
+          ]
+        },
+        {
+          "title": "Φύλλο2",
+          "max_row": 1,
+          "max_column": 1,
+          "first_row": null,
+          "nonempty_row_count": 0,
+          "last_nonempty_row": null,
+          "fully_empty_columns_1_based": [
+            1
+          ]
+        },
+        {
+          "title": "Φύλλο3",
+          "max_row": 1,
+          "max_column": 1,
+          "first_row": null,
+          "nonempty_row_count": 0,
+          "last_nonempty_row": null,
+          "fully_empty_columns_1_based": [
+            1
+          ]
+        }
+      ],
+      "trailing_empty_data_rows_first_sheet": [
+        770,
+        1297
+      ],
+      "shape": [
+        768,
+        10
+      ],
+      "columns": [
+        "X1",
+        "X2",
+        "X3",
+        "X4",
+        "X5",
+        "X6",
+        "X7",
+        "X8",
+        "Y1",
+        "Y2"
+      ],
+      "null_count": 0,
+      "nan_count": 0,
+      "engine": "calamine/fastexcel",
+      "parity": "complete original UCI workbook; bounded file-like decode, prescribed shuffle/split, 8 features and Y1/Y2 outputs"
     }
   ],
   "unavailable_integrations": [
@@ -118,6 +385,7 @@
   ],
   "synthetic_checks": [
     "Titanic schema with numeric null; not authentic Titanic records",
-    "typed heart edge frames for empty and numeric missingness; not downloaded records"
+    "typed heart edge frames for empty and numeric missingness; not downloaded records",
+    "Wine/Excel numeric null, NaN and zero-variance normalization edge frames; not downloaded records"
   ]
 }

@@ -28,22 +28,240 @@
       "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/Multi-Output.ipynb",
       "bytes": 7051,
       "original_sha256": "899fa19bc53adb1fdb7a4235cd9c21e791056167135d1de6e3332f2e9a7b90f5",
-      "converted_sha256": "899fa19bc53adb1fdb7a4235cd9c21e791056167135d1de6e3332f2e9a7b90f5",
-      "replacements": []
+      "converted_sha256": "f94712c8b66a4e3f0f1e78c55338751c589c1da3badc1a8281d9e4a6fb123f61",
+      "replacements": [
+        {
+          "old": "[\n        \"import tensorflow as tf\\n\",\n        \"import numpy as np\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import pandas as pd\\n\",\n        \"from tensorflow.keras.models import Model\\n\",\n        \"from tensorflow.keras.layers import Dense, Input\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"def format_output(data):\\n\",\n        \"    y1 = data.pop('Y1')\\n\",\n        \"    y1 = np.array(y1)\\n\",\n        \"    y2 = data.pop('Y2')\\n\",\n        \"    y2 = np.array(y2)\\n\",\n        \"    return y1, y2\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"def norm(x):\\n\",\n        \"    return (x - train_stats['mean']) / train_stats['std']\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"def plot_diff(y_true, y_pred, title=''):\\n\",\n        \"    plt.scatter(y_true, y_pred)\\n\",\n        \"    plt.title(title)\\n\",\n        \"    plt.xlabel('True Values')\\n\",\n        \"    plt.ylabel('Predictions')\\n\",\n        \"    plt.axis('equal')\\n\",\n        \"    plt.axis('square')\\n\",\n        \"    plt.xlim(plt.xlim())\\n\",\n        \"    plt.ylim(plt.ylim())\\n\",\n        \"    plt.plot([-100, 100], [-100, 100])\\n\",\n        \"    plt.show()\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"def plot_metrics(metric_name, title, ylim=5):\\n\",\n        \"    plt.title(title)\\n\",\n        \"    plt.ylim(0, ylim)\\n\",\n        \"    plt.plot(history.history[metric_name], color='blue', label=metric_name)\\n\",\n        \"    plt.plot(history.history['val_' + metric_name], color='green', label='val_' + metric_name)\\n\",\n        \"    plt.show()\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"# Get the data from UCI dataset\\n\",\n        \"URL = 'https://archive.ics.uci.edu/ml/machine-learning-databases/00242/ENB2012_data.xlsx'\\n\",\n        \"# Use pandas excel reader\\n\",\n        \"df = pd.read_excel(URL)\\n\",\n        \"df = df.sample(frac=1).reset_index(drop=True)\\n\",\n        \"\\n\",\n        \"# Split the data into train and test with 80 train / 20 test\\n\",\n        \"train, test = train_test_split(df, test_size=0.2)\\n\",\n        \"train_stats = train.describe()\\n\",\n        \"\\n\",\n        \"# Get Y1 and Y2 as the 2 outputs and format them as np arrays\\n\",\n        \"train_stats.pop('Y1')\\n\",\n        \"train_stats.pop('Y2')\\n\",\n        \"train_stats = train_stats.transpose()\\n\",\n        \"train_Y = format_output(train)\\n\",\n        \"test_Y = format_output(test)\\n\",\n        \"\\n\",\n        \"# Normalize the training and test data\\n\",\n        \"norm_train_X = norm(train)\\n\",\n        \"norm_test_X = norm(test)\\n\",\n        \"\\n\",\n        \"# Define model layers.\\n\",\n        \"input_layer = Input(shape=(len(train .columns),))\\n\",\n        \"first_dense = Dense(units='128', activation='relu')(input_layer)\\n\",\n        \"second_dense = Dense(units='128', activation='relu')(first_dense)\\n\",\n        \"\\n\",\n        \"# Y1 output will be fed directly from the second dense\\n\",\n        \"y1_output = Dense(units='1', name='y1_output')(second_dense)\\n\",\n        \"third_dense = Dense(units='64', activation='relu')(second_dense)\\n\",\n        \"\\n\",\n        \"# Y2 output will come via the third dense\\n\",\n        \"y2_output = Dense(units='1', name='y2_output')(third_dense)\\n\",\n        \"\\n\",\n        \"# Define the model with the input layer and a list of output layers\\n\",\n        \"model = Model(inputs=input_layer, outputs=[y1_output, y2_output])\\n\",\n        \"print(model.summary())\\n\",\n        \"\\n\",\n        \"# Specify the optimizer, and compile the model with loss functions for both outputs\\n\",\n        \"optimizer = tf.keras.optimizers.SGD(lr=0.001)\\n\",\n        \"model.compile(optimizer=optimizer,\\n\",\n        \"              loss={'y1_output': 'mse', 'y2_output': 'mse'},\\n\",\n        \"              metrics={'y1_output': tf.keras.metrics.RootMeanSquaredError(),\\n\",\n        \"                       'y2_output': tf.keras.metrics.RootMeanSquaredError()})\\n\",\n        \"\\n\",\n        \"# Train the model for 2000 epochs\\n\",\n        \"history = model.fit(norm_train_X, train_Y,\\n\",\n        \"                    epochs=2000, batch_size=10, validation_data=(norm_test_X, test_Y))\\n\",\n        \"\\n\",\n        \"# Test the model and print loss and mse for both outputs\\n\",\n        \"loss, Y1_loss, Y2_loss, Y1_rmse, Y2_rmse = model.evaluate(x=norm_test_X, y=test_Y)\\n\",\n        \"print(\\\"Loss = {}, Y1_loss = {}, Y1_mse = {}, Y2_loss = {}, Y2_mse = {}\\\".format(loss, Y1_loss, Y1_rmse, Y2_loss, Y2_rmse))\\n\",\n        \"\\n\",\n        \"# Plot the loss and mse\\n\",\n        \"Y_pred = model.predict(norm_test_X)\\n\",\n        \"plot_diff(test_Y[0], Y_pred[0], title='Y1')\\n\",\n        \"plot_diff(test_Y[1], Y_pred[1], title='Y2')\\n\",\n        \"plot_metrics(metric_name='y1_output_root_mean_squared_error', title='Y1 RMSE', ylim=6)\\n\",\n        \"plot_metrics(metric_name='y2_output_root_mean_squared_error', title='Y2 RMSE', ylim=7)\\n\"\n      ]",
+          "new": "[\n        \"import tensorflow as tf\\n\",\n        \"import numpy as np\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import polars as pl  # Excel requires: pip install \\\"polars[excel]\\\"\\n\",\n        \"from io import BytesIO\\n\",\n        \"from urllib.request import urlopen\\n\",\n        \"from tensorflow.keras.models import Model\\n\",\n        \"from tensorflow.keras.layers import Dense, Input\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"def format_output(data):\\n\",\n        \"    y1 = data['Y1'].to_numpy()\\n\",\n        \"    y2 = data['Y2'].to_numpy()\\n\",\n        \"    return y1, y2\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"def norm(x):\\n\",\n        \"    return x.select([\\n\",\n        \"        (pl.col(name) - train_stats['mean'][name]) / train_stats['std'][name]\\n\",\n        \"        for name in FEATURES\\n\",\n        \"    ]).to_numpy()\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"def plot_diff(y_true, y_pred, title=''):\\n\",\n        \"    plt.scatter(y_true, y_pred)\\n\",\n        \"    plt.title(title)\\n\",\n        \"    plt.xlabel('True Values')\\n\",\n        \"    plt.ylabel('Predictions')\\n\",\n        \"    plt.axis('equal')\\n\",\n        \"    plt.axis('square')\\n\",\n        \"    plt.xlim(plt.xlim())\\n\",\n        \"    plt.ylim(plt.ylim())\\n\",\n        \"    plt.plot([-100, 100], [-100, 100])\\n\",\n        \"    plt.show()\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"def plot_metrics(metric_name, title, ylim=5):\\n\",\n        \"    plt.title(title)\\n\",\n        \"    plt.ylim(0, ylim)\\n\",\n        \"    plt.plot(history.history[metric_name], color='blue', label=metric_name)\\n\",\n        \"    plt.plot(history.history['val_' + metric_name], color='green', label='val_' + metric_name)\\n\",\n        \"    plt.show()\\n\",\n        \"\\n\",\n        \"\\n\",\n        \"# Get the data from UCI dataset\\n\",\n        \"URL = 'https://archive.ics.uci.edu/ml/machine-learning-databases/00242/ENB2012_data.xlsx'\\n\",\n        \"# Read a bounded workbook stream with the calamine Excel engine.\\n\",\n        \"with urlopen(URL, timeout=30) as response:\\n\",\n        \"    workbook = response.read(2 * 1024 * 1024 + 1)\\n\",\n        \"if len(workbook) > 2 * 1024 * 1024:\\n\",\n        \"    raise ValueError(\\\"Excel workbook exceeds the 2 MiB limit\\\")\\n\",\n        \"df = pl.read_excel(BytesIO(workbook), engine=\\\"calamine\\\")\\n\",\n        \"df = df[np.random.permutation(df.height).tolist()]\\n\",\n        \"\\n\",\n        \"# Split the data into train and test with 80 train / 20 test\\n\",\n        \"train_rows, test_rows = train_test_split(range(df.height), test_size=0.2)\\n\",\n        \"train, test = df[train_rows], df[test_rows]\\n\",\n        \"FEATURES = [f'X{i}' for i in range(1, 9)]\\n\",\n        \"# Keyed, training-only statistics skip null/NaN and use sample standard deviation.\\n\",\n        \"train_stats = {\\n\",\n        \"    'mean': train.select(pl.col(FEATURES).fill_nan(None).mean()).row(0, named=True),\\n\",\n        \"    'std': train.select(pl.col(FEATURES).fill_nan(None).std(ddof=1)).row(0, named=True),\\n\",\n        \"}\\n\",\n        \"\\n\",\n        \"# Select Y1 and Y2 as separate NumPy outputs without mutating features\\n\",\n        \"train_Y = format_output(train)\\n\",\n        \"test_Y = format_output(test)\\n\",\n        \"\\n\",\n        \"# Normalize the training and test data\\n\",\n        \"norm_train_X = norm(train)\\n\",\n        \"norm_test_X = norm(test)\\n\",\n        \"\\n\",\n        \"# Define model layers.\\n\",\n        \"input_layer = Input(shape=(len(FEATURES),))\\n\",\n        \"first_dense = Dense(units='128', activation='relu')(input_layer)\\n\",\n        \"second_dense = Dense(units='128', activation='relu')(first_dense)\\n\",\n        \"\\n\",\n        \"# Y1 output will be fed directly from the second dense\\n\",\n        \"y1_output = Dense(units='1', name='y1_output')(second_dense)\\n\",\n        \"third_dense = Dense(units='64', activation='relu')(second_dense)\\n\",\n        \"\\n\",\n        \"# Y2 output will come via the third dense\\n\",\n        \"y2_output = Dense(units='1', name='y2_output')(third_dense)\\n\",\n        \"\\n\",\n        \"# Define the model with the input layer and a list of output layers\\n\",\n        \"model = Model(inputs=input_layer, outputs=[y1_output, y2_output])\\n\",\n        \"print(model.summary())\\n\",\n        \"\\n\",\n        \"# Specify the optimizer, and compile the model with loss functions for both outputs\\n\",\n        \"optimizer = tf.keras.optimizers.SGD(lr=0.001)\\n\",\n        \"model.compile(optimizer=optimizer,\\n\",\n        \"              loss={'y1_output': 'mse', 'y2_output': 'mse'},\\n\",\n        \"              metrics={'y1_output': tf.keras.metrics.RootMeanSquaredError(),\\n\",\n        \"                       'y2_output': tf.keras.metrics.RootMeanSquaredError()})\\n\",\n        \"\\n\",\n        \"# Train the model for 2000 epochs\\n\",\n        \"history = model.fit(norm_train_X, train_Y,\\n\",\n        \"                    epochs=2000, batch_size=10, validation_data=(norm_test_X, test_Y))\\n\",\n        \"\\n\",\n        \"# Test the model and print loss and mse for both outputs\\n\",\n        \"loss, Y1_loss, Y2_loss, Y1_rmse, Y2_rmse = model.evaluate(x=norm_test_X, y=test_Y)\\n\",\n        \"print(\\\"Loss = {}, Y1_loss = {}, Y1_mse = {}, Y2_loss = {}, Y2_mse = {}\\\".format(loss, Y1_loss, Y1_rmse, Y2_loss, Y2_rmse))\\n\",\n        \"\\n\",\n        \"# Plot the loss and mse\\n\",\n        \"Y_pred = model.predict(norm_test_X)\\n\",\n        \"plot_diff(test_Y[0], Y_pred[0], title='Y1')\\n\",\n        \"plot_diff(test_Y[1], Y_pred[1], title='Y2')\\n\",\n        \"plot_metrics(metric_name='y1_output_root_mean_squared_error', title='Y1 RMSE', ylim=6)\\n\",\n        \"plot_metrics(metric_name='y2_output_root_mean_squared_error', title='Y2 RMSE', ylim=7)\\n\"\n      ]",
+          "intent": "cell 3 source only"
+        }
+      ]
     },
     {
       "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-answer.ipynb",
       "bytes": 25014,
       "original_sha256": "f4f562896ca209a43d294571efeb46a712994e1d67cc4fa22e3897714a4dde81",
-      "converted_sha256": "f4f562896ca209a43d294571efeb46a712994e1d67cc4fa22e3897714a4dde81",
-      "replacements": []
+      "converted_sha256": "111b4dcf0e8d0522d4f911f42bf79587a75dbdcd8b6ff14cb667bc32aa59d24d",
+      "replacements": [
+        {
+          "old": "[\n        \"try:\\n\",\n        \"  # %tensorflow_version only exists in Colab.\\n\",\n        \"  %tensorflow_version 2.x\\n\",\n        \"except Exception:\\n\",\n        \"  pass\\n\",\n        \"  \\n\",\n        \"import tensorflow as tf\\n\",\n        \"from tensorflow.keras.models import Model\\n\",\n        \"from tensorflow.keras.layers import Dense, Input\\n\",\n        \"\\n\",\n        \"import numpy as np\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import pandas as pd\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"from sklearn.metrics import confusion_matrix\\n\",\n        \"import itertools\\n\",\n        \"\\n\",\n        \"\\n\"\n      ]",
+          "new": "[\n        \"try:\\n\",\n        \"  # %tensorflow_version only exists in Colab.\\n\",\n        \"  %tensorflow_version 2.x\\n\",\n        \"except Exception:\\n\",\n        \"  pass\\n\",\n        \"  \\n\",\n        \"import tensorflow as tf\\n\",\n        \"from tensorflow.keras.models import Model\\n\",\n        \"from tensorflow.keras.layers import Dense, Input\\n\",\n        \"\\n\",\n        \"import numpy as np\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import polars as pl\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"from sklearn.metrics import confusion_matrix\\n\",\n        \"import itertools\\n\",\n        \"\\n\",\n        \"\\n\"\n      ]",
+          "intent": "cell 4 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"## Load Dataset\\n\",\n        \"Here is where you can download the data for the wines. \\n\",\n        \"\\n\",\n        \"You will add a new column named 'is_red' in our dataframe to indicate if the wine is white or red. \\n\",\n        \"\\n\",\n        \"In the white wine datset you will fill the column 'is_red' with  zeros and in the red wine dataset you will fill it with ones.\\n\"\n      ]",
+          "new": "[\n        \"## Load Dataset\\n\",\n        \"Here is where you can download the data for the wines. \\n\",\n        \"\\n\",\n        \"You will add a new column named 'is_red' in our dataframe to indicate if the wine is white or red. \\n\",\n        \"\\n\",\n        \"In the white wine datset you will fill the column 'is_red' with  zeros and in the red wine dataset you will fill it with ones.\\n\",\n        \"\\n\",\n        \"Polars (`pip install polars`) keeps an explicit `source_row` for the original row-label alcohol demonstrations. Deduplication keeps the first record in source order, excluding that bookkeeping column. It is removed before combining/model inputs.\\n\"\n      ]",
+          "intent": "cell 5 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"df = pd.concat([red_df, white_df], ignore_index=True)\\n\"\n      ]",
+          "new": "[\n        \"df = pl.concat([red_df.drop(\\\"source_row\\\"), white_df.drop(\\\"source_row\\\")])\\n\"\n      ]",
+          "intent": "cell 11 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"# NOTE: In a real-world scenario you should shuffle the data\\n\",\n        \"# YOU ARE NOT going to do that here, because we want to test\\n\",\n        \"# with deterministic data. But if you want the code to do it\\n\",\n        \"# it's in the commented line below:\\n\",\n        \"\\n\",\n        \"#df = df.iloc[np.random.permutation(len(df))]\"\n      ]",
+          "new": "[\n        \"# NOTE: In a real-world scenario you should shuffle the data\\n\",\n        \"# YOU ARE NOT going to do that here, because we want to test\\n\",\n        \"# with deterministic data. But if you want the code to do it\\n\",\n        \"# it's in the commented line below:\\n\",\n        \"\\n\",\n        \"#df = df[np.random.permutation(df.height).tolist()]\"\n      ]",
+          "intent": "cell 13 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"df['quality'].hist(bins=20) \"\n      ]",
+          "new": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].drop_nulls().drop_nans().to_numpy(), bins=20)\"\n      ]",
+          "intent": "cell 15 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"df['quality'].hist(bins=20) \"\n      ]",
+          "new": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].drop_nulls().drop_nans().to_numpy(), bins=20)\"\n      ]",
+          "intent": "cell 20 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(train.size)\\n\",\n        \"print(test.size)\\n\",\n        \"print(val.size)\\n\",\n        \"\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"# 41015\\n\",\n        \"# 12831\\n\",\n        \"# 10257\"\n      ]",
+          "new": "[\n        \"print(train.height * train.width)\\n\",\n        \"print(test.height * test.width)\\n\",\n        \"print(val.height * val.width)\\n\",\n        \"\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"# 41015\\n\",\n        \"# 12831\\n\",\n        \"# 10257\"\n      ]",
+          "intent": "cell 23 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"Here's where you can explore the training stats. You can pop the labels 'is_red' and 'quality' from the data as these will be used as the labels\\n\"\n      ]",
+          "new": "[\n        \"Compute training-only means and sample standard deviations (`ddof=1`) for the ordered feature columns. Keep 'quality' and 'is_red' out of these statistics and model inputs. Keyed statistics explicitly match each feature by name.\\n\"\n      ]",
+          "intent": "cell 24 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"train_stats = train.describe()\\n\",\n        \"train_stats.pop('is_red')\\n\",\n        \"train_stats.pop('quality')\\n\",\n        \"train_stats = train_stats.transpose()\"\n      ]",
+          "new": "[\n        \"FEATURES = [name for name in train.columns if name not in ('quality', 'is_red')]\\n\",\n        \"train_stats = {\\n\",\n        \"  'mean': train.select(pl.col(FEATURES).fill_nan(None).mean()).row(0, named=True),\\n\",\n        \"  'std': train.select(pl.col(FEATURES).fill_nan(None).std(ddof=1)).row(0, named=True),\\n\",\n        \"}\\n\"\n      ]",
+          "intent": "cell 25 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"Next pop the quality and type columns from the dataframe and convert it into numpy arrays. Do this for the train, validation and test datasets.\\n\",\n        \"\\n\"\n      ]",
+          "new": "[\n        \"Select the quality and type columns as separate NumPy arrays without mutating the feature data. Do this for the train, validation and test datasets.\\n\"\n      ]",
+          "intent": "cell 28 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"def format_output(data):\\n\",\n        \"  is_red = data.pop('is_red')\\n\",\n        \"  is_red = np.array(is_red)\\n\",\n        \"  quality = data.pop('quality')\\n\",\n        \"  quality = np.array(quality)\\n\",\n        \"  return (quality, is_red)\"\n      ]",
+          "new": "[\n        \"def format_output(data):\\n\",\n        \"  quality = data['quality'].to_numpy()\\n\",\n        \"  is_red = data['is_red'].to_numpy()\\n\",\n        \"  return (quality, is_red)\"\n      ]",
+          "intent": "cell 29 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"Next, you can normalize the data using the formula:\\n\",\n        \"**X - mean(X) / Std(X)**\"\n      ]",
+          "new": "[\n        \"Normalize each feature with training-only statistics: **(X - training mean) / training sample standard deviation**. The ordered NumPy matrix contains features only; null/NaN values remain missing.\\n\"\n      ]",
+          "intent": "cell 31 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"def norm(x):\\n\",\n        \"  return (x - train_stats['mean']) / train_stats['std']\"\n      ]",
+          "new": "[\n        \"def norm(x):\\n\",\n        \"  return x.select([\\n\",\n        \"    (pl.col(name) - train_stats['mean'][name]) / train_stats['std'][name]\\n\",\n        \"    for name in FEATURES\\n\",\n        \"  ]).to_numpy()\"\n      ]",
+          "intent": "cell 32 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"URL = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'\\n\",\n        \"white_df = pd.read_csv(URL, sep=\\\";\\\")\\n\",\n        \"white_df[\\\"is_red\\\"] = 0\\n\",\n        \"white_df = white_df.drop_duplicates(keep='first')\\n\"\n      ]",
+          "new": "[\n        \"URL = 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'\\n\",\n        \"white_df = pl.read_csv(URL, separator=\\\";\\\", infer_schema_length=None).with_row_index(\\\"source_row\\\")\\n\",\n        \"white_df = white_df.with_columns(pl.lit(0, dtype=pl.Int64).alias(\\\"is_red\\\"))\\n\",\n        \"white_df = white_df.fill_nan(None).unique(\\n\",\n        \"    subset=[name for name in white_df.columns if name != \\\"source_row\\\"],\\n\",\n        \"    keep=\\\"first\\\", maintain_order=True)\\n\"\n      ]",
+          "intent": "cell 6 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"URL = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'\\n\",\n        \"red_df = pd.read_csv(URL, sep=\\\";\\\")\\n\",\n        \"red_df[\\\"is_red\\\"] = 1\\n\",\n        \"red_df = red_df.drop_duplicates(keep='first')\\n\"\n      ]",
+          "new": "[\n        \"URL = 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'\\n\",\n        \"red_df = pl.read_csv(URL, separator=\\\";\\\", infer_schema_length=None).with_row_index(\\\"source_row\\\")\\n\",\n        \"red_df = red_df.with_columns(pl.lit(1, dtype=pl.Int64).alias(\\\"is_red\\\"))\\n\",\n        \"red_df = red_df.fill_nan(None).unique(\\n\",\n        \"    subset=[name for name in red_df.columns if name != \\\"source_row\\\"],\\n\",\n        \"    keep=\\\"first\\\", maintain_order=True)\\n\"\n      ]",
+          "intent": "cell 8 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(white_df.alcohol[0])\\n\",\n        \"print(white_df.alcohol[100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#8.8\\n\",\n        \"#9.1\"\n      ]",
+          "new": "[\n        \"print(white_df.filter(pl.col(\\\"source_row\\\") == 0)[\\\"alcohol\\\"].item())\\n\",\n        \"print(white_df.filter(pl.col(\\\"source_row\\\") == 100)[\\\"alcohol\\\"].item())\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#8.8\\n\",\n        \"#9.1\"\n      ]",
+          "intent": "cell 7 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(red_df.alcohol[0])\\n\",\n        \"print(red_df.alcohol[100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#10.2\"\n      ]",
+          "new": "[\n        \"print(red_df.filter(pl.col(\\\"source_row\\\") == 0)[\\\"alcohol\\\"].item())\\n\",\n        \"print(red_df.filter(pl.col(\\\"source_row\\\") == 100)[\\\"alcohol\\\"].item())\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#10.2\"\n      ]",
+          "intent": "cell 9 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(df.alcohol[0])\\n\",\n        \"print(df.alcohol[100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#9.5\"\n      ]",
+          "new": "[\n        \"print(df[\\\"alcohol\\\"][0])\\n\",\n        \"print(df[\\\"alcohol\\\"][100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#9.5\"\n      ]",
+          "intent": "cell 12 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(df.alcohol[0])\\n\",\n        \"print(df.alcohol[100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#10.9\"\n      ]",
+          "new": "[\n        \"print(df[\\\"alcohol\\\"][0])\\n\",\n        \"print(df[\\\"alcohol\\\"][100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#10.9\"\n      ]",
+          "intent": "cell 18 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"df = df[(df['quality'] > 4) & (df['quality'] < 8 )]\\n\",\n        \"df = df.reset_index(drop=True)\"\n      ]",
+          "new": "[\n        \"df = df.filter((pl.col(\\\"quality\\\") > 4) & (pl.col(\\\"quality\\\") < 8))\"\n      ]",
+          "intent": "cell 17 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"train, test = train_test_split(df, test_size=0.2)\\n\",\n        \"train, val = train_test_split(train, test_size=0.2)\"\n      ]",
+          "new": "[\n        \"train_rows, test_rows = train_test_split(range(df.height), test_size=0.2)\\n\",\n        \"train, test = df[train_rows], df[test_rows]\\n\",\n        \"train_rows, val_rows = train_test_split(range(train.height), test_size=0.2)\\n\",\n        \"train, val = train[train_rows], train[val_rows]\"\n      ]",
+          "intent": "cell 22 source only (unchanged metadata context anchors duplicate source if needed)"
+        }
+      ]
     },
     {
       "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-question.ipynb",
       "bytes": 25102,
       "original_sha256": "c7a0678291954ef19b53699d3ab5e863b09f2c949b8d655f40acba6fe33ced8b",
-      "converted_sha256": "c7a0678291954ef19b53699d3ab5e863b09f2c949b8d655f40acba6fe33ced8b",
-      "replacements": []
+      "converted_sha256": "dac0af6e028b722f629694396e96e27cc95d2af0baecdcf90c911fe79a09e61a",
+      "replacements": [
+        {
+          "old": "[\n        \"try:\\n\",\n        \"  # %tensorflow_version only exists in Colab.\\n\",\n        \"  %tensorflow_version 2.x\\n\",\n        \"except Exception:\\n\",\n        \"  pass\\n\",\n        \"  \\n\",\n        \"import tensorflow as tf\\n\",\n        \"from tensorflow.keras.models import Model\\n\",\n        \"from tensorflow.keras.layers import Dense, Input\\n\",\n        \"\\n\",\n        \"import numpy as np\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import pandas as pd\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"from sklearn.metrics import confusion_matrix\\n\",\n        \"import itertools\\n\",\n        \"\\n\",\n        \"\\n\"\n      ]",
+          "new": "[\n        \"try:\\n\",\n        \"  # %tensorflow_version only exists in Colab.\\n\",\n        \"  %tensorflow_version 2.x\\n\",\n        \"except Exception:\\n\",\n        \"  pass\\n\",\n        \"  \\n\",\n        \"import tensorflow as tf\\n\",\n        \"from tensorflow.keras.models import Model\\n\",\n        \"from tensorflow.keras.layers import Dense, Input\\n\",\n        \"\\n\",\n        \"import numpy as np\\n\",\n        \"import matplotlib.pyplot as plt\\n\",\n        \"import polars as pl\\n\",\n        \"from sklearn.model_selection import train_test_split\\n\",\n        \"from sklearn.metrics import confusion_matrix\\n\",\n        \"import itertools\\n\",\n        \"\\n\",\n        \"\\n\"\n      ]",
+          "intent": "cell 4 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"## Load Dataset\\n\",\n        \"Here is where you can download the data for the wines. \\n\",\n        \"\\n\",\n        \"You will add a new column named 'is_red' in our dataframe to indicate if the wine is white or red. \\n\",\n        \"\\n\",\n        \"In the white wine datset you will fill the column 'is_red' with  zeros and in the red wine dataset you will fill it with ones.\\n\"\n      ]",
+          "new": "[\n        \"## Load Dataset\\n\",\n        \"Here is where you can download the data for the wines. \\n\",\n        \"\\n\",\n        \"You will add a new column named 'is_red' in our dataframe to indicate if the wine is white or red. \\n\",\n        \"\\n\",\n        \"In the white wine datset you will fill the column 'is_red' with  zeros and in the red wine dataset you will fill it with ones.\\n\",\n        \"\\n\",\n        \"Polars (`pip install polars`) keeps an explicit `source_row` for the original row-label alcohol demonstrations. Deduplication keeps the first record in source order, excluding that bookkeeping column. It is removed before combining/model inputs.\\n\"\n      ]",
+          "intent": "cell 5 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"df = pd.concat([red_df, white_df], ignore_index=True)\\n\"\n      ]",
+          "new": "[\n        \"df = pl.concat([red_df.drop(\\\"source_row\\\"), white_df.drop(\\\"source_row\\\")])\\n\"\n      ]",
+          "intent": "cell 11 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"# NOTE: In a real-world scenario you should shuffle the data\\n\",\n        \"# YOU ARE NOT going to do that here, because we want to test\\n\",\n        \"# with deterministic data. But if you want the code to do it\\n\",\n        \"# it's in the commented line below:\\n\",\n        \"\\n\",\n        \"#df = df.iloc[np.random.permutation(len(df))]\"\n      ]",
+          "new": "[\n        \"# NOTE: In a real-world scenario you should shuffle the data\\n\",\n        \"# YOU ARE NOT going to do that here, because we want to test\\n\",\n        \"# with deterministic data. But if you want the code to do it\\n\",\n        \"# it's in the commented line below:\\n\",\n        \"\\n\",\n        \"#df = df[np.random.permutation(df.height).tolist()]\"\n      ]",
+          "intent": "cell 13 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"df['quality'].hist(bins=20) \"\n      ]",
+          "new": "\"metadata\": {\n        \"id\": \"IsvK0-Sgy17C\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].drop_nulls().drop_nans().to_numpy(), bins=20)\"\n      ]",
+          "intent": "cell 15 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"df['quality'].hist(bins=20) \"\n      ]",
+          "new": "\"metadata\": {\n        \"id\": \"857ygzZiLgGg\",\n        \"colab_type\": \"code\",\n        \"colab\": {}\n      },\n      \"source\": [\n        \"plt.hist(df[\\\"quality\\\"].drop_nulls().drop_nans().to_numpy(), bins=20)\"\n      ]",
+          "intent": "cell 20 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(train.size)\\n\",\n        \"print(test.size)\\n\",\n        \"print(val.size)\\n\",\n        \"\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"# 41015\\n\",\n        \"# 12831\\n\",\n        \"# 10257\"\n      ]",
+          "new": "[\n        \"print(train.height * train.width)\\n\",\n        \"print(test.height * test.width)\\n\",\n        \"print(val.height * val.width)\\n\",\n        \"\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"# 41015\\n\",\n        \"# 12831\\n\",\n        \"# 10257\"\n      ]",
+          "intent": "cell 23 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"Here's where you can explore the training stats. You can pop the labels 'is_red' and 'quality' from the data as these will be used as the labels\\n\"\n      ]",
+          "new": "[\n        \"Compute training-only means and sample standard deviations (`ddof=1`) for the ordered feature columns. Keep 'quality' and 'is_red' out of these statistics and model inputs. Keyed statistics explicitly match each feature by name.\\n\"\n      ]",
+          "intent": "cell 24 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"train_stats = train.describe()\\n\",\n        \"train_stats.pop('is_red')\\n\",\n        \"train_stats.pop('quality')\\n\",\n        \"train_stats = train_stats.transpose()\"\n      ]",
+          "new": "[\n        \"FEATURES = [name for name in train.columns if name not in ('quality', 'is_red')]\\n\",\n        \"train_stats = {\\n\",\n        \"  'mean': train.select(pl.col(FEATURES).fill_nan(None).mean()).row(0, named=True),\\n\",\n        \"  'std': train.select(pl.col(FEATURES).fill_nan(None).std(ddof=1)).row(0, named=True),\\n\",\n        \"}\\n\"\n      ]",
+          "intent": "cell 25 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"Next pop the quality and type columns from the dataframe and convert it into numpy arrays. Do this for the train, validation and test datasets.\\n\",\n        \"\\n\"\n      ]",
+          "new": "[\n        \"Select the quality and type columns as separate NumPy arrays without mutating the feature data. Do this for the train, validation and test datasets.\\n\"\n      ]",
+          "intent": "cell 28 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"def format_output(data):\\n\",\n        \"  is_red = data.pop('is_red')\\n\",\n        \"  is_red = np.array(is_red)\\n\",\n        \"  quality = data.pop('quality')\\n\",\n        \"  quality = np.array(quality)\\n\",\n        \"  return (quality, is_red)\"\n      ]",
+          "new": "[\n        \"def format_output(data):\\n\",\n        \"  quality = data['quality'].to_numpy()\\n\",\n        \"  is_red = data['is_red'].to_numpy()\\n\",\n        \"  return (quality, is_red)\"\n      ]",
+          "intent": "cell 29 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"Next, you can normalize the data using the formula:\\n\",\n        \"**X - mean(X) / Std(X)**\"\n      ]",
+          "new": "[\n        \"Normalize each feature with training-only statistics: **(X - training mean) / training sample standard deviation**. The ordered NumPy matrix contains features only; null/NaN values remain missing.\\n\"\n      ]",
+          "intent": "cell 31 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"def norm(x):\\n\",\n        \"  return (x - train_stats['mean']) / train_stats['std']\"\n      ]",
+          "new": "[\n        \"def norm(x):\\n\",\n        \"  return x.select([\\n\",\n        \"    (pl.col(name) - train_stats['mean'][name]) / train_stats['std'][name]\\n\",\n        \"    for name in FEATURES\\n\",\n        \"  ]).to_numpy()\"\n      ]",
+          "intent": "cell 32 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"URL = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'\\n\",\n        \"white_df = pd.read_csv(URL, sep=\\\";\\\")\\n\",\n        \"white_df[\\\"is_red\\\"] = # YOUR CODE HERE\\n\",\n        \"white_df = white_df.drop_duplicates(keep='first')\\n\"\n      ]",
+          "new": "[\n        \"URL = 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-white.csv'\\n\",\n        \"white_df = pl.read_csv(URL, separator=\\\";\\\", infer_schema_length=None).with_row_index(\\\"source_row\\\")\\n\",\n        \"white_df = white_df.with_columns(pl.lit(# YOUR CODE HERE, dtype=pl.Int64).alias(\\\"is_red\\\"))\\n\",\n        \"white_df = white_df.fill_nan(None).unique(\\n\",\n        \"    subset=[name for name in white_df.columns if name != \\\"source_row\\\"],\\n\",\n        \"    keep=\\\"first\\\", maintain_order=True)\\n\"\n      ]",
+          "intent": "cell 6 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"URL = 'http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'\\n\",\n        \"red_df = pd.read_csv(URL, sep=\\\";\\\")\\n\",\n        \"red_df[\\\"is_red\\\"] = # YOUR CODE HERE\\n\",\n        \"red_df = red_df.drop_duplicates(keep='first')\\n\"\n      ]",
+          "new": "[\n        \"URL = 'https://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv'\\n\",\n        \"red_df = pl.read_csv(URL, separator=\\\";\\\", infer_schema_length=None).with_row_index(\\\"source_row\\\")\\n\",\n        \"red_df = red_df.with_columns(pl.lit(# YOUR CODE HERE, dtype=pl.Int64).alias(\\\"is_red\\\"))\\n\",\n        \"red_df = red_df.fill_nan(None).unique(\\n\",\n        \"    subset=[name for name in red_df.columns if name != \\\"source_row\\\"],\\n\",\n        \"    keep=\\\"first\\\", maintain_order=True)\\n\"\n      ]",
+          "intent": "cell 8 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(white_df.alcohol[0])\\n\",\n        \"print(white_df.alcohol[100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#8.8\\n\",\n        \"#9.1\"\n      ]",
+          "new": "[\n        \"print(white_df.filter(pl.col(\\\"source_row\\\") == 0)[\\\"alcohol\\\"].item())\\n\",\n        \"print(white_df.filter(pl.col(\\\"source_row\\\") == 100)[\\\"alcohol\\\"].item())\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#8.8\\n\",\n        \"#9.1\"\n      ]",
+          "intent": "cell 7 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(red_df.alcohol[0])\\n\",\n        \"print(red_df.alcohol[100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#10.2\"\n      ]",
+          "new": "[\n        \"print(red_df.filter(pl.col(\\\"source_row\\\") == 0)[\\\"alcohol\\\"].item())\\n\",\n        \"print(red_df.filter(pl.col(\\\"source_row\\\") == 100)[\\\"alcohol\\\"].item())\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#10.2\"\n      ]",
+          "intent": "cell 9 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(df.alcohol[0])\\n\",\n        \"print(df.alcohol[100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#9.5\"\n      ]",
+          "new": "[\n        \"print(df[\\\"alcohol\\\"][0])\\n\",\n        \"print(df[\\\"alcohol\\\"][100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#9.5\"\n      ]",
+          "intent": "cell 12 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"print(df.alcohol[0])\\n\",\n        \"print(df.alcohol[100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#10.9\"\n      ]",
+          "new": "[\n        \"print(df[\\\"alcohol\\\"][0])\\n\",\n        \"print(df[\\\"alcohol\\\"][100])\\n\",\n        \"#EXPECTED OUTPUT\\n\",\n        \"#9.4\\n\",\n        \"#10.9\"\n      ]",
+          "intent": "cell 18 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"df = df[(df['quality'] > # YOUR CODE HERE) & (df['quality'] < # YOUR CODE HERE )]\\n\",\n        \"df = df.reset_index(drop=True)\"\n      ]",
+          "new": "[\n        \"df = df.filter((pl.col(\\\"quality\\\") > # YOUR CODE HERE) & (pl.col(\\\"quality\\\") < # YOUR CODE HERE))\"\n      ]",
+          "intent": "cell 17 source only (unchanged metadata context anchors duplicate source if needed)"
+        },
+        {
+          "old": "[\n        \"train, test = train_test_split(# YOUR CODE HERE)\\n\",\n        \"train, val = train_test_split(# YOUR CODE HERE)\"\n      ]",
+          "new": "[\n        \"train_rows, test_rows = train_test_split(# YOUR CODE HERE)\\n\",\n        \"train, test = df[train_rows], df[test_rows]\\n\",\n        \"train_rows, val_rows = train_test_split(# YOUR CODE HERE)\\n\",\n        \"train, val = train[train_rows], train[val_rows]\"\n      ]",
+          "intent": "cell 22 source only (unchanged metadata context anchors duplicate source if needed)"
+        }
+      ]
     },
     {
       "path": "Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 4 - Models and Callbacks/ExploringCallbacks.ipynb",
