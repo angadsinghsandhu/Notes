@@ -5,7 +5,7 @@ import multiprocessing
 import os
 import textwrap
 import scipy.io
-import pandas as pd
+import polars as pl
 
 # getting dataset
 DATA_URL = 'https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/static/imdb_crop.tar'
@@ -68,9 +68,24 @@ for key, value in values.items():
     print(key, len(value))
 
 # dataframe
-df = pd.DataFrame(values, columns=names)
+# SciPy cell arrays wrap each string and 1x4 box; keep scalar NaNs as NaNs.
+normalized = {
+    key: ([None if value is None else str(value[0]) for value in values[key]]
+          if key in ('full_path', 'name') else
+          [None if value is None else value[0].astype(float).tolist() for value in values[key]]
+          if key == 'face_location' else values[key].tolist())
+    for key in names
+}
+schema = {'dob': pl.Int32, 'photo_taken': pl.UInt16, 'full_path': pl.String,
+          'gender': pl.Float64, 'name': pl.String, 'face_location': pl.List(pl.Float64),
+          'face_score': pl.Float64, 'second_face_score': pl.Float64, 'celeb_id': pl.UInt16}
+df = pl.DataFrame(normalized, schema={key: schema[key] for key in names})
 df.head()
-df.isna().sum()  # fill null data
+df.select([
+    (pl.col(key).is_null() | pl.col(key).is_nan()).sum().alias(key)
+    if schema[key] == pl.Float64 else pl.col(key).is_null().sum().alias(key)
+    for key in names
+])  # count nulls and floating NaNs
 
 # FIXME (CLICK LINK AND COMPLETE CODE)
 link = 'https://github.com/lmoroney/dlaicourse/blob/master/TensorFlow%20Deployment/Course%203%20-%20TensorFlow%20Datasets/Week%204/Exercises/TFDS_Week4_Exercise.ipynb'
