@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DELTAS = ROOT / 'site/tests/fixtures/real/polars/source-deltas.json'
 TEST_FILES = [
     'site/tests/scripts/test_check_polars.py',
+    'site/tests/scripts/test_polars_tf_support.py',
     'site/tests/Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 2 - Image Clasification with Pytorch/test_download.py',
     'site/tests/Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 4 - Models and Callbacks/test_ExploringCallbacks.py',
     'site/tests/Courses/Coursera/tf deployment/Course 3/Week 2/test_2_input_pipelines_custom.py',
