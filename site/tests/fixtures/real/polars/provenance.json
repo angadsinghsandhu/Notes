@@ -302,7 +302,7 @@
       "result": "acquired",
       "worksheets": [
         {
-          "title": "Φύλλο1",
+          "title": "\u03a6\u03cd\u03bb\u03bb\u03bf1",
           "max_row": 1297,
           "max_column": 12,
           "first_row": [
@@ -327,7 +327,7 @@
           ]
         },
         {
-          "title": "Φύλλο2",
+          "title": "\u03a6\u03cd\u03bb\u03bb\u03bf2",
           "max_row": 1,
           "max_column": 1,
           "first_row": null,
@@ -338,7 +338,7 @@
           ]
         },
         {
-          "title": "Φύλλο3",
+          "title": "\u03a6\u03cd\u03bb\u03bb\u03bf3",
           "max_row": 1,
           "max_column": 1,
           "first_row": null,
@@ -373,6 +373,70 @@
       "nan_count": 0,
       "engine": "calamine/fastexcel",
       "parity": "complete original UCI workbook; bounded file-like decode, prescribed shuffle/split, 8 features and Y1/Y2 outputs"
+    },
+    {
+      "derived_utc": "2026-10-09T19:52:45.829197+00:00",
+      "filename": "imdb_crop_records.mat",
+      "bytes": 188296,
+      "sha256": "709850e373490be8084502701c2e2e05cedc66ab7c90cf18e409a4c40324fe8f",
+      "parent_sha256": "be67a7d84df5f90893884cd7f206c8c935ceeaa2afc09b6a96076fd7f982a035",
+      "source_ids_zero_based": [
+        0,
+        3,
+        5,
+        6,
+        30,
+        504,
+        505,
+        506
+      ],
+      "parent_row_count": 460723,
+      "selection": "first real rows covering female/male/unknown gender, finite/negative infinite face score, absent/present second face, float64/uint16 bounding-box cells; includes unknown gender with finite face score and with second face",
+      "unchanged_non_record_field": "celeb_names entire 1x20284 dictionary retained without remapping celeb_id",
+      "default_load_comparison": "all selected fields and all dictionary cells recursively identical in shape, dtype and values, NaN-aware; assertions passed",
+      "recursive_comparison_count": 20329,
+      "extra_condition_counts": {
+        "missing_gender_finite_score": 7224,
+        "missing_gender_present_second": 4290
+      },
+      "url": "https://data.vision.ee.ethz.ch/cvl/rrothe/imdb-wiki/static/imdb_crop.tar",
+      "parent_member": "imdb_crop/imdb.mat",
+      "parent_payload_range_inclusive": [
+        6989163520,
+        7012099163
+      ],
+      "parent_archive_etag": "\"1a1f50800-52c6db398c2bc\"",
+      "parent_records": 460723,
+      "wrapper_mode": "scipy.io.loadmat defaults",
+      "implementation_recursive_comparison_count": 20318,
+      "evidence": "actual crop MAT record subset, recursively verified shape/dtype/value with unchanged full celeb_names dictionary",
+      "parity_limit": "metadata only; no crop images, actual shape/coordinate or TFDS builder execution",
+      "actual_selection_counts": {
+        "unknown_gender": 3,
+        "negative_infinite_face_score": 2,
+        "absent_second_face_nan": 5
+      },
+      "default_outer_shapes": {
+        "imdb": [
+          1,
+          1
+        ],
+        "record_fields": [
+          1,
+          8
+        ],
+        "celeb_names": [
+          1,
+          20284
+        ],
+        "string_cell": [
+          1
+        ],
+        "bbox_cell": [
+          1,
+          4
+        ]
+      }
     }
   ],
   "unavailable_integrations": [
@@ -386,6 +450,7 @@
   "synthetic_checks": [
     "Titanic schema with numeric null; not authentic Titanic records",
     "typed heart edge frames for empty and numeric missingness; not downloaded records",
-    "Wine/Excel numeric null, NaN and zero-variance normalization edge frames; not downloaded records"
+    "Wine/Excel numeric null, NaN and zero-variance normalization edge frames; not downloaded records",
+    "MAT metadata typed null/NaN edge records; not publisher records"
   ]
 }

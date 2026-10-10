@@ -110,6 +110,8 @@ class CheckPolarsTest(unittest.TestCase):
             'site/tests/Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/test_Multi_Output.py',
             'site/tests/Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/test_exercise_answer.py',
             'site/tests/Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/test_exercise_question.py',
+            'site/tests/Courses/Coursera/tf deployment/Course 3/Week 4/test_publish_datasets.py',
+            'site/tests/Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 4/Exercises/test_TFDS_Week4_Exercise.py',
         ])
 
     def test_isolated_environment_required_with_raw_nonzero_exit(self):
