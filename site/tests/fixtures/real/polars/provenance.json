@@ -437,6 +437,64 @@
           4
         ]
       }
+    },
+    {
+      "filename": "sunspots.csv",
+      "url": "https://raw.githubusercontent.com/https-deeplearning-ai/tensorflow-1-public/025abb3e6bd63c63b65d6133286e2d033c9c7da4/C4/W4/ungraded_labs/Sunspots.csv",
+      "acquisition_utc": "2026-10-09T19:49:56.568249+00:00",
+      "cap_bytes": 1048576,
+      "evidence": "pinned official course monthly data; historical lowercase-file equality unknown",
+      "status": 200,
+      "final_url": "https://raw.githubusercontent.com/https-deeplearning-ai/tensorflow-1-public/025abb3e6bd63c63b65d6133286e2d033c9c7da4/C4/W4/ungraded_labs/Sunspots.csv",
+      "headers": {
+        "Connection": "close",
+        "Content-Length": "70827",
+        "Cache-Control": "max-age=300",
+        "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; sandbox",
+        "Content-Type": "text/plain; charset=utf-8",
+        "ETag": "\"2693b0abc35b38d7d5ea646cb696566ea54b4b820287b06bad362fb68a75efe0\"",
+        "Strict-Transport-Security": "max-age=31536000",
+        "X-Content-Type-Options": "nosniff",
+        "X-Frame-Options": "deny",
+        "X-XSS-Protection": "1; mode=block",
+        "X-GitHub-Request-Id": "5294:3B7D0:1A440A:44DF57:6AC94564",
+        "x-github-edge-region": "sea",
+        "Accept-Ranges": "bytes",
+        "Date": "Fri, 09 Oct 2026 19:49:56 GMT",
+        "Via": "1.1 varnish",
+        "X-Served-By": "cache-bfi-krnt7300051-BFI",
+        "X-Cache": "MISS",
+        "X-Cache-Hits": "0",
+        "X-Timer": "S1791575397.654697,VS0,VE147",
+        "Vary": "Authorization,Accept-Encoding",
+        "Access-Control-Allow-Origin": "*",
+        "Cross-Origin-Resource-Policy": "cross-origin",
+        "X-Fastly-Request-ID": "9a8d76c20aae4602204448adb4846563e4fde7ed",
+        "Expires": "Fri, 09 Oct 2026 19:54:56 GMT",
+        "Source-Age": "0"
+      },
+      "header": [
+        "",
+        "Date",
+        "Monthly Mean Total Sunspot Number"
+      ],
+      "records": 3235,
+      "row_widths": [
+        3
+      ],
+      "first": [
+        "0",
+        "1749-01-31",
+        "96.7"
+      ],
+      "last": [
+        "3234",
+        "2018-07-31",
+        "1.6"
+      ],
+      "bytes": 70827,
+      "sha256": "0ef4cf0379879a9be0043885d8de1c1907ae852c903a0fcbbc58ba813efb3f10",
+      "result": "acquired"
     }
   ],
   "unavailable_integrations": [
@@ -451,6 +509,7 @@
     "Titanic schema with numeric null; not authentic Titanic records",
     "typed heart edge frames for empty and numeric missingness; not downloaded records",
     "Wine/Excel numeric null, NaN and zero-variance normalization edge frames; not downloaded records",
-    "MAT metadata typed null/NaN edge records; not publisher records"
+    "MAT metadata typed null/NaN edge records; not publisher records",
+    "Time-series adversarial calendars, null/NaN/inf, constant, short and duplicate labels; not downloaded records"
   ]
 }
