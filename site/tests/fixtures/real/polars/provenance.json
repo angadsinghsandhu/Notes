@@ -495,6 +495,58 @@
       "bytes": 70827,
       "sha256": "0ef4cf0379879a9be0043885d8de1c1907ae852c903a0fcbbc58ba813efb3f10",
       "result": "acquired"
+    },
+    {
+      "filename": "pageviews_head.csv",
+      "derived_utc": "2026-10-11T18:46:31.999540+00:00",
+      "evidence": "exact first257physical lines of full existing repository input; full file separately mandatory for parity",
+      "bytes": 7702,
+      "sha256": "c225622b96d9377552418a30d6740941c054857eeab5ef604cf6cac0ab52b959",
+      "parent_path": "Tutorials/GPU/nv-gpu-workshop/pageviews_small.csv",
+      "parent_bytes": 34132641,
+      "parent_sha256": "ee688aedeace7a623213194ba0c8754c61c4dc6cb2ff5cb55f322dd02f2fc2ff",
+      "physical_lines": 257,
+      "records": 256,
+      "parent_physical_lines": 1119000,
+      "parent_records": 1118999,
+      "header_policy": "default first physical row as header",
+      "columns": [
+        "en.m",
+        "Article_51",
+        "1",
+        "0"
+      ],
+      "full_pandas_dtypes": [
+        "str",
+        "str",
+        "int64",
+        "int64"
+      ],
+      "full_polars_dtypes": [
+        "String",
+        "String",
+        "Int64",
+        "Int64"
+      ],
+      "full_null_counts": [
+        0,
+        12,
+        0,
+        0
+      ],
+      "full_numeric_nan_counts": {
+        "1": 0,
+        "0": 0
+      },
+      "full_missing_token_discrepancy": {
+        "zero_based_row": 754611,
+        "physical_line": 754613,
+        "raw_record": "fr.m None 1 0",
+        "default_polars_null_count": 11,
+        "original_pandas_missing_count": 12,
+        "preserved_with": "explicit original default NA tokens in CPU Polars CSV reader"
+      },
+      "parity_limit": "full CPU tabular read/head only; original wrong path adapted in test memory; no cuDF/GPU/full notebook execution"
     }
   ],
   "unavailable_integrations": [
@@ -510,6 +562,7 @@
     "typed heart edge frames for empty and numeric missingness; not downloaded records",
     "Wine/Excel numeric null, NaN and zero-variance normalization edge frames; not downloaded records",
     "MAT metadata typed null/NaN edge records; not publisher records",
-    "Time-series adversarial calendars, null/NaN/inf, constant, short and duplicate labels; not downloaded records"
+    "Time-series adversarial calendars, null/NaN/inf, constant, short and duplicate labels; not downloaded records",
+    "Pageviews default Pandas NA tokens/quoted empty/Unicode/numeric missingness/header-only/empty and absent input; not publisher records"
   ]
 }

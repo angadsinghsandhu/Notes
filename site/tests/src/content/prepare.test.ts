@@ -500,6 +500,20 @@ it.each(['source', 'outputs', 'metadata'])(
   },
 );
 
+it.each(['source', 'outputs', 'metadata'])(
+  'rejects unapproved cuDF notebook %s bytes before reversing Task 9 and Task 5',
+  async (field) => {
+    const sourcePath = 'Tutorials/GPU/nv-gpu-workshop/6.0_cuDF.ipynb';
+    const actual = await readFile(join('..', sourcePath), 'utf8');
+    const token = `"${field}":`;
+    expect(actual).toContain(token);
+    const tampered = actual.replace(token, `"unapproved_${field}":`);
+    expect(() => reverseTask9Notebook(tampered, sourcePath)).toThrow(
+      'Unapproved Task 9 notebook bytes',
+    );
+  },
+);
+
 it.each(['removal', 'verification'])(
   'reports committed success after postcommit %s cleanup failure and recovers without accumulating backups',
   async (failure) => {
