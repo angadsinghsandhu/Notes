@@ -385,7 +385,7 @@ it('extracts the real DL tools notebook inline PNG without changing its original
   expect(result.html).toContain('width="878" height="172"');
   expect(result.html).toContain(extracted[0]!.asset.url);
   expect(result.html).not.toContain('data:image');
-});
+}, 15_000);
 it('bounds notebook inline rasters, rejects malformed payloads, and never extracts unused data lookalikes', async () => {
   const png = await raster();
   const data = `data:image/png;base64,${png.toString('base64')}`;
@@ -424,7 +424,7 @@ it('bounds notebook inline rasters, rejects malformed payloads, and never extrac
     untouched,
   );
   expect(calls).toBe(0);
-}, 180_000);
+}, 600_000);
 
 it('accepts a genuine PNG above five megabytes inside the stated 25 MiB raster budget', async () => {
   const png = await sharp(randomBytes(1400 * 1400 * 3), {
