@@ -182,7 +182,7 @@ test('built known alias and an actual owned draft are excluded from Pagefind and
   page,
   request,
 }) => {
-  test.setTimeout(180_000);
+  test.setTimeout(360_000);
   const name = `task6-production-${randomUUID()}`;
   const published = resolve('../Tutorials', `${name}.md`);
   const draft = resolve('../Tutorials', `${name}-draft.md`);

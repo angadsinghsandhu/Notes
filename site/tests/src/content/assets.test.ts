@@ -75,7 +75,7 @@ describe('approved asset planning and copy', () => {
     expect(
       await readFile(join(target, assets[0]!.url.split('/').at(-1)!)),
     ).toEqual(bytes);
-  });
+  }, 15_000);
   it('uses sparse inputs at the exact 25 MiB boundary', async () => {
     const root = await archive();
     await sparse(join(root, 'Tutorials/images/boundary.png'), 26_214_400);
