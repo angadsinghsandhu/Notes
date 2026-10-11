@@ -612,8 +612,29 @@
       "path": "Tutorials/GPU/nv-gpu-workshop/6.0_cuDF.ipynb",
       "bytes": 10094,
       "original_sha256": "9240ecd16cf5f58cbc4b8c64d42fc3ff2187206d7aecbbc86836a6f330c934f1",
-      "converted_sha256": "9240ecd16cf5f58cbc4b8c64d42fc3ff2187206d7aecbbc86836a6f330c934f1",
-      "replacements": []
+      "converted_sha256": "e18fc0ba61b13322f83978b1cbd0b643f5874590fdfea3cfbbc2553d0b6fc100",
+      "replacements": [
+        {
+          "old": "[\n    \"In this tutorial we have some data stored in `data/`. Most of this data is too small to really benefit from GPU acceleration, but let's explore it anyway.\"\n   ]",
+          "new": "[\n    \"This checkout stores `pageviews_small.csv` beside this notebook, rather than in the absent `data/` directory. Run the reads from this workshop directory. The CPU comparison uses Polars (`pip install polars`); both readers keep the original first physical row as column names. The CPU read infers the full schema and explicitly preserves the original Pandas default missing-value tokens, including the real page title `None`. Most of this data is too small to really benefit from GPU acceleration, but let's explore it anyway.\"\n   ]",
+          "intent": "cell 3 source only"
+        },
+        {
+          "old": "[\n    \"import pandas as pd\\n\"\n   ]",
+          "new": "[\n    \"import polars as pl\\n\"\n   ]",
+          "intent": "cell 4 source only"
+        },
+        {
+          "old": "[\n    \"df = pd.read_csv(\\\"./data/pageviews_small.csv\\\", sep=\\\" \\\")\\n\",\n    \"df.head()\\n\"\n   ]",
+          "new": "[\n    \"# Preserve the original CSV reader's default missing-value tokens.\\n\",\n    \"df = pl.read_csv(\\n\",\n    \"    \\\"./pageviews_small.csv\\\", separator=\\\" \\\", infer_schema_length=None,\\n\",\n    \"    null_values=[\\\"\\\", \\\"#N/A\\\", \\\"#N/A N/A\\\", \\\"#NA\\\", \\\"-1.#IND\\\", \\\"-1.#QNAN\\\",\\n\",\n    \"                 \\\"-NaN\\\", \\\"-nan\\\", \\\"1.#IND\\\", \\\"1.#QNAN\\\", \\\"<NA>\\\", \\\"N/A\\\", \\\"NA\\\",\\n\",\n    \"                 \\\"NULL\\\", \\\"NaN\\\", \\\"None\\\", \\\"n/a\\\", \\\"nan\\\", \\\"null\\\"],\\n\",\n    \")\\n\",\n    \"df.head()\\n\"\n   ]",
+          "intent": "cell 5 source only"
+        },
+        {
+          "old": "[\n    \"pageviews = cudf.read_csv(\\\"./data/pageviews_small.csv\\\", sep=\\\" \\\")\\n\",\n    \"pageviews.head()\\n\"\n   ]",
+          "new": "[\n    \"pageviews = cudf.read_csv(\\\"./pageviews_small.csv\\\", sep=\\\" \\\")\\n\",\n    \"pageviews.head()\\n\"\n   ]",
+          "intent": "cell 6 source only (cuDF path only)"
+        }
+      ]
     }
   ]
 }

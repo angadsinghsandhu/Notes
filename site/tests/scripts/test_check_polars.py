@@ -113,6 +113,7 @@ class CheckPolarsTest(unittest.TestCase):
             'site/tests/Courses/Coursera/tf deployment/Course 3/Week 4/test_publish_datasets.py',
             'site/tests/Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 4/Exercises/test_TFDS_Week4_Exercise.py',
             'site/tests/Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/test_S_P_Week_1_Lesson_2.py',
+            'site/tests/Tutorials/GPU/nv-gpu-workshop/test_6_0_cuDF.py',
         ])
 
     def test_isolated_environment_required_with_raw_nonzero_exit(self):
