@@ -39,11 +39,11 @@ There is no always-running API or database in this release. Git provides storage
 
 Alternatives considered:
 
-| Option | Benefit | Trade-off |
-| --- | --- | --- |
-| Astro and a custom content pipeline | Fits mixed artifacts and a tailored reading interface | Requires explicit migration and renderer tests |
-| Docusaurus | Established documentation navigation and Markdown features | Mixed notebooks/resources still need custom ingestion; stronger documentation theme conventions |
-| Application server and database | Browser editing, accounts, live mutations | Extra hosting, authentication, and synchronization absent from the chosen workflow |
+| Option                              | Benefit                                                    | Trade-off                                                                                       |
+| ----------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| Astro and a custom content pipeline | Fits mixed artifacts and a tailored reading interface      | Requires explicit migration and renderer tests                                                  |
+| Docusaurus                          | Established documentation navigation and Markdown features | Mixed notebooks/resources still need custom ingestion; stronger documentation theme conventions |
+| Application server and database     | Browser editing, accounts, live mutations                  | Extra hosting, authentication, and synchronization absent from the chosen workflow              |
 
 Cloudflare Pages is the primary deployment target. Use GitHub Actions to run checks, build once, and upload the successful output to a Cloudflare Pages Direct Upload project. This avoids a separate unchecked hosting build. Pushes to `master` publish only after the deployment is configured; pull requests run verification without deployment credentials. The output remains an ordinary static site portable to other hosts.
 
@@ -53,17 +53,17 @@ Cloudflare's documented Free limits are 500 builds/month, 20,000 deployed files,
 
 Keep content in the existing six folders. The new application lives under `site/`, with its own package manifest and lockfile. Root `README.md` documents the application commands.
 
-| Area | Responsibility |
-| --- | --- |
-| `site/src/content/` | Discovery, schemas, identifiers, asset/link resolution, renderers, migration reporting |
-| `site/src/lib/catalog.ts` | Read the generated manifest and answer UI queries; no filesystem writes |
-| `site/src/components/`, `site/src/layouts/`, `site/src/pages/` | Static reader interface and route generation |
-| `site/src/client/` | Navigation, theme, code-copy, and search interactions |
-| `site/scripts/` | CLI orchestration, local watcher, migration, output verification |
-| `site/tests/` | Tests mirroring source/script/component/page paths |
-| `site/content/` | Publication policy, metadata overrides, migration ledger |
-| `site/.generated/` | Disposable manifest and rendered bodies, ignored by Git |
-| `site/public/content-assets/` | Only referenced, approved, publishable local assets, ignored by Git |
+| Area                                                           | Responsibility                                                                         |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `site/src/content/`                                            | Discovery, schemas, identifiers, asset/link resolution, renderers, migration reporting |
+| `site/src/lib/catalog.ts`                                      | Read the generated manifest and answer UI queries; no filesystem writes                |
+| `site/src/components/`, `site/src/layouts/`, `site/src/pages/` | Static reader interface and route generation                                           |
+| `site/src/client/`                                             | Navigation, theme, code-copy, and search interactions                                  |
+| `site/scripts/`                                                | CLI orchestration, local watcher, migration, output verification                       |
+| `site/tests/`                                                  | Tests mirroring source/script/component/page paths                                     |
+| `site/content/`                                                | Publication policy, metadata overrides, migration ledger                               |
+| `site/.generated/`                                             | Disposable manifest and rendered bodies, ignored by Git                                |
+| `site/public/content-assets/`                                  | Only referenced, approved, publishable local assets, ignored by Git                    |
 
 Content code must not import UI or CLI modules. UI code consumes the manifest through `catalog.ts` and never scans the archive. CLI modules call content modules. Do not execute course programs or import course package dependencies.
 
@@ -138,18 +138,18 @@ All controls have visible focus indicators and accessible names. Touch targets a
 
 Use npm with a committed `site/package-lock.json`. Pin a supported Node LTS version in `site/.node-version`, CI, and documentation when scaffolding; pin resolved dependency versions in the lockfile. All commands below run from `site/`:
 
-| Command | Contract |
-| --- | --- |
-| `npm ci` | Install exactly the locked dependencies |
-| `npm run dev` | Prepare content, watch the archive, run Astro locally |
-| `npm run content:check` | Validate policy, metadata, routes, artifacts, and local links without rewriting source |
-| `npm run content:migrate -- --dry-run` | Emit a proposed migration report without editing original notes |
-| `npm run content:migrate -- --apply` | Apply the reviewed metadata/link migration, retaining source bodies |
-| `npm run check` | Format, lint, import boundaries, types, and unit tests |
-| `npm run build` | Prepare content, generate Astro HTML, run Pagefind, verify output limits/links |
-| `npm run preview` | Serve the completed production output locally |
-| `npm run test:e2e` | Browser verification against production output |
-| `npm run verify` | Run `check`, `build`, and `test:e2e` serially |
+| Command                                | Contract                                                                               |
+| -------------------------------------- | -------------------------------------------------------------------------------------- |
+| `npm ci`                               | Install exactly the locked dependencies                                                |
+| `npm run dev`                          | Prepare content, watch the archive, run Astro locally                                  |
+| `npm run content:check`                | Validate policy, metadata, routes, artifacts, and local links without rewriting source |
+| `npm run content:migrate -- --dry-run` | Emit a proposed migration report without editing original notes                        |
+| `npm run content:migrate -- --apply`   | Apply the reviewed metadata/link migration, retaining source bodies                    |
+| `npm run check`                        | Format, lint, import boundaries, types, isolated archive parity, and unit coverage     |
+| `npm run build`                        | Prepare content, generate Astro HTML, run Pagefind, verify output limits/links         |
+| `npm run preview`                      | Serve the completed production output locally                                          |
+| `npm run test:e2e`                     | Browser verification against production output                                         |
+| `npm run verify`                       | Run `build`, `check`, `test:e2e`, then final read-only `check:output` serially         |
 
 CI runs `npm ci` and `npm run verify`. The deploy job depends on verification and only runs on trusted pushes to `master`. Provisioning a Cloudflare project and supplying deployment credentials are setup actions, not prerequisites for local use or CI checks. Missing deployment configuration results in a clearly reported non-deployment, not a claim that a site was published. No external project or remote write is part of specification/plan creation.
 
@@ -191,4 +191,4 @@ Self-review checked intent, scope, publication assumptions, artifact fallback be
 
 ## 13. Approved Polars scope addition (2026-10-05)
 
-The user explicitly requested both new Python tooling and archived Pandas examples use Polars. Convert the 15 executable/example targets inventoried during implementation, preserving teaching intent, exercises and model-facing tabular behavior with real-data parity checks. Historical cuDF/Dask ecosystem explanations and original upstream provenance remain truthful. This specific authorization permits changes to those archive bodies beyond metadata/link migration. The separate Task 9 milestone is required before final acceptance; never execute complete notebooks or unrelated course programs to verify it.
+The user explicitly requested both new Python tooling and archived Pandas examples use Polars. Convert the 15 executable/example targets inventoried during implementation, preserving teaching intent, exercises and model-facing tabular behavior with real-data parity checks. Historical cuDF/Dask ecosystem explanations and original upstream provenance remain truthful. This specific authorization permits changes to those archive bodies beyond metadata/link migration. The separate Task 9 milestone is complete with an approved independent whole-range review and passing configured local verification. Final whole-website review remains pending. Never execute complete notebooks or unrelated course programs to verify it.
