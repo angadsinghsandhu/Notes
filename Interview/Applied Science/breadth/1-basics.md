@@ -1,3 +1,6 @@
+---
+title: "1. Fundamentals & Learning Paradigms"
+---
 # 1. Fundamentals & Learning Paradigms
 
 ## Key Concepts

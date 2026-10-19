@@ -428,3 +428,163 @@ it.each([
     ).toThrow('Tutorials/Group/reserved.md');
   },
 );
+
+it('retains supplemental metadata through actual preparation and removes it from note adjacency', async () => {
+  const options = await archive();
+  const path =
+    'Courses/Scrimba/Learn React/src/projects/01-first-react/README.md';
+  const body = await readFile(join(process.cwd(), '..', path), 'utf8');
+  await put(options.rootDir, path, body);
+  await put(
+    options.rootDir,
+    'Courses/Scrimba/Learn React/src/projects/01-first-react/1.md',
+    '# First',
+  );
+  await put(
+    options.rootDir,
+    'Courses/Scrimba/Learn React/src/projects/01-first-react/2.md',
+    '# Second',
+  );
+  const policy = JSON.parse(await readFile(options.policyPath, 'utf8'));
+  policy.overrides = { [path]: { role: 'supplemental' } };
+  await writeFile(options.policyPath, JSON.stringify(policy));
+  const result = await prepareContent(options);
+  expect(result.diagnostics).toEqual([]);
+  const supplement = result.manifest.entries.find(
+    (item) => item.sourcePath === path,
+  )!;
+  expect(supplement.role).toBe('supplemental');
+  const catalog = loadCatalog(result.manifest);
+  expect(catalog.getEntry(supplement.route)?.role).toBe('supplemental');
+  expect(catalog.getAdjacentNotes(supplement.id)).toEqual({});
+  const second = result.manifest.entries.find(
+    (item) => item.title === 'Second',
+  )!;
+  expect(catalog.getAdjacentNotes(second.id).next).toBeUndefined();
+  expect(JSON.stringify(catalog.listEntries())).not.toMatch(
+    /ledger|preparedBodies|absolutePath/,
+  );
+});
+
+it('preserves optional public metadata and independently rejects unsafe repository/body paths', () => {
+  const note = entry('rich', {
+    slug: 'rich',
+    updated: '2026-10-04',
+    anchors: ['anchor'],
+    assetUrl: '/content-assets/a.pdf',
+    sourceUrl: 'https://example.test/source',
+  });
+  const selected = loadCatalog({ ...manifest, entries: [note] }).getEntry(
+    note.route,
+  )!;
+  expect(selected).toMatchObject({
+    slug: 'rich',
+    updated: '2026-10-04',
+    anchors: ['anchor'],
+    assetUrl: note.assetUrl,
+    sourceUrl: note.sourceUrl,
+  });
+  selected.anchors!.push('mutation');
+  expect(note.anchors).toEqual(['anchor']);
+  for (const fields of [
+    { sourcePath: '/private/note.md' },
+    { sourcePath: 'Tutorials\\note.md' },
+    { bodyFile: '/private/body.html' },
+    { bodyFile: 'bodies/../private' },
+  ])
+    expect(() =>
+      loadCatalog({ ...manifest, entries: [entry('unsafe', fields)] }),
+    ).toThrow('repository-relative');
+});
+it('rejects invalid snapshots and manifests, recovers its failed cache, and refuses missing embedded bodies', async () => {
+  const options = await archive();
+  const snapshot = join(options.outputDir, 'current');
+  await mkdir(snapshot, { recursive: true });
+  const file = join(snapshot, 'manifest.json');
+  await mkdir(file);
+  await expect(readPreparedCatalog(snapshot)).rejects.toThrow(
+    'Unsafe generated manifest',
+  );
+  await rm(file, { recursive: true });
+  await writeFile(file, '{invalid');
+  await expect(readPreparedCatalog(snapshot)).rejects.toThrow();
+  const note = entry('body', {
+    id: 'c'.repeat(64),
+    bodyFile: `bodies/${'c'.repeat(64)}.html`,
+  });
+  await writeFile(
+    file,
+    JSON.stringify({ ...manifest, entries: [note], preparedBodies: {} }),
+  );
+  await expect(readPreparedCatalog(snapshot)).rejects.toThrow(
+    'Missing generated body',
+  );
+  await writeFile(
+    file,
+    JSON.stringify({
+      ...manifest,
+      entries: [
+        note,
+        entry('resource', { kind: 'pdf' }),
+        entry('draft', { draft: true }),
+      ],
+      preparedBodies: { [note.bodyFile!]: '<p>Body</p>' },
+    }),
+  );
+  const catalog = await readPreparedCatalog(snapshot);
+  const selected = catalog.getEntry(note.route)!;
+  expect(await readPreparedBody({ ...selected }, snapshot)).toBe('<p>Body</p>');
+  await expect(
+    readPreparedBody(
+      {
+        ...selected,
+        id: 'd'.repeat(64),
+        bodyFile: `bodies/${'d'.repeat(64)}.html`,
+      },
+      snapshot,
+    ),
+  ).rejects.toThrow('Body is unavailable');
+  await expect(
+    readPreparedBody(
+      selected,
+      join(options.rootDir, 'other/site/.generated/current'),
+    ),
+  ).rejects.toThrow('does not belong');
+  selected.id = 'd'.repeat(64);
+  selected.bodyFile = `bodies/${selected.id}.html`;
+  await expect(readPreparedBody(selected, snapshot)).rejects.toThrow(
+    'does not belong',
+  );
+});
+it('reads legacy body files safely and rejects symlink directories and non-file manifests', async () => {
+  const options = await archive();
+  const snapshot = join(options.outputDir, 'current');
+  await mkdir(join(snapshot, 'bodies'), { recursive: true });
+  const note = entry('legacy', {
+    id: 'e'.repeat(64),
+    bodyFile: `bodies/${'e'.repeat(64)}.html`,
+  });
+  const file = join(snapshot, 'manifest.json');
+  await writeFile(file, JSON.stringify({ ...manifest, entries: [note] }));
+  await writeFile(join(snapshot, note.bodyFile!), '<p>Legacy safe body</p>');
+  expect(await readPreparedBody(note, snapshot)).toBe(
+    '<p>Legacy safe body</p>',
+  );
+  await rm(join(snapshot, 'bodies'), { recursive: true });
+  await mkdir(join(options.rootDir, 'external'));
+  await symlink(join(options.rootDir, 'external'), join(snapshot, 'bodies'));
+  await expect(readPreparedBody(note, snapshot)).rejects.toThrow(
+    'body directory',
+  );
+  await rm(file);
+  await mkdir(file);
+  await expect(readPreparedBody(note, snapshot)).rejects.toThrow(
+    'Unsafe generated manifest',
+  );
+  await rm(join(snapshot, 'bodies'));
+  await rm(snapshot, { recursive: true });
+  await symlink(join(options.rootDir, 'external'), snapshot);
+  await expect(readPreparedCatalog(snapshot)).rejects.toThrow(
+    'Unsafe symbolic link',
+  );
+});

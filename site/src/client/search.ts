@@ -68,6 +68,7 @@ export function initSearch(document: Document, load = loadPagefind): void {
     const token = ++generation;
     list!.replaceChildren();
     more!.hidden = true;
+    more!.disabled = false;
     const query = form!
       .querySelector<HTMLInputElement>('[name="q"]')!
       .value.trim();
@@ -102,13 +103,15 @@ export function initSearch(document: Document, load = loadPagefind): void {
     void search();
   });
   more.addEventListener('click', async () => {
+    const token = generation;
     more.disabled = true;
     try {
-      await append(generation);
+      await append(token);
     } catch {
+      if (token !== generation) return;
       status.textContent = 'More results could not load. Retry the search.';
     } finally {
-      more.disabled = false;
+      if (token === generation) more.disabled = false;
     }
   });
 }

@@ -1,3 +1,6 @@
+---
+title: "1.3 How to Write and Analyze an Algorithm"
+---
 # 1.3 How to Write and Analyze an Algorithm
 
 ## Overview

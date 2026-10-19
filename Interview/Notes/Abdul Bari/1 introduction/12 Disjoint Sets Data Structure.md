@@ -1,3 +1,6 @@
+---
+title: "1.12 Disjoint Sets Data Structure"
+---
 # 1.12 Disjoint Sets Data Structure
 
 ## Overview

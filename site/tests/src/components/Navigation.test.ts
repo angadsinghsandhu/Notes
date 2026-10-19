@@ -103,3 +103,15 @@ test('theme selector and visible keyboard focus meet the 44px contract', async (
     path: '../.superpowers/sdd/2026-10-04-notes-website/screenshots/keyboard-focus-dark-320.png',
   });
 });
+
+test('real supplemental template does not appear as a primary group-navigation note', async ({
+  page,
+}) => {
+  await page.goto(
+    '/notes/courses/scrimba/learn-react/src/projects/01-first-react/',
+  );
+  await expect(page.locator('.group-navigation')).toHaveCount(0);
+  await expect(page.locator('article')).toContainText(
+    'This template provides a minimal setup',
+  );
+});

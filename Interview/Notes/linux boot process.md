@@ -1,3 +1,6 @@
+---
+title: "Booting Linux: Behind the Scenes"
+---
 # Booting Linux: Behind the Scenes
 
 This guide outlines what happens when you press the power button to boot up a Linux system, detailing the sequence from hardware initialization to launching the desktop environment.

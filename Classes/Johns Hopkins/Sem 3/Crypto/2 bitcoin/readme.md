@@ -1,3 +1,6 @@
+---
+title: "Bitcoin"
+---
 # Bitcoin
 
 This chapter covers Bitcoin, the first and most well-known cryptocurrency. It introduces the concept of Bitcoin, its history, and how it is used in decentralized systems.

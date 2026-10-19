@@ -1,3 +1,6 @@
+---
+title: "Blockchain and Cryptocurrencies (EN.601.641/441) - Professor Matthew Green"
+---
 # Blockchain and Cryptocurrencies (EN.601.641/441) - Professor Matthew Green
 
 This course focuses on blockchains and their applications, particularly in cryptocurrencies and decentralized finance. It covers blockchain technology, Bitcoin and altcoins, smart contracts, and decentralized finance (DeFi). Relevant cryptographic principles will also be discussed.

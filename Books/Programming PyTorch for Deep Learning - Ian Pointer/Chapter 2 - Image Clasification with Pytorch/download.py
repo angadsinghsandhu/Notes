@@ -4,7 +4,7 @@ import os
 import sys
 import urllib3
 from urllib.parse import urlparse
-import pandas as pd
+import polars as pl
 import itertools
 import shutil
 
@@ -39,7 +39,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
     # get args and create output directory
-    imagesDF = pd.read_csv("./images.csv")
+    imagesDF = pl.read_csv("./images.csv")
 
     for set_type, klass in list(itertools.product(set_types, classes)):
         path = "./{}/{}".format(set_type, klass)
@@ -51,8 +51,6 @@ if __name__ == "__main__":
 
     result = [
         download_image(url, klass, data_type)
-        for url, klass, data_type in zip(
-            imagesDF["url"], imagesDF["class"], imagesDF["type"]
-        )
+        for url, klass, data_type in imagesDF.select("url", "class", "type").iter_rows()
     ]
     sys.exit(0)

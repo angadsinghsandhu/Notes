@@ -1,3 +1,6 @@
+---
+title: "Amazon Inventory Lockers"
+---
 # Amazon Inventory Lockers
 
 Below is one example of a Low Level Design (LLD) in Python for a **Delivery & Locker Management System** that meets the requirements. The design follows the SOLID principles and is broken into several files, each handling a specific responsibility. In this system:

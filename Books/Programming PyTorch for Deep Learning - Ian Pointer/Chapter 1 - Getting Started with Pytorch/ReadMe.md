@@ -1,3 +1,6 @@
+---
+title: "Getting Started with Pytorch"
+---
 # Getting Started with Pytorch
 
 In this chapter we will create our initial uderstandings of PyTorch and how thw API functions. We will also be discussing ways of efficiently using and running these models.

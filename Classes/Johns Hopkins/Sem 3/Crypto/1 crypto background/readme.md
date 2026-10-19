@@ -1,3 +1,6 @@
+---
+title: "Cryptocurrency Background"
+---
 # Cryptocurrency Background
 
 This chapter covers the basics of cryptocurrencies and their applications. It introduces the concept of cryptocurrencies, their history, and how they are used in decentralized systems.

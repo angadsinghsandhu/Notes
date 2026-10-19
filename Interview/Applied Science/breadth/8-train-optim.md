@@ -1,3 +1,6 @@
+---
+title: "8. Training & Optimization"
+---
 # 8. Training & Optimization
 
 ---

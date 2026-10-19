@@ -288,3 +288,37 @@ it.each(['retired-name', 'proposed-url'])(
     ).toContain('installed');
   },
 );
+
+it('rejects an unowned publication directory and malformed generated asset names before source/output changes', async () => {
+  const options = await archive();
+  await expect(
+    recoverPublications(
+      join(options.rootDir, 'private'),
+      join(options.rootDir, 'private-assets'),
+    ),
+  ).rejects.toThrow('owned site/.generated');
+  const assets = join(options.rootDir, 'site/public/content-assets');
+  const stage = join(options.outputDir, `.stage-${randomUUID()}`);
+  await mkdir(stage, { recursive: true });
+  await expect(
+    commitPublication(
+      options.outputDir,
+      assets,
+      stage,
+      {
+        version: 1,
+        entries: [],
+        ledger: [],
+        assets: [
+          {
+            sourcePath: 'Tutorials/a.pdf',
+            mode: 'local',
+            bytes: 1,
+            url: '/content-assets/unowned.pdf',
+          },
+        ],
+      },
+      false,
+    ),
+  ).rejects.toThrow('Invalid generated asset name');
+});

@@ -1,3 +1,6 @@
+---
+title: "Parking Lot System"
+---
 # Parking Lot System
 
 ## Problem Statement

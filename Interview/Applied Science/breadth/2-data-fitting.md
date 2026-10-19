@@ -1,3 +1,6 @@
+---
+title: "2. Bias-Variance Tradeoff & Regularization ⭐⭐⭐"
+---
 # 2. Bias-Variance Tradeoff & Regularization ⭐⭐⭐
 
 ---

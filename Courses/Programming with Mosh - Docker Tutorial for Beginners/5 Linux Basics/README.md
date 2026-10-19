@@ -1,3 +1,6 @@
+---
+title: "Linux Basics"
+---
 # Linux Basics
 
 Reasons to learn Linux to learn Docker:

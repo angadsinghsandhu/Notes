@@ -1,3 +1,6 @@
+---
+title: "1.1 Priori Analysis and Posteriori Testing"
+---
 # 1.1 Priori Analysis and Posteriori Testing
 
 ## Overview

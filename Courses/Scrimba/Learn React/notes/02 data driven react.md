@@ -1,3 +1,6 @@
+---
+title: "Data-Driven React"
+---
 # Data-Driven React
 
 Understanding how to pass and manage data in React components is crucial for building dynamic applications. In this section, we will explore props, reusable components, passing data, and rendering arrays in React.

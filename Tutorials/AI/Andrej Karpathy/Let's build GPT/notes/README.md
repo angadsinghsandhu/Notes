@@ -1,3 +1,6 @@
+---
+title: "Creating ChatGPT from scratch"
+---
 # Creating ChatGPT from scratch
 
 ## *Introduction*

@@ -1,3 +1,6 @@
+---
+title: "Estimation Maximization"
+---
 # Estimation Maximization
 
 lecture : <https://videolectures.net/hltss2010_eisner_plm/>

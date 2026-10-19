@@ -1,3 +1,6 @@
+---
+title: "Dynamic Programming"
+---
 # Dynamic Programming
 
 ## Collection of overlaping sub-problems

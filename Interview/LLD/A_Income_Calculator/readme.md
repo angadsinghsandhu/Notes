@@ -1,3 +1,6 @@
+---
+title: "Income Calculator Low Level Design"
+---
 # Income Calculator Low Level Design
 
 Below is an example Low Level Design (LLD) for an **Income Calculator** system. This design calculates the net income based on a user’s base salary, bonuses, and deductions. The design follows SOLID principles and includes inline comments that reference our design steps.

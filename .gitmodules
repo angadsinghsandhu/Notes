@@ -1,0 +1,5 @@
+# Preserve the archived gitlink for checkout cleanup; this does not verify
+# availability of its historical commit. Checkout must not initialize it.
+[submodule "rag-workshop-pydata-nyc-2024"]
+	path = Tutorials/AI/RAG/rag-workshop-pydata-nyc-2024
+	url = https://github.com/theam/rag-workshop-pydata-nyc-2024.git

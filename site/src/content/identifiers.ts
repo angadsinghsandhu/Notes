@@ -91,6 +91,7 @@ export function assertUniqueRoutes(entries: ContentEntry[]): void {
     '/search/',
     '/404.html',
     '/sitemap.xml',
+    '/_headers',
     ...CONTENT_ROOTS.map((root) => `/library/${root.toLowerCase()}/`),
   ])
     claim(route, `reserved website route ${route}`, !route.endsWith('/'));

@@ -1,3 +1,6 @@
+---
+title: "2.9 Strassen's Matrix Multiplication"
+---
 # 2.9 Strassen's Matrix Multiplication
 
 ## Overview

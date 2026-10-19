@@ -1,5 +1,5 @@
 ---
-import { sectionLabels } from '../lib/catalog.js';
+import { sectionLabels, isLearningNote } from '../lib/catalog.js';
 import type { ContentEntry } from '../content/index.js';
 interface Props {
   entry?: ContentEntry;
@@ -16,9 +16,7 @@ for (const item of treeEntries ?? []) {
   if (group !== undefined)
     groups.set(group, [...(groups.get(group) ?? []), item]);
 }
-const notes = treeEntries?.every((item) =>
-  ['markdown', 'notebook'].includes(item.kind),
-);
+const notes = treeEntries?.every(isLearningNote);
 ---
 
 {!treeEntries && (

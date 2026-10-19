@@ -1,3 +1,6 @@
+---
+title: "Convolutional Neural Networks"
+---
 # Convolutional Neural Networks
 
 After experimenting with **fully connected neural networks** in Chapter 2, we may have noticed some limitations:

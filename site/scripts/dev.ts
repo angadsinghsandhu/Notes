@@ -1,7 +1,7 @@
-import { watch } from 'node:fs';
+import { watch } from 'chokidar';
 import { lstat } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
-import { basename, dirname, join, resolve } from 'node:path';
+import { basename, dirname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   prepareContent,
@@ -12,19 +12,20 @@ import {
 } from '../src/content/index.js';
 import { contentOptions } from './content.js';
 
+type WatchHandle = { close(): void | Promise<void> };
 type WatchServices = {
   prepare?: typeof prepareContent;
   subscribe?: (
     path: string,
     recursive: boolean,
     onEvent: (filename: string | null) => void,
-  ) => { close(): void };
+  ) => WatchHandle | Promise<WatchHandle>;
   onDiagnostics?: (diagnostics: Diagnostic[]) => void;
 };
 type Server = { kill(): void; exited: Promise<void> };
 type DevelopmentServices = WatchServices & { startServer?: () => Server };
 
-/** Native events request a serialized rebuild; events during a build collapse into the next build. */
+/** Source events request a serialized rebuild; events during a build collapse into the next build. */
 export async function startContentWatcher(
   options: PrepareOptions,
   onSuccess: () => void,
@@ -39,25 +40,62 @@ export async function startContentWatcher(
     });
   const subscribe =
     services.subscribe ??
-    ((path, recursive, onEvent) => {
-      const watcher = watch(path, { recursive }, (_event, filename) =>
-        onEvent(filename),
-      );
-      watcher.on('error', (error) =>
-        report([{ sourcePath: 'watcher', message: error.message }]),
-      );
-      return watcher;
+    (async (path, recursive, onEvent) => {
+      // ponytail: 1s polling costs O(watched paths); tune only if measured load warrants it.
+      const watcher = watch(path, {
+        usePolling: true,
+        interval: 1000,
+        binaryInterval: 1000,
+        ignoreInitial: true,
+        followSymlinks: false,
+        ...(recursive ? {} : { depth: 0 }),
+        ignored: (candidate) =>
+          Boolean(
+            publicationExclusion(
+              relative(options.rootDir, candidate).replaceAll('\\', '/'),
+              { ...policy, exclude: [] },
+            ),
+          ),
+      });
+      let ready = false;
+      try {
+        await new Promise<void>((resolveReady, reject) => {
+          watcher.once('ready', () => {
+            ready = true;
+            resolveReady();
+          });
+          watcher.on('error', (error) => {
+            if (!ready) reject(error);
+            else
+              report([
+                {
+                  sourcePath: 'watcher',
+                  message:
+                    error instanceof Error ? error.message : String(error),
+                },
+              ]);
+          });
+          watcher.on('all', (_event, changed) =>
+            onEvent(relative(path, changed).replaceAll('\\', '/')),
+          );
+        });
+        return watcher;
+      } catch (error) {
+        await watcher.close();
+        throw error;
+      }
     });
-  const watchers = new Map<string, { close(): void }>();
+  const watchers = new Map<string, WatchHandle>();
   const prepare = services.prepare ?? prepareContent;
   let closed = false;
+  let initialized = false;
   let refreshing = Promise.resolve();
   let pending = false;
   let running: Promise<void> | undefined;
   function rebuild(): void {
     if (closed) return;
     pending = true;
-    if (running) return;
+    if (!initialized || running) return;
     running = (async () => {
       while (pending && !closed) {
         pending = false;
@@ -94,7 +132,7 @@ export async function startContentWatcher(
         if (closed) return;
         watchers.set(
           path,
-          subscribe(path, true, (filename) => {
+          await subscribe(path, true, (filename) => {
             if (
               filename &&
               publicationExclusion(
@@ -119,14 +157,14 @@ export async function startContentWatcher(
   try {
     watchers.set(
       options.rootDir,
-      subscribe(options.rootDir, false, (filename) => {
+      await subscribe(options.rootDir, false, (filename) => {
         if (filename && !policy.roots.includes(filename)) return;
         refreshing = refreshing
           .then(async () => {
             if (closed) return;
             for (const root of filename ? [filename] : policy.roots) {
               const path = join(options.rootDir, root);
-              watchers.get(path)?.close();
+              await watchers.get(path)?.close();
               watchers.delete(path);
             }
             await watchRoots();
@@ -139,24 +177,28 @@ export async function startContentWatcher(
     );
     watchers.set(
       dirname(options.policyPath),
-      subscribe(dirname(options.policyPath), false, (filename) => {
+      await subscribe(dirname(options.policyPath), false, (filename) => {
         if (!filename || filename === basename(options.policyPath)) rebuild();
       }),
     );
-    await watchRoots();
+    refreshing = refreshing.then(watchRoots);
+    await refreshing;
+    initialized = true;
     rebuild();
     await running;
   } catch (error) {
-    for (const watcher of watchers.values()) watcher.close();
+    closed = true;
+    await refreshing.catch(() => undefined);
+    for (const watcher of watchers.values()) await watcher.close();
     throw error;
   }
   return {
     close: async () => {
       if (closed) return;
       closed = true;
-      for (const watcher of watchers.values()) watcher.close();
-      watchers.clear();
       await refreshing;
+      for (const watcher of watchers.values()) await watcher.close();
+      watchers.clear();
       await running;
     },
   };

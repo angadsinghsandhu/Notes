@@ -48,6 +48,7 @@ const updated = z
 const metadataFields = z
   .object({
     title: nonempty,
+    role: z.literal('supplemental').optional(),
     description: z.string().optional(),
     tags: uniqueStrings.optional(),
     draft: z.boolean().optional(),
@@ -150,7 +151,9 @@ function legacyTitle(source: SourceEntry, body: string): string {
     if (!fence) {
       if (/^ {0,3}=+[ \t]*$/.test(line) && previousLine.trim())
         return previousLine.trim();
-      const heading = /^ {0,3}#\s+(.+?)\s*#*\s*$/.exec(line)?.[1]?.trim();
+      const heading = /^ {0,3}#[ \t]+(.+?)(?:[ \t]+#+)?[ \t]*$/
+        .exec(line)?.[1]
+        ?.trim();
       if (heading) return heading;
       previousLine = /^ {0,3}\S/.test(line) ? line : '';
     }

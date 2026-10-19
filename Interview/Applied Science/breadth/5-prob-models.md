@@ -1,3 +1,6 @@
+---
+title: "5. Probabilistic Models"
+---
 # 5. Probabilistic Models
 
 ---

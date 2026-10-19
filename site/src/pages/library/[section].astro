@@ -2,7 +2,11 @@
 import LibraryLayout from '../../layouts/LibraryLayout.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import Navigation from '../../components/Navigation.astro';
-import { readPreparedCatalog, sectionLabels } from '../../lib/catalog.js';
+import {
+  readPreparedCatalog,
+  sectionLabels,
+  isLearningNote,
+} from '../../lib/catalog.js';
 import type { ContentEntry, Section } from '../../content/index.js';
 export async function getStaticPaths() {
   const catalog = await readPreparedCatalog();
@@ -16,12 +20,8 @@ interface Props {
   entries: ContentEntry[];
 }
 const { section, entries } = Astro.props;
-const notes = entries.filter((entry) =>
-  ['markdown', 'notebook'].includes(entry.kind),
-);
-const resources = entries.filter(
-  (entry) => !['markdown', 'notebook'].includes(entry.kind),
-);
+const notes = entries.filter(isLearningNote);
+const resources = entries.filter((entry) => !isLearningNote(entry));
 const title = sectionLabels[section];
 ---
 
@@ -61,13 +61,18 @@ const title = sectionLabels[section];
       {resources.length === 0 && (
         <p>No resources have been published in this section yet.</p>
       )}
-      {['code', 'pdf', 'slides'].map((kind) => {
+      {['markdown', 'notebook', 'code', 'pdf', 'slides'].map((kind) => {
         const selected = resources.filter((entry) => entry.kind === kind);
         return (
           selected.length > 0 && (
             <details class="group-disclosure">
               <summary>
-                {kind} ({selected.length})
+                {kind === 'markdown'
+                  ? 'Supplemental documents'
+                  : kind === 'notebook'
+                    ? 'Supplemental notebooks'
+                    : kind}{' '}
+                ({selected.length})
               </summary>
               <Navigation treeEntries={selected} />
             </details>

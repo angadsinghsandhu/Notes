@@ -10,6 +10,7 @@ export type SourceEntry = {
   bytes: number;
 };
 export type Metadata = {
+  role?: 'supplemental';
   title: string;
   description: string;
   tags: string[];
@@ -55,6 +56,7 @@ export type AssetRecord = {
   bytes: number;
   url: string;
   mode: 'local' | 'external';
+  dimensions?: { width: number; height: number };
 };
 export type Manifest = {
   version: 1;

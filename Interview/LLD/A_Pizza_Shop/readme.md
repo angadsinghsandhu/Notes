@@ -1,3 +1,6 @@
+---
+title: "Pizza Ordering System Low Level Design"
+---
 # Pizza Ordering System Low Level Design
 
 Below is an example Low Level Design (LLD) for a **Pizza Ordering System**. This design supports customizing pizzas, tracking orders, and managing inventory. The design follows the SOLID principles and includes inline comments that reference our design steps.

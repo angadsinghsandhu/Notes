@@ -5,6 +5,7 @@ import {
   createEntry,
   compareSourcePaths,
 } from '../../../src/content/identifiers.js';
+import { readMetadata, readPolicy } from '../../../src/content/schema.js';
 import type { Metadata, SourceEntry } from '../../../src/content/types.js';
 const metadata: Metadata = {
   title: 'Title',
@@ -177,5 +178,25 @@ it.each([false, true])(
     expect(check).toThrow('/notes/tutorials/example/index.html');
     expect(check).toThrow('Tutorials/example.md');
     expect(check).toThrow('Tutorials/alias.md');
+  },
+);
+
+it.each([
+  '/_headers',
+  '/_headers/',
+  '/_HEADERS/',
+  '/_headers/index.html',
+  '/_headers/child/',
+])(
+  'rejects schema-valid alias %s colliding with the actual deployed header file',
+  async (alias) => {
+    const input = source('Tutorials/header-alias.ipynb', 'notebook');
+    const policy = await readPolicy('content/publication.json');
+    policy.overrides[input.sourcePath] = { aliases: [alias] };
+    const validated = await readMetadata(input, policy);
+    expect(validated.aliases).toEqual([alias]);
+    const check = () => assertUniqueRoutes([createEntry(input, validated)]);
+    expect(check).toThrow('Tutorials/header-alias.ipynb');
+    expect(check).toThrow('reserved website route /_headers');
   },
 );
