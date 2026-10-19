@@ -315,3 +315,44 @@ it('actual artifact verifier accepts only matching metadata and fails closed wit
       );
   }
 });
+
+it('maps every archived gitlink for checkout cleanup without enabling recursive acquisition or credentials', async () => {
+  const { stdout } = await promisify(execFile)('git', ['ls-files', '--stage'], {
+    cwd: '..',
+    maxBuffer: 8 * 1024 * 1024,
+  });
+  const gitlinks = stdout
+    .split('\n')
+    .filter((line) => line.startsWith('160000 '));
+  expect(gitlinks).toEqual([
+    '160000 c7052dd271eeaa741b588f35ef27244fa9b0f9fe 0\tTutorials/AI/RAG/rag-workshop-pydata-nyc-2024',
+  ]);
+  const { stdout: mapping } = await promisify(execFile)(
+    'git',
+    [
+      'config',
+      '-f',
+      '.gitmodules',
+      '--get-regexp',
+      '^submodule\\..*\\.(path|url)$',
+    ],
+    { cwd: '..' },
+  );
+  expect(mapping).toContain('Tutorials/AI/RAG/rag-workshop-pydata-nyc-2024');
+  expect(mapping).toContain(
+    'https://github.com/theam/rag-workshop-pydata-nyc-2024.git',
+  );
+  const { jobs } = await workflow();
+  for (const job of Object.values(jobs))
+    for (const step of job.steps)
+      if (step.uses?.startsWith('actions/checkout@')) {
+        expect(step.with?.['persist-credentials']).toBe(false);
+        expect(step.with?.['submodules'] ?? false).toBe(false);
+      }
+  // Mirrors the live checkout's auth-cleanup boundary; it must not acquire the missing historical commit.
+  await promisify(execFile)(
+    'git',
+    ['submodule', 'foreach', '--recursive', ':'],
+    { cwd: '..' },
+  );
+});

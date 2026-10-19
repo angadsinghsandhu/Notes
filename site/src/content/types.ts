@@ -56,6 +56,7 @@ export type AssetRecord = {
   bytes: number;
   url: string;
   mode: 'local' | 'external';
+  dimensions?: { width: number; height: number };
 };
 export type Manifest = {
   version: 1;

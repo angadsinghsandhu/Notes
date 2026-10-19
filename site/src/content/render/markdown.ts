@@ -1,7 +1,12 @@
 import { randomUUID } from 'node:crypto';
 import { fromHtml } from 'hast-util-from-html';
 import { toHtml } from 'hast-util-to-html';
-import type { Nodes, Root as HtmlRoot, RootContent as HtmlContent } from 'hast';
+import type {
+  Element,
+  Nodes,
+  Root as HtmlRoot,
+  RootContent as HtmlContent,
+} from 'hast';
 import katex from 'katex';
 import type { Root, RootContent } from 'mdast';
 import rehypeRaw from 'rehype-raw';
@@ -149,7 +154,8 @@ export async function renderMarkdown(
   }
   attachmentLinks(authorTree);
   const clean = sanitizeAuthorTree(authorTree);
-  function resolve(node: Nodes): void {
+  const sourceActions = new Map<HtmlContent, HtmlContent[]>();
+  function resolve(node: Nodes, anchor?: Element): void {
     if (node.type === 'element') {
       const id = node.properties.id;
       if (typeof id === 'string' && headingIds.has(id))
@@ -161,14 +167,75 @@ export async function renderMarkdown(
             ? 'href'
             : undefined;
       const href = key ? node.properties[key] : undefined;
-      if (key && typeof href === 'string')
-        node.properties[key] = resolveLink(
-          href,
-          context.sourcePath,
-          context.catalog,
-        );
+      if (key && typeof href === 'string') {
+        const resolved = resolveLink(href, context.sourcePath, context.catalog);
+        node.properties[key] = resolved;
+        if (node.tagName === 'img') {
+          const asset = [...context.catalog.assets.values()].find(
+            (asset) => asset.url.split(/[?#]/)[0] === resolved.split(/[?#]/)[0],
+          );
+          if (asset?.mode === 'external') {
+            const label = String(node.properties.alt || 'Image');
+            const action: Element = {
+              type: 'element',
+              tagName: 'a',
+              properties: { href: resolved },
+              children: [
+                { type: 'text', value: `View image source: ${label}` },
+              ],
+            };
+            if (anchor) {
+              node.tagName = 'span';
+              node.properties = {};
+              node.children = [{ type: 'text', value: label }];
+              sourceActions.set(anchor, [
+                ...(sourceActions.get(anchor) ?? []),
+                action,
+              ]);
+            } else Object.assign(node, action);
+          } else {
+            const dimensions = asset?.dimensions;
+            if (dimensions) {
+              const width =
+                Number(node.properties.width) ||
+                (Number(node.properties.height)
+                  ? Math.round(
+                      (Number(node.properties.height) * dimensions.width) /
+                        dimensions.height,
+                    )
+                  : dimensions.width);
+              const height =
+                Number(node.properties.height) ||
+                Math.round((width * dimensions.height) / dimensions.width);
+              if (
+                [width, height].every(
+                  (value) =>
+                    Number.isSafeInteger(value) &&
+                    value > 0 &&
+                    value <= 40_000_000,
+                )
+              )
+                Object.assign(node.properties, { width, height });
+            }
+            Object.assign(node.properties, {
+              loading: 'lazy',
+              decoding: 'async',
+            });
+          }
+        }
+      }
     }
-    if ('children' in node) for (const child of node.children) resolve(child);
+    if ('children' in node) {
+      const children: HtmlContent[] = [];
+      for (const child of node.children) {
+        resolve(
+          child,
+          node.type === 'element' && node.tagName === 'a' ? node : anchor,
+        );
+        children.push(child, ...(sourceActions.get(child) ?? []));
+      }
+      node.children = children;
+    }
   }
   resolve(clean);
   // Author HTML is now sanitized; only controlled transforms generate trusted HTML.

@@ -33,9 +33,9 @@ const entrySchema = z
 const fragmentSchema = z
   .object({
     url: z.string(),
-    meta: z.object({ title: z.string(), kind: z.string() }).passthrough(),
+    meta: z.object({ title: z.string(), kind: z.string() }).loose(),
   })
-  .passthrough();
+  .loose();
 function unpack(bytes: Uint8Array): Buffer {
   const decoded = gunzipSync(bytes);
   if (decoded.subarray(0, 12).toString() !== 'pagefind_dcd')

@@ -155,6 +155,7 @@ test('built response policy permits the actual theme, math, search, images and n
     await page.goto(`${origin}${codeRoute}`);
     const httpsImage =
       'https://cdn.analyticsvidhya.com/wp-content/uploads/2021/02/Screenshot-from-2021-02-25-13-19-20-244x300.png';
+    await page.locator(`img[src="${httpsImage}"]`).scrollIntoViewIfNeeded();
     await expect(page.locator(`img[src="${httpsImage}"]`)).toBeVisible();
     await expect
       .poll(() =>
@@ -182,6 +183,7 @@ test('built response policy permits the actual theme, math, search, images and n
     await page.goto(
       `${origin}/notes/courses/coursera/deep-learning-ai-course/tensorflow-in-practice/course-4-s-p/s-p-week-2-exercise-question/`,
     );
+    await page.locator(`img[src="${historical}"]`).scrollIntoViewIfNeeded();
     await expect(page.locator(`img[src="${historical}"]`)).toBeVisible();
     await expect
       .poll(() =>

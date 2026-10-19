@@ -213,3 +213,117 @@ it('discards a superseded result body and a superseded loader rejection', async 
   await Promise.resolve();
   expect(document.querySelectorAll('li')).toHaveLength(0);
 });
+
+it.each(['success', 'failure'])(
+  'old pagination %s cannot mutate a newer query or its pending button',
+  async (outcome) => {
+    const old = Promise.withResolvers<typeof data>();
+    const current = Promise.withResolvers<typeof data>();
+    const oldData = vi.fn(() => old.promise);
+    const currentData = vi.fn(() => current.promise);
+    const results = (last: () => Promise<typeof data>) =>
+      Array.from({ length: 21 }, (_, i) => ({
+        data: i === 20 ? last : async () => data,
+      }));
+    const search = vi
+      .fn()
+      .mockResolvedValueOnce({ results: results(oldData) })
+      .mockResolvedValueOnce({ results: results(currentData) })
+      .mockResolvedValue({ results: [] });
+    initSearch(document, async () => ({ search }));
+    const more =
+      document.querySelector<HTMLButtonElement>('[data-search-more]')!;
+    const status = document.querySelector('[data-search-status]')!;
+    submit('old');
+    await vi.waitFor(() => expect(more.hidden).toBe(false));
+    more.click();
+    await vi.waitFor(() => expect(oldData).toHaveBeenCalledOnce());
+    expect(more.disabled).toBe(true);
+    submit('current');
+    await vi.waitFor(() =>
+      expect(document.querySelectorAll('li')).toHaveLength(20),
+    );
+    expect(more.disabled).toBe(false);
+    more.click();
+    await vi.waitFor(() => expect(currentData).toHaveBeenCalledOnce());
+    const message = status.textContent;
+    if (outcome === 'success') old.resolve(data);
+    else old.reject(new Error('Old fragment failure'));
+    await vi.waitFor(() =>
+      expect(oldData.mock.settledResults[0]?.type).toBe(
+        outcome === 'success' ? 'fulfilled' : 'rejected',
+      ),
+    );
+    expect(status.textContent).toBe(message);
+    expect(more.disabled).toBe(true);
+    expect(document.querySelectorAll('li')).toHaveLength(20);
+    submit('empty');
+    await vi.waitFor(() => expect(status.textContent).toContain('No results'));
+    current.reject(new Error('Superseded current fragment'));
+    await vi.waitFor(() =>
+      expect(currentData.mock.settledResults[0]?.type).toBe('rejected'),
+    );
+    expect(status.textContent).toContain('No results');
+    expect(more.hidden).toBe(true);
+    expect(more.disabled).toBe(false);
+  },
+);
+
+it('current pagination can retry after a fragment failure', async () => {
+  const last = vi
+    .fn()
+    .mockRejectedValueOnce(new Error('Missing fragment'))
+    .mockResolvedValue(data);
+  const results = Array.from({ length: 21 }, (_, i) => ({
+    data: i === 20 ? last : async () => data,
+  }));
+  initSearch(document, async () => ({ search: async () => ({ results }) }));
+  const more = document.querySelector<HTMLButtonElement>('[data-search-more]')!;
+  submit();
+  await vi.waitFor(() => expect(more.hidden).toBe(false));
+  more.click();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('More results could not load'),
+  );
+  expect(more.disabled).toBe(false);
+  more.click();
+  await vi.waitFor(() =>
+    expect(document.querySelectorAll('li')).toHaveLength(21),
+  );
+  expect(more.hidden).toBe(true);
+  expect(more.disabled).toBe(false);
+});
+
+it('a superseded pagination rejection preserves newer empty-query feedback', async () => {
+  const pending = Promise.withResolvers<typeof data>();
+  const last = vi.fn(() => pending.promise);
+  const search = vi
+    .fn()
+    .mockResolvedValueOnce({
+      results: Array.from({ length: 21 }, (_, i) => ({
+        data: i === 20 ? last : async () => data,
+      })),
+    })
+    .mockResolvedValue({ results: [] });
+  initSearch(document, async () => ({ search }));
+  const more = document.querySelector<HTMLButtonElement>('[data-search-more]')!;
+  submit('old');
+  await vi.waitFor(() => expect(more.hidden).toBe(false));
+  more.click();
+  await vi.waitFor(() => expect(last).toHaveBeenCalledOnce());
+  submit('new');
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('No results'),
+  );
+  pending.reject(new Error('Old fragment failure'));
+  await vi.waitFor(() =>
+    expect(last.mock.settledResults[0]?.type).toBe('rejected'),
+  );
+  expect(document.querySelector('[data-search-status]')!.textContent).toContain(
+    'No results',
+  );
+});

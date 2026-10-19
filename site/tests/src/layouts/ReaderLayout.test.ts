@@ -175,3 +175,50 @@ test('actual wide code math and table scroll locally with keyboard focus at 320p
     ).toBe(true);
   }
 });
+
+test('a real below-fold local diagram reserves its aspect ratio before loading', async ({
+  page,
+}) => {
+  let release!: () => void;
+  const pending = new Promise<void>((done) => {
+    release = done;
+  });
+  await page.setViewportSize({ width: 320, height: 900 });
+  await page.route('https://**', (route) => route.abort());
+  await page.route('**/content-assets/**', async (route) => {
+    await pending;
+    await route.continue();
+  });
+  try {
+    await page.goto(
+      '/notes/classes/stanford/stanford-cs234-reinforcement-learning-2019/lecture-1/',
+      { waitUntil: 'domcontentloaded' },
+    );
+    const image = page.getByRole('img', { name: 'Types of RL', exact: true });
+    await expect(image).toHaveAttribute('loading', 'lazy');
+    await expect(image).toHaveAttribute('decoding', 'async');
+    await expect(image).toHaveAttribute('width', /^[1-9][0-9]*$/);
+    await expect(image).toHaveAttribute('height', /^[1-9][0-9]*$/);
+    await image.scrollIntoViewIfNeeded();
+    expect(
+      await image.evaluate((el) => (el as HTMLImageElement).naturalWidth),
+    ).toBe(0);
+    const before = (await image.boundingBox())!;
+    expect(before.width).toBeGreaterThan(0);
+    expect(before.height).toBeGreaterThan(0);
+    release();
+    await expect
+      .poll(() => image.evaluate((el) => (el as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0);
+    const after = (await image.boundingBox())!;
+    expect(after.height).toBeCloseTo(before.height, 1);
+    expect(after.width).toBeCloseTo(before.width, 1);
+    expect(
+      await page.evaluate(
+        () => document.documentElement.scrollWidth <= innerWidth,
+      ),
+    ).toBe(true);
+  } finally {
+    release();
+  }
+});

@@ -11,6 +11,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
+import sharp from 'sharp';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   planAssets,
@@ -333,4 +334,46 @@ it('rechecks planned source boundaries for traversal, symlinks, directories and 
   await expect(readPlannedLocalAsset(root, asset!)).rejects.toThrow(
     'size limit',
   );
+});
+
+it('reserves safely oriented native image geometry without rejecting opaque asset bytes', async () => {
+  const root = await archive();
+  const image = sharp({
+    create: { width: 2, height: 3, channels: 3, background: '#fff' },
+  });
+  for (const format of ['png', 'gif', 'webp', 'avif'] as const) {
+    const path = `Tutorials/images/a.${format}`;
+    await writeFile(
+      join(root, path),
+      await image.clone().toFormat(format).toBuffer(),
+    );
+    expect((await planAssets(root, [path], policy))[0]).toMatchObject({
+      dimensions: { width: 2, height: 3 },
+    });
+  }
+  const rotated = 'Tutorials/images/rotated.jpg';
+  await writeFile(
+    join(root, rotated),
+    await image.clone().jpeg().withMetadata({ orientation: 6 }).toBuffer(),
+  );
+  expect((await planAssets(root, [rotated], policy))[0]).toMatchObject({
+    dimensions: { width: 3, height: 2 },
+  });
+  const svg = 'Tutorials/images/a.svg';
+  await writeFile(
+    join(root, svg),
+    '<svg viewBox="0 0 12 7"><path d="M0 0"/></svg>',
+  );
+  expect((await planAssets(root, [svg], policy))[0]).toMatchObject({
+    dimensions: { width: 12, height: 7 },
+  });
+  for (const name of ['opaque.ico', 'invalid.png', 'document.pdf']) {
+    const path = `Tutorials/images/${name}`;
+    await writeFile(join(root, path), 'original opaque bytes');
+    const [asset] = await planAssets(root, [path], policy);
+    expect(asset).not.toHaveProperty('dimensions');
+    expect((await readPlannedLocalAsset(root, asset!)).toString()).toBe(
+      'original opaque bytes',
+    );
+  }
 });

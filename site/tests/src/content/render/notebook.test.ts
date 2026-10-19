@@ -198,6 +198,9 @@ describe('validated notebook display', () => {
     expect(Buffer.from(extracted[1]!.bytes)).toEqual(jpg);
     expect(ctx.catalog.assets.size).toBe(2);
     expect(result.html).toContain('width="2" height="3"');
+    expect(result.html.match(/loading="lazy" decoding="async"/g)).toHaveLength(
+      (result.html.match(/<img/g) ?? []).length,
+    );
     expect(result.html).toContain('Unsupported output (cell 0)');
     expect(result.html).not.toMatch(/<script|<svg|<b>plain|unused|data:image/);
   });
@@ -254,6 +257,9 @@ describe('validated notebook display', () => {
     expect(ctx.catalog.assets.size).toBe(1);
     expect(result.html.match(/<img/g)).toHaveLength(3);
     expect(result.html).toContain('width="2" height="3"');
+    expect(result.html.match(/loading="lazy" decoding="async"/g)).toHaveLength(
+      (result.html.match(/<img/g) ?? []).length,
+    );
   });
   it.each(['missing', 'invalid'])(
     'keeps a cell diagnostic for a referenced %s attachment',
@@ -294,6 +300,9 @@ describe('validated notebook display', () => {
     expect(assets[0]!.sourcePath).not.toBe(assets[1]!.sourcePath);
     expect(result.html.match(/<img/g)).toHaveLength(2);
     expect(result.html).toContain('width="2" height="3"');
+    expect(result.html.match(/loading="lazy" decoding="async"/g)).toHaveLength(
+      (result.html.match(/<img/g) ?? []).length,
+    );
     expect(result.html).not.toContain('attachment:');
     await expect(
       renderNotebook(

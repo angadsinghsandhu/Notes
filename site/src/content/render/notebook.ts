@@ -127,6 +127,8 @@ function imageHtml(image: RasterAsset): string {
       alt: 'Stored notebook output',
       width: image.width,
       height: image.height,
+      loading: 'lazy',
+      decoding: 'async',
     },
     children: [],
   });
