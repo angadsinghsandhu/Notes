@@ -46,6 +46,7 @@ it.each([
 
 type Step = {
   id?: string;
+  if?: string;
   uses?: string;
   run?: string;
   env?: Record<string, string>;
@@ -118,6 +119,28 @@ it('separates PR verification from trusted configured artifact-only publication'
   for (const job of Object.values(jobs))
     for (const step of job.steps)
       if (step.uses) expect(step.uses).toMatch(/@[a-f0-9]{40}$/);
+});
+
+it('retains narrowly scoped development diagnostics after success or failure separately from verified dist', async () => {
+  const { jobs } = await workflow();
+  const artifact = jobs.verify.steps.find((step) => step.id === 'artifact')!;
+  const diagnostics = jobs.verify.steps.find(
+    (step) => step.id === 'dev-diagnostics',
+  );
+  expect(diagnostics).toBeDefined();
+  expect(diagnostics?.if).toBe('!cancelled()');
+  expect(diagnostics?.uses).toBe(artifact.uses);
+  expect(diagnostics?.with?.['name']).toBe(
+    'notes-site-dev-diagnostics-${{ github.sha }}',
+  );
+  expect(diagnostics?.with?.['path']).toBe(
+    'site/test-results\n.superpowers/sdd/2026-10-04-notes-website/task6-owned-*-http.log\n.superpowers/sdd/2026-10-04-notes-website/task6-dev-search-*.log\n',
+  );
+  expect(diagnostics?.with?.['retention-days']).toBe(3);
+  expect(diagnostics?.with?.['include-hidden-files']).toBe(true);
+  expect(artifact.if ?? 'success()').toBe('success()');
+  expect(artifact.with?.['path']).toBe('site/dist');
+  expect(artifact.with?.['name']).toBe('notes-site-${{ github.sha }}');
 });
 
 it('installs pinned isolated parity dependencies only before the verification job gate', async () => {

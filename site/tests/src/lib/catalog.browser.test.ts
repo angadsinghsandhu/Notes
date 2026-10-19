@@ -1,5 +1,5 @@
-import { expect, test } from '@playwright/test';
-import { spawn, execFile } from 'node:child_process';
+import { expect, test, type TestInfo } from '@playwright/test';
+import { spawn, execFile, type ChildProcess } from 'node:child_process';
 import { createServer } from 'node:net';
 import {
   readFile,
@@ -19,6 +19,53 @@ import { promisify } from 'node:util';
 const site = resolve('.');
 const evidence = resolve('../.superpowers/sdd/2026-10-04-notes-website');
 const execute = promisify(execFile);
+// Provisional full-archive bounds; Linux child timings must validate these.
+const fullArchiveReadinessTimeout = 180_000;
+const fullArchivePublicationTimeout = 180_000;
+const lifecycleTimeout = 1_500_000; // Up to eight preparations plus 60 seconds.
+const developmentSearchTimeout = 240_000;
+
+function developmentDiagnostics(child: ChildProcess, info: TestInfo) {
+  const events: string[] = [];
+  const record = (message: string) =>
+    events.push(`${new Date().toISOString()} ${message}`);
+  record(`npm dev startup PID ${child.pid}`);
+  for (const [stream, label] of [
+    [child.stdout, 'stdout'],
+    [child.stderr, 'stderr'],
+  ] as const)
+    stream?.on('data', (bytes: Buffer) =>
+      record(`${label}: ${bytes.toString()}`),
+    );
+  child.once('error', (error) => record(`startup error: ${error.message}`));
+  child.once('exit', (code, signal) =>
+    record(`exit code=${code} signal=${signal}`),
+  );
+  const exited = new Promise<void>((done) => child.once('close', () => done()));
+  return {
+    record,
+    exited,
+    fail(error: unknown): never {
+      record('test failed');
+      if (error instanceof Error)
+        error.message += `\nLast npm dev diagnostics:\n${events.join('\n').slice(-8000)}`;
+      throw error;
+    },
+    async save(name: string, assertions = '') {
+      try {
+        await mkdir(evidence, { recursive: true });
+        const path = join(evidence, name);
+        await writeFile(path, `${assertions}\n${events.join('\n')}\n`);
+        await info.attach('npm-dev-diagnostics', {
+          path,
+          contentType: 'text/plain',
+        });
+      } catch (error) {
+        console.error('Could not retain npm dev diagnostics', error);
+      }
+    },
+  };
+}
 
 async function freePort(): Promise<number> {
   const socket = createServer();
@@ -36,33 +83,28 @@ async function freePort(): Promise<number> {
 test('actual npm dev updates bodies, new routes, aliases and deletion without restarting Astro', async ({
   request,
   page,
-}) => {
-  test.setTimeout(480_000);
+}, testInfo) => {
+  test.setTimeout(lifecycleTimeout);
   const name = `task6-owned-${randomUUID()}`;
   const original = resolve('../Tutorials', `${name}.md`);
   let source = '';
   let owned = `---\ntitle: Task 6 synthetic lifecycle proof\n---\n# First lifecycle body\n`;
   const port = await freePort();
   const url = `http://127.0.0.1:${port}`;
-  let output = '';
   const child = spawn('npm', ['run', 'dev', '--', '--port', String(port)], {
     cwd: site,
     detached: true,
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  child.stdout.on('data', (bytes: Buffer) => {
-    output += bytes.toString();
-  });
-  child.stderr.on('data', (bytes: Buffer) => {
-    output += bytes.toString();
-  });
-  const exited = new Promise<void>((done) => child.once('exit', () => done()));
+  const diagnostics = developmentDiagnostics(child, testInfo);
   const log: string[] = [];
   async function until(
     path: string,
     body: string,
     status = 200,
+    timeout = fullArchivePublicationTimeout,
   ): Promise<string> {
+    diagnostics.record(`waiting for ${path} HTTP ${status} including ${body}`);
     let last = '';
     await expect
       .poll(
@@ -75,9 +117,10 @@ test('actual npm dev updates bodies, new routes, aliases and deletion without re
             return false;
           }
         },
-        { timeout: 75_000, intervals: [500, 1000] },
+        { timeout, intervals: [500, 1000] },
       )
       .toBe(true);
+    diagnostics.record(`ready: ${path} HTTP ${status} includes ${body}`);
     log.push(`${path} HTTP ${status} includes ${body}`);
     return last;
   }
@@ -91,6 +134,8 @@ test('actual npm dev updates bodies, new routes, aliases and deletion without re
     await until(
       '/notes/interview/applied-science/breadth/6-6-2-transformers/',
       'Transformer',
+      200,
+      fullArchiveReadinessTimeout,
     );
     const astroPid = await pid();
     const indexBefore = await readFile('dist/pagefind/pagefind-entry.json');
@@ -152,29 +197,31 @@ test('actual npm dev updates bodies, new routes, aliases and deletion without re
     log.push(
       `Same Astro PID ${astroPid} after modify/add/rename+alias/delete; dev notice present`,
     );
+  } catch (error) {
+    diagnostics.fail(error);
   } finally {
-    if (child.pid) process.kill(-child.pid, 'SIGTERM');
-    await exited;
-    if (source) {
-      const actual = await readFile(source, 'utf8');
-      expect(actual, `Unexpected edits preserved at ${source}`).toBe(owned);
-      await writeFile(join(evidence, `${name}-source.txt`), owned, {
-        flag: 'wx',
-      }).catch((error: unknown) => {
-        if (!(
-          error instanceof Error &&
-          'code' in error &&
-          error.code === 'EEXIST'
-        ))
-          throw error;
-      });
-      await unlink(source);
+    try {
+      if (child.pid && child.exitCode === null && child.signalCode === null)
+        process.kill(-child.pid, 'SIGTERM');
+      await diagnostics.exited;
+      if (source) {
+        const actual = await readFile(source, 'utf8');
+        expect(actual, `Unexpected edits preserved at ${source}`).toBe(owned);
+        await writeFile(join(evidence, `${name}-source.txt`), owned, {
+          flag: 'wx',
+        }).catch((error: unknown) => {
+          if (!(
+            error instanceof Error &&
+            'code' in error &&
+            error.code === 'EEXIST'
+          ))
+            throw error;
+        });
+        await unlink(source);
+      }
+    } finally {
+      await diagnostics.save(`${name}-http.log`, log.join('\n'));
     }
-    await mkdir(evidence, { recursive: true });
-    await writeFile(
-      join(evidence, `${name}-http.log`),
-      `${log.join('\n')}\n\n${output}`,
-    );
   }
 });
 
@@ -310,24 +357,17 @@ test('production cleanup preserves incoming sitemap and canonical configuration'
 
 test('development serves the last built real Pagefind index and displays its update limitation', async ({
   page,
-}) => {
-  test.setTimeout(120_000);
+}, testInfo) => {
+  test.setTimeout(developmentSearchTimeout);
   const port = await freePort();
   const url = `http://127.0.0.1:${port}`;
-  let output = '';
   const entryBefore = await readFile('dist/pagefind/pagefind-entry.json');
   const child = spawn('npm', ['run', 'dev', '--', '--port', String(port)], {
     cwd: site,
     detached: true,
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  child.stdout.on('data', (bytes: Buffer) => {
-    output += bytes.toString();
-  });
-  child.stderr.on('data', (bytes: Buffer) => {
-    output += bytes.toString();
-  });
-  const exited = new Promise<void>((done) => child.once('exit', () => done()));
+  const diagnostics = developmentDiagnostics(child, testInfo);
   const outside = resolve('src/lib/catalog.ts');
   const link = resolve('dist/pagefind', `task6-link-${randomUUID()}.js`);
   let linked = false;
@@ -337,6 +377,7 @@ test('development serves the last built real Pagefind index and displays its upd
   try {
     await symlink(outside, link);
     linked = true;
+    diagnostics.record('waiting for /search/ HTTP 200');
     await expect
       .poll(
         async () => {
@@ -346,9 +387,10 @@ test('development serves the last built real Pagefind index and displays its upd
             return 0;
           }
         },
-        { timeout: 75_000, intervals: [500, 1000] },
+        { timeout: fullArchiveReadinessTimeout, intervals: [500, 1000] },
       )
       .toBe(200);
+    diagnostics.record('ready: /search/ HTTP 200');
     await page.goto(`${url}/search/`);
     await expect(page.locator('.development-search-notice')).toContainText(
       'does not update with note edits',
@@ -390,20 +432,28 @@ test('development serves the last built real Pagefind index and displays its upd
     await expect(page.locator('[data-search-status]')).toContainText(
       'npm run build and npm run preview',
     );
+  } catch (error) {
+    diagnostics.fail(error);
   } finally {
-    if (child.pid) process.kill(-child.pid, 'SIGTERM');
-    await exited;
-    if (moved) {
-      await expect(access(indexRoot)).rejects.toMatchObject({ code: 'ENOENT' });
-      expect(await readFile(join(backup, 'pagefind-entry.json'))).toEqual(
-        entryBefore,
-      );
-      await rename(backup, indexRoot);
+    try {
+      if (child.pid && child.exitCode === null && child.signalCode === null)
+        process.kill(-child.pid, 'SIGTERM');
+      await diagnostics.exited;
+      if (moved) {
+        await expect(access(indexRoot)).rejects.toMatchObject({
+          code: 'ENOENT',
+        });
+        expect(await readFile(join(backup, 'pagefind-entry.json'))).toEqual(
+          entryBefore,
+        );
+        await rename(backup, indexRoot);
+      }
+      if (linked) {
+        expect(await readlink(link)).toBe(outside);
+        await unlink(link);
+      }
+    } finally {
+      await diagnostics.save(`task6-dev-search-${port}.log`);
     }
-    if (linked) {
-      expect(await readlink(link)).toBe(outside);
-      await unlink(link);
-    }
-    await writeFile(join(evidence, `task6-dev-search-${port}.log`), output);
   }
 });
