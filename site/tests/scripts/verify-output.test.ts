@@ -120,9 +120,11 @@ async function pageFixture(fields: Partial<ContentEntry> = {}) {
   }
   return { ...fixture, entry, html };
 }
+// Folder pages grew HTML output 36%; covered Linux verification already took 105s.
+// Keep bounded headroom for the complete archive alongside parallel tests.
 it('accepts the actual complete built archive and keeps the ledger internal', async () => {
   expect(await verifyOutput(join(process.cwd(), 'dist'))).toEqual([]);
-}, 120000);
+}, 240000);
 it('accepts exactly 20000 files and rejects 20001', async () => {
   const { dist } = await output();
   await mkdir(join(dist, '_astro'));
