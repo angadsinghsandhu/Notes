@@ -3,6 +3,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fromHtml } from 'hast-util-from-html';
 import type { Element, Nodes } from 'hast';
+import { buildFolders, flattenFolders } from '../src/lib/folders.js';
 import { verifyPagefind } from './verify-pagefind.js';
 import {
   publicationExclusion,
@@ -125,12 +126,16 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
   const fixed = [
     '/',
     '/library/',
+    '/library/tree/',
     '/search/',
     ...policy.roots.map((root) => `/library/${root.toLowerCase()}/`),
   ];
   const expected = new Set([
     '404.html',
     ...fixed.map(routeFile),
+    ...flattenFolders(buildFolders(published))
+      .filter((folder) => folder.segments.length > 0)
+      .map((folder) => routeFile(folder.route)),
     ...published.flatMap((entry) =>
       [entry.route, ...entry.aliases].map(routeFile),
     ),

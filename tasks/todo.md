@@ -40,3 +40,13 @@ Review assumptions are public readership, rendered notebooks/code with PDF/slide
 - [ ] Task 9: approved archived Pandas → Polars conversion (15 files; isolated real-data parity).
 
 Task 7 migrated 171 authored titles without changing source bodies, classified 49 upstream supplemental documents, and accounted for all 10,031 archive files. Production validation checks routes, assets, source actions, exclusions and native Pagefind output. Source polling and serialized watcher readiness passed the original live HTTP lifecycle. Fresh controller verification passed 398 units, all four per-file coverage floors of at least 90%, all static/build/output gates and 56 browser tests. Independent review and scoped re-review resolved all three P2 findings; two Zod deprecation hints remain deferred for final review. No deployment was performed.
+
+## Approved folder navigation correction (2026-10-19)
+
+- [x] Implement aligned clickable breadcrumbs, folder pages/cards and full-tree navigation.
+- [x] Verify real archive, mobile/desktop, keyboard/no-JS and existing quality gates.
+- [x] Independently review and commit verified navigation; refresh the local preview.
+
+User approved the short design in chat. Folder cards show immediate children; the complete 2,300-folder tree is a shared page linked from the desktop sidebar and mobile drawer. Generated navigation routes participate in existing alias and case-insensitive output ownership checks.
+
+Review: independent review and scoped re-review approved. Final checks passed 75 Python tests, 463 unit tests, all per-file coverage floors, format/lint/boundaries/typecheck/build/output validation, and 69 production browser tests after the final guard. The earlier full 73-browser run also passed the four real development/publication fixtures. All non-Pagefind output is byte-identical to that full browser artifact; native Pagefind metadata/filter semantics are unchanged, and fresh search/response-policy browser checks passed on the final configured build. Archive files remain unchanged. Local preview runs at http://127.0.0.1:4330/library/books/. No merge or deployment was performed.

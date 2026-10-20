@@ -1,0 +1,20 @@
+---
+import LibraryLayout from '../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FolderTree from '../../components/FolderTree.astro';
+import { readPreparedCatalog } from '../../lib/catalog.js';
+import { buildFolders } from '../../lib/folders.js';
+const folders = buildFolders((await readPreparedCatalog()).listEntries());
+---
+
+<LibraryLayout
+  title="Folder tree"
+  description="Explore the entire published folder hierarchy."
+>
+  <Breadcrumbs title="Folder tree" />
+  <h1>Folder tree</h1>
+  <p>Expand a branch with its arrow. Open any folder by its name.</p>
+  <nav aria-label="All published folders">
+    <FolderTree folders={folders} />
+  </nav>
+</LibraryLayout>

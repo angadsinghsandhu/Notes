@@ -1,0 +1,72 @@
+---
+import type { Folder } from '../lib/folders.js';
+import { isLearningNote } from '../lib/catalog.js';
+interface Props {
+  folder: Folder;
+}
+const { folder } = Astro.props;
+const notes = folder.entries.filter(isLearningNote);
+const resources = folder.entries.filter((entry) => !isLearningNote(entry));
+---
+
+{folder.children.length > 0 && (
+  <section aria-labelledby="folders-title">
+    <h2 id="folders-title">Folders</h2>
+    <div class="section-cards folder-cards">
+      {folder.children.map((child) => (
+        <a class="section-card" href={child.route}>
+          <h3>{child.label}</h3>
+          <p>
+            {child.noteCount} learning notes · {child.resourceCount} resources
+          </p>
+        </a>
+      ))}
+    </div>
+  </section>
+)}
+<section data-library-notes aria-labelledby="notes-title">
+  <h2 id="notes-title">Learning notes</h2>
+  {notes.length === 0 && <p>No learning notes directly in this folder.</p>}
+  <ul class="entry-list">
+    {notes.map((item) => (
+      <li>
+        <a href={item.route}>{item.title}</a>
+        <p class="entry-meta">
+          {item.kind}
+          {item.description && ` · ${item.description}`}
+        </p>
+      </li>
+    ))}
+  </ul>
+</section>
+<section data-library-resources aria-labelledby="resources-title">
+  <h2 id="resources-title">Course code &amp; resources</h2>
+  {resources.length === 0 && <p>No resources directly in this folder.</p>}
+  {['markdown', 'notebook', 'code', 'pdf', 'slides'].map((kind) => {
+    const selected = resources.filter((item) => item.kind === kind);
+    return (
+      selected.length > 0 && (
+        <section>
+          <h3>
+            {kind === 'markdown'
+              ? 'Supplemental documents'
+              : kind === 'notebook'
+                ? 'Supplemental notebooks'
+                : kind}
+          </h3>
+          <ul class="entry-list">
+            {selected.map((item) => (
+              <li>
+                <a href={item.route}>{item.title}</a>
+                <p class="entry-meta">
+                  {item.kind}
+                  {item.description && ` · ${item.description}`}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    );
+  })}
+</section>

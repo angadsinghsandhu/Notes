@@ -15,6 +15,7 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { afterEach, expect, it, vi } from 'vitest';
 import { execFileSync } from 'node:child_process';
+import { buildFolders, flattenFolders } from '../../src/lib/folders.js';
 import { verifyOutput } from '../../scripts/verify-output.js';
 import type { ContentEntry, Manifest } from '../../src/content/index.js';
 const roots: string[] = [];
@@ -55,6 +56,7 @@ async function output(entries: ContentEntry[] = []) {
   for (const route of [
     '/',
     '/library/',
+    '/library/tree/',
     '/search/',
     ...[
       'books',
@@ -64,6 +66,9 @@ async function output(entries: ContentEntry[] = []) {
       'languages',
       'tutorials',
     ].map((section) => `/library/${section}/`),
+    ...flattenFolders(buildFolders(entries))
+      .filter((folder) => folder.segments.length > 0)
+      .map((folder) => folder.route),
   ])
     await put(
       join(dist, route, 'index.html'),
@@ -115,13 +120,15 @@ async function pageFixture(fields: Partial<ContentEntry> = {}) {
   }
   return { ...fixture, entry, html };
 }
+// Folder pages grew HTML output 36%; covered Linux verification already took 105s.
+// Keep bounded headroom for the complete archive alongside parallel tests.
 it('accepts the actual complete built archive and keeps the ledger internal', async () => {
   expect(await verifyOutput(join(process.cwd(), 'dist'))).toEqual([]);
-}, 120000);
+}, 240000);
 it('accepts exactly 20000 files and rejects 20001', async () => {
   const { dist } = await output();
   await mkdir(join(dist, '_astro'));
-  for (let index = 10; index < 20000; index++)
+  for (let index = 11; index < 20000; index++)
     await writeFile(join(dist, `_astro/fixture-${index}.js`), '');
   expect(await verifyOutput(dist)).toEqual([]);
   await writeFile(join(dist, '_astro/fixture-20000.js'), '');
@@ -728,3 +735,27 @@ it.each(['policy', 'mandatory'])(
     );
   },
 );
+
+it('allows only the published hierarchy and rejects a missing or stale folder page', async () => {
+  const { dist } = await pageFixture({ groupSegments: ['a b', 'Chapter'] });
+  expect(await verifyOutput(dist)).toEqual([]);
+  const folder = 'library/books/folders/a~20b/Chapter/index.html';
+  await rm(join(dist, folder));
+  await put(
+    join(dist, 'library/books/folders/stale/index.html'),
+    '<p>Stale folder</p>',
+  );
+  const diagnostics = await verifyOutput(dist);
+  expect(diagnostics).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        sourcePath: folder,
+        message: 'Missing expected output file',
+      }),
+      expect.objectContaining({
+        sourcePath: 'library/books/folders/stale/index.html',
+        message: expect.stringContaining('Unexpected output'),
+      }),
+    ]),
+  );
+});

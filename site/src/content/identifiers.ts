@@ -59,7 +59,10 @@ export function createEntry(
   };
 }
 
-export function assertUniqueRoutes(entries: ContentEntry[]): void {
+export function assertUniqueRoutes(
+  entries: ContentEntry[],
+  additionalPages: readonly { route: string; owner: string }[] = [],
+): void {
   const owners = new Map<string, string>();
   const files = new Map<string, string>();
   const directories = new Map<string, string>();
@@ -88,6 +91,7 @@ export function assertUniqueRoutes(entries: ContentEntry[]): void {
   for (const route of [
     '/',
     '/library/',
+    '/library/tree/',
     '/search/',
     '/404.html',
     '/sitemap.xml',
@@ -95,6 +99,7 @@ export function assertUniqueRoutes(entries: ContentEntry[]): void {
     ...CONTENT_ROOTS.map((root) => `/library/${root.toLowerCase()}/`),
   ])
     claim(route, `reserved website route ${route}`, !route.endsWith('/'));
+  for (const page of additionalPages) claim(page.route, page.owner);
   for (const entry of entries) {
     claim(entry.route, entry.sourcePath);
     for (const alias of entry.aliases) {
