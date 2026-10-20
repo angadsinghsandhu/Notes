@@ -1,4 +1,5 @@
 import type { APIContext } from 'astro';
+import { buildFolders, flattenFolders } from '../lib/folders.js';
 import { readPreparedCatalog, sectionLabels } from '../lib/catalog.js';
 
 export async function getStaticPaths() {
@@ -11,8 +12,12 @@ export async function GET({ site }: APIContext): Promise<Response> {
   const routes = [
     '/',
     '/library/',
+    '/library/tree/',
     '/search/',
     ...Object.keys(sectionLabels).map((section) => `/library/${section}/`),
+    ...flattenFolders(buildFolders(catalog.listEntries()))
+      .filter((folder) => folder.segments.length > 0)
+      .map((folder) => folder.route),
     ...catalog.listEntries().map((entry) => entry.route),
   ];
   const escape = (value: string) =>

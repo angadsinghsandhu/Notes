@@ -21,7 +21,7 @@ function source(
   return {
     sourcePath,
     absolutePath: `/archive/${sourcePath}`,
-    section: sourcePath.startsWith('Languages') ? 'languages' : 'tutorials',
+    section: sourcePath.split('/')[0]!.toLowerCase() as SourceEntry['section'],
     kind,
     bytes: 0,
   };
@@ -112,6 +112,7 @@ const fixedRoutes = [
   '/',
   '/search/',
   '/library/',
+  '/library/tree/',
   '/404.html',
   '/sitemap.xml',
   '/library/books/',
@@ -198,5 +199,62 @@ it.each([
     const check = () => assertUniqueRoutes([createEntry(input, validated)]);
     expect(check).toThrow('Tutorials/header-alias.ipynb');
     expect(check).toThrow('reserved website route /_headers');
+  },
+);
+
+it('accepts additional page claims without changing the existing default entry API', () => {
+  const entry = createEntry(source('Books/Foo/one.py', 'code'), metadata);
+  expect(() => assertUniqueRoutes([entry])).not.toThrow();
+  expect(() =>
+    assertUniqueRoutes(
+      [entry],
+      [{ route: '/library/books/folders/Foo/', owner: 'folder Books/Foo' }],
+    ),
+  ).not.toThrow();
+});
+
+it.each([false, true])(
+  'rejects case-folded additional page owners (reverse=%s)',
+  (reverse) => {
+    const pages = [
+      { route: '/library/books/folders/Foo/', owner: 'folder Books/Foo' },
+      { route: '/library/books/folders/foo/', owner: 'folder Books/foo' },
+    ];
+    if (reverse) pages.reverse();
+    const check = () => assertUniqueRoutes([], pages);
+    expect(check).toThrow('folder Books/Foo');
+    expect(check).toThrow('folder Books/foo');
+  },
+);
+
+it.each([false, true])(
+  'rejects additional page output file/directory owners in either order (reverse=%s)',
+  (reverse) => {
+    const pages = [
+      { route: '/library/books/folders/Foo/', owner: 'folder Books/Foo' },
+      {
+        route: '/library/books/folders/Foo/index.html/child/',
+        owner: 'other generated page',
+      },
+    ];
+    if (reverse) pages.reverse();
+    const check = () => assertUniqueRoutes([], pages);
+    expect(check).toThrow('Output collision');
+    expect(check).toThrow('folder Books/Foo');
+    expect(check).toThrow('other generated page');
+  },
+);
+
+it.each(['/library/tree/', '/LIBRARY/TREE/', '/library/tree/index.html'])(
+  'rejects supported authored code alias %s owned by the fixed tree page',
+  async (alias) => {
+    const input = source('Books/Foo/one.py', 'code');
+    const policy = await readPolicy('content/publication.json');
+    policy.overrides[input.sourcePath] = { aliases: [alias] };
+    const validated = await readMetadata(input, policy);
+    expect(validated.aliases).toEqual([alias]);
+    const check = () => assertUniqueRoutes([createEntry(input, validated)]);
+    expect(check).toThrow(input.sourcePath);
+    expect(check).toThrow('reserved website route /library/tree/');
   },
 );

@@ -1,12 +1,15 @@
 ---
 import '../styles/tokens.css';
 import '../styles/global.css';
+import '../styles/folders.css';
+import type { Folder } from '../lib/folders.js';
 import Navigation from '../components/Navigation.astro';
 import type { ContentEntry } from '../content/index.js';
 interface Props {
   title: string;
   description: string;
   entry?: ContentEntry;
+  folder?: Folder;
   navItems?: ContentEntry[];
   noindex?: boolean;
 }
@@ -14,6 +17,7 @@ const {
   title,
   description,
   entry,
+  folder,
   navItems = [],
   noindex = false,
 } = Astro.props;
@@ -85,12 +89,20 @@ const canonical =
     </header>
     <div class="site-shell">
       <aside class="sidebar">
-        <Navigation {...(entry ? { entry } : {})} items={navItems} />
+        <Navigation
+          {...(entry ? { entry } : {})}
+          {...(folder ? { folder } : {})}
+          items={navItems}
+        />
       </aside>
       <main id="main" tabindex="-1">
         <details class="no-js-navigation" data-pagefind-ignore>
           <summary>Browse sections</summary>
-          <Navigation {...(entry ? { entry } : {})} items={navItems} />
+          <Navigation
+            {...(entry ? { entry } : {})}
+            {...(folder ? { folder } : {})}
+            items={navItems}
+          />
         </details>
         <slot />
       </main>
@@ -109,7 +121,11 @@ const canonical =
           Close navigation
         </button>
       </div>
-      <Navigation {...(entry ? { entry } : {})} items={navItems} />
+      <Navigation
+        {...(entry ? { entry } : {})}
+        {...(folder ? { folder } : {})}
+        items={navItems}
+      />
     </dialog>
     <script>
       import { initNavigation } from '../client/navigation.js';

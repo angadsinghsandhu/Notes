@@ -1,10 +1,21 @@
 import { expect, it, vi, afterEach } from 'vitest';
 import type { APIContext } from 'astro';
 import { GET, getStaticPaths } from '../../../src/pages/[sitemap].xml.js';
-vi.mock('../../../src/lib/catalog.js', () => ({
+vi.mock('../../../src/lib/catalog.js', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('../../../src/lib/catalog.js')>()),
   sectionLabels: { tutorials: 'Tutorials' },
   readPreparedCatalog: vi.fn(async () => ({
-    listEntries: () => [{ route: '/notes/tutorials/a&b/' }],
+    listEntries: () => [
+      {
+        route: '/notes/tutorials/a&b/',
+        sourcePath: 'Tutorials/a & b/note.md',
+        aliases: [],
+        section: 'tutorials',
+        groupSegments: ['a & b'],
+        kind: 'markdown',
+        draft: false,
+      },
+    ],
   })),
 }));
 afterEach(() => vi.unstubAllEnvs());
@@ -27,5 +38,7 @@ it('returns 404 without a site and XML-escapes actual catalog URLs', async () =>
     '<loc>https://notes.example.test/library/tutorials/</loc>',
   );
   expect(body).toContain('/notes/tutorials/a&amp;b/');
+  expect(body).toContain('/library/tree/');
+  expect(body).toContain('/library/tutorials/folders/a~20~26~20b/');
   expect(body).not.toContain('/notes/tutorials/a&b/');
 });
