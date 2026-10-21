@@ -883,3 +883,142 @@ it.each([false, true])(
   },
   10000,
 );
+
+it('watches sidecar edits, replacements and directory creation through an awaited subscription', async () => {
+  const options = { ...(await archive()), organizationDir: '' };
+  options.organizationDir = join(options.rootDir, 'site/content/organization');
+  const source = events();
+  const prepare = vi.fn(async () => success);
+  const watcher = await startContentWatcher(options, () => {}, {
+    subscribe: source.subscribe,
+    prepare,
+  });
+  handles.push(watcher);
+  const callback = source.callbacks.get(options.organizationDir);
+  expect(callback).toEqual(expect.any(Function));
+  for (const filename of [
+    'taxonomy.json',
+    'collections.json',
+    'entries.json',
+    'paths.json',
+    null,
+  ]) {
+    const before = prepare.mock.calls.length;
+    callback!(filename);
+    await vi.waitFor(() => expect(prepare).toHaveBeenCalledTimes(before + 1));
+  }
+  await watcher.close();
+  expect(source.close).toHaveBeenCalledTimes(4);
+});
+
+it('polls initial organization creation, all sidecar edits and atomic replacements, retaining the last good generation on invalid JSON', async () => {
+  const base = await archive();
+  const options = {
+    ...base,
+    organizationDir: join(base.rootDir, 'site/content/organization'),
+  };
+  await writeFile(join(base.rootDir, 'Tutorials/note.md'), '# Public');
+  const diagnostics = vi.fn();
+  const watcher = await startContentWatcher(options, () => {}, {
+    onDiagnostics: diagnostics,
+  });
+  handles.push(watcher);
+  const manifestFile = join(options.outputDir, 'current/manifest.json');
+  const snapshot = async () =>
+    JSON.parse(
+      await readFile(manifestFile, 'utf8'),
+    ) as import('../../src/content/index.js').Manifest;
+  expect((await snapshot()).organization?.topics).toEqual([]);
+  const records = {
+    taxonomy: {
+      version: 1,
+      topics: [{ id: 'topic', title: 'Topic', summary: 'initial' }],
+    },
+    collections: {
+      version: 1,
+      collections: [
+        { id: 'book', title: 'Book', type: 'book', summary: 'initial' },
+      ],
+      groups: [],
+    },
+    entries: {
+      version: 1,
+      entries: [
+        {
+          uid: `doc-${'a'.repeat(64)}`,
+          sourcePath: 'Tutorials/note.md',
+          topics: ['topic'],
+          purpose: 'note',
+          status: 'reviewed',
+          summary: 'initial',
+        },
+      ],
+    },
+    paths: {
+      version: 1,
+      paths: [{ id: 'study', title: 'Study', summary: 'initial', steps: [] }],
+    },
+  };
+  await mkdir(options.organizationDir);
+  for (const [name, value] of Object.entries(records))
+    await writeFile(
+      join(options.organizationDir, `${name}.json`),
+      JSON.stringify(value),
+    );
+  await vi.waitFor(
+    async () =>
+      expect((await snapshot()).organization?.topics[0]?.summary).toBe(
+        'initial',
+      ),
+    { timeout: 6500 },
+  );
+  for (const name of ['taxonomy', 'collections', 'entries', 'paths'] as const) {
+    const filename = join(options.organizationDir, `${name}.json`);
+    const value = records[name];
+    const item =
+      name === 'taxonomy'
+        ? records.taxonomy.topics[0]!
+        : name === 'collections'
+          ? records.collections.collections[0]!
+          : name === 'entries'
+            ? records.entries.entries[0]!
+            : records.paths.paths[0]!;
+    const summary = async () => {
+      const organization = (await snapshot()).organization!;
+      return (
+        name === 'taxonomy'
+          ? organization.topics[0]
+          : name === 'collections'
+            ? organization.collections[0]
+            : name === 'entries'
+              ? organization.memberships[0]
+              : organization.paths[0]
+      )?.summary;
+    };
+    item.summary = 'edited';
+    await writeFile(filename, JSON.stringify(value));
+    await vi.waitFor(async () => expect(await summary()).toBe('edited'), {
+      timeout: 6500,
+    });
+    const previous = await readFile(manifestFile);
+    const errors = diagnostics.mock.calls.length;
+    await writeFile(filename, '{');
+    await vi.waitFor(
+      () => expect(diagnostics.mock.calls.length).toBeGreaterThan(errors),
+      { timeout: 6500 },
+    );
+    expect(await readFile(manifestFile)).toEqual(previous);
+    expect(diagnostics.mock.calls.at(-1)![0][0].message).toContain(
+      `${name}.json`,
+    );
+    item.summary = 'replaced';
+    const replacement = join(options.organizationDir, `${name}.replacement`);
+    await writeFile(replacement, JSON.stringify(value));
+    await rename(replacement, filename);
+    await vi.waitFor(async () => expect(await summary()).toBe('replaced'), {
+      timeout: 6500,
+    });
+  }
+  await watcher.close();
+  expect(faults.watchers.every((watcher) => watcher.closed)).toBe(true);
+}, 60000);

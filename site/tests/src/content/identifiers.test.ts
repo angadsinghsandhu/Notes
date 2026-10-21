@@ -4,6 +4,8 @@ import {
   assertUniqueRoutes,
   createEntry,
   compareSourcePaths,
+  publicationPages,
+  sourceFolderRoute,
 } from '../../../src/content/identifiers.js';
 import { readMetadata, readPolicy } from '../../../src/content/schema.js';
 import type { Metadata, SourceEntry } from '../../../src/content/types.js';
@@ -258,3 +260,56 @@ it.each(['/library/tree/', '/LIBRARY/TREE/', '/library/tree/index.html'])(
     expect(check).toThrow('reserved website route /library/tree/');
   },
 );
+
+it('derives exact source folder bytes and all organization claims for central validation', () => {
+  expect(sourceFolderRoute('books', ['A.B ~ (C)!'])).toBe(
+    '/library/books/folders/A~2EB~20~7E~20~28C~29~21/',
+  );
+  expect(sourceFolderRoute('books', [])).toBe('/library/books/');
+  const entry = createEntry(source('Books/Folder/Nested/note.md'), metadata);
+  const pages = publicationPages([entry], {
+    topics: [{ id: 'topic', title: 'Topic', summary: '' }],
+    collections: [{ id: 'book', title: 'Book', summary: '', type: 'book' }],
+    groups: [
+      {
+        id: 'chapter',
+        collectionId: 'book',
+        title: 'Chapter',
+        summary: '',
+        type: 'chapter',
+      },
+    ],
+    paths: [{ id: 'study', title: 'Study', summary: '', steps: [] }],
+    memberships: [],
+  });
+  expect(pages.map((page) => page.route)).toEqual([
+    '/library/books/folders/Folder/',
+    '/library/books/folders/Folder/Nested/',
+    '/library/topics/topic/',
+    '/library/collections/book/',
+    '/library/collections/book/groups/chapter/',
+    '/library/paths/study/',
+  ]);
+  for (const page of pages) {
+    expect(() =>
+      assertUniqueRoutes([{ ...entry, route: page.route }], pages),
+    ).toThrow(/collision/i);
+    expect(() =>
+      assertUniqueRoutes(
+        [{ ...entry, aliases: [page.route.toUpperCase()] }],
+        pages,
+      ),
+    ).toThrow(/collision/i);
+  }
+  for (const route of [
+    '/library/topics/',
+    '/library/collections/',
+    '/library/paths/',
+    '/sitemap.xml',
+  ])
+    expect(() =>
+      assertUniqueRoutes([], [{ route, owner: 'organization page' }]),
+    ).toThrow(/collision/i);
+  expect(publicationPages([{ ...entry, draft: true }])).toEqual([]);
+  expect(publicationPages([entry, entry])).toHaveLength(2);
+});

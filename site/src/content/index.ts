@@ -20,6 +20,8 @@ export { discoverEntries, publicationExclusion } from './discover.js';
 export {
   assertUniqueRoutes,
   compareSourcePaths,
+  sourceFolderRoute,
+  publicationPages,
   createEntry,
 } from './identifiers.js';
 export { readMetadata, readPolicy } from './schema.js';

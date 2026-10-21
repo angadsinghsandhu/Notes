@@ -48,6 +48,7 @@ it('returns nonzero for source diagnostics and zero for a repaired source', asyn
   );
   const options = await contentOptions(site);
   expect(options.revision).toBe('b'.repeat(40));
+  expect(options.organizationDir).toBe(join(site, 'content/organization'));
   expect(await runContent(options)).toBe(1);
   expect(error.mock.calls.flat().join(' ')).toContain('Tutorials/note.md');
   await writeFile(join(root, 'Tutorials/note.md'), '# Note');

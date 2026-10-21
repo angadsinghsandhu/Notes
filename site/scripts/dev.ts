@@ -181,6 +181,24 @@ export async function startContentWatcher(
         if (!filename || filename === basename(options.policyPath)) rebuild();
       }),
     );
+    if (options.organizationDir) {
+      // Chokidar tracks an absent target and its parent, including atomic replacements.
+      watchers.set(
+        options.organizationDir,
+        await subscribe(options.organizationDir, true, (filename) => {
+          if (
+            !filename ||
+            [
+              'taxonomy.json',
+              'collections.json',
+              'entries.json',
+              'paths.json',
+            ].includes(filename)
+          )
+            rebuild();
+        }),
+      );
+    }
     refreshing = refreshing.then(watchRoots);
     await refreshing;
     initialized = true;

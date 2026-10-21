@@ -1,7 +1,8 @@
 import { createHash } from 'node:crypto';
 import { posix } from 'node:path';
 import { CONTENT_ROOTS } from './schema.js';
-import type { ContentEntry, Metadata, SourceEntry } from './types.js';
+import type { OrganizationSnapshot } from './organization-types.js';
+import type { ContentEntry, Metadata, SourceEntry, Section } from './types.js';
 
 const naturalOrder = new Intl.Collator('en', {
   numeric: true,
@@ -92,6 +93,9 @@ export function assertUniqueRoutes(
     '/',
     '/library/',
     '/library/tree/',
+    '/library/topics/',
+    '/library/collections/',
+    '/library/paths/',
     '/search/',
     '/404.html',
     '/sitemap.xml',
@@ -114,4 +118,59 @@ export function assertUniqueRoutes(
       claim(alias, entry.sourcePath);
     }
   }
+}
+
+/** Escape the escape character too: distinct source names never share a URL. */
+export function sourceFolderRoute(
+  section: Section,
+  segments: readonly string[],
+): string {
+  const path = segments
+    .map((segment) =>
+      encodeURIComponent(segment)
+        .replace(
+          /[!'()*~.]/g,
+          (character) =>
+            `%${character.charCodeAt(0).toString(16).toUpperCase()}`,
+        )
+        .replaceAll('%', '~'),
+    )
+    .join('/');
+  return `/library/${section}/${path ? `folders/${path}/` : ''}`;
+}
+
+export function publicationPages(
+  entries: readonly ContentEntry[],
+  organization?: OrganizationSnapshot,
+): { route: string; owner: string }[] {
+  const folders = new Map<string, string>();
+  for (const entry of entries) {
+    if (entry.draft) continue;
+    entry.groupSegments.forEach((_label, index) => {
+      const segments = entry.groupSegments.slice(0, index + 1);
+      folders.set(
+        sourceFolderRoute(entry.section, segments),
+        `folder ${entry.section}/${segments.join('/')}`,
+      );
+    });
+  }
+  return [
+    ...Array.from(folders, ([route, owner]) => ({ route, owner })),
+    ...(organization?.topics.map((topic) => ({
+      route: `/library/topics/${topic.id}/`,
+      owner: `topic ${topic.id}`,
+    })) ?? []),
+    ...(organization?.collections.map((collection) => ({
+      route: `/library/collections/${collection.id}/`,
+      owner: `collection ${collection.id}`,
+    })) ?? []),
+    ...(organization?.groups.map((group) => ({
+      route: `/library/collections/${group.collectionId}/groups/${group.id}/`,
+      owner: `group ${group.collectionId}/${group.id}`,
+    })) ?? []),
+    ...(organization?.paths.map((path) => ({
+      route: `/library/paths/${path.id}/`,
+      owner: `path ${path.id}`,
+    })) ?? []),
+  ];
 }
