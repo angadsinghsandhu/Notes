@@ -66,10 +66,13 @@ it('prepares archive content before dev and production build through explicit pa
   const packageJson = JSON.parse(await readFile('package.json', 'utf8')) as {
     scripts: Record<string, string>;
   };
-  expect(packageJson.scripts.dev).toBe('tsx scripts/dev.ts');
+  expect(packageJson.scripts.dev).toBe(
+    'npm run pdf:assets && tsx scripts/dev.ts',
+  );
+  expect(packageJson.scripts['pdf:assets']).toBe('tsx scripts/pdf-assets.ts');
   expect(packageJson.scripts['content:check']).toBe('tsx scripts/content.ts');
   expect(packageJson.scripts.build).toBe(
-    'npm run content:check && astro build && pagefind --site dist && npm run check:output',
+    'npm run pdf:assets && npm run content:check && astro build && pagefind --site dist && npm run check:output',
   );
 });
 

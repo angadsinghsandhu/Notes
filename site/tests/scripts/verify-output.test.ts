@@ -17,6 +17,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { execFileSync } from 'node:child_process';
 import { buildFolders, flattenFolders } from '../../src/lib/folders.js';
 import { verifyOutput } from '../../scripts/verify-output.js';
+import { stagePdfAssets } from '../../scripts/pdf-assets.js';
 import type { ContentEntry, Manifest } from '../../src/content/index.js';
 const roots: string[] = [];
 afterEach(async () => {
@@ -756,6 +757,32 @@ it('allows only the published hierarchy and rejects a missing or stale folder pa
         sourcePath: 'library/books/folders/stale/index.html',
         message: expect.stringContaining('Unexpected output'),
       }),
+    ]),
+  );
+});
+
+it('checks exact PDF support inventory and original bytes only when needed', async () => {
+  const { dist } = await output();
+  await put(join(dist, 'index.html'), '<main data-pdf-viewer>PDF</main>');
+  expect(await verifyOutput(dist)).toContainEqual(
+    expect.objectContaining({ message: 'Missing PDF.js support file' }),
+  );
+  await stagePdfAssets(join(dist, 'pdfjs'));
+  expect(
+    (await verifyOutput(dist)).filter((d) => d.sourcePath.startsWith('pdfjs/')),
+  ).toEqual([]);
+  await put(join(dist, 'pdfjs/foreign.js'), 'unexpected');
+  await put(join(dist, 'pdfjs/LICENSE'), 'tampered');
+  expect(await verifyOutput(dist)).toEqual(
+    expect.arrayContaining([
+      {
+        sourcePath: 'pdfjs/foreign.js',
+        message: 'Unexpected PDF.js support file',
+      },
+      {
+        sourcePath: 'pdfjs/LICENSE',
+        message: 'PDF.js support file differs from pinned distribution',
+      },
     ]),
   );
 });

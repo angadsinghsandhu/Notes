@@ -1,0 +1,78 @@
+---
+import '../styles/pdf.css';
+interface Props {
+  url: string;
+}
+const { url } = Astro.props;
+---
+
+<section
+  class="pdf-viewer"
+  data-pdf-viewer
+  data-pdf-url={url}
+  aria-label="PDF preview"
+  data-pagefind-ignore
+>
+  <div class="pdf-toolbar" role="group" aria-label="PDF controls">
+    <button
+      type="button"
+      data-pdf-previous
+      disabled
+      aria-label="Previous PDF page"
+    >
+      Previous
+    </button>
+    <button type="button" data-pdf-next disabled aria-label="Next PDF page">
+      Next
+    </button>
+    <form class="pdf-page-form">
+      <label>
+        Page{' '}
+        <input
+          data-pdf-page
+          type="number"
+          min="1"
+          value="1"
+          step="1"
+          inputmode="numeric"
+          aria-label="PDF page number"
+        />
+      </label>
+      <span data-pdf-count></span>
+      <button type="submit" aria-label="Go to PDF page">
+        Go
+      </button>
+    </form>
+    <button type="button" data-pdf-out aria-label="Zoom out PDF">
+      −
+    </button>
+    <button type="button" data-pdf-in aria-label="Zoom in PDF">
+      +
+    </button>
+    <button type="button" data-pdf-fit>
+      Fit width
+    </button>
+    <span data-pdf-zoom aria-label="PDF zoom"></span>
+    <button type="button" data-pdf-retry hidden>
+      Retry preview
+    </button>
+  </div>
+  <p data-pdf-status role="status" aria-live="polite">
+    PDF preview loads when visible. Open or download the PDF if unavailable.
+  </p>
+  <div
+    class="pdf-viewport"
+    data-pdf-viewport
+    role="region"
+    aria-label="PDF page, scroll to read when zoomed"
+  >
+    <div data-pdf-stage></div>
+  </div>
+  <noscript>
+    <p>Enable JavaScript for the preview, or use Open PDF or Download PDF.</p>
+  </noscript>
+</section>
+<script>
+  import { initPdfViewers } from '../client/pdf-viewer.js';
+  initPdfViewers(document);
+</script>

@@ -7,6 +7,7 @@
 /site/.astro/
 /site/.generated/
 /site/public/content-assets/
+/site/public/pdfjs/
 /site/coverage/
 /site/playwright-report/
 /site/test-results/

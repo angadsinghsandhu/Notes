@@ -14,10 +14,10 @@
 
 ## Implementation and verification
 
-- [ ] Implement the approved pipeline and website with appropriate tests and quality gates.
-- [ ] Adapt existing content and verify internal links and artifact rendering.
-- [ ] Verify local development, production output, mobile and desktop layouts, and deployment configuration.
-- [ ] Document authoring, local startup, and deployment.
+- [x] Implement the approved pipeline and website with appropriate tests and quality gates.
+- [x] Adapt existing content and verify internal links and artifact rendering.
+- [x] Verify local development, production output, mobile and desktop layouts, and deployment configuration.
+- [x] Document authoring, local startup, and deployment.
 
 ## Review
 
@@ -36,8 +36,8 @@ Review assumptions are public readership, rendered notebooks/code with PDF/slide
 - [x] Task 5: content pipeline and development watcher (reviewed; commits 99c9718, 0272436; 188 units and all gates pass).
 - [x] Task 6: responsive reader and search (reviewed; commit 1fb53b5; 270 units/all gates/52 browsers; 2 minor follow-ups recorded).
 - [x] Task 7: full archive migration and output verification (reviewed; commits bef12de, 992e0f6; 398 units/all gates/56 browsers).
-- [ ] Task 8: deployment and operating documentation.
-- [ ] Task 9: approved archived Pandas → Polars conversion (15 files; isolated real-data parity).
+- [x] Task 8: deployment and operating documentation.
+- [x] Task 9: approved archived Pandas → Polars conversion (15 files; isolated real-data parity).
 
 Task 7 migrated 171 authored titles without changing source bodies, classified 49 upstream supplemental documents, and accounted for all 10,031 archive files. Production validation checks routes, assets, source actions, exclusions and native Pagefind output. Source polling and serialized watcher readiness passed the original live HTTP lifecycle. Fresh controller verification passed 398 units, all four per-file coverage floors of at least 90%, all static/build/output gates and 56 browser tests. Independent review and scoped re-review resolved all three P2 findings; two Zod deprecation hints remain deferred for final review. No deployment was performed.
 
@@ -50,3 +50,13 @@ Task 7 migrated 171 authored titles without changing source bodies, classified 4
 User approved the short design in chat. Folder cards show immediate children; the complete 2,300-folder tree is a shared page linked from the desktop sidebar and mobile drawer. Generated navigation routes participate in existing alias and case-insensitive output ownership checks.
 
 Review: independent review and scoped re-review approved. Final checks passed 75 Python tests, 463 unit tests, all per-file coverage floors, format/lint/boundaries/typecheck/build/output validation, and 69 production browser tests after the final guard. The earlier full 73-browser run also passed the four real development/publication fixtures. All non-Pagefind output is byte-identical to that full browser artifact; native Pagefind metadata/filter semantics are unchanged, and fresh search/response-policy browser checks passed on the final configured build. Archive files remain unchanged. Local preview runs at http://127.0.0.1:4330/library/books/. No merge or deployment was performed.
+
+## Approved responsive PDF viewer (2026-10-19)
+
+- [x] Implement self-hosted PDF.js pages, zoom/fit-width, selectable text and fallbacks.
+- [x] Verify real PDFs, mobile/desktop, keyboard, lazy loading and response policy.
+- [x] Independently review and commit verified viewer; refresh local preview.
+
+User approved the short design in chat.
+
+Review: the PDF reader passed independent task review, scoped re-review and final integration review. Fresh complete verification passed 75 archive parity checks, 482 unit tests, all four per-file coverage floors, format/lint/boundaries/typecheck/build/output checks, and 77 browser tests. Actual seven-page and 220-page documents cover pixels, selectable text, page controls, zoom, keyboard scrolling, mobile layouts and response policy. New pages reset reading offsets while same-page zoom preserves position. The reviewed immutable preview is available at http://127.0.0.1:4330/. Tasks 8 and 9 were already independently completed before these navigation/PDF follow-ups; their checkboxes now reflect that recorded completion. No merge or deployment was performed. Live Cloudflare hosting, real encrypted PDF browser fixtures, physical mobile browsers and full model training remain unverified.
