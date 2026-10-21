@@ -51,3 +51,22 @@ export { writeManifest } from './manifest.js';
 export { readPlannedLocalAsset } from './assets.js';
 export { applyMigration, planMigration } from './migrate.js';
 export type { MigrationPlan } from './migrate.js';
+
+export type {
+  Purpose,
+  EditorialStatus,
+  Topic,
+  Collection,
+  Group,
+  OrganizationRecord,
+  PathStep,
+  LearningPath,
+  OrganizationDefinition,
+  Membership,
+  OrganizationSnapshot,
+} from './organization-types.js';
+export {
+  readOrganization,
+  validateOrganization,
+} from './organization-schema.js';
+export { resolveOrganization } from './organization.js';
