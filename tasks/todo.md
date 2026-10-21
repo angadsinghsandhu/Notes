@@ -60,3 +60,13 @@ Review: independent review and scoped re-review approved. Final checks passed 75
 User approved the short design in chat.
 
 Review: the PDF reader passed independent task review, scoped re-review and final integration review. Fresh complete verification passed 75 archive parity checks, 482 unit tests, all four per-file coverage floors, format/lint/boundaries/typecheck/build/output checks, and 77 browser tests. Actual seven-page and 220-page documents cover pixels, selectable text, page controls, zoom, keyboard scrolling, mobile layouts and response policy. New pages reset reading offsets while same-page zoom preserves position. The reviewed immutable preview is available at http://127.0.0.1:4330/. Tasks 8 and 9 were already independently completed before these navigation/PDF follow-ups; their checkboxes now reflect that recorded completion. No merge or deployment was performed. Live Cloudflare hosting, real encrypted PDF browser fixtures, physical mobile browsers and full model training remain unverified.
+
+## Proposed library information architecture (2026-10-21)
+
+- [x] Inventory published paths and metadata; sample document content and identify structural problems.
+- [x] Write the requested refactor specification and implementation plan.
+- [x] Self-review contracts, compatibility, pilot scope and verification coverage.
+- [ ] Obtain user review of both documents before implementation.
+- [ ] Execute the reviewed plan with the established subagent-driven method.
+
+Review: the proposal adds Topics, Collections and Learning Paths over the existing six-root archive. It preserves canonical readers, source bodies, prepared body IDs, PDF functionality and the complete source tree. A separate persistent UID registry supports curated references. The initial curation pilots are Applied Science, the PyTorch book and the Udemy React course; full-corpus editorial rewriting, duplicate deletion and physical moves are deferred. The plan defines eight testable milestones, strict metadata/reference validation, learning/file search scopes, live-update acceptance and route/hash preservation. Both artifacts are proposals for joint review as explicitly requested; no product code, archive material or running preview changed.
