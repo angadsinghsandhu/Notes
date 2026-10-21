@@ -12,7 +12,7 @@ declare global {
 }
 
 // Local compatibility proof, not Cloudflare parsing or a live-host check.
-test('built response policy permits the actual theme, math, search, images and native PDF', async ({
+test('built response policy permits the actual theme, math, search, images and PDF.js', async ({
   page,
   request,
 }) => {
@@ -43,6 +43,7 @@ test('built response policy permits the actual theme, math, search, images and n
   expect(csp).toContain("img-src 'self' data: https:");
   expect(csp).toContain('upgrade-insecure-requests');
   expect(csp).toContain("frame-src 'self'");
+  expect(csp).toContain("worker-src 'self'");
   expect(csp).toContain("frame-ancestors 'self'");
   expect(csp).not.toContain("script-src 'self' 'unsafe-inline'");
   expect(csp).not.toContain("'unsafe-eval'");
@@ -229,36 +230,21 @@ test('built response policy permits the actual theme, math, search, images and n
     expect(asset.headers()['content-type']).toMatch(/^application\/pdf\b/);
     expect((await asset.body()).subarray(0, 5).toString()).toBe('%PDF-');
     await page.goto(`${origin}${pdf.route}`);
-    await page.locator('iframe[title="PDF preview"]').scrollIntoViewIfNeeded();
-    await expect
-      .poll(() =>
-        page
-          .frames()
-          .some((frame) => frame.url().startsWith('chrome-extension://')),
-      )
-      .toBe(true);
-    const viewer = page
-      .frames()
-      .find((frame) => frame.url().startsWith('chrome-extension://'))!;
-    await expect
-      .poll(() =>
-        viewer.evaluate(() => {
-          const documentViewer = document.querySelector('pdf-viewer') as
-            (HTMLElement & { loadState_?: string; docLength_?: number }) | null;
-          return {
-            load: documentViewer?.loadState_,
-            pages: documentViewer?.docLength_,
-          };
-        }),
-      )
-      .toEqual({ load: 'success', pages: 220 });
+    await page.locator('[data-pdf-viewer]').scrollIntoViewIfNeeded();
+    await expect(page.locator('[data-pdf-stage] canvas')).toBeVisible();
+    await expect(page.locator('[data-pdf-status]')).toHaveText('Page 1 of 220');
+    await expect(page.locator('.textLayer span').first()).toBeAttached();
+    await page
+      .getByRole('button', { name: 'Next PDF page', exact: true })
+      .click();
+    await expect(page.locator('[data-pdf-status]')).toHaveText('Page 2 of 220');
     expect(await page.evaluate(() => window.headerViolations)).toEqual([]);
     await page.screenshot({
-      path: '../.superpowers/sdd/2026-10-04-notes-website/task-8-headers-native-pdf.png',
+      path: '../.superpowers/sdd/2026-10-04-notes-website/../2026-10-19-pdf-viewer/headers-pdfjs.png',
       fullPage: true,
     });
     console.log(
-      'Actual built-header local proxy: exact theme SHA and persisted choice, loaded KaTeX font/inline strut, Shiki styles, native Pagefind WASM/search, native PDF loadState=success/docLength=220; no CSP violations on tested documents.',
+      'Actual built-header local proxy: exact theme SHA and persisted choice, loaded KaTeX font/inline strut, Shiki styles, native Pagefind WASM/search, PDF.js worker/canvas/selectable text/navigation with 220 pages; no CSP violations on tested documents.',
     );
   } finally {
     proxy.closeAllConnections();

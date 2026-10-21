@@ -7,13 +7,13 @@
     "node": "24.18.1"
   },
   "scripts": {
-    "dev": "tsx scripts/dev.ts",
+    "dev": "npm run pdf:assets && tsx scripts/dev.ts",
     "format:check": "prettier --check .",
     "lint": "eslint . --max-warnings 0",
     "check:boundaries": "eslint . --config eslint.boundaries.config.mjs --max-warnings 0",
     "typecheck": "astro check && tsc --project tsconfig.tools.json --noEmit",
     "check": "npm run format:check && npm run lint && npm run check:boundaries && npm run typecheck && npm run test:polars && npm run test:unit",
-    "build": "npm run content:check && astro build && pagefind --site dist && npm run check:output",
+    "build": "npm run pdf:assets && npm run content:check && astro build && pagefind --site dist && npm run check:output",
     "preview": "astro preview --host 127.0.0.1",
     "test:unit": "vitest run --coverage --coverage.thresholds.perFile --coverage.thresholds.lines 90 --coverage.thresholds.functions 90 --coverage.thresholds.statements 90 --coverage.thresholds.branches 90",
     "test:polars": "python3 -B scripts/check_polars.py",
@@ -21,7 +21,8 @@
     "verify": "npm run build && npm run check && npm run test:e2e && npm run check:output",
     "content:check": "tsx scripts/content.ts",
     "content:migrate": "tsx scripts/migrate.ts",
-    "check:output": "tsx scripts/verify-output.ts"
+    "check:output": "tsx scripts/verify-output.ts",
+    "pdf:assets": "tsx scripts/pdf-assets.ts"
   },
   "dependencies": {
     "astro": "7.3.5",
@@ -31,6 +32,7 @@
     "hast-util-sanitize": "5.0.2",
     "hast-util-to-html": "9.0.5",
     "katex": "0.19.0",
+    "pdfjs-dist": "6.4.299",
     "rehype-raw": "7.0.0",
     "remark-gfm": "4.0.1",
     "remark-math": "6.0.0",

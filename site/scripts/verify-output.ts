@@ -5,6 +5,7 @@ import { fromHtml } from 'hast-util-from-html';
 import type { Element, Nodes } from 'hast';
 import { buildFolders, flattenFolders } from '../src/lib/folders.js';
 import { verifyPagefind } from './verify-pagefind.js';
+import { pdfAssets } from './pdf-assets.js';
 import {
   publicationExclusion,
   readPolicy,
@@ -159,6 +160,7 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
       assets.has(file) ||
       /^_astro\/[^/]+\.(?:js|css|woff2?|ttf|otf)$/.test(file) ||
       /^pagefind\/[a-zA-Z0-9_./-]+$/.test(file) ||
+      file.startsWith('pdfjs/') ||
       file === '_headers' ||
       file === '_redirects';
     if (!allowed)
@@ -178,6 +180,24 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
       }));
       pages.set(file, { ids: new Set(), nodes: [], links });
     }
+  }
+  const hasPdfViewer = [...pages.values()].some((parsed) =>
+    parsed.nodes.some((node) => 'dataPdfViewer' in node.properties),
+  );
+  const pdfFiles = [...files.keys()].filter((file) =>
+    file.startsWith('pdfjs/'),
+  );
+  if (hasPdfViewer || pdfFiles.length) {
+    const support = await pdfAssets();
+    for (const file of pdfFiles) {
+      const original = support.get(file.slice('pdfjs/'.length));
+      if (!original) fail(file, 'Unexpected PDF.js support file');
+      else if (!(await readFile(join(dist, file))).equals(original))
+        fail(file, 'PDF.js support file differs from pinned distribution');
+    }
+    for (const file of support.keys())
+      if (!files.has(`pdfjs/${file}`))
+        fail(`pdfjs/${file}`, 'Missing PDF.js support file');
   }
   for (const file of [...expected, ...assets])
     if (!files.has(file)) fail(file, 'Missing expected output file');

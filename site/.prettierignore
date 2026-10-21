@@ -9,3 +9,4 @@ coverage/
 
 # Ground-truth copied inputs retain exact archive bytes.
 tests/fixtures/real/
+public/pdfjs/
