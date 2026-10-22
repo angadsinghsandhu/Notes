@@ -1,14 +1,14 @@
 # Library information architecture refactor
 
 Date: 2026-10-21 (America/Los_Angeles)
-Status: proposed for user review; implementation is not approved by this document.
+Status: approved for implementation by the user on 2026-10-21; subagent-driven execution is in progress.
 Baseline: `19aee3713aaa34f03aad8679b09c6793a4111209`.
 
 ## Intent and scope
 
 Make the archive useful as a learning library: find a concept across sources, follow a book/course in order, and follow a preparation path without digging through implementation files. Preserve Markdown-in-Git authoring, local operation, static Cloudflare Pages hosting, mobile access, existing readers, and the original archive.
 
-The user requested a refactor specification and plan following the archive review. This proposal interprets that as a navigation, classification, and publishing refactor. It does not authorize bulk prose rewriting, physical moves, duplicate deletion, merging, or deployment. The requested plan accompanies this proposed spec for joint review; neither artifact is an implementation approval.
+The user requested a refactor specification and plan following the archive review. This proposal interprets that as a navigation, classification, and publishing refactor. It does not authorize bulk prose rewriting, physical moves, duplicate deletion, merging, or deployment. The user subsequently approved both artifacts by requesting implementation of all tasks on 2026-10-21. That approval preserves the exclusions above.
 
 ## Evidence and limitations
 
