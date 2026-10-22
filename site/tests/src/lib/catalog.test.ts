@@ -588,3 +588,105 @@ it('reads legacy body files safely and rejects symlink directories and non-file 
     'Unsafe symbolic link',
   );
 });
+
+it('catalog_organization_is_generation_bound', async () => {
+  const options = await archive();
+  await put(
+    options.rootDir,
+    'Tutorials/catalog.md',
+    '# First organization body',
+  );
+  await prepareContent(options);
+  const snapshot = join(options.outputDir, 'current');
+  const file = join(snapshot, 'manifest.json');
+  const firstManifest = JSON.parse(await readFile(file, 'utf8')) as Manifest;
+  const note = firstManifest.entries[0]!;
+  const uid = `doc-${note.id}`;
+  firstManifest.organization = {
+    topics: [{ id: 'topic', title: 'First topic', summary: '' }],
+    collections: [],
+    groups: [],
+    paths: [],
+    memberships: [
+      {
+        entryId: note.id,
+        uid,
+        topics: ['topic'],
+        purpose: 'note',
+        status: 'reviewed',
+        summary: 'Curated',
+        relatedUids: [],
+      },
+    ],
+  };
+  await writeFile(file, JSON.stringify(firstManifest));
+  const parse = vi.spyOn(JSON, 'parse');
+  const first = await readPreparedCatalog(snapshot);
+  expect(await readPreparedCatalog(snapshot)).toBe(first);
+  expect(parse).toHaveBeenCalledTimes(1);
+  const selected = first.organization.listNodeEntries('topic', 'topic')[0]!;
+  const byUid = first.organization.getEntryByUid(uid)!;
+  first.organization.getMembership(note.id).topics.push('mutation');
+  first.organization.getNode('topic', 'topic')!.title = 'mutation';
+  expect(first.organization.getNode('topic', 'topic')!.title).toBe(
+    'First topic',
+  );
+  expect(JSON.stringify(first.organization)).not.toMatch(
+    /ledger|absolutePath|preparedBodies/,
+  );
+  parse.mockRestore();
+  await put(
+    options.rootDir,
+    'Tutorials/catalog.md',
+    '# Second organization body',
+  );
+  await prepareContent(options);
+  const second = await readPreparedCatalog(snapshot);
+  expect(second).not.toBe(first);
+  expect(second.organization.listNodes('topic')).toEqual([]);
+  expect(await readPreparedBody(selected, snapshot)).toContain(
+    'First organization body',
+  );
+  expect(await readPreparedBody(byUid, snapshot)).toContain(
+    'First organization body',
+  );
+  expect(await readPreparedBody(second.listEntries()[0]!, snapshot)).toContain(
+    'Second organization body',
+  );
+});
+
+it('keeps source adjacency and all unregistered public files with organization selectors', () => {
+  const first = entry('first');
+  const outline = entry('outline');
+  const last = entry('last');
+  const code = entry('resource', { kind: 'code' });
+  const catalog = loadCatalog({
+    ...manifest,
+    entries: [first, outline, last, code],
+    organization: {
+      topics: [{ id: 'topic', title: 'Topic', summary: '' }],
+      collections: [],
+      groups: [],
+      paths: [],
+      memberships: [first, outline, last, code].map((item) => ({
+        entryId: item.id,
+        topics: ['topic'],
+        purpose: item === code ? 'project-file' : 'note',
+        status: item === outline ? 'outline' : 'reviewed',
+        summary: '',
+        relatedUids: [],
+      })),
+    },
+  });
+  expect(catalog.listEntries()).toHaveLength(4);
+  expect(
+    catalog.organization
+      .listNodeEntries('topic', 'topic')
+      .map((item) => item.id),
+  ).toEqual(['first', 'last']);
+  expect(
+    catalog.organization.listNodeEntries('topic', 'topic', { scope: 'files' }),
+  ).toHaveLength(4);
+  expect(catalog.getAdjacentNotes('last').next?.id).toBe('outline');
+  expect(catalog.getEntry(code.route)?.id).toBe(code.id);
+});

@@ -6,6 +6,19 @@ import type {
   Purpose,
 } from './organization-types.js';
 
+export function isLearningEntry(
+  entry: ContentEntry,
+  membership: Pick<Membership, 'purpose' | 'status'>,
+): boolean {
+  return (
+    !entry.draft &&
+    entry.role !== 'supplemental' &&
+    membership.purpose !== 'project-file' &&
+    membership.status !== 'outline' &&
+    membership.status !== 'draft'
+  );
+}
+
 function fallbackPurpose(entry: ContentEntry): Purpose {
   if (entry.kind === 'code') return 'project-file';
   return !entry.role && (entry.kind === 'markdown' || entry.kind === 'notebook')
@@ -55,11 +68,7 @@ export function resolveOrganization(
     };
     memberships.push(membership);
     if (membership.uid) publicUids.add(membership.uid);
-    if (
-      !entry.role &&
-      membership.purpose !== 'project-file' &&
-      membership.status !== 'outline'
-    ) {
+    if (isLearningEntry(entry, membership)) {
       for (const assigned of membership.topics) {
         let topic = topicIndex.get(assigned);
         while (topic) {

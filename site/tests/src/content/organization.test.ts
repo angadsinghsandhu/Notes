@@ -317,3 +317,30 @@ describe('organization resolution', () => {
     expect(value.paths.paths[0]!.steps[0]!.entryUids).toEqual([secondUid]);
   });
 });
+
+it('shares learning eligibility for public references, exercises, outlines and supporting files', async () => {
+  const { isLearningEntry } = await import('../../../src/content/index.js');
+  const base = { purpose: 'note' as const, status: 'reviewed' as const };
+  expect(isLearningEntry(entry(), base)).toBe(true);
+  expect(isLearningEntry(entry(), { ...base, purpose: 'exercise' })).toBe(true);
+  expect(
+    isLearningEntry(entry('Books/ref.pdf', { kind: 'pdf' }), {
+      ...base,
+      purpose: 'reference',
+    }),
+  ).toBe(true);
+  expect(isLearningEntry(entry(), { ...base, purpose: 'project-file' })).toBe(
+    false,
+  );
+  expect(isLearningEntry(entry(), { ...base, status: 'outline' })).toBe(false);
+  expect(isLearningEntry(entry(), { ...base, status: 'draft' })).toBe(false);
+  expect(isLearningEntry(entry('Books/draft.md', { draft: true }), base)).toBe(
+    false,
+  );
+  expect(
+    isLearningEntry(
+      entry('Books/supplement.md', { role: 'supplemental' }),
+      base,
+    ),
+  ).toBe(false);
+});

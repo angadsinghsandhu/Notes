@@ -71,4 +71,4 @@ export {
   readOrganization,
   validateOrganization,
 } from './organization-schema.js';
-export { resolveOrganization } from './organization.js';
+export { resolveOrganization, isLearningEntry } from './organization.js';
