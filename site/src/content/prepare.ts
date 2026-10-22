@@ -8,7 +8,14 @@ import {
 } from './publication.js';
 import { discoverEntries } from './discover.js';
 import { readMetadata, readPolicy } from './schema.js';
-import { compareSourcePaths, createEntry } from './identifiers.js';
+import { readOrganization } from './organization-schema.js';
+import { resolveOrganization } from './organization.js';
+import {
+  assertUniqueRoutes,
+  publicationPages,
+  compareSourcePaths,
+  createEntry,
+} from './identifiers.js';
 import {
   collectExplicitAnchors,
   collectHeadings,
@@ -39,6 +46,7 @@ export type PrepareOptions = {
   rootDir: string;
   outputDir: string;
   policyPath: string;
+  organizationDir?: string;
   hosted: boolean;
   revision?: string;
   /** Watcher only: retain exactly the preceding publication’s assets for handoff. */
@@ -151,10 +159,28 @@ export async function prepareContent(
       );
     const discovery = await discoverEntries(root, policy);
     manifest.ledger = discovery.ledger;
+    const definition = options.organizationDir
+      ? await readOrganization(options.organizationDir)
+      : undefined;
+    const records = new Map(
+      definition?.entries.entries.map((record) => [record.sourcePath, record]),
+    );
+    const organizationEntries: ContentEntry[] = [];
     const documents: Document[] = [];
     for (const source of discovery.sources) {
       try {
         const entry = createEntry(source, await readMetadata(source, policy));
+        organizationEntries.push(entry);
+        if (records.get(entry.sourcePath)?.status === 'draft') {
+          entry.draft = true;
+          const row = manifest.ledger.find(
+            (row) => row.sourcePath === entry.sourcePath,
+          )!;
+          row.disposition = 'excluded';
+          row.reason = 'Excluded organizational draft content';
+          delete row.destination;
+          continue;
+        }
         const text = ['markdown', 'notebook', 'code'].includes(source.kind)
           ? await readFile(source.absolutePath, 'utf8')
           : '';
@@ -183,6 +209,31 @@ export async function prepareContent(
       }
     }
     if (diagnostics.length) return result;
+    if (definition) {
+      // Discovery already removed policy/frontmatter drafts. Keep missing records strict.
+      const excluded = new Set(
+        discovery.ledger
+          .filter((row) => row.disposition === 'excluded')
+          .map((row) => row.sourcePath),
+      );
+      manifest.organization = resolveOrganization(organizationEntries, {
+        ...definition,
+        entries: {
+          version: 1,
+          entries: definition.entries.entries.filter(
+            (record) =>
+              !excluded.has(record.sourcePath) ||
+              organizationEntries.some(
+                (entry) => entry.sourcePath === record.sourcePath,
+              ),
+          ),
+        },
+      });
+    }
+    assertUniqueRoutes(
+      manifest.entries,
+      publicationPages(manifest.entries, manifest.organization),
+    );
     const candidates: AssetRecord[] = manifest.ledger
       .filter((row) => row.disposition === 'supporting-asset')
       .map((row, index) => ({

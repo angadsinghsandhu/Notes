@@ -1,3 +1,5 @@
+import type { OrganizationSnapshot } from './organization-types.js';
+
 export type Section =
   'books' | 'classes' | 'courses' | 'interview' | 'languages' | 'tutorials';
 export type ContentKind = 'markdown' | 'notebook' | 'code' | 'pdf' | 'slides';
@@ -60,6 +62,7 @@ export type AssetRecord = {
 };
 export type Manifest = {
   version: 1;
+  organization?: OrganizationSnapshot;
   entries: ContentEntry[];
   assets: AssetRecord[];
   ledger: MigrationRow[];

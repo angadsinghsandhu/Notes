@@ -26,6 +26,7 @@ export async function contentOptions(
     rootDir,
     outputDir: join(siteDir, '.generated'),
     policyPath,
+    organizationDir: join(siteDir, 'content/organization'),
     hosted: process.env.HOSTED === 'true',
     revision,
   };

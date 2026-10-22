@@ -1,3 +1,11 @@
+import { buildOrganizationIndex, publicEntry } from './organization.js';
+import type { OrganizationIndex } from './organization.js';
+export type {
+  OrganizationIndex,
+  LibraryNode,
+  LibraryLink,
+  ResolvedPathStep,
+} from './organization.js';
 import { lstat, readFile } from 'node:fs/promises';
 import { basename, dirname, join, resolve } from 'node:path';
 import { assertUniqueRoutes, compareSourcePaths } from '../content/index.js';
@@ -25,6 +33,7 @@ export function isLearningNote(entry: ContentEntry): boolean {
 }
 
 export type Catalog = {
+  organization: OrganizationIndex;
   getEntry(route: string): ContentEntry | undefined;
   listEntries(filters?: {
     section?: Section;
@@ -35,63 +44,6 @@ export type Catalog = {
     next?: ContentEntry;
   };
 };
-
-/** The internal ledger/assets never become page props. Select public fields explicitly. */
-function publicEntry(entry: ContentEntry): ContentEntry {
-  const {
-    id,
-    title,
-    role,
-    description,
-    tags,
-    draft,
-    slug,
-    order,
-    updated,
-    aliases,
-    sourcePath,
-    section,
-    kind,
-    bytes,
-    groupSegments,
-    route,
-    headings,
-    anchors,
-    bodyFile,
-    assetUrl,
-    sourceUrl,
-  } = entry;
-  if (
-    sourcePath.startsWith('/') ||
-    sourcePath.includes('\\') ||
-    bodyFile?.startsWith('/') ||
-    bodyFile?.split('/').includes('..')
-  )
-    throw new Error('Catalog entries must contain repository-relative paths');
-  return {
-    id,
-    title,
-    description,
-    tags: [...tags],
-    draft,
-    aliases: [...aliases],
-    sourcePath,
-    section,
-    kind,
-    bytes,
-    groupSegments: [...groupSegments],
-    route,
-    headings: headings.map((heading) => ({ ...heading })),
-    ...(role ? { role } : {}),
-    ...(slug !== undefined ? { slug } : {}),
-    ...(order !== undefined ? { order } : {}),
-    ...(updated !== undefined ? { updated } : {}),
-    ...(anchors ? { anchors: [...anchors] } : {}),
-    ...(bodyFile ? { bodyFile } : {}),
-    ...(assetUrl ? { assetUrl } : {}),
-    ...(sourceUrl ? { sourceUrl } : {}),
-  };
-}
 
 const preparedBodies = new WeakMap<
   ContentEntry,
@@ -121,7 +73,17 @@ function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
   for (const entry of entries)
     for (const route of [entry.route, ...entry.aliases])
       routes.set(route, entry);
+  const index = buildOrganizationIndex(entries, manifest.organization);
   return {
+    organization: {
+      ...index,
+      getEntryByUid: (uid) => {
+        const entry = index.getEntryByUid(uid);
+        return entry ? select(entry) : undefined;
+      },
+      listNodeEntries: (type, key, options) =>
+        index.listNodeEntries(type, key, options).map(select),
+    },
     getEntry: (route) => {
       const entry = routes.get(route);
       return entry ? select(entry) : undefined;

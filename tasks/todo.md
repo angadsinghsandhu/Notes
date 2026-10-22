@@ -66,7 +66,20 @@ Review: the PDF reader passed independent task review, scoped re-review and fina
 - [x] Inventory published paths and metadata; sample document content and identify structural problems.
 - [x] Write the requested refactor specification and implementation plan.
 - [x] Self-review contracts, compatibility, pilot scope and verification coverage.
-- [ ] Obtain user review of both documents before implementation.
+- [x] Obtain user review of both documents before implementation (user requested implementing all tasks on 2026-10-21).
 - [ ] Execute the reviewed plan with the established subagent-driven method.
 
 Review: the proposal adds Topics, Collections and Learning Paths over the existing six-root archive. It preserves canonical readers, source bodies, prepared body IDs, PDF functionality and the complete source tree. A separate persistent UID registry supports curated references. The initial curation pilots are Applied Science, the PyTorch book and the Udemy React course; full-corpus editorial rewriting, duplicate deletion and physical moves are deferred. The plan defines eight testable milestones, strict metadata/reference validation, learning/file search scopes, live-update acceptance and route/hash preservation. Both artifacts are proposals for joint review as explicitly requested; no product code, archive material or running preview changed.
+
+### Organization implementation milestones
+
+- [x] Task 1: strict organization schema and persistent identity (8325343; independent review approved).
+- [x] Task 2: atomic preparation, draft/route safety and sidecar watcher (9fa6fb0; independent review approved).
+- [x] Task 3: indexed public catalog selectors (540dfa4; independent review approved).
+- [ ] Task 4: reviewed metadata migration and three pilot collections.
+- [ ] Task 5: responsive curated pages, trees and reader links.
+- [ ] Task 6: learning/file search scopes and metadata filters.
+- [ ] Task 7: full output preservation and live development acceptance.
+- [ ] Task 8: authoring guide, whole-branch review and feature delivery.
+
+Execution: isolated notes-website worktree; ledger `.superpowers/sdd/2026-10-21-library-information-architecture/progress.md`. Source/body identities and the reviewed port-4330 snapshot remain preserved. Main alone handles Git/remote writes; no merge or deployment is authorized.

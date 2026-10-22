@@ -1,5 +1,9 @@
 import type { ContentEntry, Section } from '../content/index.js';
-import { assertUniqueRoutes, compareSourcePaths } from '../content/index.js';
+import {
+  assertUniqueRoutes,
+  compareSourcePaths,
+  sourceFolderRoute as folderRoute,
+} from '../content/index.js';
 import { isLearningNote, sectionLabels } from './catalog.js';
 
 export type Folder = {
@@ -13,21 +17,7 @@ export type Folder = {
   resourceCount: number;
 };
 
-/** Escape the escape character too: distinct source names never share a URL. */
-export function folderRoute(section: Section, segments: string[]): string {
-  const path = segments
-    .map((segment) =>
-      encodeURIComponent(segment)
-        .replace(
-          /[!'()*~.]/g,
-          (character) =>
-            `%${character.charCodeAt(0).toString(16).toUpperCase()}`,
-        )
-        .replaceAll('%', '~'),
-    )
-    .join('/');
-  return `/library/${section}/${path ? `folders/${path}/` : ''}`;
-}
+export { sourceFolderRoute as folderRoute } from '../content/index.js';
 
 export function buildFolders(entries: ContentEntry[]): Folder[] {
   const folders = new Map<string, Folder>();
