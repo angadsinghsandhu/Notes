@@ -2,6 +2,7 @@ import * as fs from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, expect, it, vi } from 'vitest';
+import { check, resolveConfig } from 'prettier';
 import * as content from '../../../src/content/index.js';
 
 vi.mock('node:fs/promises', async (importOriginal) => ({
@@ -138,4 +139,66 @@ it('retains existing registry entries omitted from a full proposal and prevents 
   await expect(content.applyOrganizationMigration(forged)).rejects.toThrow(
     'UID',
   );
+});
+
+it('plans and applies repository-formatted JSON for the actual short topic-array shape', async () => {
+  const root = await fixture();
+  const sourcePath = 'Interview/Applied Science/breadth/1-basics.md';
+  await fs.mkdir(join(root, 'Interview/Applied Science/breadth'), {
+    recursive: true,
+  });
+  await fs.writeFile(join(root, sourcePath), '# Basics');
+  const definition = empty();
+  definition.taxonomy.topics.push(
+    { id: 'machine-learning', title: 'Machine Learning', summary: '' },
+    {
+      id: 'foundations-data-preparation',
+      title: 'Foundations & Data Preparation',
+      summary:
+        'Learning paradigms, practical data issues and the applied-science study roadmap.',
+      parentId: 'machine-learning',
+      order: 0,
+    },
+  );
+  // Exact applied record shape that first exposed the format-gate failure.
+  definition.entries.entries.push({
+    uid: 'doc-841e249712513ae53c8d4862682312ce9b16be98092e7776aed0afd8b236031c',
+    sourcePath,
+    topics: ['foundations-data-preparation'],
+    purpose: 'note',
+    status: 'unreviewed',
+  });
+  const options = {
+    ...(await resolveConfig(
+      join(process.cwd(), 'content/organization/entries.json'),
+    )),
+    parser: 'json',
+  };
+  const plan = await content.planOrganizationMigration(root, definition);
+  await content.applyOrganizationMigration(plan);
+  const appliedBytes = await sidecars(root);
+  expect({
+    proposed: await Promise.all(
+      plan.sidecars.map((sidecar) => check(sidecar.proposedBytes, options)),
+    ),
+    applied: await Promise.all(
+      appliedBytes.map((bytes) => check(bytes, options)),
+    ),
+  }).toEqual({
+    proposed: [true, true, true, true],
+    applied: [true, true, true, true],
+  });
+  expect(plan.sidecars[2]!.proposedBytes).toContain(
+    '"topics": ["foundations-data-preparation"]',
+  );
+  expect(appliedBytes).toEqual(
+    plan.sidecars.map((sidecar) => sidecar.proposedBytes),
+  );
+  await content.applyOrganizationMigration(JSON.parse(JSON.stringify(plan)));
+  const repeated = await content.planOrganizationMigration(root, definition);
+  expect(repeated.sidecars.map((sidecar) => sidecar.proposedBytes)).toEqual(
+    appliedBytes,
+  );
+  await content.applyOrganizationMigration(repeated);
+  expect(await sidecars(root)).toEqual(appliedBytes);
 });

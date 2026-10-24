@@ -1,4 +1,5 @@
 import { join } from 'node:path';
+import { format } from 'prettier';
 import {
   readOrganization,
   validateOrganization,
@@ -68,7 +69,9 @@ export async function planOrganizationMigration(
     sidecars.push({
       filename: `${name}.json`,
       previousHash: bytes === null ? null : sha256(bytes),
-      proposedBytes: `${JSON.stringify(definition[name], null, 2)}\n`,
+      proposedBytes: await format(JSON.stringify(definition[name]), {
+        parser: 'json',
+      }),
     });
   }
   return {
