@@ -76,7 +76,7 @@ Review: the proposal adds Topics, Collections and Learning Paths over the existi
 - [x] Task 1: strict organization schema and persistent identity (8325343; independent review approved).
 - [x] Task 2: atomic preparation, draft/route safety and sidecar watcher (9fa6fb0; independent review approved).
 - [x] Task 3: indexed public catalog selectors (540dfa4; independent review approved).
-- [ ] Task 4: reviewed metadata migration and three pilot collections.
+- [x] Task 4: reviewed metadata migration and three pilots (targeted checks/build and independent review approved; final full gate remains for delivery).
 - [ ] Task 5: responsive curated pages, trees and reader links.
 - [ ] Task 6: learning/file search scopes and metadata filters.
 - [ ] Task 7: full output preservation and live development acceptance.
