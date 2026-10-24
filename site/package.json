@@ -21,6 +21,7 @@
     "verify": "npm run build && npm run check && npm run test:e2e && npm run check:output",
     "content:check": "tsx scripts/content.ts",
     "content:migrate": "tsx scripts/migrate.ts",
+    "content:organize": "tsx scripts/organize.ts",
     "check:output": "tsx scripts/verify-output.ts",
     "pdf:assets": "tsx scripts/pdf-assets.ts"
   },

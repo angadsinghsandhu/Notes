@@ -80,6 +80,7 @@ it('prepares archive content before dev and production build through explicit pa
 it('wires reviewed dry-run migration and output verification commands', async () => {
   const value = JSON.parse(await readFile('package.json', 'utf8'));
   expect(value.scripts['content:migrate']).toBe('tsx scripts/migrate.ts');
+  expect(value.scripts['content:organize']).toBe('tsx scripts/organize.ts');
   expect(value.scripts['check:output']).toBe('tsx scripts/verify-output.ts');
 });
 

@@ -72,3 +72,8 @@ export {
   validateOrganization,
 } from './organization-schema.js';
 export { resolveOrganization, isLearningEntry } from './organization.js';
+export {
+  planOrganizationMigration,
+  applyOrganizationMigration,
+} from './organization-migrate.js';
+export type { OrganizationMigrationPlan } from './organization-migrate.js';
