@@ -83,3 +83,19 @@ Review: the proposal adds Topics, Collections and Learning Paths over the existi
 - [ ] Task 8: authoring guide, whole-branch review and feature delivery.
 
 Execution: isolated notes-website worktree; ledger `.superpowers/sdd/2026-10-21-library-information-architecture/progress.md`. Source/body identities and the reviewed port-4330 snapshot remain preserved. Main alone handles Git/remote writes; no merge or deployment is authorized.
+
+## LeetCode interactive curriculum (2026-10-24)
+
+- [x] Inspect current solutions and the source-reader pipeline; inventory numbered coverage and duplicates.
+- [x] Create clickable library/lesson mockups in ignored brainstorming space.
+- [x] Confirm deep lessons for problems 1–2000, every distinct approach visualized, curated inputs and future custom-input compatibility.
+- [x] Confirm Cloudflare-only hosting, owner-only cross-device studied progress, official links, sourced company information and reusable learning trees.
+- [x] Write the full design, obtain independent builder check and user approval.
+- [x] Write and self-review separate platform and complete-curriculum implementation plans.
+- [ ] Obtain user review of the implementation plans before execution; retain the established subagent-driven method.
+- [ ] Reconcile and complete the prerequisite organization refactor without discarding its partial files.
+- [ ] Implement and independently review platform Tasks 1–14 and curriculum inventory/pilot C1–C2.
+- [ ] Complete all 40 coverage waves in C3 with exact IDs, bounded sub-batches and independent per-lesson review.
+- [ ] Complete final integration/coverage review and the applicable serialized full gate; update PRs without merging or deploying.
+
+Review: approved specification `docs/superpowers/specs/2026-10-24-leetcode-learning-library-design.md`; plans `docs/superpowers/plans/2026-10-24-leetcode-learning-platform.md` and `docs/superpowers/plans/2026-10-24-leetcode-curriculum.md`. Initial filename inventory found 360 Python files, 250 distinct numbered problems, 240 in range and 79 duplicate numbers; identity/correctness reconciliation remains implementation work. The plans distinguish software/pilot readiness from all 2000 verified lessons, preserve original archive URLs/bytes and private progress, and defer actual deployment authorization. This milestone changes documentation only; no curriculum lessons, progress backend or production UI have been implemented.

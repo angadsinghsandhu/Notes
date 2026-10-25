@@ -1,6 +1,6 @@
 # LeetCode 1–2000 interactive learning library
 
-Status: design proposal; requires user approval before implementation planning.
+Status: approved by the user on 2026-10-24; implementation plans await review.
 Date: 2026-10-24 (America/Los_Angeles).
 
 ## Intent and agreed scope
