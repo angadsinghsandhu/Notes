@@ -222,3 +222,17 @@ test('a real below-fold local diagram reserves its aspect ratio before loading',
     release();
   }
 });
+
+test('curated reader metadata labels outline status and preserves the source breadcrumb', async ({
+  page,
+}) => {
+  await page.goto(
+    '/library/collections/programming-pytorch-deep-learning/groups/chapter-4/',
+  );
+  await page.locator('[data-organization-resources] a').click();
+  await expect(page.locator('.organization-metadata')).toContainText('Outline');
+  await expect(
+    page.getByRole('navigation', { name: 'Breadcrumbs' }),
+  ).toContainText('Books');
+  await expect(page.locator('article[data-pagefind-body]')).toHaveCount(1);
+});

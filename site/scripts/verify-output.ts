@@ -8,6 +8,7 @@ import { verifyPagefind } from './verify-pagefind.js';
 import { pdfAssets } from './pdf-assets.js';
 import {
   publicationExclusion,
+  organizationPageRoutes,
   readPolicy,
   type Diagnostic,
   type Manifest,
@@ -19,7 +20,7 @@ const routeFile = (route: string) =>
   route.endsWith('/') ? `${route.slice(1)}index.html` : route.slice(1);
 type Page = {
   ids: Set<string>;
-  links: { url: string; tag: string }[];
+  links: { url: string; tag: string; attribute?: string }[];
   nodes: Element[];
 };
 const text = (node: Nodes): string =>
@@ -28,25 +29,46 @@ const text = (node: Nodes): string =>
     : 'children' in node
       ? node.children.map(text).join('')
       : '';
+// Flatten parser attribute ropes retained across pages; preserve exact UTF-16 code units.
+const retainedText = (value: string): string =>
+  Buffer.from(value, 'utf16le').toString('utf16le');
 function page(html: string): Page {
   const result: Page = { ids: new Set(), links: [], nodes: [] };
   function visit(node: Nodes): void {
     if (node.type === 'element') {
-      result.nodes.push(node);
+      // Links/IDs remain complete; only source actions need retained anchor text.
+      const sourceAction =
+        node.tagName === 'a' && text(node).trim() === 'View original source';
+      if (
+        sourceAction ||
+        ['meta', 'link', 'iframe'].includes(node.tagName) ||
+        'dataPdfViewer' in node.properties ||
+        'dataPagefindBody' in node.properties
+      )
+        result.nodes.push({
+          type: 'element',
+          tagName: node.tagName,
+          properties: node.properties,
+          children: sourceAction ? [{ type: 'text', value: text(node) }] : [],
+        });
       for (const key of ['id', 'name']) {
         const value = node.properties[key];
-        if (typeof value === 'string') result.ids.add(value);
+        if (typeof value === 'string') result.ids.add(retainedText(value));
       }
       for (const key of ['href', 'src', 'poster', 'action', 'cite']) {
         const value = node.properties[key];
         if (typeof value === 'string')
-          result.links.push({ url: value, tag: node.tagName });
+          result.links.push({
+            url: retainedText(value),
+            tag: node.tagName,
+            attribute: key,
+          });
       }
       const set = node.properties['srcSet'];
       if (typeof set === 'string')
         for (const candidate of set.split(','))
           result.links.push({
-            url: candidate.trim().split(/\s+/)[0] ?? '',
+            url: retainedText(candidate.trim().split(/\s+/)[0] ?? ''),
             tag: node.tagName,
           });
       if (
@@ -56,7 +78,8 @@ function page(html: string): Page {
         const target = /url=(.*)$/i.exec(
           String(node.properties['content']),
         )?.[1];
-        if (target) result.links.push({ url: target, tag: 'meta' });
+        if (target)
+          result.links.push({ url: retainedText(target), tag: 'meta' });
       }
     }
     if ('children' in node) for (const child of node.children) visit(child);
@@ -134,6 +157,7 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
   const expected = new Set([
     '404.html',
     ...fixed.map(routeFile),
+    ...organizationPageRoutes(published, manifest.organization).map(routeFile),
     ...flattenFolders(buildFolders(published))
       .filter((folder) => folder.segments.length > 0)
       .map((folder) => routeFile(folder.route)),
@@ -314,13 +338,14 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
     if (
       entry.bytes > MAX_BYTES &&
       ['pdf', 'slides'].includes(entry.kind) &&
-      parsed.nodes.some(
-        (node) =>
-          node.tagName === 'iframe' ||
-          (node.tagName === 'a' &&
-            node.properties['href'] === entry.assetUrl &&
-            entry.assetUrl?.startsWith('/')),
-      )
+      (parsed.nodes.some((node) => node.tagName === 'iframe') ||
+        parsed.links.some(
+          (link) =>
+            link.tag === 'a' &&
+            link.attribute === 'href' &&
+            link.url === entry.assetUrl &&
+            entry.assetUrl?.startsWith('/'),
+        ))
     )
       fail(entry.sourcePath, 'Oversized resource has a local source action');
   }

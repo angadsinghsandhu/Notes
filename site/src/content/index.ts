@@ -77,3 +77,5 @@ export {
   applyOrganizationMigration,
 } from './organization-migrate.js';
 export type { OrganizationMigrationPlan } from './organization-migrate.js';
+
+export { organizationPageRoutes } from './organization-routes.js';

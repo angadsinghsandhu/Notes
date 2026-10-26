@@ -1,0 +1,24 @@
+---
+import LibraryLayout from '../../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import OrganizationTree from '../../../components/OrganizationTree.astro';
+import { readPreparedCatalog } from '../../../lib/catalog.js';
+import { organizationTree } from '../../../lib/organization-pages.js';
+const catalog = await readPreparedCatalog();
+---
+
+<LibraryLayout
+  title="Topics"
+  description="Find a concept across the curated source material."
+>
+  <div data-pagefind-ignore>
+    <Breadcrumbs title="Topics" />
+    <h1>Topics</h1>
+    <p>Find a concept across the curated source material.</p>
+    <nav aria-label="Topic tree">
+      <OrganizationTree
+        nodes={organizationTree(catalog.organization, 'topic')}
+      />
+    </nav>
+  </div>
+</LibraryLayout>

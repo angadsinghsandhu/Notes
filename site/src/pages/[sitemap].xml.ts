@@ -14,6 +14,7 @@ export async function GET({ site }: APIContext): Promise<Response> {
     '/library/',
     '/library/tree/',
     '/search/',
+    ...catalog.organizationRoutes(),
     ...Object.keys(sectionLabels).map((section) => `/library/${section}/`),
     ...flattenFolders(buildFolders(catalog.listEntries()))
       .filter((folder) => folder.segments.length > 0)

@@ -1,0 +1,39 @@
+---
+import type { ReaderOrganization } from '../lib/organization-pages.js';
+interface Props {
+  metadata: ReaderOrganization;
+  description?: string;
+}
+const { metadata, description = '' } = Astro.props;
+---
+
+<div class="organization-metadata" data-pagefind-ignore>
+  <p class="entry-meta">
+    {metadata.status === 'outline'
+      ? 'Outline'
+      : metadata.status === 'reviewed'
+        ? 'Reviewed'
+        : 'Unreviewed'}{' '}
+    · {metadata.purpose === 'project-file' ? 'Project file' : metadata.purpose}
+  </p>
+  {metadata.summary && metadata.summary !== description && (
+    <p>{metadata.summary}</p>
+  )}
+  {metadata.topics.length > 0 && (
+    <div class="organization-links">
+      <span>Topics</span>
+      {metadata.topics.map((topic) => (
+        <a href={topic.route}>{topic.title}</a>
+      ))}
+    </div>
+  )}
+  {metadata.collection && (
+    <div class="organization-links">
+      <span>Collection</span>
+      <a href={metadata.collection.route}>{metadata.collection.title}</a>
+      {metadata.group && (
+        <a href={metadata.group.route}>{metadata.group.title}</a>
+      )}
+    </div>
+  )}
+</div>

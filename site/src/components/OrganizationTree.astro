@@ -1,0 +1,43 @@
+---
+import type { OrganizationTreeNode } from '../lib/organization-pages.js';
+interface Props {
+  nodes: OrganizationTreeNode[];
+  currentRoute?: string;
+}
+const { nodes, currentRoute } = Astro.props;
+const containsCurrent = (node: OrganizationTreeNode): boolean =>
+  node.route === currentRoute || node.children.some(containsCurrent);
+---
+
+<ul class="organization-tree">
+  {nodes.map((node) => (
+    <li>
+      {node.children.length ? (
+        <details open={containsCurrent(node)}>
+          <summary>{node.title}</summary>
+          {node.route && (
+            <a
+              href={node.route}
+              aria-current={node.route === currentRoute ? 'page' : undefined}
+            >
+              Open {node.title}
+            </a>
+          )}
+          <Astro.self
+            nodes={node.children}
+            {...(currentRoute ? { currentRoute } : {})}
+          />
+        </details>
+      ) : node.route ? (
+        <a
+          href={node.route}
+          aria-current={node.route === currentRoute ? 'page' : undefined}
+        >
+          {node.title}
+        </a>
+      ) : (
+        <span>{node.title}</span>
+      )}
+    </li>
+  ))}
+</ul>

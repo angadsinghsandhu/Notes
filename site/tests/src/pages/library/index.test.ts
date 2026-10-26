@@ -51,3 +51,12 @@ test('real upstream templates remain accessible only in supplemental browsing', 
     page.getByRole('link', { name: 'View original source' }),
   ).toBeVisible();
 });
+
+test('library gives three equal curated entry points and retains the source archive', async ({
+  page,
+}) => {
+  await page.goto('/library/');
+  await expect(page.locator('main .organization-card')).toHaveCount(3);
+  await expect(page.locator('main .organization-counts')).toHaveCount(0);
+  await expect(page.locator('#source-archive .section-card')).toHaveCount(6);
+});

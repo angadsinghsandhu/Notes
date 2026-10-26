@@ -37,3 +37,18 @@ test('code copy reports success and clipboard failure', async ({
   await copy.click();
   await expect(page.getByRole('status').first()).toContainText('Copy failed');
 });
+
+test('canonical project code reader carries compact curated metadata and no source file tree', async ({
+  page,
+}) => {
+  await page.goto(
+    '/resources/books/programming-pytorch-for-deep-learning-ian-pointer/chapter-2-image-clasification-with-pytorch/download-py/',
+  );
+  await expect(page.locator('.organization-metadata')).toContainText(
+    'Chapter 2',
+  );
+  await expect(page.locator('.organization-metadata')).toContainText(
+    'Project file',
+  );
+  await expect(page.locator('[data-project-files]')).toHaveCount(0);
+});

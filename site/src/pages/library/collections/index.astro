@@ -1,0 +1,55 @@
+---
+import LibraryLayout from '../../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import OrganizationCards from '../../../components/OrganizationCards.astro';
+import { readPreparedCatalog } from '../../../lib/catalog.js';
+import { organizationCards } from '../../../lib/organization-pages.js';
+const catalog = await readPreparedCatalog();
+const collections = catalog.organization
+  .listNodes('collection')
+  .filter((n) => n.type === 'collection');
+const types = {
+  book: 'Books',
+  'university-course': 'University Courses',
+  'online-course': 'Online Courses',
+  workshop: 'Workshops & Tutorials',
+};
+---
+
+<LibraryLayout
+  title="Collections"
+  description="Follow books and courses in their original source context."
+>
+  <div data-pagefind-ignore>
+    <Breadcrumbs title="Collections" />
+    <h1>Collections</h1>
+    <p>Follow books and courses in their original source context.</p>
+    {Object.entries(types).map(([type, title]) => {
+      const nodes = collections.filter((n) => n.record.type === type);
+      const providers = [
+        ...new Set(nodes.map((n) => n.record.provider ?? 'Other sources')),
+      ];
+      return (
+        nodes.length > 0 && (
+          <section class="browse-section">
+            <h2>{title}</h2>
+            {providers.map((provider) => (
+              <section>
+                <h3>{provider}</h3>
+                <OrganizationCards
+                  cards={organizationCards(
+                    catalog.organization,
+                    nodes.filter(
+                      (n) =>
+                        (n.record.provider ?? 'Other sources') === provider,
+                    ),
+                  )}
+                />
+              </section>
+            ))}
+          </section>
+        )
+      );
+    })}
+  </div>
+</LibraryLayout>

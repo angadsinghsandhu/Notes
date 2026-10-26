@@ -1,6 +1,7 @@
 ---
 import 'katex/dist/katex.min.css';
-import '../styles/reader.css';
+import OrganizationMetadata from '../components/OrganizationMetadata.astro';
+import type { ReaderOrganization } from '../lib/organization-pages.js';
 import { fromHtml } from 'hast-util-from-html';
 import { toHtml } from 'hast-util-to-html';
 import type { Element, Root } from 'hast';
@@ -11,13 +12,21 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import TableOfContents from '../components/TableOfContents.astro';
 import ResourceViewer from '../components/ResourceViewer.astro';
 interface Props {
+  organization?: ReaderOrganization;
   entry: ContentEntry;
   html: string;
   navItems?: ContentEntry[];
   previous?: ContentEntry;
   next?: ContentEntry;
 }
-const { entry, html, navItems = [], previous, next } = Astro.props;
+const {
+  entry,
+  html,
+  navItems = [],
+  previous,
+  next,
+  organization,
+} = Astro.props;
 // Only Task4's sanitized/rendered body enters this tree. Add native scroll regions
 // server-side so keyboard scrolling and accessible labels survive without JS.
 const tree = fromHtml(html, { fragment: true });
@@ -67,6 +76,17 @@ const note = ['markdown', 'notebook'].includes(entry.kind);
   }
   entry={entry}
   navItems={navItems}
+  {...(organization?.collection
+    ? {
+        organizationNav: {
+          title: organization.collection.title,
+          route: organization.collection.route,
+          nodes: organization.tree,
+          currentRoute:
+            organization.group?.route ?? organization.collection.route,
+        },
+      }
+    : {})}
 >
   <Breadcrumbs entry={entry} />
   <div class="reader-grid">
@@ -87,6 +107,12 @@ const note = ['markdown', 'notebook'].includes(entry.kind);
           </p>
           <h1 data-pagefind-meta="title">{entry.title}</h1>
           {entry.description && <p>{entry.description}</p>}
+          {organization && (
+            <OrganizationMetadata
+              metadata={organization}
+              description={entry.description}
+            />
+          )}
           {entry.sourceUrl && (
             <div class="actions" data-pagefind-ignore>
               <a class="action" href={entry.sourceUrl}>
