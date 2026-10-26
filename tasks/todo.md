@@ -78,7 +78,7 @@ Review: the proposal adds Topics, Collections and Learning Paths over the existi
 - [x] Task 3: indexed public catalog selectors (540dfa4; independent review approved).
 - [x] Task 4: reviewed metadata migration and three pilots (targeted checks/build and independent review approved; final full gate remains for delivery).
 - [x] Task 5: responsive curated pages, trees and reader links (independent spec/quality review clean; 100 targeted units, 29 curated and 17 directly affected browser tests).
-- [ ] Task 6: learning/file search scopes and metadata filters.
+- [x] Task 6: learning/file search scopes and metadata filters (independent review clean; 32 targeted units, 10 real browser tests and exact native membership audit of all 6,279 readers).
 - [ ] Task 7: full output preservation and live development acceptance.
 - [ ] Task 8: authoring guide, whole-branch review and feature delivery.
 

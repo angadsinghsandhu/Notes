@@ -236,3 +236,24 @@ test('curated reader metadata labels outline status and preserves the source bre
   ).toContainText('Books');
   await expect(page.locator('article[data-pagefind-body]')).toHaveCount(1);
 });
+
+test('canonical reader exposes repeated native filter captures without adding body text', async ({
+  page,
+}) => {
+  await page.goto(math);
+  await expect(page.locator('[data-pagefind-filter="scope"]')).toHaveText([
+    'files',
+    'learning',
+  ]);
+  await expect(page.locator('[data-pagefind-filter="topic"]')).toHaveText([
+    'attention-transformers-language-models',
+    'deep-learning',
+  ]);
+  await expect(
+    page.locator('article [data-pagefind-filter="scope"]'),
+  ).toHaveCount(0);
+  await expect(page.locator('article[data-pagefind-body]')).toHaveCount(1);
+  await expect(page.locator('[data-pagefind-filter="collection"]')).toHaveCount(
+    0,
+  );
+});

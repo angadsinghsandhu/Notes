@@ -78,7 +78,7 @@ export function initSearch(document: Document, load = loadPagefind): void {
     }
     status!.textContent = 'Searching…';
     const filters: Record<string, string> = {};
-    for (const name of ['section', 'kind']) {
+    for (const name of ['scope', 'section', 'kind', 'topic', 'collection']) {
       const value = form!.querySelector<HTMLSelectElement>(
         `[name="${name}"]`,
       )!.value;
@@ -101,6 +101,12 @@ export function initSearch(document: Document, load = loadPagefind): void {
   form.addEventListener('submit', (event) => {
     event.preventDefault();
     void search();
+  });
+  form.addEventListener('change', (event) => {
+    if ((event.target as HTMLElement).matches('select')) void search();
+  });
+  form.addEventListener('reset', () => {
+    setTimeout(() => void search(), 0);
   });
   more.addEventListener('click', async () => {
     const token = generation;
