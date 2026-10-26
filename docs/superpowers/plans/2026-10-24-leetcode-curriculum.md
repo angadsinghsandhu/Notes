@@ -93,4 +93,4 @@ Platform contracts: strict `CurriculumDefinition`, canonical `ProblemId`, `valid
 
 ## Self-review
 
-This plan explicitly owns all 2000 content targets, not only the pilot. Identity/provenance/gaps belong to C1; deep per-approach teaching/tests/traces and pilot proof to C2; scalable exact coverage and completion to C3. Five Review Focus cases are covered by named checks. Software, private accounts, path rendering and deployment readiness remain in the companion platform plan rather than being duplicated here. Design approved; both implementation plans await user review before execution.
+This plan explicitly owns all 2000 content targets, not only the pilot. Identity/provenance/gaps belong to C1; deep per-approach teaching/tests/traces and pilot proof to C2; scalable exact coverage and completion to C3. Five Review Focus cases are covered by named checks. Software, private accounts, path rendering and deployment readiness remain in the companion platform plan rather than being duplicated here. User approved both implementation plans on 2026-10-25; execution uses the established subagent-driven method.

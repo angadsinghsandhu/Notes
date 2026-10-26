@@ -218,4 +218,4 @@ After any formatting/autofix, recheck affected files. Log UTC clock stamps, comm
 
 ## Self-review
 
-All spec surfaces have owners: identity/provenance/content C1/C2/C3; archive preservation 0/3/12; traces 4/5; lesson/search 6; trees 2/7; D1/auth 8/9; UI sync 10; pilot 11; hosting/local/docs 13; final validation 14. All five Review Focus conditions have named tests. Deferred named subsets, custom inputs and public registration are not silently implemented. User design approval is recorded; this plan awaits user review before implementation.
+All spec surfaces have owners: identity/provenance/content C1/C2/C3; archive preservation 0/3/12; traces 4/5; lesson/search 6; trees 2/7; D1/auth 8/9; UI sync 10; pilot 11; hosting/local/docs 13; final validation 14. All five Review Focus conditions have named tests. Deferred named subsets, custom inputs and public registration are not silently implemented. User approved both implementation plans on 2026-10-25; execution starts with prerequisite reconciliation under the established subagent-driven method.
