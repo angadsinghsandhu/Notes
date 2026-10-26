@@ -88,6 +88,20 @@ const note = ['markdown', 'notebook'].includes(entry.kind);
       }
     : {})}
 >
+  <div data-pagefind-ignore hidden>
+    <span data-pagefind-filter="scope">files</span>
+    {organization?.learning && (
+      <span data-pagefind-filter="scope">learning</span>
+    )}
+    {organization?.topicIds.map((id) => (
+      <span data-pagefind-filter="topic">{id}</span>
+    ))}
+    {organization?.collection && (
+      <span data-pagefind-filter="collection">
+        {organization.collection.id}
+      </span>
+    )}
+  </div>
   <Breadcrumbs entry={entry} />
   <div class="reader-grid">
     <div class="reader-column">

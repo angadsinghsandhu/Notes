@@ -4,7 +4,7 @@ import { initSearch, type SearchIndex } from '../../../src/client/search.js';
 
 beforeEach(() => {
   document.body.innerHTML =
-    '<form data-search-form><input name="q"><select name="section"><option value="">All</option><option value="interview">Interview</option></select><select name="kind"><option value="">All</option><option>markdown</option></select><button>Search</button></form><p data-search-status role="status"></p><ol data-search-results></ol><button data-search-more hidden>Load more results</button>';
+    '<form data-search-form><input name="q"><select name="scope"><option value="learning">Learning</option><option value="files">Files</option></select><select name="topic"><option value="">All</option><option value="deep-learning">Deep learning</option></select><select name="collection"><option value="">All</option><option value="book">Book</option></select><select name="section"><option value="">All</option><option value="interview">Interview</option></select><select name="kind"><option value="">All</option><option>markdown</option></select><button>Search</button></form><p data-search-status role="status"></p><ol data-search-results></ol><button data-search-more hidden>Load more results</button>';
 });
 function submit(query = 'attention') {
   document.querySelector('input')!.value = query;
@@ -48,7 +48,7 @@ it('empty query stays local; initialized once, loading/results and filters are c
   );
   expect(document.querySelector('script')).toBeNull();
   expect(search).toHaveBeenCalledWith('attention', {
-    filters: { section: 'interview', kind: 'markdown' },
+    filters: { scope: 'learning', section: 'interview', kind: 'markdown' },
   });
   expect(load).toHaveBeenCalledTimes(1);
 });
@@ -326,4 +326,65 @@ it('a superseded pagination rejection preserves newer empty-query feedback', asy
   expect(document.querySelector('[data-search-status]')!.textContent).toContain(
     'No results',
   );
+});
+
+it('changing scope topic and collection resets pagination; reset restores learning and an empty query', async () => {
+  const results = Array.from({ length: 41 }, () => ({
+    data: async () => data,
+  }));
+  const search = vi.fn().mockResolvedValue({ results });
+  initSearch(document, async () => ({ search }));
+  submit();
+  const more = document.querySelector<HTMLButtonElement>('[data-search-more]')!;
+  await vi.waitFor(() =>
+    expect(document.querySelectorAll('li')).toHaveLength(20),
+  );
+  more.click();
+  await vi.waitFor(() =>
+    expect(document.querySelectorAll('li')).toHaveLength(40),
+  );
+  for (const [name, value] of [
+    ['scope', 'files'],
+    ['topic', 'deep-learning'],
+    ['collection', 'book'],
+  ]) {
+    const select = document.querySelector<HTMLSelectElement>(
+      `[name="${name}"]`,
+    )!;
+    select.value = value!;
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    await vi.waitFor(() =>
+      expect(document.querySelectorAll('li')).toHaveLength(20),
+    );
+  }
+  expect(search).toHaveBeenLastCalledWith('attention', {
+    filters: { scope: 'files', topic: 'deep-learning', collection: 'book' },
+  });
+  search.mockResolvedValue({ results: [] });
+  document.querySelector<HTMLSelectElement>('[name="scope"]')!.value =
+    'learning';
+  document
+    .querySelector('[name="scope"]')!
+    .dispatchEvent(new Event('change', { bubbles: true }));
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('No results'),
+  );
+  expect(more.hidden).toBe(true);
+  document.querySelector('form')!.reset();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('Enter a phrase'),
+  );
+  expect(
+    document.querySelector<HTMLSelectElement>('[name="scope"]')!.value,
+  ).toBe('learning');
+  expect(
+    document.querySelector<HTMLSelectElement>('[name="topic"]')!.value,
+  ).toBe('');
+  expect(
+    document.querySelector<HTMLSelectElement>('[name="collection"]')!.value,
+  ).toBe('');
 });

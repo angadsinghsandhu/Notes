@@ -1,3 +1,4 @@
+import { isLearningEntry } from '../content/index.js';
 import type {
   ContentEntry,
   EditorialStatus,
@@ -24,6 +25,8 @@ export type OrganizationDocument = LibraryLink & {
   purpose: Purpose;
 };
 export type ReaderOrganization = {
+  learning: boolean;
+  topicIds: string[];
   topics: LibraryLink[];
   collection?: LibraryLink;
   group?: LibraryLink;
@@ -87,7 +90,19 @@ export function readerOrganization(
           membership.collectionId + '/' + membership.groupId,
         )
       : undefined;
+  const topicIds = new Set<string>();
+  for (const id of membership.topics) {
+    let node = index.getNode('topic', id);
+    while (node?.type === 'topic' && !topicIds.has(node.id)) {
+      topicIds.add(node.id);
+      node = node.record.parentId
+        ? index.getNode('topic', node.record.parentId)
+        : undefined;
+    }
+  }
   return {
+    learning: isLearningEntry(entry, membership),
+    topicIds: [...topicIds],
     topics: membership.topics.flatMap((id) => {
       const node = index.getNode('topic', id);
       return node ? [link(node)] : [];

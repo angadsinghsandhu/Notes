@@ -17,6 +17,7 @@
 - Proposed canonical routes: `/practice/leetcode/`, `/practice/leetcode/<number>/`, `/practice/paths/`, `/practice/paths/<id>/`; preserve source readers and routes.
 - Every distinct approach needs checked code, explanation/proof/complexity, tests and at least one curated visualization. No custom-input editor or arbitrary code execution.
 - Maximum 2000 trace frames and 1 MiB uncompressed trace per example. No silent truncation, autoplay, whole-corpus trace bundle or animation-only explanation.
+- Archive/lesson Pages output and public Worker trace assets have separate preserved limits: at most 20,000 files and 25 MiB per file in each artifact. Do not raise limits, introduce paid capacity or remove original routes to fit traces.
 - Completed means studied. Only one configured owner; private data never enters static output, Pagefind or public caches. Anonymous reading works without the API.
 - Content states `planned`, `draft`, `verified` remain distinct. Company associations require source/date; unknown evidence stays unknown.
 - Keep Node 24.18.1 and existing project Python environment; no archived notebook/course execution. No speculative framework.
@@ -93,6 +94,7 @@ Every `.ts` above has its same relative `.test.ts` under `site/tests/`. Every As
 - [ ] Add red tests `claims_new_routes_against_aliases_and_source_folders`, `invalid_lesson_keeps_last_good_snapshot`, `draft_body_not_reported_verified`, `old_catalog_keeps_old_lesson_and_trace`, `source_variants_link_without_rewriting_archive`. Include normalized/case-folded collisions.
 - [ ] Implement companion artifact inside the existing atomic publication transaction; reuse sanitized Markdown/heading/render helpers. No new parallel content watcher or per-page reparsing of the large archive manifest.
 - [ ] Expose lesson routes to the sitemap/output ownership inventory. Watch curriculum metadata/prose/code/trace changes through the existing awaited queue with errors retaining last successful output.
+- [ ] Emit immutable public trace assets as a separate generation-bound artifact for the existing Worker's static asset binding. Keep Pages archive/readers within their own budget; claim a public `/practice-traces/` route distinct from protected account/progress paths. Build explicit trace URL/hash mappings and validate file counts, byte bounds and matching generation across both artifacts. No remote upload in this task.
 - [ ] Run direct-dependent content/catalog tests and scoped gates. Review/commit `feat: publish curriculum snapshots with archive preservation`.
 
 ### Task 4: Build deterministic trace verification and bounded execution
@@ -104,6 +106,7 @@ Every `.ts` above has its same relative `.test.ts` under `site/tests/`. Every As
 - [ ] Write red tests for wrong intermediate state, mismatched implementation hash, duplicated step IDs, invalid code-line references, missing text explanation, 2001 frames and 1048577 bytes. Pin exact accepted boundaries too.
 - [ ] Implement reviewed subprocess execution with deterministic seeds/timeouts and fail-closed network/filesystem restrictions appropriate to trusted repo implementations. Not an untrusted-code sandbox: never expose a browser/HTTP execution endpoint. Run only explicitly enrolled curriculum modules through explicit call adapters, never archive imports.
 - [ ] Generate traces from the tested instrumented algorithm, not a disconnected animation; check every state transition against per-approach invariants and independent small-input oracle where justified. Preserve input mutation semantics and result parity.
+- [ ] Measure pilot artifact sizes and model the exact 2000-target file budget. Package example traces per approach when useful, with a strict 25 MiB package cap and each example still bounded to 2000 frames/1 MiB. Lazy loading fetches only the selected approach. Test Pages and Worker artifact overflow failures without relaxing either limit; do not assume projection is measured full-corpus output.
 - [ ] Run `python3 -B -m unittest discover -s tests/scripts -p 'test_curriculum*.py'` and mirrored trace Vitest tests. Wire curriculum checks into the real final gate; add lint/type/format tooling for these Python files using existing Python conventions without reformatting archive files.
 - [ ] Independent review/commit `feat: verify deterministic algorithm traces`. Coordinate companion C2 for real eight-domain fixtures before calling the framework complete.
 
@@ -147,6 +150,7 @@ Every `.ts` above has its same relative `.test.ts` under `site/tests/`. Every As
 
 - [ ] Red tests against actual local D1 binding: migrations create unique owner/problem row, version 0 insert race has one winner, stale update conflicts, repeated identical intended state returns stable saved state, different problems do not conflict, unstudy clears studied timestamp/revision, timestamps are server-assigned.
 - [ ] Implement prepared SQL, conditional writes/transactions and explicit read consistency using supported D1 behavior. Conflict response includes authoritative current state; clients never use clock time as ordering.
+- [ ] Configure the separate public trace static asset binding and test its route without owner authentication. Access/session guards apply only to account/progress endpoints; a public asset request must not invoke a D1 write or require private credentials.
 - [ ] Run focused Worker integration tests under Wrangler/Cloudflare test runtime. Extend real coverage/static gates for Worker files and SQL behavior without adding a second ignored product test tree. Review/commit `feat: store versioned owner study progress in D1`.
 
 ### Task 9: Secure the same-origin owner API and export
@@ -198,6 +202,7 @@ Every `.ts` above has its same relative `.test.ts` under `site/tests/`. Every As
 - [ ] Add red startup test that a production hostname can never enable development fixture identity; local D1 stays local; missing production auth fails closed. One documented local command starts needed local dependencies and cleans up only its owned process tree.
 - [ ] Document authoring/verification commands, statuses, paths, company evidence, adding an approach/example, progress export and version conflicts. Test exact commands on owned local fixture; preserve current preview and original mutable caches.
 - [ ] Document custom domain, Access exact owner allow policy + OTP, JWT audience/team, protected path scope, alternate ingress disabled, Worker/D1 bindings, local/remote migration separation and artifact workflow. Read current Cloudflare limits at execution; report costs/constraints honestly. No automatic provisioning or remote DB writes.
+- [ ] Verify and document both immutable deployment artifacts: Pages readers and Worker public trace assets, each within its independent file/byte limits and sharing the expected curriculum revision. A private API outage must leave static reading and textual transcripts available. Include local public-asset routing so visualizations do not depend on a remote account.
 - [ ] Update CI to exercise Worker/curriculum gates and existing website gates with isolated local DB. Keep deployment opt-in rules; public static success is not claimed as live auth success.
 - [ ] Run scoped docs/startup/config tests and mirror checks; independently review and commit `docs: document curriculum authoring and private progress operation`.
 

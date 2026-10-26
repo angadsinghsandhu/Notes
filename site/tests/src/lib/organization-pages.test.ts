@@ -364,3 +364,95 @@ it('file tree shares directories without duplicating nodes or losing leaf links'
     'parse.js',
   ]);
 });
+
+it('search metadata includes unique assigned topics and ancestors from the selected generation', () => {
+  const data = {
+    ...snapshot,
+    memberships: snapshot.memberships.map((m) =>
+      m.entryId === note.id ? { ...m, topics: ['leaf', 'root'] } : m,
+    ),
+  };
+  const metadata = readerOrganization(
+    loadCatalog({ ...manifest, organization: data }),
+    note,
+  );
+  expect(metadata.learning).toBe(true);
+  expect(metadata.topicIds).toEqual(['leaf', 'root']);
+  expect(readerOrganization(loadCatalog(manifest), code).learning).toBe(false);
+  expect(
+    readerOrganization(
+      loadCatalog({
+        ...manifest,
+        organization: {
+          ...snapshot,
+          topics: snapshot.topics.map((t) => ({
+            id: t.id,
+            title: t.title,
+            summary: t.summary,
+          })),
+        },
+      }),
+      note,
+    ).topicIds,
+  ).toEqual(['leaf']);
+  expect(metadata.topicIds).toEqual(['leaf', 'root']);
+});
+it.each([
+  {
+    entry: { ...note, role: 'supplemental' as const },
+    fields: {},
+    learning: false,
+  },
+  { entry: note, fields: { status: 'outline' as const }, learning: false },
+  {
+    entry: note,
+    fields: { purpose: 'project-file' as const },
+    learning: false,
+  },
+  {
+    entry: { ...note, kind: 'pdf' as const },
+    fields: { purpose: 'reference' as const },
+    learning: true,
+  },
+])(
+  'search uses shared learning policy for $fields and $entry.kind',
+  ({ entry, fields, learning }) => {
+    const catalog = loadCatalog({
+      ...manifest,
+      entries: [entry, code],
+      organization: {
+        ...snapshot,
+        memberships: snapshot.memberships.map((m) =>
+          m.entryId === note.id ? { ...m, ...fields } : m,
+        ),
+      },
+    });
+    expect(readerOrganization(catalog, entry).learning).toBe(learning);
+  },
+);
+
+it('draft readers cannot obtain public search metadata', () => {
+  for (const sourceDraft of [true, false]) {
+    const entry = { ...note, draft: sourceDraft };
+    const catalog = loadCatalog({
+      ...manifest,
+      entries: [entry, code],
+      organization: {
+        ...snapshot,
+        memberships: snapshot.memberships.map((m) =>
+          m.entryId === note.id
+            ? {
+                ...m,
+                status: sourceDraft
+                  ? ('unreviewed' as const)
+                  : ('draft' as const),
+              }
+            : m,
+        ),
+      },
+    });
+    expect(() => readerOrganization(catalog, entry)).toThrow(
+      'Unknown public entry',
+    );
+  }
+});
