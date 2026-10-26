@@ -58,6 +58,9 @@ async function output(entries: ContentEntry[] = []) {
     '/',
     '/library/',
     '/library/tree/',
+    '/library/topics/',
+    '/library/collections/',
+    '/library/paths/',
     '/search/',
     ...[
       'books',
@@ -129,7 +132,10 @@ it('accepts the actual complete built archive and keeps the ledger internal', as
 it('accepts exactly 20000 files and rejects 20001', async () => {
   const { dist } = await output();
   await mkdir(join(dist, '_astro'));
-  for (let index = 11; index < 20000; index++)
+  const initialFiles = (
+    await readdir(dist, { recursive: true, withFileTypes: true })
+  ).filter((entry) => entry.isFile()).length;
+  for (let index = initialFiles; index < 20000; index++)
     await writeFile(join(dist, `_astro/fixture-${index}.js`), '');
   expect(await verifyOutput(dist)).toEqual([]);
   await writeFile(join(dist, '_astro/fixture-20000.js'), '');
@@ -784,5 +790,114 @@ it('checks exact PDF support inventory and original bytes only when needed', asy
         message: 'PDF.js support file differs from pinned distribution',
       },
     ]),
+  );
+});
+
+it('allows precisely populated curated routes while rejecting empty or unknown route output', async () => {
+  const fixture = await pageFixture();
+  fixture.manifest.organization = {
+    topics: [
+      { id: 'root', title: 'Root', summary: '' },
+      { id: 'leaf', parentId: 'root', title: 'Leaf', summary: '' },
+      { id: 'empty', title: 'Empty', summary: '' },
+    ],
+    collections: [],
+    groups: [],
+    paths: [],
+    memberships: [
+      {
+        entryId: fixture.entry.id,
+        topics: ['leaf'],
+        purpose: 'note',
+        status: 'unreviewed',
+        summary: '',
+        relatedUids: [],
+      },
+    ],
+  };
+  await put(
+    join(fixture.site, '.generated/current/manifest.json'),
+    JSON.stringify(fixture.manifest),
+  );
+  for (const id of ['root', 'leaf'])
+    await put(
+      join(fixture.dist, 'library/topics', id, 'index.html'),
+      '<html><body><main data-pagefind-ignore>Topic</main></body></html>',
+    );
+  expect(await verifyOutput(fixture.dist)).toEqual([]);
+  await put(
+    join(fixture.dist, 'library/topics/empty/index.html'),
+    '<html><body>Empty</body></html>',
+  );
+  expect(await verifyOutput(fixture.dist)).toContainEqual({
+    sourcePath: 'library/topics/empty/index.html',
+    message: 'Unexpected output file: stale page, asset, or excluded content',
+  });
+});
+
+it('preserves nested source-action text and fragments while retaining compact validation evidence', async () => {
+  const fixture = await pageFixture();
+  await put(
+    join(fixture.dist, fixture.entry.route, 'index.html'),
+    fixture.html.replace(
+      'View original source',
+      'View <strong>original <em>source</em></strong>',
+    ),
+  );
+  expect(await verifyOutput(fixture.dist)).toEqual([]);
+  await put(
+    join(fixture.dist, fixture.entry.route, 'index.html'),
+    fixture.html.replace(
+      'View original source',
+      'View <strong>incorrect <em>source</em></strong>',
+    ),
+  );
+  expect(await verifyOutput(fixture.dist)).toContainEqual({
+    sourcePath: fixture.entry.sourcePath,
+    message: 'Malformed or missing original source action',
+  });
+});
+
+it('preserves non-ASCII and supplementary Unicode fragment targets in retained parser strings', async () => {
+  const fixture = await pageFixture();
+  const html = fixture.html.replace(
+    '</article>',
+    '</article><div data-pagefind-ignore><h2 id="図🧠">Unicode</h2><a href="#%E5%9B%B3%F0%9F%A7%A0">Jump</a></div>',
+  );
+  await put(join(fixture.dist, fixture.entry.route, 'index.html'), html);
+  expect(await verifyOutput(fixture.dist)).toEqual([]);
+  await put(
+    join(fixture.dist, fixture.entry.route, 'index.html'),
+    html.replace('id="図🧠"', 'id="different"'),
+  );
+  expect(await verifyOutput(fixture.dist)).toContainEqual({
+    sourcePath: fixture.entry.route.slice(1) + 'index.html',
+    message: 'Missing fragment: #%E5%9B%B3%F0%9F%A7%A0',
+  });
+});
+
+it('keeps the oversized anchor guard href-only while validating other anchor URL attributes', async () => {
+  const { dist, entry, html } = await pageFixture({
+    kind: 'pdf',
+    bytes: 26_214_401,
+    assetUrl: '/content-assets/untracked.pdf',
+  });
+  await put(
+    join(dist, entry.route, 'index.html'),
+    html.replace(
+      '</article>',
+      '<div data-pagefind-ignore><a href="https://external.example.test/" src="/content-assets/untracked.pdf">Metadata only</a></div></article>',
+    ),
+  );
+  const diagnostics = await verifyOutput(dist);
+  expect(diagnostics).not.toContainEqual(
+    expect.objectContaining({
+      message: 'Oversized resource has a local source action',
+    }),
+  );
+  expect(diagnostics).toContainEqual(
+    expect.objectContaining({
+      message: 'Missing local target: /content-assets/untracked.pdf',
+    }),
   );
 });

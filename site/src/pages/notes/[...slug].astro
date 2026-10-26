@@ -1,4 +1,8 @@
 ---
+import {
+  readerOrganization,
+  type ReaderOrganization,
+} from '../../lib/organization-pages.js';
 import ReaderLayout from '../../layouts/ReaderLayout.astro';
 import {
   readPreparedBody,
@@ -16,6 +20,7 @@ export async function getStaticPaths() {
       params: { slug: entry.route.slice('/notes/'.length).replace(/\/$/, '') },
       props: {
         entry,
+        organization: readerOrganization(catalog, entry),
         html: await readPreparedBody(entry),
         ...catalog.getAdjacentNotes(entry.id),
         navItems: notes.filter(
@@ -29,6 +34,7 @@ export async function getStaticPaths() {
   );
 }
 interface Props {
+  organization: ReaderOrganization;
   entry: ContentEntry;
   html: string;
   navItems: ContentEntry[];

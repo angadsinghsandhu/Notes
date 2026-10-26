@@ -690,3 +690,18 @@ it('keeps source adjacency and all unregistered public files with organization s
   expect(catalog.getAdjacentNotes('last').next?.id).toBe('outline');
   expect(catalog.getEntry(code.route)?.id).toBe(code.id);
 });
+
+it('returns an independent emitted organization route list for each caller', () => {
+  const catalog = loadCatalog({
+    version: 1,
+    entries: [],
+    assets: [],
+    ledger: [],
+  });
+  catalog.organizationRoutes().push('/polluted/');
+  expect(catalog.organizationRoutes()).toEqual([
+    '/library/topics/',
+    '/library/collections/',
+    '/library/paths/',
+  ]);
+});

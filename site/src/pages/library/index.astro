@@ -1,5 +1,6 @@
 ---
 import LibraryLayout from '../../layouts/LibraryLayout.astro';
+import OrganizationCards from '../../components/OrganizationCards.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import { readPreparedCatalog } from '../../lib/catalog.js';
 import { buildFolders } from '../../lib/folders.js';
@@ -16,23 +17,71 @@ const resourceCount = folders.reduce(
   description="Browse learning notes by subject, with course code and resources available separately."
 >
   <Breadcrumbs title="Browse all" />
-  <h1>Library</h1>
-  <p data-library-notes>{noteCount} learning notes, organized by subject.</p>
-  <p data-library-resources>
-    {resourceCount} course code &amp; resources. Each folder lists learning
-    notes and resources separately.
-  </p>
-  <nav aria-label="Browse by section" class="section-cards">
-    {folders.map((folder) => (
-      <a class="section-card" href={folder.route}>
-        <h2>{folder.label}</h2>
-        <p>
-          {folder.noteCount} learning notes · {folder.resourceCount} resources
-        </p>
-      </a>
-    ))}
-  </nav>
-  <p>
-    <a href="/library/tree/">Explore the complete folder tree</a>
-  </p>
+  <div data-pagefind-ignore>
+    <h1>Library</h1>
+    <p>
+      Explore curated topics, follow a source collection, or choose a study
+      sequence.
+    </p>
+    <h2>Choose how to browse</h2>
+    <OrganizationCards
+      showCounts={false}
+      cards={[
+        {
+          id: 'topics',
+          title: 'Topics',
+          route: '/library/topics/',
+          summary: 'Find a concept across sources.',
+          learningCount: 0,
+          resourceCount: 0,
+          projectCount: 0,
+        },
+        {
+          id: 'collections',
+          title: 'Collections',
+          route: '/library/collections/',
+          summary: 'Follow books, courses and their source snapshots.',
+          learningCount: 0,
+          resourceCount: 0,
+          projectCount: 0,
+        },
+        {
+          id: 'paths',
+          title: 'Learning Paths',
+          route: '/library/paths/',
+          summary: 'Work through an ordered study sequence.',
+          learningCount: 0,
+          resourceCount: 0,
+          projectCount: 0,
+        },
+      ]}
+    />
+    <p>
+      <a href="/library/#source-archive">Source Archive</a>
+    </p>
+    <section id="source-archive" class="browse-section">
+      <h2>Source Archive</h2>
+      <p data-library-notes>
+        {noteCount} learning notes in the original source archive.
+      </p>
+      <p data-library-resources>
+        {resourceCount} course code &amp; resources. Each folder lists learning
+        notes and resources separately.
+      </p>
+      <nav aria-label="Browse by section" class="section-cards">
+        {folders.map((folder) => (
+          <a class="section-card" href={folder.route}>
+            <h3>{folder.label}</h3>
+            <p>
+              {folder.noteCount} learning notes · {folder.resourceCount}{' '}
+              resources
+            </p>
+          </a>
+        ))}
+      </nav>
+      <p>
+        <a href="/library/tree/">Explore the complete folder tree</a>
+      </p>
+    </section>
+  </div>
 </LibraryLayout>

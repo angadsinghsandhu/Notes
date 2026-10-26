@@ -1,0 +1,61 @@
+---
+import LibraryLayout from '../../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import OrganizationCards from '../../../components/OrganizationCards.astro';
+import { readPreparedCatalog } from '../../../lib/catalog.js';
+import {
+  organizationCards,
+  organizationDocuments,
+  organizationTree,
+} from '../../../lib/organization-pages.js';
+export async function getStaticPaths() {
+  const catalog = await readPreparedCatalog();
+  const index = catalog.organization;
+  return catalog
+    .organizationRoutes()
+    .filter((route) => /^\/library\/collections\/[^/]+\/$/.test(route))
+    .map((route) => {
+      const id = route.split('/')[3]!;
+      const node = index.getNode('collection', id)!;
+      if (node.type !== 'collection') throw new Error('Expected a collection');
+      return {
+        params: { id },
+        props: {
+          node,
+          cards: organizationCards(index, index.listNodes('group', id)),
+          documents: organizationDocuments(index, 'collection', id),
+          tree: organizationTree(index, 'group', id),
+        },
+      };
+    });
+}
+const { node, cards, documents, tree } = Astro.props;
+---
+
+<LibraryLayout
+  title={node.title}
+  description={node.summary}
+  organizationNav={{ title: node.title, route: node.route, nodes: tree }}
+>
+  <div data-pagefind-ignore>
+    <Breadcrumbs title={node.title} />
+    <h1>{node.title}</h1>
+    <p>{node.summary}</p>
+    <p class="entry-meta">
+      {[
+        node.record.provider,
+        node.record.courseCode,
+        node.record.edition,
+        node.record.year,
+        node.record.semester,
+      ]
+        .filter(Boolean)
+        .join(' · ')}
+    </p>
+    <section class="browse-section">
+      <h2>Chapters &amp; modules</h2>
+      <OrganizationCards cards={cards} />
+    </section>
+    <OrganizationCards documents={documents} context="collection" />
+  </div>
+</LibraryLayout>

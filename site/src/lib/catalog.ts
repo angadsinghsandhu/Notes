@@ -8,7 +8,11 @@ export type {
 } from './organization.js';
 import { lstat, readFile } from 'node:fs/promises';
 import { basename, dirname, join, resolve } from 'node:path';
-import { assertUniqueRoutes, compareSourcePaths } from '../content/index.js';
+import {
+  assertUniqueRoutes,
+  compareSourcePaths,
+  organizationPageRoutes,
+} from '../content/index.js';
 import type {
   ContentEntry,
   ContentKind,
@@ -34,6 +38,7 @@ export function isLearningNote(entry: ContentEntry): boolean {
 
 export type Catalog = {
   organization: OrganizationIndex;
+  organizationRoutes(): string[];
   getEntry(route: string): ContentEntry | undefined;
   listEntries(filters?: {
     section?: Section;
@@ -74,7 +79,9 @@ function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
     for (const route of [entry.route, ...entry.aliases])
       routes.set(route, entry);
   const index = buildOrganizationIndex(entries, manifest.organization);
+  const emittedRoutes = organizationPageRoutes(entries, manifest.organization);
   return {
+    organizationRoutes: () => [...emittedRoutes],
     organization: {
       ...index,
       getEntryByUid: (uid) => {

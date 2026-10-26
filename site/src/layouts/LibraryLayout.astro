@@ -2,10 +2,18 @@
 import '../styles/tokens.css';
 import '../styles/global.css';
 import '../styles/folders.css';
+import '../styles/reader.css';
+import type { OrganizationTreeNode } from '../lib/organization-pages.js';
 import type { Folder } from '../lib/folders.js';
 import Navigation from '../components/Navigation.astro';
 import type { ContentEntry } from '../content/index.js';
 interface Props {
+  organizationNav?: {
+    title: string;
+    route: string;
+    nodes: OrganizationTreeNode[];
+    currentRoute?: string;
+  };
   title: string;
   description: string;
   entry?: ContentEntry;
@@ -15,6 +23,7 @@ interface Props {
 }
 const {
   title,
+  organizationNav,
   description,
   entry,
   folder,
@@ -93,6 +102,7 @@ const canonical =
           {...(entry ? { entry } : {})}
           {...(folder ? { folder } : {})}
           items={navItems}
+          {...(organizationNav ? { organizationNav } : {})}
         />
       </aside>
       <main id="main" tabindex="-1">
@@ -102,6 +112,7 @@ const canonical =
             {...(entry ? { entry } : {})}
             {...(folder ? { folder } : {})}
             items={navItems}
+            {...(organizationNav ? { organizationNav } : {})}
           />
         </details>
         <slot />
@@ -125,6 +136,7 @@ const canonical =
         {...(entry ? { entry } : {})}
         {...(folder ? { folder } : {})}
         items={navItems}
+        {...(organizationNav ? { organizationNav } : {})}
       />
     </dialog>
     <script>

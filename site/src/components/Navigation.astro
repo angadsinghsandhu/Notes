@@ -1,13 +1,21 @@
 ---
+import OrganizationTree from './OrganizationTree.astro';
+import type { OrganizationTreeNode } from '../lib/organization-pages.js';
 import { sectionLabels } from '../lib/catalog.js';
 import { folderRoute, type Folder } from '../lib/folders.js';
 import type { ContentEntry } from '../content/index.js';
 interface Props {
+  organizationNav?: {
+    title: string;
+    route: string;
+    nodes: OrganizationTreeNode[];
+    currentRoute?: string;
+  };
   entry?: ContentEntry;
   items?: ContentEntry[];
   folder?: Folder;
 }
-const { entry, items = [], folder } = Astro.props;
+const { entry, items = [], folder, organizationNav } = Astro.props;
 const section = entry?.section ?? folder?.section;
 const segments = entry?.groupSegments ?? folder?.segments ?? [];
 const currentRoute = section ? folderRoute(section, segments) : undefined;
@@ -22,42 +30,77 @@ const treeHref = currentRoute
   data-pagefind-ignore
 >
   <a href="/library/" class="nav-overview">
-    All notes
+    Library
   </a>
-  <ul class="section-links">
-    {Object.entries(sectionLabels).map(([section, label]) => (
+  <ul class="curated-links">
+    {[
+      ['Topics', '/library/topics/'],
+      ['Collections', '/library/collections/'],
+      ['Learning Paths', '/library/paths/'],
+      ['Source Archive', '/library/#source-archive'],
+    ].map(([title, route]) => (
       <li>
         <a
-          href={`/library/${section}/`}
-          aria-current={
-            (entry?.section ?? folder?.section) === section ||
-            Astro.url.pathname === `/library/${section}/`
-              ? 'true'
-              : undefined
-          }
+          href={route}
+          aria-current={Astro.url.pathname === route ? 'page' : undefined}
         >
-          <svg
-            viewBox="0 0 24 24"
-            width="20"
-            height="20"
-            aria-hidden="true"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.5"
-          >
-            <path d="M3 6h7l2 2h9v12H3z" />
-          </svg>
-          <span>{label}</span>
+          {title}
         </a>
       </li>
     ))}
   </ul>
-  <a
-    href={treeHref}
-    aria-current={Astro.url.pathname === '/library/tree/' ? 'page' : undefined}
-  >
-    Folder tree
-  </a>
+  {organizationNav && (
+    <details open class="collection-navigation">
+      <summary>{organizationNav.title}</summary>
+      <a href={organizationNav.route}>
+        {organizationNav.route === '/library/topics/' ? 'Topic' : 'Collection'}{' '}
+        overview &amp; full tree
+      </a>
+      <OrganizationTree
+        nodes={organizationNav.nodes}
+        currentRoute={organizationNav.currentRoute ?? Astro.url.pathname}
+      />
+    </details>
+  )}
+  <details class="source-navigation" open={!!section}>
+    <summary>Source sections</summary>
+    <ul class="section-links">
+      {Object.entries(sectionLabels).map(([section, label]) => (
+        <li>
+          <a
+            href={`/library/${section}/`}
+            aria-current={
+              (entry?.section ?? folder?.section) === section ||
+              Astro.url.pathname === `/library/${section}/`
+                ? 'true'
+                : undefined
+            }
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="20"
+              height="20"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path d="M3 6h7l2 2h9v12H3z" />
+            </svg>
+            <span>{label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <a
+      href={treeHref}
+      aria-current={
+        Astro.url.pathname === '/library/tree/' ? 'page' : undefined
+      }
+    >
+      Folder tree
+    </a>
+  </details>
   {section && segments.length > 0 && (
     <details open class="folder-ancestors">
       <summary>Current folder</summary>

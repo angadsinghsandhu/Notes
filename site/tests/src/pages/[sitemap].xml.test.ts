@@ -79,3 +79,23 @@ test('sitemap and canonical output require an explicit HTTPS production URL', as
     expect(home).not.toContain('rel="canonical"');
   }
 });
+
+test('curated sitemap uses canonical populated routes and preserves listing SEO', async ({
+  request,
+  page,
+}) => {
+  const xml = await (await request.get('/sitemap.xml')).text();
+  for (const route of [
+    '/library/topics/',
+    '/library/collections/',
+    '/library/paths/',
+    '/library/topics/attention-transformers-language-models/',
+  ])
+    expect(xml).toContain('https://notes.example.test' + route);
+  await page.goto('/library/topics/');
+  await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
+    'href',
+    'https://notes.example.test/library/topics/',
+  );
+  await expect(page.locator('[data-pagefind-body]')).toHaveCount(0);
+});

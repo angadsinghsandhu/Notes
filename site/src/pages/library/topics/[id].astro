@@ -1,0 +1,72 @@
+---
+import LibraryLayout from '../../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import OrganizationCards from '../../../components/OrganizationCards.astro';
+import OrganizationTree from '../../../components/OrganizationTree.astro';
+import { readPreparedCatalog } from '../../../lib/catalog.js';
+import {
+  organizationCards,
+  organizationDocuments,
+  organizationTree,
+} from '../../../lib/organization-pages.js';
+export async function getStaticPaths() {
+  const catalog = await readPreparedCatalog();
+  const index = catalog.organization;
+  return catalog
+    .organizationRoutes()
+    .filter((route) => /^\/library\/topics\/[^/]+\/$/.test(route))
+    .map((route) => {
+      const id = route.split('/')[3]!;
+      const node = index.getNode('topic', id)!;
+      const documents = organizationDocuments(index, 'topic', id, true);
+      const collections = new Set(
+        index
+          .listNodeEntries('topic', id, { descendants: true, scope: 'files' })
+          .map((e) => index.getMembership(e.id).collectionId),
+      );
+      return {
+        params: { id },
+        props: {
+          node,
+          documents,
+          children: organizationCards(index, index.listNodes('topic', id)),
+          tree: organizationTree(index, 'topic'),
+          related: organizationCards(
+            index,
+            index.listNodes('collection').filter((n) => collections.has(n.id)),
+          ),
+        },
+      };
+    });
+}
+const { node, documents, children, tree, related } = Astro.props;
+---
+
+<LibraryLayout
+  title={node.title}
+  description={node.summary}
+  organizationNav={{ title: 'Topics', route: '/library/topics/', nodes: tree }}
+>
+  <div data-pagefind-ignore>
+    <Breadcrumbs title={node.title} />
+    <h1>{node.title}</h1>
+    <p>{node.summary}</p>
+    {children.length > 0 && (
+      <section class="browse-section">
+        <h2>Child topics</h2>
+        <OrganizationCards cards={children} />
+      </section>
+    )}
+    <OrganizationCards documents={documents} context="topic" />
+    {related.length > 0 && (
+      <section data-related-collections class="browse-section">
+        <h2>Related collections</h2>
+        <OrganizationCards cards={related} />
+      </section>
+    )}
+    <details class="group-disclosure">
+      <summary>Topic tree</summary>
+      <OrganizationTree nodes={tree} currentRoute={node.route} />
+    </details>
+  </div>
+</LibraryLayout>

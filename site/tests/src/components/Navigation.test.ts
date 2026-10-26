@@ -115,3 +115,22 @@ test('real supplemental template does not appear as a primary group-navigation n
     'This template provides a minimal setup',
   );
 });
+
+test('reader collection navigation includes only its active branch and a full-tree link', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(
+    '/notes/books/programming-pytorch-for-deep-learning-ian-pointer/chapter-2-image-clasification-with-pytorch/',
+  );
+  const nav = page.locator('.sidebar .collection-navigation');
+  await expect(nav).toContainText('Programming PyTorch');
+  await expect(nav).not.toContainText('React');
+  await expect(nav.locator('a[aria-current=page]')).toContainText('Chapter 2');
+  await expect(
+    nav.getByRole('link', { name: 'Collection overview & full tree' }),
+  ).toHaveAttribute(
+    'href',
+    '/library/collections/programming-pytorch-deep-learning/',
+  );
+});

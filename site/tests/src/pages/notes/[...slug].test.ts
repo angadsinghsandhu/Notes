@@ -38,3 +38,19 @@ test('reading and navigation work without JavaScript', async ({ browser }) => {
   ).toBeVisible();
   await context.close();
 });
+
+test('canonical book note carries curated links from its selected catalog generation', async ({
+  page,
+}) => {
+  await page.goto(
+    '/notes/books/programming-pytorch-for-deep-learning-ian-pointer/chapter-2-image-clasification-with-pytorch/',
+  );
+  await expect(
+    page.locator(
+      '.organization-metadata a[href="/library/collections/programming-pytorch-deep-learning/"]',
+    ),
+  ).toHaveCount(1);
+  await expect(page.locator('.organization-metadata')).toContainText(
+    'Chapter 2',
+  );
+});
