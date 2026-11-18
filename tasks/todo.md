@@ -79,7 +79,7 @@ Review: the proposal adds Topics, Collections and Learning Paths over the existi
 - [x] Task 4: reviewed metadata migration and three pilots (targeted checks/build and independent review approved; final full gate remains for delivery).
 - [x] Task 5: responsive curated pages, trees and reader links (independent spec/quality review clean; 100 targeted units, 29 curated and 17 directly affected browser tests).
 - [x] Task 6: learning/file search scopes and metadata filters (independent review clean; 32 targeted units, 10 real browser tests and exact native membership audit of all 6,279 readers).
-- [ ] Task 7: full output preservation and live development acceptance.
+- [x] Task 7: full output preservation and live development acceptance (independent review and fixes verified, 6,279 original routes and 10,031 original source hashes preserved).
 - [ ] Task 8: authoring guide, whole-branch review and feature delivery.
 
 Execution: isolated notes-website worktree; ledger `.superpowers/sdd/2026-10-21-library-information-architecture/progress.md`. Source/body identities and the reviewed port-4330 snapshot remain preserved. Main alone handles Git/remote writes; no merge or deployment is authorized.
