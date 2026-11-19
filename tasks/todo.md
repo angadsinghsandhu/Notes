@@ -67,7 +67,7 @@ Review: the PDF reader passed independent task review, scoped re-review and fina
 - [x] Write the requested refactor specification and implementation plan.
 - [x] Self-review contracts, compatibility, pilot scope and verification coverage.
 - [x] Obtain user review of both documents before implementation (user requested implementing all tasks on 2026-10-21).
-- [ ] Execute the reviewed plan with the established subagent-driven method.
+- [x] Execute the reviewed plan with the established subagent-driven method.
 
 Review: the proposal adds Topics, Collections and Learning Paths over the existing six-root archive. It preserves canonical readers, source bodies, prepared body IDs, PDF functionality and the complete source tree. A separate persistent UID registry supports curated references. The initial curation pilots are Applied Science, the PyTorch book and the Udemy React course; full-corpus editorial rewriting, duplicate deletion and physical moves are deferred. The plan defines eight testable milestones, strict metadata/reference validation, learning/file search scopes, live-update acceptance and route/hash preservation. Both artifacts are proposals for joint review as explicitly requested; no product code, archive material or running preview changed.
 
@@ -79,8 +79,8 @@ Review: the proposal adds Topics, Collections and Learning Paths over the existi
 - [x] Task 4: reviewed metadata migration and three pilots (targeted checks/build and independent review approved; final full gate remains for delivery).
 - [x] Task 5: responsive curated pages, trees and reader links (independent spec/quality review clean; 100 targeted units, 29 curated and 17 directly affected browser tests).
 - [x] Task 6: learning/file search scopes and metadata filters (independent review clean; 32 targeted units, 10 real browser tests and exact native membership audit of all 6,279 readers).
-- [ ] Task 7: full output preservation and live development acceptance.
-- [ ] Task 8: authoring guide, whole-branch review and feature delivery.
+- [x] Task 7: full output preservation and live development acceptance (independent review and fixes verified, 6,279 original routes and 10,031 original source hashes preserved).
+- [x] Task 8: authoring guide, whole-branch review and feature delivery. Full verification passed on `69c04c2`: 675 unit, 119 browser and 75 archive parity tests. The local preview serves the verified artifact.
 
 Execution: isolated notes-website worktree; ledger `.superpowers/sdd/2026-10-21-library-information-architecture/progress.md`. Source/body identities and the reviewed port-4330 snapshot remain preserved. Main alone handles Git/remote writes; no merge or deployment is authorized.
 
@@ -93,7 +93,7 @@ Execution: isolated notes-website worktree; ledger `.superpowers/sdd/2026-10-21-
 - [x] Write the full design, obtain independent builder check and user approval.
 - [x] Write and self-review separate platform and complete-curriculum implementation plans.
 - [x] Obtain user review of the implementation plans before execution; retain the established subagent-driven method (approved 2026-10-25).
-- [ ] Reconcile and complete the prerequisite organization refactor without discarding its partial files.
+- [x] Reconcile and complete the prerequisite organization refactor without discarding its partial files (platform Task 0).
 - [ ] Implement and independently review platform Tasks 1–14 and curriculum inventory/pilot C1–C2.
 - [ ] Complete all 40 coverage waves in C3 with exact IDs, bounded sub-batches and independent per-lesson review.
 - [ ] Complete final integration/coverage review and the applicable serialized full gate; update PRs without merging or deploying.

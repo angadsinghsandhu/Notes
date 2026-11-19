@@ -84,18 +84,25 @@ test('curated sitemap uses canonical populated routes and preserves listing SEO'
   request,
   page,
 }) => {
-  const xml = await (await request.get('/sitemap.xml')).text();
-  for (const route of [
-    '/library/topics/',
-    '/library/collections/',
-    '/library/paths/',
-    '/library/topics/attention-transformers-language-models/',
-  ])
-    expect(xml).toContain('https://notes.example.test' + route);
+  const configured = process.env['SITE_URL'];
+  const response = await request.get('/sitemap.xml');
+  expect(response.status()).toBe(configured ? 200 : 404);
+  if (configured) {
+    const xml = await response.text();
+    for (const route of [
+      '/library/topics/',
+      '/library/collections/',
+      '/library/paths/',
+      '/library/topics/attention-transformers-language-models/',
+    ])
+      expect(xml).toContain(new URL(route, configured).href);
+  }
   await page.goto('/library/topics/');
-  await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
-    'href',
-    'https://notes.example.test/library/topics/',
-  );
+  if (configured)
+    await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
+      'href',
+      new URL('/library/topics/', configured).href,
+    );
+  else await expect(page.locator('link[rel=canonical]')).toHaveCount(0);
   await expect(page.locator('[data-pagefind-body]')).toHaveCount(0);
 });

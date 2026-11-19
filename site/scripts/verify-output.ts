@@ -2,6 +2,8 @@ import { lstat, readFile, readdir } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fromHtml } from 'hast-util-from-html';
+import { SaxesParser } from 'saxes';
+import { buildOrganizationIndex } from '../src/lib/organization.js';
 import type { Element, Nodes } from 'hast';
 import { buildFolders, flattenFolders } from '../src/lib/folders.js';
 import { verifyPagefind } from './verify-pagefind.js';
@@ -20,9 +22,13 @@ const routeFile = (route: string) =>
   route.endsWith('/') ? `${route.slice(1)}index.html` : route.slice(1);
 type Page = {
   ids: Set<string>;
+  namedAnchors?: Set<string>;
   links: { url: string; tag: string; attribute?: string }[];
   nodes: Element[];
+  pathSteps: { id: string; links: string[] }[];
 };
+const hasFragment = (page: Page, id: string) =>
+  page.ids.has(id) || page.namedAnchors?.has(id);
 const text = (node: Nodes): string =>
   node.type === 'text'
     ? node.value
@@ -33,8 +39,8 @@ const text = (node: Nodes): string =>
 const retainedText = (value: string): string =>
   Buffer.from(value, 'utf16le').toString('utf16le');
 function page(html: string): Page {
-  const result: Page = { ids: new Set(), links: [], nodes: [] };
-  function visit(node: Nodes): void {
+  const result: Page = { ids: new Set(), links: [], nodes: [], pathSteps: [] };
+  function visit(node: Nodes, step?: Page['pathSteps'][number]): void {
     if (node.type === 'element') {
       // Links/IDs remain complete; only source actions need retained anchor text.
       const sourceAction =
@@ -51,18 +57,21 @@ function page(html: string): Page {
           properties: node.properties,
           children: sourceAction ? [{ type: 'text', value: text(node) }] : [],
         });
-      for (const key of ['id', 'name']) {
-        const value = node.properties[key];
-        if (typeof value === 'string') result.ids.add(retainedText(value));
-      }
+      const { id, name } = node.properties;
+      if (typeof id === 'string') result.ids.add(retainedText(id));
+      if (node.tagName === 'a' && typeof name === 'string')
+        (result.namedAnchors ??= new Set()).add(retainedText(name));
       for (const key of ['href', 'src', 'poster', 'action', 'cite']) {
         const value = node.properties[key];
-        if (typeof value === 'string')
+        if (typeof value === 'string') {
+          if (step && node.tagName === 'a' && key === 'href')
+            step.links.push(retainedText(value));
           result.links.push({
             url: retainedText(value),
             tag: node.tagName,
             attribute: key,
           });
+        }
       }
       const set = node.properties['srcSet'];
       if (typeof set === 'string')
@@ -82,7 +91,22 @@ function page(html: string): Page {
           result.links.push({ url: retainedText(target), tag: 'meta' });
       }
     }
-    if ('children' in node) for (const child of node.children) visit(child);
+    if (
+      node.type === 'element' &&
+      node.tagName === 'ol' &&
+      Array.isArray(node.properties.className) &&
+      node.properties.className.includes('path-steps')
+    ) {
+      for (const child of node.children) {
+        const item =
+          child.type === 'element' && child.tagName === 'li'
+            ? { id: String(child.properties.id ?? ''), links: [] as string[] }
+            : undefined;
+        if (item) result.pathSteps.push(item);
+        visit(child, item);
+      }
+    } else if ('children' in node)
+      for (const child of node.children) visit(child, step);
   }
   visit(fromHtml(html));
   return result;
@@ -154,13 +178,18 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
     '/search/',
     ...policy.roots.map((root) => `/library/${root.toLowerCase()}/`),
   ];
+  const organizationRoutes = organizationPageRoutes(
+    published,
+    manifest.organization,
+  );
+  const folders = flattenFolders(buildFolders(published))
+    .filter((folder) => folder.segments.length > 0)
+    .map((folder) => folder.route);
   const expected = new Set([
     '404.html',
     ...fixed.map(routeFile),
-    ...organizationPageRoutes(published, manifest.organization).map(routeFile),
-    ...flattenFolders(buildFolders(published))
-      .filter((folder) => folder.segments.length > 0)
-      .map((folder) => routeFile(folder.route)),
+    ...organizationRoutes.map(routeFile),
+    ...folders.map(routeFile),
     ...published.flatMap((entry) =>
       [entry.route, ...entry.aliases].map(routeFile),
     ),
@@ -202,7 +231,7 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
         url: match[1] ?? match[2] ?? match[3] ?? '',
         tag: 'style',
       }));
-      pages.set(file, { ids: new Set(), nodes: [], links });
+      pages.set(file, { ids: new Set(), nodes: [], links, pathSteps: [] });
     }
   }
   const hasPdfViewer = [...pages.values()].some((parsed) =>
@@ -254,7 +283,10 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
         else if (
           url.hash &&
           pages.has(target) &&
-          !pages.get(target)!.ids.has(decodeURIComponent(url.hash.slice(1)))
+          !hasFragment(
+            pages.get(target)!,
+            decodeURIComponent(url.hash.slice(1)),
+          )
         )
           fail(file, `Missing fragment: ${link.url}`);
       } catch {
@@ -262,9 +294,99 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
       }
     }
   }
+  const organization = buildOrganizationIndex(published, manifest.organization);
+  for (const route of organizationRoutes) {
+    const parsed = pages.get(routeFile(route));
+    if (!parsed) continue;
+    const canonicals = parsed.nodes.filter(
+      (node) =>
+        node.tagName === 'link' &&
+        Array.isArray(node.properties.rel) &&
+        node.properties.rel.includes('canonical'),
+    );
+    if (
+      siteUrl
+        ? canonicals.length !== 1 ||
+          canonicals[0]?.properties.href !== new URL(route, siteUrl).href
+        : canonicals.length > 0
+    )
+      fail(route, `Invalid canonical for ${route}`);
+    if (parsed.nodes.some((node) => 'dataPagefindBody' in node.properties))
+      fail(route, 'Organization listing contains Pagefind body');
+    const path = /^\/library\/paths\/([^/]+)\/$/.exec(route);
+    const node = path ? organization.getNode('path', path[1]!) : undefined;
+    if (
+      node?.type === 'path' &&
+      JSON.stringify(parsed.pathSteps) !==
+        JSON.stringify(
+          node.steps.map((step) => ({
+            id: step.id,
+            links: [...step.entries, ...step.topics].map((link) => link.route),
+          })),
+        )
+    )
+      fail(route, `Invalid resolved path steps for ${route}`);
+  }
+  if (siteUrl && files.has('sitemap.xml')) {
+    const expectedUrls = new Set(
+      [
+        ...fixed,
+        ...organizationRoutes,
+        ...folders,
+        ...published.map((entry) => entry.route),
+      ].map((route) => new URL(route, siteUrl).href),
+    );
+    try {
+      const urls: string[] = [];
+      let location: string | undefined;
+      const namespace = 'http://www.sitemaps.org/schemas/sitemap/0.9';
+      const tags: string[] = [];
+      const parser = new SaxesParser({ xmlns: true });
+      parser.on('opentag', ({ local, uri }) => {
+        const tag = uri === namespace ? local : '';
+        tags.push(tag);
+        const path = tags.join('/');
+        if (tags.length === 1 && tag !== 'urlset')
+          throw new Error('Invalid sitemap root');
+        if (path === 'urlset/url/loc') {
+          if (location !== undefined) throw new Error('Repeated location');
+          location = '';
+        } else if (path.startsWith('urlset/url/loc/'))
+          throw new Error('Nested location content');
+      });
+      const append = (value: string) => {
+        if (tags.join('/') === 'urlset/url/loc') location += value;
+      };
+      parser.on('text', append);
+      parser.on('cdata', append);
+      parser.on('closetag', () => {
+        if (tags.join('/') === 'urlset/url') {
+          if (!location) throw new Error('Missing location');
+          urls.push(location);
+          location = undefined;
+        }
+        tags.pop();
+      });
+      parser.write(await readFile(join(dist, 'sitemap.xml'), 'utf8')).close();
+      if (
+        urls.length !== expectedUrls.size ||
+        new Set(urls).size !== urls.length ||
+        urls.some((url) => !expectedUrls.has(url))
+      )
+        throw new Error('Sitemap membership mismatch');
+    } catch {
+      fail('sitemap.xml', 'Sitemap differs from canonical published routes');
+    }
+  }
   for (const entry of published) {
     const parsed = pages.get(routeFile(entry.route));
     if (!parsed) continue;
+    const missingAnchors = [
+      ...entry.headings.map(({ id }) => id).filter((id) => !parsed.ids.has(id)),
+      ...(entry.anchors ?? []).filter((anchor) => !hasFragment(parsed, anchor)),
+    ];
+    for (const anchor of missingAnchors)
+      fail(entry.sourcePath, `Reader is missing declared anchor: ${anchor}`);
     const actions = parsed.nodes.filter(
       (node) =>
         node.tagName === 'a' && text(node).trim() === 'View original source',

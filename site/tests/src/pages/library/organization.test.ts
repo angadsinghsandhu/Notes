@@ -251,12 +251,17 @@ test('keyboard cards retain visible focus and canonical listing SEO', async ({
   );
   await page.keyboard.press('Enter');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Topics');
-  await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
-    'href',
-    'https://notes.example.test/library/topics/',
-  );
-  const xml = await (await request.get('/sitemap.xml')).text();
-  expect(xml).toContain('https://notes.example.test' + project);
+  const configured = process.env['SITE_URL'];
+  if (configured)
+    await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
+      'href',
+      new URL('/library/topics/', configured).href,
+    );
+  else await expect(page.locator('link[rel=canonical]')).toHaveCount(0);
+  const sitemap = await request.get('/sitemap.xml');
+  expect(sitemap.status()).toBe(configured ? 200 : 404);
+  if (configured)
+    expect(await sitemap.text()).toContain(new URL(project, configured).href);
   expect(await (await request.get(topic)).text()).not.toContain(
     'data-pagefind-body',
   );

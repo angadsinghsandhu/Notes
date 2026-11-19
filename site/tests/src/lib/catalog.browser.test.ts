@@ -1,12 +1,10 @@
-import { expect, test, type TestInfo } from '@playwright/test';
-import { spawn, execFile, type ChildProcess } from 'node:child_process';
-import { createServer } from 'node:net';
+import { expect, test } from '@playwright/test';
+import { spawn, execFile } from 'node:child_process';
 import {
   readFile,
   writeFile,
   rename,
   unlink,
-  mkdir,
   access,
   symlink,
   readlink,
@@ -15,215 +13,16 @@ import {
 import { resolve, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { promisify } from 'node:util';
+import {
+  developmentDiagnostics,
+  freePort,
+  fullArchiveReadinessTimeout,
+  developmentSearchTimeout,
+} from './catalog-development.js';
 
 const site = resolve('.');
 const evidence = resolve('../.superpowers/sdd/2026-10-04-notes-website');
 const execute = promisify(execFile);
-// Provisional full-archive bounds; Linux child timings must validate these.
-const fullArchiveReadinessTimeout = 180_000;
-const fullArchivePublicationTimeout = 180_000;
-const lifecycleTimeout = 1_500_000; // Up to eight preparations plus 60 seconds.
-const developmentSearchTimeout = 240_000;
-
-function developmentDiagnostics(child: ChildProcess, info: TestInfo) {
-  const events: string[] = [];
-  const record = (message: string) =>
-    events.push(`${new Date().toISOString()} ${message}`);
-  record(`npm dev startup PID ${child.pid}`);
-  for (const [stream, label] of [
-    [child.stdout, 'stdout'],
-    [child.stderr, 'stderr'],
-  ] as const)
-    stream?.on('data', (bytes: Buffer) =>
-      record(`${label}: ${bytes.toString()}`),
-    );
-  child.once('error', (error) => record(`startup error: ${error.message}`));
-  child.once('exit', (code, signal) =>
-    record(`exit code=${code} signal=${signal}`),
-  );
-  const exited = new Promise<void>((done) => child.once('close', () => done()));
-  return {
-    record,
-    exited,
-    fail(error: unknown): never {
-      record('test failed');
-      if (error instanceof Error)
-        error.message += `\nLast npm dev diagnostics:\n${events.join('\n').slice(-8000)}`;
-      throw error;
-    },
-    async save(name: string, assertions = '') {
-      try {
-        await mkdir(evidence, { recursive: true });
-        const path = join(evidence, name);
-        await writeFile(path, `${assertions}\n${events.join('\n')}\n`);
-        await info.attach('npm-dev-diagnostics', {
-          path,
-          contentType: 'text/plain',
-        });
-      } catch (error) {
-        console.error('Could not retain npm dev diagnostics', error);
-      }
-    },
-  };
-}
-
-async function freePort(): Promise<number> {
-  const socket = createServer();
-  await new Promise<void>((done) => socket.listen(0, '127.0.0.1', done));
-  const address = socket.address();
-  if (!address || typeof address === 'string') throw new Error('No port');
-  await new Promise<void>((done, reject) =>
-    socket.close((e) => (e ? reject(e) : done())),
-  );
-  return address.port;
-}
-
-// These explicitly labelled synthetic notes exercise the real watcher and HTTP routes.
-// Exact owned bytes are verified before cleanup; unexpected edits are preserved.
-test('actual npm dev updates bodies, new routes, aliases and deletion without restarting Astro', async ({
-  request,
-  page,
-}, testInfo) => {
-  test.setTimeout(lifecycleTimeout);
-  const name = `task6-owned-${randomUUID()}`;
-  const original = resolve('../Tutorials', `${name}.md`);
-  let source = '';
-  let owned = `---\ntitle: Task 6 synthetic lifecycle proof\n---\n# First lifecycle body\n`;
-  const port = await freePort();
-  const url = `http://127.0.0.1:${port}`;
-  const child = spawn('npm', ['run', 'dev', '--', '--port', String(port)], {
-    cwd: site,
-    detached: true,
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
-  const diagnostics = developmentDiagnostics(child, testInfo);
-  const log: string[] = [];
-  async function until(
-    path: string,
-    body: string,
-    status = 200,
-    timeout = fullArchivePublicationTimeout,
-  ): Promise<string> {
-    diagnostics.record(`waiting for ${path} HTTP ${status} including ${body}`);
-    let last = '';
-    await expect
-      .poll(
-        async () => {
-          try {
-            const response = await request.get(`${url}${path}`);
-            last = await response.text();
-            return response.status() === status && last.includes(body);
-          } catch {
-            return false;
-          }
-        },
-        { timeout, intervals: [500, 1000] },
-      )
-      .toBe(true);
-    diagnostics.record(`ready: ${path} HTTP ${status} includes ${body}`);
-    log.push(`${path} HTTP ${status} includes ${body}`);
-    return last;
-  }
-  async function pid(): Promise<string> {
-    return (
-      await execute('lsof', ['-t', `-iTCP:${port}`, '-sTCP:LISTEN'])
-    ).stdout.trim();
-  }
-  try {
-    const route = `/notes/tutorials/${name}/`;
-    await until(
-      '/notes/interview/applied-science/breadth/6-6-2-transformers/',
-      'Transformer',
-      200,
-      fullArchiveReadinessTimeout,
-    );
-    const astroPid = await pid();
-    const indexBefore = await readFile('dist/pagefind/pagefind-entry.json');
-    expect(astroPid).toMatch(/^\d+$/);
-    log.push(
-      `Owned Astro listener PID ${astroPid}; npm PID ${child.pid}; port ${port}`,
-    );
-    await writeFile(original, owned, { flag: 'wx' });
-    source = original;
-    await until(route, 'First lifecycle body');
-    await page.goto(`${url}${route}`);
-    expect(await pid()).toBe(astroPid);
-    owned = owned.replace('First lifecycle body', 'Changed lifecycle body');
-    await writeFile(source, owned);
-    await until(route, 'Changed lifecycle body');
-    await expect(page.locator('article')).toContainText(
-      'Changed lifecycle body',
-      { timeout: 75_000 },
-    );
-    log.push('Open browser reader updated automatically after source edit');
-    expect(await pid()).toBe(astroPid);
-    const renamed = resolve('../Tutorials', `${name}-renamed.md`);
-    await rename(source, renamed);
-    source = renamed;
-    owned = owned.replace('---\n#', `aliases: [${route}]\n---\n#`);
-    await writeFile(source, owned);
-    const newRoute = `/notes/tutorials/${name}-renamed/`;
-    await until(newRoute, 'Changed lifecycle body');
-    const alias = await until(route, 'noindex');
-    expect(alias).toContain(newRoute);
-    expect(alias).not.toContain('data-pagefind-body');
-    expect(await pid()).toBe(astroPid);
-    const published = owned;
-    owned = owned.replace('---\n#', 'draft: true\n---\n#');
-    await writeFile(source, owned);
-    await until(newRoute, 'Page not found', 404);
-    await until(route, 'Page not found', 404);
-    expect(await pid()).toBe(astroPid);
-    owned = published;
-    await writeFile(source, owned);
-    await until(newRoute, 'Changed lifecycle body');
-    await until(route, 'noindex');
-    expect(await pid()).toBe(astroPid);
-    expect(await readFile('dist/pagefind/pagefind-entry.json')).toEqual(
-      indexBefore,
-    );
-    log.push('Production Pagefind index bytes unchanged by archive edits');
-    const search = await request.get(`${url}/search/`);
-    expect(await search.text()).toContain('does not update with note edits');
-    expect(await readFile(source, 'utf8')).toBe(owned);
-    await writeFile(join(evidence, `${name}-source.txt`), owned, {
-      flag: 'wx',
-    });
-    await unlink(source);
-    source = '';
-    await until(newRoute, 'Page not found', 404);
-    await until(route, 'Page not found', 404);
-    expect(await pid()).toBe(astroPid);
-    log.push(
-      `Same Astro PID ${astroPid} after modify/add/rename+alias/delete; dev notice present`,
-    );
-  } catch (error) {
-    diagnostics.fail(error);
-  } finally {
-    try {
-      if (child.pid && child.exitCode === null && child.signalCode === null)
-        process.kill(-child.pid, 'SIGTERM');
-      await diagnostics.exited;
-      if (source) {
-        const actual = await readFile(source, 'utf8');
-        expect(actual, `Unexpected edits preserved at ${source}`).toBe(owned);
-        await writeFile(join(evidence, `${name}-source.txt`), owned, {
-          flag: 'wx',
-        }).catch((error: unknown) => {
-          if (!(
-            error instanceof Error &&
-            'code' in error &&
-            error.code === 'EEXIST'
-          ))
-            throw error;
-        });
-        await unlink(source);
-      }
-    } finally {
-      await diagnostics.save(`${name}-http.log`, log.join('\n'));
-    }
-  }
-});
 
 test('built known alias and an actual owned draft are excluded from Pagefind and sitemap', async ({
   page,
@@ -382,7 +181,12 @@ test('development serves the last built real Pagefind index and displays its upd
       .poll(
         async () => {
           try {
-            return (await page.request.get(`${url}/search/`)).status();
+            const response = await page.request.get(`${url}/search/`);
+            try {
+              return response.status();
+            } finally {
+              await response.dispose();
+            }
           } catch {
             return 0;
           }

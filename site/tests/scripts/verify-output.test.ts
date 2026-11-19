@@ -441,7 +441,27 @@ it('validates exact canonical targets for configured output without altering ind
   const { dist, entry, html } = await pageFixture();
   vi.stubEnv('SITE_URL', 'https://notes.example.test');
   try {
-    await put(join(dist, 'sitemap.xml'), '<?xml version="1.0"?><urlset/>');
+    const routes = (await readdir(dist, { recursive: true }))
+      .filter((file) => file.endsWith('index.html'))
+      .map((file) => '/' + file.slice(0, -'index.html'.length));
+    await put(
+      join(dist, 'sitemap.xml'),
+      `<?xml version="1.0"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${routes.map((route) => `<url><loc>https://notes.example.test${route}</loc></url>`).join('')}</urlset>`,
+    );
+    for (const route of [
+      '/library/topics/',
+      '/library/collections/',
+      '/library/paths/',
+    ]) {
+      const file = join(dist, route, 'index.html');
+      await put(
+        file,
+        (await readFile(file, 'utf8')).replace(
+          '<body>',
+          `<head><link rel="canonical" href="https://notes.example.test${route}"></head><body>`,
+        ),
+      );
+    }
     const canonical = `<head><link rel="canonical" href="https://notes.example.test${entry.route}"></head>`;
     await put(
       join(dist, entry.route, 'index.html'),

@@ -22,7 +22,7 @@ npx playwright install --with-deps chromium
 npm run dev
 ```
 
-Full Chromium is required for the native PDF viewer tests; do not install only the headless shell. The development command prepares content before starting Astro. It polls source paths every second, awaits watcher readiness, and refreshes open readers after successful publication. A failed content rebuild reports the offending source paths and keeps the last successful snapshot; repair the source to recover without restarting. Polling costs O(watched paths) per second. Development retains one previous asset publication for open readers; production removes stale assets.
+Install full Chromium for the browser suite, which exercises the built response policy and the PDF.js viewer. The development command prepares content before starting Astro. It polls source paths every second, awaits watcher readiness, and refreshes open readers after successful publication. A failed content rebuild reports the offending source paths and keeps the last successful snapshot; repair the source to recover without restarting. Polling costs O(watched paths) per second. Development retains one previous asset publication for open readers; production removes stale assets.
 
 Before `npm run check` or `npm run verify`, select **Python 3.12.14** and install the pinned archive parity dependencies in an isolated environment. Run this setup from the repository root:
 
@@ -48,15 +48,25 @@ npm run verify
 
 ## Authoring
 
-Add UTF-8 Markdown under one of the six archive roots. Directory paths define subject and hierarchy; `README.md` is the directory landing note. New notes require a nonempty frontmatter title:
+### Add an ordinary note
 
-```yaml
+Add UTF-8 Markdown under one of the six archive roots. Directory paths define the Source Archive hierarchy, and `README.md` is the directory landing note. A new ordinary note publishes automatically without a registry entry and appears in Source Archive and default learning search. Drafts and exclusions suppress publication. Supplemental notes remain in Source Archive and All files search.
+
+For example, save this Markdown in `Tutorials/attention-mechanisms.md`. New notes require a nonempty frontmatter title.
+
+```markdown
 ---
 title: Attention mechanisms
 description: Scaled dot-product attention
 tags: [transformers]
 ---
+
+## Why scale the scores?
+
+Dividing by the square root of the key dimension keeps large dot products from saturating the softmax.
 ```
+
+The reader is `/notes/tutorials/attention-mechanisms/`. The `tags` field describes the note. Topic browsing and topic search filters use the optional registry below.
 
 Optional fields are `description` (string), `tags` (unique strings), `draft` (boolean), `slug` (section-relative lowercase ASCII path), `order` (finite number), `updated` (real ISO date, `YYYY-MM-DD`), `aliases` (previous absolute site paths), and `role: supplemental`. Omitted tags/aliases are empty and omitted draft is false. Omitted role means a primary learning note; supplemental course/template documents retain readers, full-text search and source links while leaving default study-note browsing, navigation and adjacency. No other role value is accepted. Legacy notes derive titles from their first H1 or filename; do not invent updated dates.
 
@@ -64,11 +74,145 @@ Edit `site/content/publication.json` for exclusions and path-specific overrides.
 
 Relative note/image/resource links are resolved from the source directory and rewritten to published routes; invalid targets, ambiguous wiki links and missing heading fragments fail with source diagnostics. Markdown supports safe HTML, tables, task lists, fenced code and math. Author scripts, event handlers, arbitrary iframes and executable MDX are forbidden. Notebooks display stored Markdown, code and supported output **without execution**. Code resources are highlighted text; course programs and their package dependencies are not run or deployed.
 
-Referenced images and eligible PDF/slide assets are content-addressed. An individual deployed file may not exceed **25 MiB (26,214,400 bytes)**; output may not exceed **20,000 files**. Local PDFs provide a desktop native preview and an Open PDF fallback at every viewport. Slides provide downloads, not a slide renderer. Oversized resources use an immutable public repository source URL or explicit HTTPS `resourceUrl` override. Declare `repositoryPublic: true` only for a genuinely public repository and configure its HTTPS `repositoryUrl`; `SOURCE_REVISION` must be an immutable commit hash (CI uses `github.sha`). Private or unavailable external sources need an explicit public resource URL or exclusion. No additional object-storage service is provisioned.
+Referenced images and eligible PDF/slide assets are content-addressed. An individual deployed file may not exceed **25 MiB (26,214,400 bytes)**; output may not exceed **20,000 files**. Local PDFs have a responsive, in-page PDF.js preview with page and zoom controls. **Open PDF** and **Download PDF** are available at every viewport, including when JavaScript is disabled. Slides provide downloads, not a slide renderer. Oversized resources use an immutable public repository source URL or explicit HTTPS `resourceUrl` override. Declare `repositoryPublic: true` only for a genuinely public repository and configure its HTTPS `repositoryUrl`; `SOURCE_REVISION` must be an immutable commit hash (CI uses `github.sha`). Private or unavailable external sources need an explicit public resource URL or exclusion. No additional object-storage service is provisioned.
+
+### Optionally enroll a note
+
+Enroll a note to assign topics, a source collection or group, related readers, or a place in a learning path. Enrollment adds a stable `uid`, and builds read the registry without writing to it. The enrollment command scans all eligible sources in the worktree and proposes records for every unregistered public reader. New records start `unreviewed` with `topics: []`. The default purpose is `note` for primary Markdown and notebooks, `project-file` for code, and `reference` for other readers, including supplemental Markdown.
+
+From `site/`, save the dry run to the ignored `.superpowers/` directory at the repository root. The plan contains the absolute worktree path, so keep it local. `--silent` keeps the npm banner out of the JSON.
+
+```sh
+mkdir -p ../.superpowers
+npm run --silent content:organize -- --dry-run > ../.superpowers/organization-plan.json
+```
+
+Review the `inventory` for source hashes, dispositions and existing reader routes and anchors. Check `coverage` and the duplicate, outline and unclassified `candidates`. In `sidecars`, inspect the proposed JSON strings in `proposedBytes` and confirm which sources would be enrolled. Bare `npm run content:organize` also defaults to a read-only dry run. Run the apply command from the same worktree once you have reviewed the file.
+
+```sh
+npm run --silent content:organize -- --apply ../.superpowers/organization-plan.json
+```
+
+Apply checks current source and publication policy evidence and the prior sidecar hashes. It installs the proposed bytes in `site/content/organization/` and saves recovery evidence under `.superpowers/organization-migrations/` when there are changes. Repeating the same apply against unchanged inputs is a no-op. If source, policy or sidecar edits make a plan stale, generate and review a fresh plan.
+
+### Classify an enrolled note
+
+Edit the sidecars directly after enrollment. Review their diff and check the result with `npm run content:check` from `site/`. The enrollment command adds default records. Editorial choices belong in the sidecar edits. Keep organization fields out of upstream source files.
+
+Each of the four files requires `"version": 1` and rejects unrecognized fields. The complete JSON examples below show how the attention note could be organized in a workshop. In the shared registry, add records to existing arrays, reuse matching topic and collection IDs when appropriate, and update the enrolled entry in place.
+
+**`site/content/organization/taxonomy.json`**
+
+```json
+{
+  "version": 1,
+  "topics": [
+    {
+      "id": "attention-mechanisms",
+      "title": "Attention mechanisms",
+      "summary": "How attention weights combine input values."
+    }
+  ]
+}
+```
+
+**`site/content/organization/collections.json`**
+
+```json
+{
+  "version": 1,
+  "collections": [
+    {
+      "id": "attention-workshop",
+      "title": "Attention workshop",
+      "summary": "Worked examples of scaled dot-product attention.",
+      "type": "workshop"
+    }
+  ],
+  "groups": [
+    {
+      "id": "scaled-dot-product",
+      "collectionId": "attention-workshop",
+      "title": "Scaled dot-product attention",
+      "summary": "Compare scores before and after scaling.",
+      "type": "module",
+      "order": 1
+    }
+  ]
+}
+```
+
+**`site/content/organization/entries.json`**
+
+```json
+{
+  "version": 1,
+  "entries": [
+    {
+      "uid": "doc-319b10bc3bcdebb3cf5b9420f7b66d24f2263c7d3d4d10141ca9eb4fac95d9c7",
+      "sourcePath": "Tutorials/attention-mechanisms.md",
+      "topics": ["attention-mechanisms"],
+      "collectionId": "attention-workshop",
+      "groupId": "scaled-dot-product",
+      "purpose": "note",
+      "status": "unreviewed"
+    }
+  ]
+}
+```
+
+**`site/content/organization/paths.json`**
+
+```json
+{
+  "version": 1,
+  "paths": [
+    {
+      "id": "attention-workshop-introduction",
+      "title": "Introduction to attention",
+      "summary": "Start with score scaling, then explore related notes.",
+      "steps": [
+        {
+          "id": "read-about-scaling",
+          "title": "Why scale attention scores?",
+          "summary": "Read about scaling before applying the softmax.",
+          "entryUids": [
+            "doc-319b10bc3bcdebb3cf5b9420f7b66d24f2263c7d3d4d10141ca9eb4fac95d9c7"
+          ],
+          "topicIds": ["attention-mechanisms"]
+        }
+      ]
+    }
+  ]
+}
+```
+
+Use the exact normalized repository-relative `sourcePath` and keep the enrolled `uid` when a file moves. Update its `sourcePath` and preserve old reader links with an alias when the route changes. An entry can have multiple topics and appear in several paths. Its `collectionId` and `groupId` are optional. A group requires its owning collection, and a nested group’s `parentId` must be in the same collection. Topic hierarchies can have at most three levels. Use lowercase hyphenated IDs. Group IDs are unique within a collection, and step IDs are unique within a path.
+
+Every `entryUids` reference in a path step must resolve to a public, enrolled reader. A step without entry references needs a topic with eligible learning material, including material in its descendant topics. The published path applies learning eligibility to its entries, omitting public outlines, entries with `purpose: project-file`, and supplemental readers. It displays topics that contain eligible learning material, skips steps with no visible entries or topics, and keeps the remaining steps in array order. A path gets a page only when it has a visible step.
+
+Optional `relatedUids` records one-way relationships in the registry. For a public reader, each related UID must resolve to a public, enrolled reader.
+
+Use `purpose` to distinguish `note`, `exercise`, `reference`, and `project-file`. Collections represent a book, university course, online course, or workshop. Groups represent chapters, modules, projects, assessments, or reference material. A `project` group exposes a file tree. Give each preserved example snapshot its own project group so its files stay together.
+
+| `status`     | Meaning                                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------------------------------- |
+| `unreviewed` | No editorial review is recorded. Eligible readers still appear in learning browse and search.              |
+| `outline`    | A public outline. Find it in Source Archive, All files search, and Resources where grouped.                |
+| `draft`      | Withheld from public readers, navigation, search and sitemap, including when the source has no draft flag. |
+| `reviewed`   | An editor has verified the document. Set this only after editorial review.                                 |
+
+The default **Learning material** search includes eligible notes, notebooks, exercises and references. Choose **All files** to include project code, supplemental readers and outlines. Both scopes support topic, collection, section and kind filters. Topic filtering includes descendant topics. The library’s topic, collection, group and path pages link to the same canonical reader in Source Archive. Search uses the latest production build.
+
+`npm run content:check` reports broken registry references with the owning source or record and the invalid target. For a deleted source, remove its stale entry and repair incoming path steps and related UID references. For a public reference to a draft or excluded target, update or remove that reference. For a misspelled group or topic ID, correct the reference in its sidecar. During development an invalid edit leaves the last successful snapshot available while you fix the diagnostic.
 
 ## Migration and internal reports
 
 The reviewed metadata migration is complete and preserves original authored bodies. Its tracked audit is `site/content/migration-report.json`; generated disposition accounting is the `ledger` field in `site/.generated/current/manifest.json` and records pages, supporting assets, external resources, drafts/exclusions and unsupported files. These reports and publication configuration are not served or indexed.
+
+The organization pilot audit records the original source inventory, hashes, canonical routes and anchors, dispositions, and reviewed sidecar hashes. It is kept outside public output. The pilot enrolled **6,279** readers and assigned organization metadata to **5,106** across Applied Science interview notes, Ian Pointer’s PyTorch book, and the Udemy React course. It defines **22 topics**, **2 source collections** with **405 groups**, and **1 learning path** with **22 steps**. The remaining **1,173 readers** have neither a topic nor a source collection. The `reviewed` editorial count is zero. [Organization pilot audit](site/content/organization-migration-report.json)
+
+Topics were assigned to **38 readers**, including **34** of the **573** eligible for default learning search. Of the rest of that learning scope, **535** have neither a topic nor a collection and **4** have a collection only. All **5,654 code readers** remain intentionally untagged. Duplicate and outline candidates require editorial review. Further topic curation, splitting long notes, rewriting the roadmap, reconciling overlapping material, factual corrections and deduplication are deferred editorial work.
 
 For future metadata migrations, inspect the default dry-run before applying:
 
@@ -111,6 +255,6 @@ Tokens stay in trusted readiness/publication process environments; never put the
 
 Only a trusted `push` to `refs/heads/master` with successful verification and complete settings can publish. Verification uses Node 24.18.1, `npm ci`, full Chromium, Python 3.12.14 with isolated pinned parity dependencies and `npm run verify` in `site/`. It uploads only the verified `dist`. A separate job checks its exact artifact ID and SHA-256 digest, downloads it with digest mismatch treated as an error, and uses pinned Wrangler 4.147.0 without rebuilding or installing course dependencies. PRs and other branches cannot publish. Publishing runs in a workspace without checked-out course projects or a `functions` directory.
 
-The `_headers` policy allows the exact inline theme-bootstrap hash, same-origin scripts/fonts/assets/PDF frames, Pagefind WebAssembly compilation and controlled KaTeX/Shiki inline styles. Changing bootstrap bytes requires updating the hash and passing the actual-header browser gate. It permits same-origin framing for native PDF resources and sanitized HTTPS archive images. Historical HTTP image URLs use native HTTPS upgrading; the local compatibility test uses deterministic image transport and does not establish upstream availability. Local tests cannot establish Cloudflare parsing, project existence, token permissions or a published URL; after authorized publication, check the actual hosted responses and reader/search/PDF behavior.
+The `_headers` policy allows the exact inline theme-bootstrap hash, same-origin scripts, fonts, assets, frames and PDF.js workers, Pagefind WebAssembly compilation and controlled KaTeX/Shiki inline styles. Changing bootstrap bytes requires updating the hash and passing the actual-header browser gate. The policy also allows sanitized HTTPS archive images. Historical HTTP image URLs use native HTTPS upgrading; the local compatibility test uses deterministic image transport and does not establish upstream availability. Local tests cannot establish Cloudflare parsing, project existence, token permissions or a published URL; after authorized publication, check the actual hosted responses and reader/search/PDF behavior.
 
 Cloudflare Free's 500 builds/month is a managed-build quota, not a measured Direct Upload deployment quota. See [Direct Upload](https://developers.cloudflare.com/pages/get-started/direct-upload/), [CI setup](https://developers.cloudflare.com/pages/how-to/use-direct-upload-with-continuous-integration/), [headers](https://developers.cloudflare.com/pages/configuration/headers/) and [limits](https://developers.cloudflare.com/pages/platform/limits/).
