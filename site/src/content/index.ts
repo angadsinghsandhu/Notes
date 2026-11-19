@@ -79,3 +79,20 @@ export {
 export type { OrganizationMigrationPlan } from './organization-migrate.js';
 
 export { organizationPageRoutes } from './organization-routes.js';
+
+export type {
+  ProblemId,
+  LessonStatus,
+  ProblemRecord,
+  CompanyAssociation,
+  LessonApproachDefinition,
+  LessonRecord,
+  LearningPathNode,
+  LearningPathDefinition,
+  CurriculumDefinition,
+} from './leetcode/types.js';
+export {
+  hashLessonForReview,
+  readCurriculum,
+  validateCurriculum,
+} from './leetcode/schema.js';

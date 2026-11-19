@@ -94,8 +94,11 @@ Execution: isolated notes-website worktree; ledger `.superpowers/sdd/2026-10-21-
 - [x] Write and self-review separate platform and complete-curriculum implementation plans.
 - [x] Obtain user review of the implementation plans before execution; retain the established subagent-driven method (approved 2026-10-25).
 - [x] Reconcile and complete the prerequisite organization refactor without discarding its partial files (platform Task 0).
-- [ ] Implement and independently review platform Tasks 1–14 and curriculum inventory/pilot C1–C2.
+- [x] Platform Task 1: define and independently review strict curriculum contracts.
+- [ ] Implement and independently review platform Tasks 2–14 and curriculum inventory/pilot C1–C2.
 - [ ] Complete all 40 coverage waves in C3 with exact IDs, bounded sub-batches and independent per-lesson review.
 - [ ] Complete final integration/coverage review and the applicable serialized full gate; update PRs without merging or deploying.
 
 Review: approved specification `docs/superpowers/specs/2026-10-24-leetcode-learning-library-design.md`; plans `docs/superpowers/plans/2026-10-24-leetcode-learning-platform.md` and `docs/superpowers/plans/2026-10-24-leetcode-curriculum.md`. Initial filename inventory found 360 Python files, 250 distinct numbered problems, 240 in range and 79 duplicate numbers; identity/correctness reconciliation remains implementation work. The plans distinguish software/pilot readiness from all 2000 verified lessons, preserve original archive URLs/bytes and private progress, and defer actual deployment authorization. This milestone changes documentation only; no curriculum lessons, progress backend or production UI have been implemented.
+
+Platform Task 1 review: 21 focused tests and all four schema coverage metrics at 100%, scoped format/lint/boundaries and project typechecking passed, and independent re-review confirmed the three contract corrections. The production build and output validation passed with a byte-identical Task 0 publication manifest. This milestone validates curriculum records. Actual curriculum authoring, file evidence verification and site integration follow in later tasks.
