@@ -2,7 +2,8 @@ import { lstat, readFile, readdir } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { fromHtml } from 'hast-util-from-html';
-import { SaxesParser } from 'saxes';
+import { verifySitemap } from './verify-output-sitemap.js';
+import { selectCurriculumRoutes } from '../src/lib/leetcode.js';
 import { buildOrganizationIndex } from '../src/lib/organization.js';
 import type { Element, Nodes } from 'hast';
 import { buildFolders, flattenFolders } from '../src/lib/folders.js';
@@ -12,6 +13,9 @@ import {
   publicationExclusion,
   organizationPageRoutes,
   readPolicy,
+  publicationPages,
+  assertCurriculumRouteOwnership,
+  verifyCurriculumArtifacts,
   type Diagnostic,
   type Manifest,
 } from '../src/content/index.js';
@@ -113,7 +117,10 @@ function page(html: string): Page {
 }
 
 /** Read-only verification of the deployed tree against the private prepared manifest. */
-export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
+export async function verifyOutput(
+  distDir: string,
+  electedCurriculumRoutes?: readonly string[],
+): Promise<Diagnostic[]> {
   const diagnostics: Diagnostic[] = [];
   const fail = (sourcePath: string, message: string) =>
     diagnostics.push({ sourcePath, message });
@@ -185,9 +192,39 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
   const folders = flattenFolders(buildFolders(published))
     .filter((folder) => folder.segments.length > 0)
     .map((folder) => folder.route);
+  let curriculumRoutes: string[] = [];
+  if (
+    manifest.curriculumGeneration !== undefined ||
+    electedCurriculumRoutes?.length
+  ) {
+    try {
+      const snapshot =
+        manifest.curriculumGeneration === undefined
+          ? undefined
+          : await verifyCurriculumArtifacts(
+              join(site, '.generated'),
+              manifest.curriculumGeneration,
+            );
+      const claims = snapshot?.routes ?? [];
+      assertCurriculumRouteOwnership(
+        [...publicationPages([], manifest.organization), ...claims],
+        published,
+      );
+      curriculumRoutes = selectCurriculumRoutes(
+        claims,
+        electedCurriculumRoutes,
+      );
+    } catch (error) {
+      fail(
+        '.generated/current/manifest.json',
+        error instanceof Error ? error.message : String(error),
+      );
+    }
+  }
   const expected = new Set([
     '404.html',
     ...fixed.map(routeFile),
+    ...curriculumRoutes.map(routeFile),
     ...organizationRoutes.map(routeFile),
     ...folders.map(routeFile),
     ...published.flatMap((entry) =>
@@ -203,7 +240,7 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
   const pages = new Map<string, Page>();
   for (const [file, bytes] of files) {
     if (
-      /(?:^|\/)(?:\.generated|content|migration-report\.json|manifest\.json|publication\.json|\.env(?:\..*)?)($|\/)/.test(
+      /(?:^|\/)(?:\.generated|content|migration-report\.json|manifest\.json|publication\.json|\.env(?:\..*)?)($|\/)|^(?:worker-assets|practice-traces)($|\/)|(?:^|\/)(?:curriculum|trace-assets|progress-registry)\.json$/.test(
         file,
       )
     )
@@ -328,52 +365,18 @@ export async function verifyOutput(distDir: string): Promise<Diagnostic[]> {
       fail(route, `Invalid resolved path steps for ${route}`);
   }
   if (siteUrl && files.has('sitemap.xml')) {
-    const expectedUrls = new Set(
-      [
-        ...fixed,
-        ...organizationRoutes,
-        ...folders,
-        ...published.map((entry) => entry.route),
-      ].map((route) => new URL(route, siteUrl).href),
-    );
     try {
-      const urls: string[] = [];
-      let location: string | undefined;
-      const namespace = 'http://www.sitemaps.org/schemas/sitemap/0.9';
-      const tags: string[] = [];
-      const parser = new SaxesParser({ xmlns: true });
-      parser.on('opentag', ({ local, uri }) => {
-        const tag = uri === namespace ? local : '';
-        tags.push(tag);
-        const path = tags.join('/');
-        if (tags.length === 1 && tag !== 'urlset')
-          throw new Error('Invalid sitemap root');
-        if (path === 'urlset/url/loc') {
-          if (location !== undefined) throw new Error('Repeated location');
-          location = '';
-        } else if (path.startsWith('urlset/url/loc/'))
-          throw new Error('Nested location content');
-      });
-      const append = (value: string) => {
-        if (tags.join('/') === 'urlset/url/loc') location += value;
-      };
-      parser.on('text', append);
-      parser.on('cdata', append);
-      parser.on('closetag', () => {
-        if (tags.join('/') === 'urlset/url') {
-          if (!location) throw new Error('Missing location');
-          urls.push(location);
-          location = undefined;
-        }
-        tags.pop();
-      });
-      parser.write(await readFile(join(dist, 'sitemap.xml'), 'utf8')).close();
-      if (
-        urls.length !== expectedUrls.size ||
-        new Set(urls).size !== urls.length ||
-        urls.some((url) => !expectedUrls.has(url))
-      )
-        throw new Error('Sitemap membership mismatch');
+      verifySitemap(
+        await readFile(join(dist, 'sitemap.xml'), 'utf8'),
+        siteUrl,
+        [
+          ...fixed,
+          ...organizationRoutes,
+          ...folders,
+          ...published.map((entry) => entry.route),
+          ...curriculumRoutes,
+        ],
+      );
     } catch {
       fail('sitemap.xml', 'Sitemap differs from canonical published routes');
     }

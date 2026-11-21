@@ -1,3 +1,4 @@
+import { createCurriculumCatalog, type CurriculumCatalog } from './leetcode.js';
 import { buildOrganizationIndex, publicEntry } from './organization.js';
 import type { OrganizationIndex } from './organization.js';
 export type {
@@ -12,6 +13,7 @@ import {
   assertUniqueRoutes,
   compareSourcePaths,
   organizationPageRoutes,
+  readPublishedCurriculum,
 } from '../content/index.js';
 import type {
   ContentEntry,
@@ -37,6 +39,7 @@ export function isLearningNote(entry: ContentEntry): boolean {
 }
 
 export type Catalog = {
+  curriculum: CurriculumCatalog;
   organization: OrganizationIndex;
   organizationRoutes(): string[];
   getEntry(route: string): ContentEntry | undefined;
@@ -59,7 +62,11 @@ export function loadCatalog(manifest: Manifest): Catalog {
   return createCatalog(manifest);
 }
 
-function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
+function createCatalog(
+  manifest: Manifest,
+  select = publicEntry,
+  curriculum = createCurriculumCatalog(),
+): Catalog {
   const entries = manifest.entries
     .filter((entry) => !entry.draft)
     .map(publicEntry)
@@ -81,6 +88,7 @@ function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
   const index = buildOrganizationIndex(entries, manifest.organization);
   const emittedRoutes = organizationPageRoutes(entries, manifest.organization);
   return {
+    curriculum,
     organizationRoutes: () => [...emittedRoutes],
     organization: {
       ...index,
@@ -152,10 +160,29 @@ export async function readPreparedCatalog(
 ): Promise<Catalog> {
   const snapshot = await snapshotPath(snapshotDir);
   const file = join(snapshot, 'manifest.json');
+  const generation = await manifestGeneration(file);
+  try {
+    return await catalogForGeneration(file, snapshot, generation);
+  } catch (error) {
+    // A winning commit may retire the generation this read just selected.
+    const latest = await manifestGeneration(file);
+    if (latest === generation) throw error;
+    return catalogForGeneration(file, snapshot, latest);
+  }
+}
+
+async function manifestGeneration(file: string): Promise<string> {
   const stat = await lstat(file);
   if (!stat.isFile() || stat.isSymbolicLink())
     throw new Error('Unsafe generated manifest');
-  const generation = `${stat.ino}:${stat.mtimeMs}:${stat.ctimeMs}:${stat.size}`;
+  return `${stat.ino}:${stat.mtimeMs}:${stat.ctimeMs}:${stat.size}`;
+}
+
+async function catalogForGeneration(
+  file: string,
+  snapshot: string,
+  generation: string,
+): Promise<Catalog> {
   if (cached?.snapshot === snapshot && cached.generation === generation)
     return cached.catalog;
   const catalog = readCatalogFile(file, snapshot);
@@ -163,7 +190,7 @@ export async function readPreparedCatalog(
   try {
     return await catalog;
   } catch (error) {
-    if (cached.catalog === catalog) cached = undefined;
+    if (cached?.catalog === catalog) cached = undefined;
     throw error;
   }
 }
@@ -175,6 +202,14 @@ async function readCatalogFile(
   const manifest = JSON.parse(await readFile(file, 'utf8')) as Manifest & {
     preparedBodies?: Record<string, string>;
   };
+  const curriculum = createCurriculumCatalog(
+    manifest.curriculumGeneration === undefined
+      ? undefined
+      : await readPublishedCurriculum(
+          dirname(snapshot),
+          manifest.curriculumGeneration,
+        ),
+  );
   const bodies = new Map<string, string>();
   for (const entry of manifest.entries) {
     if (entry.draft || !entry.bodyFile) continue;
@@ -185,17 +220,21 @@ async function readCatalogFile(
     if (typeof html !== 'string') throw new Error('Missing generated body');
     bodies.set(entry.bodyFile, html);
   }
-  return createCatalog(manifest, (entry) => {
-    const selected = publicEntry(entry);
-    if (selected.bodyFile)
-      preparedBodies.set(selected, {
-        snapshot,
-        id: selected.id,
-        bodyFile: selected.bodyFile,
-        html: bodies.get(selected.bodyFile)!,
-      });
-    return selected;
-  });
+  return createCatalog(
+    manifest,
+    (entry) => {
+      const selected = publicEntry(entry);
+      if (selected.bodyFile)
+        preparedBodies.set(selected, {
+          snapshot,
+          id: selected.id,
+          bodyFile: selected.bodyFile,
+          html: bodies.get(selected.bodyFile)!,
+        });
+      return selected;
+    },
+    curriculum,
+  );
 }
 
 function assertBodyPath(entry: ContentEntry): void {

@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile, realpath } from 'node:fs/promises';
-import { extname, join } from 'node:path';
+import { extname, isAbsolute, join, relative, sep } from 'node:path';
 import {
   commitPublication,
   discardPublication,
@@ -8,6 +8,10 @@ import {
 } from './publication.js';
 import { discoverEntries } from './discover.js';
 import { readMetadata, readPolicy } from './schema.js';
+import { hasCurriculumDirectory } from './leetcode/publication.js';
+import { prepareCurriculum } from './leetcode/prepare.js';
+import { readCurriculum } from './leetcode/schema.js';
+import type { ProblemId } from './leetcode/types.js';
 import { readOrganization } from './organization-schema.js';
 import { resolveOrganization } from './organization.js';
 import {
@@ -47,6 +51,8 @@ export type PrepareOptions = {
   outputDir: string;
   policyPath: string;
   organizationDir?: string;
+  curriculumDir?: string;
+  sourceVariants?: ReadonlyMap<string, ProblemId>;
   hosted: boolean;
   revision?: string;
   /** Watcher only: retain exactly the preceding publication’s assets for handoff. */
@@ -107,6 +113,23 @@ function notebookExtraction(entry: ContentEntry, link: MarkdownLink): boolean {
     (link.href.startsWith('attachment:') ||
       (link.image && /^data:image\/(?:png|jpeg);base64,/.test(link.href)))
   );
+}
+
+async function enrolledCurriculumRoot(
+  projectRoot: string,
+  canonicalRoot: string,
+  source: string,
+): Promise<string | undefined> {
+  const path = relative(projectRoot, source);
+  const segments = path.split(sep);
+  if (!path || segments[0] === '..' || isAbsolute(path))
+    throw new Error('Curriculum directory must be inside the project');
+  let directory = canonicalRoot;
+  for (const segment of segments) {
+    directory = join(directory, segment);
+    if (!(await hasCurriculumDirectory(directory))) return undefined;
+  }
+  return directory;
 }
 
 export async function prepareContent(
@@ -341,6 +364,27 @@ export async function prepareContent(
         join(stage, 'assets', asset.url.slice('/content-assets/'.length)),
         bytes,
       );
+    }
+    const curriculumDir = options.curriculumDir
+      ? await enrolledCurriculumRoot(
+          options.rootDir,
+          root,
+          options.curriculumDir,
+        )
+      : undefined;
+    if (curriculumDir) {
+      const { sourceVariants } = options;
+      const snapshot = await prepareCurriculum(
+        await readCurriculum(curriculumDir),
+        {
+          rootDir: curriculumDir,
+          outputDir: join(stage, 'curriculum'),
+          sourceCatalog: catalog,
+          ...(sourceVariants ? { sourceVariants } : {}),
+          additionalPages: publicationPages([], manifest.organization),
+        },
+      );
+      manifest.curriculumGeneration = snapshot.generation;
     }
     await writeManifest(manifest, stage, bodies);
     await commitPublication(

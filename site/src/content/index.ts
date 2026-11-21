@@ -79,3 +79,34 @@ export {
 export type { OrganizationMigrationPlan } from './organization-migrate.js';
 
 export { organizationPageRoutes } from './organization-routes.js';
+
+export type {
+  ProblemId,
+  LessonStatus,
+  ProblemRecord,
+  CompanyAssociation,
+  LessonApproachDefinition,
+  LessonRecord,
+  LearningPathNode,
+  LearningPathDefinition,
+  CurriculumDefinition,
+} from './leetcode/types.js';
+export {
+  hashLessonForReview,
+  readCurriculum,
+  validateCurriculum,
+} from './leetcode/schema.js';
+
+export { pathProgress, validateLearningPaths } from './leetcode/paths.js';
+export type { LearningPathIndex, PathProgress } from './leetcode/paths.js';
+
+export { readPublishedCurriculum } from './leetcode/publication.js';
+export type {
+  CurriculumSnapshot,
+  PreparedLesson,
+  PreparedProblem,
+} from './leetcode/prepare.js';
+export {
+  assertCurriculumRouteOwnership,
+  verifyCurriculumArtifacts,
+} from './leetcode/artifacts.js';

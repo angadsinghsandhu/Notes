@@ -9,6 +9,7 @@ import {
 } from 'node:fs/promises';
 import { basename, dirname, join, resolve } from 'node:path';
 import { verifyGeneratedTree, verifyOutputDirectory } from './manifest.js';
+import { installCurriculum, pruneCurriculum } from './leetcode/publication.js';
 import type { Manifest } from './types.js';
 
 const assetName =
@@ -190,13 +191,23 @@ export async function commitPublication(
   const wanted = localNames(manifest);
   const retained = new Set(wanted);
   const file = join(current, 'manifest.json');
+  let precedingCurriculum: string | undefined;
   if (development && (await exists(file))) {
     const previous = JSON.parse(await readFile(file, 'utf8')) as Manifest;
+    precedingCurriculum = previous.curriculumGeneration;
     for (const name of localNames(previous)) retained.add(name);
   }
   const installed: string[] = [];
   await mkdir(join(stage, 'retired-assets'));
+  const stagedCurriculum = join(stage, 'curriculum');
+  let installedCurriculum: string | undefined;
   try {
+    if (manifest.curriculumGeneration !== undefined)
+      installedCurriculum = await installCurriculum(
+        generated,
+        stagedCurriculum,
+        manifest.curriculumGeneration,
+      );
     for (const name of wanted) {
       const target = join(assetsTarget, name);
       if (await exists(target)) {
@@ -228,6 +239,8 @@ export async function commitPublication(
         JSON.stringify({ installed }),
       );
       await restorePending(stage, current, assetsTarget);
+      if (installedCurriculum)
+        await rename(installedCurriculum, stagedCurriculum);
       await rm(join(stage, 'rollback-pending.json'));
     } catch (rollbackError) {
       throw new Error(
@@ -240,6 +253,11 @@ export async function commitPublication(
   // Cleanup after the commit cannot turn a changed publication into a failed rebuild.
   try {
     await recoverPublications(generated, assetsTarget);
+    await pruneCurriculum(
+      generated,
+      manifest.curriculumGeneration,
+      precedingCurriculum,
+    );
   } catch (error) {
     console.warn(
       `Committed publication; recovery cleanup pending: ${message(error)}`,
