@@ -69,6 +69,10 @@ export function assertUniqueRoutes(
   const directories = new Map<string, string>();
   function claim(route: string, owner: string, endpoint = false): void {
     const key = `${route.replace(/\/+$/, '').toLowerCase()}/`;
+    if (key.startsWith('/practice-traces/'))
+      throw new Error(
+        `Route collision at ${route}: reserved Worker namespace /practice-traces/`,
+      );
     const previous = owners.get(key);
     if (previous !== undefined)
       throw new Error(`Route collision at ${route}: ${previous} and ${owner}`);

@@ -5,6 +5,7 @@ vi.mock('../../../src/lib/catalog.js', async (importOriginal) => ({
   ...(await importOriginal<typeof import('../../../src/lib/catalog.js')>()),
   sectionLabels: { tutorials: 'Tutorials' },
   readPreparedCatalog: vi.fn(async () => ({
+    curriculum: { publishedRoutes: () => ['/practice/paths/a&b/'] },
     organizationRoutes: () => [
       '/library/topics/',
       '/library/collections/',
@@ -48,5 +49,6 @@ it('returns 404 without a site and XML-escapes actual catalog URLs', async () =>
   expect(body).toContain('/library/topics/populated/');
   expect(body).toContain('/library/collections/');
   expect(body).toContain('/library/tutorials/folders/a~20~26~20b/');
+  expect(body).toContain('/practice/paths/a&amp;b/');
   expect(body).not.toContain('/notes/tutorials/a&b/');
 });

@@ -50,6 +50,7 @@ export async function startContentWatcher(
         followSymlinks: false,
         ...(recursive ? {} : { depth: 0 }),
         ignored: (candidate) =>
+          path !== options.curriculumDir &&
           Boolean(
             publicationExclusion(
               relative(options.rootDir, candidate).replaceAll('\\', '/'),
@@ -197,6 +198,12 @@ export async function startContentWatcher(
           )
             rebuild();
         }),
+      );
+    }
+    if (options.curriculumDir) {
+      watchers.set(
+        options.curriculumDir,
+        await subscribe(options.curriculumDir, true, rebuild),
       );
     }
     refreshing = refreshing.then(watchRoots);

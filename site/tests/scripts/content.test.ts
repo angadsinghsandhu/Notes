@@ -1,4 +1,11 @@
-import { mkdtemp, mkdir, writeFile, readFile, rm } from 'node:fs/promises';
+import {
+  mkdtemp,
+  mkdir,
+  writeFile,
+  readFile,
+  rm,
+  symlink,
+} from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join, delimiter } from 'node:path';
 import { execFile } from 'node:child_process';
@@ -49,6 +56,7 @@ it('returns nonzero for source diagnostics and zero for a repaired source', asyn
   const options = await contentOptions(site);
   expect(options.revision).toBe('b'.repeat(40));
   expect(options.organizationDir).toBe(join(site, 'content/organization'));
+  expect(options.curriculumDir).toBe(join(site, 'content/leetcode'));
   expect(await runContent(options)).toBe(1);
   expect(error.mock.calls.flat().join(' ')).toContain('Tutorials/note.md');
   await writeFile(join(root, 'Tutorials/note.md'), '# Note');
@@ -208,4 +216,38 @@ exit "$TASK_9_PARITY_EXIT"
       ...(parityExit === 0 ? order.slice(5) : []),
     ]);
   }
+});
+
+it('accepts genuine curriculum absence and retains publication for an invalid curriculum enrollment', async () => {
+  const { site } = await archive();
+  const error = vi.spyOn(console, 'error').mockImplementation(() => {});
+  vi.spyOn(console, 'log').mockImplementation(() => {});
+  const options = await contentOptions(site);
+  const directory = options.curriculumDir!;
+  const manifest = join(options.outputDir, 'current/manifest.json');
+  expect(await runContent(options)).toBe(0);
+  const baseline = await readFile(manifest);
+
+  await mkdir(directory);
+  expect(await runContent(options)).toBe(1);
+  expect(error).toHaveBeenLastCalledWith(
+    expect.stringContaining('cannot read curriculum JSON'),
+  );
+  expect(await readFile(manifest)).toEqual(baseline);
+
+  await rm(directory, { recursive: true });
+  await writeFile(directory, '{}');
+  expect(await runContent(options)).toBe(1);
+  expect(error).toHaveBeenLastCalledWith(
+    expect.stringContaining('Unsafe curriculum directory'),
+  );
+  expect(await readFile(manifest)).toEqual(baseline);
+
+  await rm(directory);
+  await symlink(join(site, 'missing'), directory);
+  expect(await runContent(options)).toBe(1);
+  expect(error).toHaveBeenLastCalledWith(
+    expect.stringContaining('Unsafe curriculum directory'),
+  );
+  expect(await readFile(manifest)).toEqual(baseline);
 });

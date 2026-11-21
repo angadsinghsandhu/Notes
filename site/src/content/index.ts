@@ -99,3 +99,14 @@ export {
 
 export { pathProgress, validateLearningPaths } from './leetcode/paths.js';
 export type { LearningPathIndex, PathProgress } from './leetcode/paths.js';
+
+export { readPublishedCurriculum } from './leetcode/publication.js';
+export type {
+  CurriculumSnapshot,
+  PreparedLesson,
+  PreparedProblem,
+} from './leetcode/prepare.js';
+export {
+  assertCurriculumRouteOwnership,
+  verifyCurriculumArtifacts,
+} from './leetcode/artifacts.js';

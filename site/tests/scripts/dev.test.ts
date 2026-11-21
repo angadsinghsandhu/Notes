@@ -49,6 +49,8 @@ vi.mock('node:fs/promises', async (original) => {
   };
 });
 
+import { hashLessonForReview } from '../../src/content/index.js';
+import { prepareFixture } from '../src/content/leetcode/prepare-fixtures.js';
 import { startContentWatcher, startDevelopment } from '../../scripts/dev.js';
 import type {
   PreparationResult,
@@ -1022,3 +1024,95 @@ it('polls initial organization creation, all sidecar edits and atomic replacemen
   await watcher.close();
   expect(faults.watchers.every((watcher) => watcher.closed)).toBe(true);
 }, 60000);
+
+it('watches an initially absent curriculum and reports malformed first enrollment through preparation', async () => {
+  const options = await archive();
+  const curriculumDir = join(options.rootDir, 'site/content/leetcode');
+  const success = vi.fn();
+  const onDiagnostics = vi.fn();
+  const watcher = await startContentWatcher(
+    { ...options, curriculumDir },
+    success,
+    { onDiagnostics },
+  );
+  handles.push(watcher);
+  expect(success).toHaveBeenCalledTimes(1);
+  await mkdir(curriculumDir);
+  await writeFile(join(curriculumDir, 'manifest.json'), '{}');
+  await vi.waitFor(() => expect(onDiagnostics).toHaveBeenCalled(), {
+    timeout: 4500,
+  });
+  expect(success).toHaveBeenCalledTimes(1);
+  expect(onDiagnostics.mock.calls.at(-1)?.[0][0].message).toContain(
+    'cannot read curriculum JSON',
+  );
+});
+
+it('reports standalone edits to curriculum evidence in archive-excluded directories', async () => {
+  const options = await archive();
+  const fixture = await prepareFixture(options.rootDir);
+  const { problems, lessons, paths } = fixture.definition;
+  const { review, ...lesson } = lessons[0]!;
+  const evidenceDir = join(fixture.lessonDir, 'build');
+  await mkdir(evidenceDir);
+  await rename(
+    join(fixture.lessonDir, 'lesson.md'),
+    join(evidenceDir, 'lesson.md'),
+  );
+  const relocated = {
+    ...lesson,
+    prose: { ...lesson.prose!, path: 'build/lesson.md' },
+  };
+  const signed = {
+    ...relocated,
+    review: {
+      ...review!,
+      contentSha256: hashLessonForReview(problems[0]!, relocated),
+    },
+  };
+  const curriculumDir = join(options.rootDir, 'site/content/leetcode');
+  await rename(fixture.rootDir, curriculumDir);
+  await writeFile(
+    join(curriculumDir, 'manifest.json'),
+    JSON.stringify({
+      version: 1,
+      problems,
+      lessons: [lesson.problemId],
+      paths: paths.map(({ id }) => id),
+    }),
+  );
+  await writeFile(
+    join(curriculumDir, 'problems/1/metadata.json'),
+    JSON.stringify(signed),
+  );
+  await mkdir(join(curriculumDir, 'paths'));
+  for (const path of paths)
+    await writeFile(
+      join(curriculumDir, `paths/${path.id}.json`),
+      JSON.stringify(path),
+    );
+
+  const success = vi.fn();
+  const onDiagnostics = vi.fn();
+  const watcher = await startContentWatcher(
+    { ...options, curriculumDir },
+    success,
+    { onDiagnostics },
+  );
+  handles.push(watcher);
+  expect(success).toHaveBeenCalledTimes(1);
+  const manifestPath = join(options.outputDir, 'current/manifest.json');
+  const before = await readFile(manifestPath);
+  await writeFile(
+    join(curriculumDir, 'problems/1/build/lesson.md'),
+    '# Changed outside review',
+  );
+  await vi.waitFor(() => expect(onDiagnostics).toHaveBeenCalled(), {
+    timeout: 4500,
+  });
+  expect(onDiagnostics.mock.calls.at(-1)?.[0][0].message).toContain(
+    'build/lesson.md does not match its SHA256 evidence',
+  );
+  expect(success).toHaveBeenCalledTimes(1);
+  expect(await readFile(manifestPath)).toEqual(before);
+});

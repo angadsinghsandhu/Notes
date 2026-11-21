@@ -20,6 +20,7 @@ export async function GET({ site }: APIContext): Promise<Response> {
       .filter((folder) => folder.segments.length > 0)
       .map((folder) => folder.route),
     ...catalog.listEntries().map((entry) => entry.route),
+    ...catalog.curriculum.publishedRoutes(),
   ];
   const escape = (value: string) =>
     value

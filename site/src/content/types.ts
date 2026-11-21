@@ -63,6 +63,7 @@ export type AssetRecord = {
 export type Manifest = {
   version: 1;
   organization?: OrganizationSnapshot;
+  curriculumGeneration?: string;
   entries: ContentEntry[];
   assets: AssetRecord[];
   ledger: MigrationRow[];
