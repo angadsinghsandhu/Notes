@@ -96,3 +96,6 @@ export {
   readCurriculum,
   validateCurriculum,
 } from './leetcode/schema.js';
+
+export { pathProgress, validateLearningPaths } from './leetcode/paths.js';
+export type { LearningPathIndex, PathProgress } from './leetcode/paths.js';
