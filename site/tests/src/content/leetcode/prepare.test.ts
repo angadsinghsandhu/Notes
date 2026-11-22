@@ -11,7 +11,12 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, expect, test } from 'vitest';
 import { prepareCurriculum } from '../../../../src/content/leetcode/prepare.js';
-import { digest, prepareFixture, sourceEntry } from './prepare-fixtures.js';
+import {
+  digest,
+  prepareFixture,
+  sourceEntry,
+  traceFixture,
+} from './prepare-fixtures.js';
 
 let directory: string;
 beforeEach(async () => {
@@ -197,12 +202,7 @@ test.each([
   {
     label: 'too many frames',
     trace: (implementationSha256: string) =>
-      JSON.stringify({
-        problemId: 'leetcode:1',
-        approachId: 'hash-map',
-        exampleId: 'pair',
-        implementationSha256,
-        result: [],
+      traceFixture(implementationSha256, {
         frames: Array.from({ length: 2001 }, () => null),
       }),
     reason: /2000 frames/i,
@@ -293,15 +293,7 @@ test.each([
 ])('rejects public trace structure with %j', async (changes) => {
   const fixture = await prepareFixture(directory, {
     trace: (implementationSha256) =>
-      JSON.stringify({
-        problemId: 'leetcode:1',
-        approachId: 'hash-map',
-        exampleId: 'pair',
-        implementationSha256,
-        result: [],
-        frames: [],
-        ...changes,
-      }),
+      traceFixture(implementationSha256, changes),
   });
   await expect(prepareCurriculum(fixture.definition, fixture)).rejects.toThrow(
     /trace structure/,
@@ -395,4 +387,88 @@ test('lesson prose still rejects unknown curriculum paths', async () => {
   await expect(prepareCurriculum(fixture.definition, fixture)).rejects.toThrow(
     /cannot resolve \/practice\/paths\/unknown\//,
   );
+});
+
+test.each([
+  ['\uFEFF\r\n# heading\r\n\r\nanswer = 1\r\n', 4],
+  ['\r# heading\r\ranswer = 1', 4],
+  ['answer = 1\n', 1],
+  ['answer = 1', 1],
+  ['', 0],
+] as const)(
+  'binds trace code links to physical source lines in %j',
+  async (code, lineCount) => {
+    function linkedTrace(implementationSha256: string, line: number) {
+      return traceFixture(implementationSha256, {
+        frames: [
+          {
+            stepId: 'answer',
+            codeLines: [line],
+            explanation: 'Show the computed answer.',
+            state: { kind: 'array', items: [1] },
+            highlights: [],
+          },
+        ],
+      });
+    }
+    if (lineCount > 0) {
+      const accepted = await prepareFixture(directory, {
+        code,
+        trace: (implementationSha256) =>
+          linkedTrace(implementationSha256, lineCount),
+      });
+      await expect(
+        prepareCurriculum(accepted.definition, accepted),
+      ).resolves.toBeDefined();
+    }
+    const rejected = await prepareFixture(directory, {
+      code,
+      trace: (implementationSha256) =>
+        linkedTrace(implementationSha256, lineCount + 1),
+    });
+    await expect(
+      prepareCurriculum(rejected.definition, {
+        ...rejected,
+        outputDir: join(directory, 'rejected'),
+      }),
+    ).rejects.toThrow(/source line/);
+  },
+);
+
+test('rejects renderer references outside the stored frame', async () => {
+  const fixture = await prepareFixture(directory, {
+    trace: (implementationSha256) =>
+      traceFixture(implementationSha256, {
+        frames: [
+          {
+            stepId: 'invalid',
+            codeLines: [1],
+            explanation: 'Show an array cell.',
+            state: { kind: 'array', items: [] },
+            highlights: [{ index: 0 }],
+          },
+        ],
+      }),
+  });
+  await expect(prepareCurriculum(fixture.definition, fixture)).rejects.toThrow(
+    /highlight/,
+  );
+});
+
+test('rejects a valid trace with a different implementation SHA despite matching file evidence', async () => {
+  const fixture = await prepareFixture(directory, {
+    trace: () => traceFixture('b'.repeat(64)),
+  });
+  await expect(prepareCurriculum(fixture.definition, fixture)).rejects.toThrow(
+    /identity/,
+  );
+});
+
+test('renders bare CR as a visible code line boundary', async () => {
+  const fixture = await prepareFixture(directory, {
+    code: '# first\r# second',
+  });
+  const snapshot = await prepareCurriculum(fixture.definition, fixture);
+  const codeHtml = snapshot.lessons[0]?.approaches[0]?.codeHtml ?? '';
+  expect(codeHtml.match(/<span class="line">/g)).toHaveLength(2);
 });

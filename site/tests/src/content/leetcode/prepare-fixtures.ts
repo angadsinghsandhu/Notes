@@ -32,6 +32,30 @@ export function sourceEntry(
   };
 }
 
+export function traceFixture(
+  implementationSha256: string,
+  changes: Record<string, unknown> = {},
+) {
+  return JSON.stringify({
+    version: 1,
+    problemId: 'leetcode:1',
+    approachId: 'hash-map',
+    exampleId: 'pair',
+    implementationSha256,
+    result: [0, 1],
+    frames: [
+      {
+        stepId: 'check-0',
+        codeLines: [1],
+        explanation: 'Look for the complement of 2.',
+        state: { kind: 'array', items: [2, 7] },
+        highlights: [{ index: 0 }],
+      },
+    ],
+    ...changes,
+  });
+}
+
 export async function prepareFixture(
   directory: string,
   options: {
@@ -41,6 +65,7 @@ export async function prepareFixture(
     source?: ContentEntry;
     companyUrl?: string;
     approach?: 'shell';
+    code?: string;
     traceCount?: number;
   } = {},
 ) {
@@ -69,27 +94,19 @@ export async function prepareFixture(
   const implementation =
     options.approach === 'shell'
       ? {
-          ...(await evidence('solution.sh', "printf 'safe'")),
+          ...(await evidence('solution.sh', options.code ?? "printf 'safe'")),
           entryPoint: null,
         }
       : {
           ...(await evidence(
             'solutions.py',
-            'def two_sum():\n    return [0, 1]\n',
+            options.code ?? 'def two_sum():\n    return [0, 1]\n',
           )),
           entryPoint: 'two_sum',
         };
   const implementationSha256 = implementation.sha256;
   const trace =
-    options.trace?.(implementationSha256) ??
-    JSON.stringify({
-      problemId: 'leetcode:1',
-      approachId: 'hash-map',
-      exampleId: 'pair',
-      implementationSha256,
-      result: [0, 1],
-      frames: [],
-    });
+    options.trace?.(implementationSha256) ?? traceFixture(implementationSha256);
   const problem = firstProblem();
   const record: ProblemRecord = {
     ...problem,
@@ -123,14 +140,10 @@ export async function prepareFixture(
     const bytes =
       traceCount === 1
         ? trace
-        : JSON.stringify({
-            problemId: record.id,
-            approachId: 'hash-map',
-            exampleId,
-            implementationSha256,
-            result: [],
-            frames: [],
-          }).padEnd(1_048_576, ' ');
+        : traceFixture(implementationSha256, { exampleId }).padEnd(
+            1_048_576,
+            ' ',
+          );
     traces.push({
       ...(await evidence(`traces/hash-map/${exampleId}.json`, bytes)),
       implementationSha256,

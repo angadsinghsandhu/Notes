@@ -110,3 +110,11 @@ export {
   assertCurriculumRouteOwnership,
   verifyCurriculumArtifacts,
 } from './leetcode/artifacts.js';
+
+export { validateTrace } from './leetcode/trace.js';
+export type {
+  AlgorithmTrace,
+  TraceFrame,
+  TraceHighlight,
+  TraceState,
+} from './leetcode/trace.js';

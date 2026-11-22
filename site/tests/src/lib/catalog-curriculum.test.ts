@@ -16,7 +16,10 @@ import {
   readPreparedBody,
   readPreparedCatalog,
 } from '../../../src/lib/catalog.js';
-import { prepareFixture } from '../content/leetcode/prepare-fixtures.js';
+import {
+  prepareFixture,
+  traceFixture,
+} from '../content/leetcode/prepare-fixtures.js';
 
 const faults = vi.hoisted(() => ({
   beforeRead: undefined as undefined | ((path: string) => Promise<void>),
@@ -204,14 +207,7 @@ it('keeps the last good curriculum on malformed updates and pins held archive bo
   await enrollCurriculum(base.rootDir, {
     prose: '# Lesson after',
     trace: (implementationSha256) =>
-      JSON.stringify({
-        problemId: 'leetcode:1',
-        approachId: 'hash-map',
-        exampleId: 'pair',
-        implementationSha256,
-        result: [1, 0],
-        frames: [],
-      }),
+      traceFixture(implementationSha256, { result: [1, 0] }),
   });
   await put(base.rootDir, 'Tutorials/note.md', '# Archive after');
   const second = await prepareContent(options);

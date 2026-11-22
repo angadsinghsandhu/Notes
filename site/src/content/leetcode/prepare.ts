@@ -10,6 +10,7 @@ import type { ContentEntry, Heading, RouteCatalog } from '../types.js';
 import { assertCurriculumRouteOwnership } from './artifacts.js';
 import { validateLearningPaths } from './paths.js';
 import { validateCurriculum } from './schema.js';
+import { TRACE_BYTE_LIMIT, validateTrace } from './trace.js';
 import type {
   CurriculumDefinition,
   LearningPathDefinition,
@@ -20,7 +21,6 @@ import type {
 } from './types.js';
 
 const traceNamespace = '/practice-traces/';
-const traceByteLimit = 1024 * 1024;
 const packageByteLimit = 25 * 1024 * 1024;
 const workerFileLimit = 20_000;
 
@@ -131,7 +131,7 @@ async function readEvidence(
     const info = await file.stat();
     if (!info.isFile())
       throw new Error(`${evidence.path} must be a regular file`);
-    const limit = trace ? traceByteLimit : packageByteLimit;
+    const limit = trace ? TRACE_BYTE_LIMIT : packageByteLimit;
     const limitMessage = trace ? '1 MiB trace limit' : '25 MiB evidence limit';
     if (info.size > limit)
       throw new Error(`${evidence.path} exceeds the ${limitMessage}`);
@@ -148,21 +148,12 @@ async function readEvidence(
   }
 }
 
-const traceFields = new Set([
-  'version',
-  'problemId',
-  'approachId',
-  'exampleId',
-  'implementationSha256',
-  'result',
-  'frames',
-]);
-
 function checkTrace(
   raw: string,
   problemId: ProblemId,
   approachId: string,
   evidence: LessonApproachDefinition['traces'][number],
+  lineCount: number,
 ): void {
   let value: unknown;
   try {
@@ -181,16 +172,19 @@ function checkTrace(
     Reflect.get(value, 'implementationSha256') !== evidence.implementationSha256
   )
     throw new Error(`${evidence.path} has inconsistent trace identity`);
-  const frames: unknown = Reflect.get(value, 'frames');
-  if (
-    !Array.isArray(frames) ||
-    !Object.hasOwn(value, 'result') ||
-    Object.keys(value).some((key) => !traceFields.has(key)) ||
-    (Object.hasOwn(value, 'version') && Reflect.get(value, 'version') !== 1)
-  )
-    throw new Error(`${evidence.path} has an invalid public trace structure`);
-  if (frames.length > 2000)
-    throw new Error(`${evidence.path} exceeds 2000 frames`);
+  try {
+    const trace = validateTrace(value);
+    for (const { stepId, codeLines } of trace.frames)
+      for (const line of codeLines)
+        if (line > lineCount)
+          throw new Error(
+            `Step ${stepId} references source line ${line}, beyond ${lineCount} lines`,
+          );
+  } catch (error) {
+    throw new Error(`${evidence.path}: ${(error as Error).message}`, {
+      cause: error,
+    });
+  }
 }
 
 async function prepareApproaches(
@@ -208,14 +202,18 @@ async function prepareApproaches(
     implementation,
     traces,
   } of record.approaches) {
-    const code = await readEvidence(lessonDir, implementation);
+    const originalCode = await readEvidence(lessonDir, implementation);
+    const code = originalCode.replace(/\r\n?/g, '\n');
+    const lineCount = code
+      ? code.split('\n').length - Number(code.endsWith('\n'))
+      : 0;
     const prefix = '{"version":1,"traces":[';
     const suffix = ']}\n';
     let byteCount = prefix.length + suffix.length;
     const originals: string[] = [];
     for (const evidence of traces) {
       const raw = await readEvidence(lessonDir, evidence, true);
-      checkTrace(raw, record.problemId, id, evidence);
+      checkTrace(raw, record.problemId, id, evidence, lineCount);
       byteCount += Buffer.byteLength(raw) + Number(originals.length > 0);
       if (byteCount > packageByteLimit)
         throw new Error(
