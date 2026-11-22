@@ -158,42 +158,58 @@ if [ "$*" = "$TASK_8_FAIL_COMMAND" ]; then exit 23; fi
   }
 });
 
-it('executes isolated archive parity in check and stops on its nonzero exit', async () => {
+it('runs archive parity and curriculum verification in check and stops at a failed Python command', async () => {
   const { scripts } = JSON.parse(await readFile('package.json', 'utf8')) as {
     scripts: Record<string, string>;
   };
-  expect(scripts['test:polars']).toBe('python3 -B scripts/check_polars.py');
+  const parity = '-B scripts/check_polars.py';
+  const discovery =
+    '-B -m unittest discover -s tests/scripts -p test_curriculum*.py';
+  const evidence = '-B scripts/curriculum.py check';
+  expect(scripts['test:polars']).toBe(`python3 ${parity}`);
   const order = [
     'run format:check',
     'run lint',
     'run check:boundaries',
     'run typecheck',
     'run test:polars',
+    'run test:curriculum',
     'run test:unit',
   ];
   expect(scripts.check).toBe(
     order.map((command) => `npm ${command}`).join(' && '),
   );
-  const root = await mkdtemp(join(tmpdir(), 'notes-parity-gate-'));
+  const root = await mkdtemp(join(tmpdir(), 'notes-python-gates-'));
   roots.push(root);
   const log = join(root, 'order.log');
   await writeFile(
     join(root, 'npm'),
     `#!/bin/sh
-printf '%s\\n' "$*" >> "$TASK_9_ORDER_LOG"
-if [ "$*" = "run test:polars" ]; then exec sh -c "$TASK_9_PARITY_COMMAND"; fi
+printf '%s\\n' "$*" >> "$TASK_CHECK_ORDER_LOG"
+case "$*" in
+  "run test:polars") exec sh -c "$TASK_CHECK_PARITY_COMMAND" ;;
+  "run test:curriculum") exec sh -c "$TASK_CHECK_CURRICULUM_COMMAND" ;;
+esac
 `,
     { mode: 0o755 },
   );
   await writeFile(
     join(root, 'python3'),
     `#!/bin/sh
-printf 'python3 %s\\n' "$*" >> "$TASK_9_ORDER_LOG"
-exit "$TASK_9_PARITY_EXIT"
+printf 'python3 %s\\n' "$*" >> "$TASK_CHECK_ORDER_LOG"
+if [ "$*" = "$TASK_CHECK_FAIL_COMMAND" ]; then exit 31; fi
 `,
     { mode: 0o755 },
   );
-  for (const parityExit of [0, 31]) {
+  const executed = [
+    ...order.slice(0, 5),
+    `python3 ${parity}`,
+    order[5],
+    `python3 ${discovery}`,
+    `python3 ${evidence}`,
+    order[6],
+  ];
+  for (const failingCommand of ['', parity, discovery, evidence]) {
     await writeFile(log, '');
     let code = 0;
     try {
@@ -201,20 +217,21 @@ exit "$TASK_9_PARITY_EXIT"
         env: {
           ...process.env,
           PATH: `${root}${delimiter}${process.env['PATH'] ?? ''}`,
-          TASK_9_ORDER_LOG: log,
-          TASK_9_PARITY_COMMAND: scripts['test:polars']!,
-          TASK_9_PARITY_EXIT: String(parityExit),
+          TASK_CHECK_ORDER_LOG: log,
+          TASK_CHECK_PARITY_COMMAND: scripts['test:polars']!,
+          TASK_CHECK_CURRICULUM_COMMAND: scripts['test:curriculum']!,
+          TASK_CHECK_FAIL_COMMAND: failingCommand,
         },
       });
     } catch (error) {
       code = (error as { code: number }).code;
     }
-    expect(code).toBe(parityExit);
-    expect((await readFile(log, 'utf8')).trim().split('\n')).toEqual([
-      ...order.slice(0, 5),
-      'python3 -B scripts/check_polars.py',
-      ...(parityExit === 0 ? order.slice(5) : []),
-    ]);
+    expect(code).toBe(failingCommand ? 31 : 0);
+    expect((await readFile(log, 'utf8')).trim().split('\n')).toEqual(
+      failingCommand
+        ? executed.slice(0, executed.indexOf(`python3 ${failingCommand}`) + 1)
+        : executed,
+    );
   }
 });
 
