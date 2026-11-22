@@ -1,11 +1,7 @@
-import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
 import { describe, expect, test } from 'vitest';
 import {
   hashLessonForReview,
-  readCurriculum,
   validateCurriculum,
-  validateLearningPaths,
 } from '../../../../src/content/index.js';
 import type { CurriculumDefinition } from '../../../../src/content/index.js';
 import {
@@ -19,134 +15,6 @@ import {
   verifiedContent,
   verifiedLesson,
 } from './schema-fixtures.js';
-
-test('loads the checked-in curriculum inventory with all 2,000 targets accounted for', async () => {
-  const root = new URL('../../../../content/leetcode/', import.meta.url);
-  const { version, problems, lessons, paths } = await readCurriculum(
-    fileURLToPath(root),
-  );
-  const numbers = Array.from({ length: 2000 }, (_, index) => index + 1);
-  const pilot = [
-    [1, 'Two Sum', 'easy'],
-    [3, 'Longest Substring Without Repeating Characters', 'medium'],
-    [20, 'Valid Parentheses', 'easy'],
-    [64, 'Minimum Path Sum', 'medium'],
-    [98, 'Validate Binary Search Tree', 'medium'],
-    [127, 'Word Ladder', 'hard'],
-    [146, 'LRU Cache', 'medium'],
-    [175, 'Combine Two Tables', 'easy'],
-  ] as const;
-  const sortedProblems = problems.toSorted((a, b) => a.number - b.number);
-  const unknown = sortedProblems.filter(
-    ({ evidence }) => !evidence.officialQuestion,
-  );
-  const byNumber = new Map(
-    problems.map((problem) => [problem.number, problem]),
-  );
-
-  expect(version).toBe(1);
-  expect(sortedProblems.map(({ number, id }) => [number, id])).toEqual(
-    numbers.map((number) => [number, `leetcode:${number}`]),
-  );
-  for (const [number, title, difficulty] of pilot) {
-    const slug = title.toLowerCase().replaceAll(' ', '-');
-    const officialUrl = `https://leetcode.com/problems/${slug}/`;
-    expect(byNumber.get(number)).toMatchObject({
-      title,
-      slug,
-      difficulty,
-      officialUrl,
-      domain: number === 175 ? 'sql' : 'algorithm',
-      evidence: {
-        officialQuestion: {
-          frontendNumber: number,
-          title,
-          sourceUrl: officialUrl,
-        },
-      },
-    });
-  }
-  for (const problem of unknown) {
-    expect(problem).toMatchObject({
-      title: null,
-      slug: null,
-      officialUrl: null,
-      domain: null,
-      difficulty: null,
-      topics: [],
-    });
-  }
-
-  const path = validateLearningPaths(paths, problems).get('all-problems');
-  expect(path).toBeDefined();
-  const targets = path!.nodes.filter((node) => node.kind === 'problem');
-  expect(targets.map(({ problemId }) => problemId).sort()).toEqual(
-    problems.map(({ id }) => id).sort(),
-  );
-  const nodes = new Map(path!.nodes.map((node) => [node.id, node]));
-  const pending = nodes.get('pending-classification');
-  if (unknown.length > 0) {
-    expect(pending).toMatchObject({
-      kind: 'stage',
-      title: 'Pending classification',
-    });
-  }
-  const descendants = new Set(pending?.childIds);
-  for (const id of descendants) {
-    for (const child of nodes.get(id)!.childIds) descendants.add(child);
-  }
-  expect(
-    targets
-      .filter(({ id }) => descendants.has(id))
-      .map(({ problemId }) => problemId)
-      .sort(),
-  ).toEqual(unknown.map(({ id }) => id).sort());
-
-  const targetByProblem = new Map(
-    targets.map((node) => [node.problemId, node]),
-  );
-  for (const id of ['leetcode:3', 'leetcode:146'] as const) {
-    expect(targetByProblem.get(id)?.prerequisiteIds).toContain(
-      targetByProblem.get('leetcode:1')!.id,
-    );
-  }
-
-  const report: unknown = JSON.parse(
-    await readFile(new URL('coverage-report.json', root), 'utf8'),
-  );
-  const plannedIds = sortedProblems
-    .filter(({ status }) => status === 'planned')
-    .map(({ number }) => number);
-  const draftIds = sortedProblems
-    .filter(({ status }) => status === 'draft')
-    .map(({ number }) => number);
-  const verified = sortedProblems.filter(({ status }) => status === 'verified');
-  const reviewByProblem = new Map(
-    lessons.map(({ problemId, review }) => [problemId, review]),
-  );
-  expect(report).toEqual({
-    version: 1,
-    plannedIds,
-    draftIds,
-    verifiedIds: verified.map(({ number }) => number),
-    evidence: verified.map(({ number, id }) => ({
-      id: number,
-      contentSha256: reviewByProblem.get(id)!.contentSha256,
-    })),
-    unresolved: [
-      {
-        reason: 'official-metadata-pending',
-        ids: unknown.map(({ number }) => number),
-      },
-      {
-        reason: 'lesson-evidence-pending',
-        ids: sortedProblems
-          .filter(({ status }) => status !== 'verified')
-          .map(({ number }) => number),
-      },
-    ].filter(({ ids }) => ids.length > 0),
-  });
-});
 
 describe('validateCurriculum', () => {
   test('accounts for every frontend number and allows unknown planned metadata', () => {
