@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "mode": "preview",
+  "sourceSha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "entries": [
+    {
+      "id": "doc-7777777777777777777777777777777777777777777777777777777777777777",
+      "title": "Worked example",
+      "kind": "markdown",
+      "route": "/notes/books/worked-example/",
+      "aliases": ["/notes/books/worked%20example/"],
+      "headings": [{ "id": "invariant", "text": "Invariant", "depth": 2 }],
+      "anchors": ["proof"],
+      "description": "An annotated worked example.",
+      "tags": ["example"],
+      "section": "books",
+      "groupSegments": [],
+      "searchIndexed": true,
+      "bodyHtml": "<h2 id=\"invariant\">Invariant</h2>\n<p id=\"proof\">The invariant follows from the definition.</p>",
+      "sourceUrl": "https://github.com/example/notes/blob/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa/Books/Worked%20example.md"
+    }
+  ],
+  "organization": {
+    "topics": [],
+    "collections": [],
+    "groups": [],
+    "paths": [],
+    "memberships": [
+      {
+        "entryId": "doc-7777777777777777777777777777777777777777777777777777777777777777",
+        "uid": "doc-7777777777777777777777777777777777777777777777777777777777777777",
+        "topics": [],
+        "purpose": "note",
+        "status": "reviewed",
+        "summary": "An annotated worked example.",
+        "relatedUids": []
+      }
+    ]
+  },
+  "assets": [],
+  "verifiedCurriculumIds": [],
+  "curriculum": {
+    "generation": null,
+    "problems": [],
+    "lessons": [],
+    "paths": [],
+    "pendingPathLabels": [],
+    "sourceVariants": [],
+    "traceAssets": []
+  }
+}

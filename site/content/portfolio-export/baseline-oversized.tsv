@@ -1,0 +1,188 @@
+lines	blob	path
+592	ec179e810ca695e0b6a6d48f58d14befef2a539c	Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 2 - Image Clasification with Pytorch/ch2.ipynb
+1394	585c14b8a4c7460025ed59d3b90b421fea79d6a0	Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 2 - Image Clasification with Pytorch/images.csv
+701	0c93b76574aaf47f5702d8348d7e6cc24862af04	Books/Programming PyTorch for Deep Learning - Ian Pointer/Chapter 3 - Convolutional Neural Networks/ch3.ipynb
+665	611ccfc68f022809e404ca474674fb1b155d76b3	Classes/Johns Hopkins/Sem 1/ML-DL/recitation/DL_Tools_Demo.ipynb
+10668	587bec89bac30c1c617775ca269ef87ec9bdf0cd	Classes/Johns Hopkins/Sem 1/NLP/Week 1/Homework/extra-grammars/wallstreet.gr
+62160	43fc6b06474cb1d4acc8c579da1281954783f4b0	Classes/Johns Hopkins/Sem 2/IRWA/hw1/data/part-of-speech.histogram
+4500	359e4b7d60b27decab2c02031ff063267249d5b8	Classes/Johns Hopkins/Sem 2/IRWA/hw1/hw1a.output
+62160	43fc6b06474cb1d4acc8c579da1281954783f4b0	Classes/Johns Hopkins/Sem 2/IRWA/hw1/part-of-speech.histogram
+722	9a4f122bd2f49f4614b380d65ee45b385d695be1	Classes/Johns Hopkins/Sem 2/IRWA/hw1/segment.dev1
+7200	b3afef3b7a36ea478d8a0f8baa83ee21a241715e	Classes/Johns Hopkins/Sem 2/IRWA/hw1/segment.train
+5170	69077dac2ab429b6601f8665928f6231ee4f68b0	Classes/Johns Hopkins/Sem 2/IRWA/hw1/segment.train1
+4500	9d52594a272fb7110423ddd7468ee6f24ea5a573	Classes/Johns Hopkins/Sem 2/IRWA/hw1/sent.dev1
+45000	990474c66b46a8044e959a3f841850a8e2b3651c	Classes/Johns Hopkins/Sem 2/IRWA/hw1/sent.train
+40500	323617f517adae1d13b736e062f92bdacef3521e	Classes/Johns Hopkins/Sem 2/IRWA/hw1/sent.train1
+42634	6526f5c9829b91fefaf520bc6b45dc0cf58e6f71	Classes/Johns Hopkins/Sem 2/IRWA/hw2/cacm.raw
+570	a467881ae24293904f45aa1ee15aa89d4d64f8af	Classes/Johns Hopkins/Sem 2/IRWA/hw2/hw2.py
+677	4581808e54d6a6080c9faae42f89fe60c8c3e6f3	Classes/Johns Hopkins/Sem 2/IRWA/hw2/news.raw
+631	a02dd727d28cdc90afa6b79f4b4de34c34ea9513	Classes/Johns Hopkins/Sem 2/IRWA/hw2/test2.py
+901	ad709f8efa94600eb559c3dc5f16e814a3051ee4	Classes/Johns Hopkins/Sem 2/IRWA/hw2/top_10_docs.tsv
+3600	f202992a15faa9da680029b49b1c46ab8f9c0b23	Classes/Johns Hopkins/Sem 2/IRWA/hw3/perplace-train.tsv
+4000	81552ffd3f141b57b9a3f15fe96c29f93f330613	Classes/Johns Hopkins/Sem 2/IRWA/hw3/perplace.tsv
+3595	9c63058bd925e8cc96e825b0a91ecdfe7c74d4d2	Classes/Johns Hopkins/Sem 2/IRWA/hw3/plant-train.tsv
+3995	633b37fd85ff716a0544499ab9fc58171773f4d0	Classes/Johns Hopkins/Sem 2/IRWA/hw3/plant.tsv
+558	714ce46e0825edae6c43be19608920010dccb57e	Classes/Johns Hopkins/Sem 2/IRWA/hw3/smsspam-dev.tsv
+5016	90b320643aefc6e4af55ac536fea24c20605b503	Classes/Johns Hopkins/Sem 2/IRWA/hw3/smsspam-train.tsv
+5574	595b8567217bc77b836b1cdbfed8294bc066f8e4	Classes/Johns Hopkins/Sem 2/IRWA/hw3/smsspam.tsv
+3600	bf65cf4c7a6bf364b630bf25c6ad66e77befd010	Classes/Johns Hopkins/Sem 2/IRWA/hw3/tank-train.tsv
+4000	0ae7f1a646120d7c163c7c1ad25bfc7a46acd3f6	Classes/Johns Hopkins/Sem 2/IRWA/hw3/tank.tsv
+502	ca6992f1a6adacdbe2ad57cd8e140cb37bbca131	Classes/Johns Hopkins/Sem 2/IRWA/hw3/text_classify.py
+28331	1fb64b8778779d45b204cf7582e4beab2ab46eed	Classes/Johns Hopkins/Sem 2/IRWA/hw4/output.log
+866	018e9a4565a817d458a15aaa1b223700017adf91	Classes/MIT/6.006 Introduction to Algorithms/15-DP_1.md
+556	b1a25ca4b4b6b903a7a6f8c96eeccc16f1ccb20b	Classes/MIT/6.006 Introduction to Algorithms/16-DP_2.md
+607	e7ee5091d936a45a52cec22d23f6cf6ec2469f95	Classes/MIT/6.006 Introduction to Algorithms/17-DP_3.md
+1502	9e7834d6c054e2370cd0b88380539d236f78005c	Classes/Stanford/Stanford CS234 - Reinforcement Learning (2019)/Practice/Breakout/Atari_Breakout.ipynb
+538	24fa8baa04adea4dad7f929990cc232ee862e2dc	Classes/Stanford/Stanford CS234 - Reinforcement Learning (2019)/Practice/CartPole/CartPoleBalance.ipynb
+978	9f7df61dafc0814cff7d71a422e8f2ce3175bdc1	Classes/Stanford/Stanford CS234 - Reinforcement Learning (2019)/Practice/DL_PyTorch_Tutorial_17th_Jan_2023.ipynb
+921	ec8aaf83b9a189c8e75016def3863717e24fa6c3	Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-answer.ipynb
+921	fee7d9d2a3d503e281beea96eec98756ca84d9fb	Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 1 - Functional API/exercise-question.ipynb
+949	f221b48ad7bb8ae4a7b7782c9678b1463430947f	Courses/Coursera/Deep Learning AI course/Advanced TensorFlow/Extending Keras/Week 4 - Models and Callbacks/ExploringCallbacks.ipynb
+813	3df3d1883ea1aa5765841b853b1e494d6f480f1e	Courses/Coursera/Deep Learning AI course/Course 1 - Part 4 - Lesson 2 - Notebook.ipynb
+526	187c8726cc90312bbe1b312973eeb521fa1cf92d	Courses/Coursera/Deep Learning AI course/Course 1 - Part 6 - Lesson 2 - Notebook.ipynb
+639	0de33be3eb22e3a3c1bbc0dcb900fc3cdc3198dc	Courses/Coursera/Deep Learning AI course/Course 1 - Part 8 - Lesson 2 - Notebook.ipynb
+693	6e81c9bcf70bbc37f06fbc6fae7f9f534608237a	Courses/Coursera/Deep Learning AI course/Course 1 - Part 8 - Lesson 3 - Notebook.ipynb
+588	f40ce1a81b959ca270e5d33ea21a9258b54be673	Courses/Coursera/Deep Learning AI course/Course 1 - Part 8 - Lesson 4 - Notebook.ipynb
+897	57ac23075da93175949f7d20efea59fabc1cf985	Courses/Coursera/Deep Learning AI course/Course 2 - Part 2 - Lesson 2 - Notebook.ipynb
+803	02f9ab088ca9214843346af800e0b65db3b35bac	Courses/Coursera/Deep Learning AI course/Course 2 - Part 4 - Lesson 2 - Notebook (Cats v Dogs Augmentation).ipynb
+685	e6f7c33b1b5ffa686354cf56708b09d932f4cccc	Courses/Coursera/Deep Learning AI course/Exercises/Exercise 7 - Transfer Learning/Exercise 7 - Answer.ipynb
+667	774a808e8c7977939569f450a7a94bdd8c233915	Courses/Coursera/Deep Learning AI course/Horse_or_Human_NoValidation.ipynb
+677	71799eee7d22a3fc90f92f8cf5c08da94175ac28	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 1 - TensorFlow-JS/Week 3/Exercise/TFJS_Week3_Exercise.ipynb
+1012	1184effebf9360e1d45a821c9aefa00e7bd10bff	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 1/Examples/TFLite_Week1_Transfer_Learning.ipynb
+789	8a928fed90987364978c51d4f9b2777a86d8e3ea	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 1/Exercises/TFLite_Week1_Exercise.ipynb
+1001	fe811239d8e2989de19fecabb1ebb0c9dddac514	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 2/Examples/Android Apps/image_classification/app/src/main/assets/labels_mobilenet_quant_v1_224.txt
+943	bdf8672261f0691c01b6e48db7700b87d66c9174	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 2/Examples/Android Apps/image_classification/app/src/main/java/com/google/tflite/imageclassification/sample/camera/Camera2BasicFragment.kt
+521	176d7111df7e8acb5403b3c65c5c463ff93d30c2	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 2/Examples/Android Apps/object_detection/app/src/main/java/com/google/tflite/objectdetection/CameraConnectionFragment.kt
+861	eff6b8d6661f6f90dbba1c3e84a9da41ec3bd66e	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 2/Exercise/TFLite_Week2_Exercise.ipynb
+848	d8d9c339280fd7c4e1ab77d04b967ac0cd17aafa	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 2/Exercise/TFLite_Week2_Exercise_Answer.ipynb
+861	1e6e92b3ffaf12191268f06028978eb81b5ea44b	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 3/Exercise/TFLite_Week3_Exercise.ipynb
+848	7867ed6dcdaa382c09b01bb490773ebc9315ad66	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 3/Exercise/TFLite_Week3_Exercise_Answer.ipynb
+1001	fe811239d8e2989de19fecabb1ebb0c9dddac514	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 4/Examples/image_classification/labels_mobilenet_quant_v1_224.txt
+3434	835db858ab278c5a7c50060aa140c3bfb7e3b451	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/data.ipynb
+733	f14faa407f7b98b178c28fff6f92148c01bad747	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/feature_columns.ipynb
+1254	f6dd339e0e0cd54483ac7a0f9871b853d4912e11	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Examples/old_tfrecord.ipynb
+731	a156b2cfdcfa073f143f44121060715bd5adc1fa	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 2/Exercises/TFDS_Week2_Exercise.ipynb
+506	f8bcbdb9e42e8d9da9eb0fc02339775c2402b24e	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 3/Exercises/TFDS_Week3_Exercise.ipynb
+1115	b0e74d7ca3949bb0ff4102893d40bf06b28a6d4e	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/Week 4/Exercises/TFDS_Week4_Exercise.ipynb
+623	2e8bfb269a70588c80893f6a25179ae414178c34	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 1/Examples/rest_simple.ipynb
+583	b0e8f68d0a892855e33eba59186a6f6cd5730d98	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 1/Examples/tfserving_hello_world.ipynb
+669	f8095234ae0aa54e04d7d187ac9fcc5fb12d3a54	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 1/Exercises/TFServing_Week1_Exercise.ipynb
+676	c522e38e9d080cfcfea92754cf41f790f4ccb10f	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 1/Exercises/TFServing_Week1_Exercise_Answer.ipynb
+795	30d16ce3f10ecc770a01e4fc534215c428abc350	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 2/Examples/tfhub_basic_examples.ipynb
+535	83feeb236eb3d23d4494e6c7b430d58e48e036ba	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 2/Examples/transfer_learning.ipynb
+576	3cb78074306613b2d3a41fded4c6ba51fbf04348	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 2/Exercises/TFServing_Week2_Exercise.ipynb
+686	a64e3bde433f42fbe48f2e8774c63a886e036283	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 3/Examples/image_summaries.ipynb
+1561	80bfef952db5f94e882cee3a2eac23c7165da5e5	Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/Week 4/Examples/Custom_Federated_Algorithms,_Part_1_Introduction_to_the_Federated_Core.ipynb
+10000	c415c519baef1c69eb407d041cd69bb47bdcecf3	Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 3 - NLP/meta.tsv
+10000	e79ea7535642502c623ebf9b95eb04a7676e73c9	Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 3 - NLP/vecs.tsv
+689	65c01058ecf0be65f91550ad90f59fe9010eea3b	Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/S+P Week 3 Lesson 4 - LSTM.ipynb
+963	aeb9027987650e009bb4984522ee2b00b86ac56a	Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/S+P Week 4 Exercise Answer.ipynb
+890	63c15868175c85018695e36471eae938dff18c4b	Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/S+P Week 4 Exercise Question.ipynb
+2017	b5ac6c872b664126a82c75be04bf25618081eb32	Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/S+P Week 4 Lesson 5.ipynb
+1015	666f6324800dd387aafac503bbb961997d50dd3f	Courses/Coursera/Deep Learning AI course/TensorFlow In Practice/Course 4 - S+P/S+P_Week_1_Lesson_2.ipynb
+9999	965d785e8973f03abd6950171cbf2786a535d782	Courses/Coursera/tf in practice/Course 3/meta.tsv
+9999	ac24ccfe9786a068256f9c12226b4054ae31a392	Courses/Coursera/tf in practice/Course 3/vecs.tsv
+1761	91e9057c3838d45aeffae87ca079bdf31a0103d8	Courses/Scrimba/Learn React/notes/01 static pages.md
+1716	ece1cee95a6c9e780e623c3e8d0c1b2944a4b328	Courses/Scrimba/Learn React/notes/02 data driven react.md
+2718	9fbac5628f3359889a8c64b57c06638927fbfac9	Courses/Scrimba/Learn React/src/projects/01-first-react/package-lock.json
+2845	25d1102f4e4fb28281733a81a2c2ca237d635e08	Courses/Scrimba/Learn React/src/projects/02-ReactFacts/package-lock.json
+1518	ae6f72aec0bc7b8b2960b87b7701e46a5369021b	Courses/Scrimba/Learn React/src/projects/03-TravelJournal/yarn.lock
+616	ff9e1a7a947b24d6d94865635fb1c2be9055c43a	Courses/Udemy/React/other/course-update-guide-udemy.md
+9731	2c094dafe462eb4c602c32594971f2b882f30950	Courses/Udemy/React/src/01 Getting Started/edited-first-app/yarn.lock
+9731	2c094dafe462eb4c602c32594971f2b882f30950	Courses/Udemy/React/src/01 Getting Started/react-vs-vanilla-js-example/react/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/01-starting-project/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/02-creating-using-first-component/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/03-using-outputting-dynamic-values/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/04-html-attributes-dynamically-image-files/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/05-cmp-props/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/06-alternative-props-syntax/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/07-storing-cmp-in-files/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/08-styles-next-to-cmp/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/09-composition-children-prop/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/10-reacting-to-events/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/11-passing-functions-as-values/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/12-passing-custom-arguments-to-event-fn/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/13-how-not-to-update-ui/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/14-managing-state/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/15-deriving-computing-values/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/16-rendering-content-conditionally/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/17-css-styling-dynamic-styles/yarn.lock
+544	f99c942a61502ea4e6bbb29f8217d3c76458297e	Courses/Udemy/React/src/03 React Essentials/18-outputting-list-data/yarn.lock
+5108	dea296f2cc9e8e65c26d4cd7ec2912cd04877f46	Courses/Udemy/React/src/09 Practice Project - Project Management/10-finished/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/15 HTTP Requests/01-starting-project/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/15 HTTP Requests/02-using-async-await/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/15 HTTP Requests/03-handling-errors/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/15 HTTP Requests/04-extracting-code/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/15 HTTP Requests/05-sending-data/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/15 HTTP Requests/06-optimistic-updating/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/15 HTTP Requests/07-deleting/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/15 HTTP Requests/08-practice-finished/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/16 Custom Hooks/01-starting-project/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/16 Custom Hooks/02-creating-a-custom-hook/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/16 Custom Hooks/03-finished/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/01-starting-project/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/02-planning-and-first-cmp/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/03-fetching-meals-data/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/04-adding-mealitem-cmp/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/05-creating-configurable-button/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/06-finishing-using-cart-context/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/07-adding-reusable-modal/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/08-working-on-cart-items/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/09-handling-form-submission/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/10-sending-a-post-request/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/11-adding-a-custom-http-hook/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/18 Practice Project - Food Order/12-finishing-touches/backend/package-lock.json
+788	e637b7d4223014937014d7be06e67b506569faac	Courses/Udemy/React/src/21 Routing/12-adv-starting-project/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/01-starting-project/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/02-installing-using-react-query/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/03-query-config-object/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/04-enabling-disabling-queries/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/05-changing-data-with-mutations/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/06-fetching-more-data-and-testing-mutation/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/07-acting-on-mutation-success-and-invalidating-queries/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/08-challenge-problem/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/09-disabling-automatic-refetching/backend/package-lock.json
+1106	bd379de858fec3af3b9cee42b733131bba9658ed	Courses/Udemy/React/src/24 React Query/10-optimistic-updating/backend/package-lock.json
+859	fdb09da8f2eabf7c14d659d8bf7e35089b4ba1d2	Interview/Applied Science/breadth/10-eval.md
+1047	034129d91feff8e8774152e479037113b339eef6	Interview/Applied Science/breadth/11-practical.md
+1108	f5fc08e367a7db8a7f04f98e7903335fbdf9361b	Interview/Applied Science/breadth/12-stats.md
+668	07e440fbdbdcf89a6ee6646ba81b679f76cdfa7f	Interview/Applied Science/breadth/2-data-fitting.md
+536	9bd611d18ffdfbf7b43c00ac1773234bef6486d9	Interview/Applied Science/breadth/3.1-linear-models.md
+833	8f9e04af8af32a11dec1f1851ab1e3576cbbb4d8	Interview/Applied Science/breadth/3.2-tree-models.md
+863	9e10ed7e18a00b99f6224ff8255b1056a1595ec9	Interview/Applied Science/breadth/3.3-svm.md
+995	f7bbb3a1db797e015020cdf75d976ed6048e980d	Interview/Applied Science/breadth/4.1-clustering.md
+979	b728dc7b800f5573b81ca7f2814ecf9b791202d8	Interview/Applied Science/breadth/4.2-dim-reduc.md
+997	4826b2c7d83e8f1691816f31e47701186b97c8e9	Interview/Applied Science/breadth/5-prob-models.md
+531	707824b5b257146811310507dbba34109a6ad342	Interview/Applied Science/breadth/6.1-nn-basics.md
+608	efa340c975e967cc708e0c86fb133845fdea5ac4	Interview/Applied Science/breadth/6.2-cnn.md
+560	1ac1274518973b2ae7a90cf919b76e2a0d8b7f40	Interview/Applied Science/breadth/6.3-cv.md
+718	15fa369e77515bb015f09d1bdb068d22afd4fba4	Interview/Applied Science/breadth/6.4-nlp.md
+571	f1cb2015358b5b79f15a16f96cbbafc045e57b6e	Interview/Applied Science/breadth/6.5-seq-models.md
+1012	ba8c98c66d90a552d694e68095aded205ba0b374	Interview/Applied Science/breadth/7-rl.md
+1105	f1c8c16de4445e6684b62850608084c5e2c336b1	Interview/Applied Science/breadth/8-train-optim.md
+952	d56efcdd8eea834e2672f0f1675e600977e95b70	Interview/Applied Science/breadth/9-splits.md
+815	72922d07d9a975a631312c7dd51778d35bd21d6d	Interview/Applied Science/roadmap.md
+793	9bb4bc72f0eec92a5b50fd3b8d5a699027e6ecc9	Interview/Behavioral/Leadership Principles.md
+3082	a57f567c4550e8db56e25c9f819af4215f29d6cc	Interview/Notes/Cheatsheets/data structures.md
+583	6473b8f0e9c05860e9fb77dab276728ff46d2ab0	Interview/Notes/Cheatsheets/patterns.md
+653	6642e689973f99b8dc2ce74da7fc47d498564fa1	Interview/Notes/tree guide.md
+704	5bf784a06ced718dc0806069def3b4f2c8da943c	Interview/leetcode/prompt.txt
+40000	7dcb3a2d4cc3b48b6283dd46870bfeb78f88aac9	Tutorials/AI/Andrej Karpathy/Let's build GPT/code/data/tinyshakespeare.txt
+543	0777ba56d08a925e7490f1d56a0c1bc7fb6c814c	Tutorials/GPU/nv-gpu-workshop/2.0_Numba.ipynb
+769	9e6a36214b9dcd6e9a29dd1199cf0496782a2745	Tutorials/GPU/nv-gpu-workshop/diabetes.csv
+1119000	010299b9961e8087d3e0478a079654e61ebf19bd	Tutorials/GPU/nv-gpu-workshop/pageviews_small.csv
+30047	4960e9585217500719bcada0b0ab1d31896c0a6b	site/content/leetcode/manifest.json
+18066	2d2f1d11a538d1b7844dbbcda138e7781b7db2ea	site/content/leetcode/paths/all-problems.json
+2796	b1493849e9691f0c10057b60b8c69bc4d5955680	site/content/leetcode/source-map.json
+56513	e0e42b3c4d642dcd29666127ad0053e418003276	site/content/migration-report.json
+176478	a9cbf7cbcc314cb57914ef29d219a85ba685a82a	site/content/organization-migration-report.json
+3624	0c044d6c0eaa46fa20b9d38f61beb41bb659edc3	site/content/organization/collections.json
+54143	3addb0f3408309a18b0e5a6f3083393e2de571eb	site/content/organization/entries.json
+9572	0d9e6627a87d7087848c20459b682563630cb732	site/package-lock.json
+568	edc5b286b487ca4839e4b35ceee880ff9a121068	site/tests/fixtures/real/polars/provenance.json
+640	d1a9ab0853f16618cd91da8404ba0a312707b8f3	site/tests/fixtures/real/polars/source-deltas.json
+3236	444c404bb1e8001fe5b900cf58548940ef12ef9f	site/tests/fixtures/real/polars/sunspots.csv
+1600	9bb4e3cd10475593334526fd8deb9e809800f061	site/tests/fixtures/real/polars/winequality-red.csv
+4899	3c4d55470dd222c898436b17e93cc157da2f39f6	site/tests/fixtures/real/polars/winequality-white.csv
+616	ff9e1a7a947b24d6d94865635fb1c2be9055c43a	site/tests/fixtures/real/task3/course-update-guide-udemy.md
+1758	61b8d8e3fa8183f930337b41fece49f655808fad	site/tests/fixtures/real/task5/repair-4.txt
