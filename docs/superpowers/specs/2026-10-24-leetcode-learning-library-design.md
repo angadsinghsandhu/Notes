@@ -1,5 +1,7 @@
 # LeetCode 1–2000 interactive learning library
 
+> **Superseded on 2026-11-23.** This document is a historical record. Do not resume its task list. The active sequence is the [Portfolio and Notes Master Plan](https://github.com/angadsinghsandhu/angadsinghsandhu/blob/main/docs/superpowers/plans/2026-11-23-portfolio-notes-master.md). Notes work is defined in the [Notes Publishing and LeetCode Curriculum Plan](https://github.com/angadsinghsandhu/angadsinghsandhu/blob/main/docs/superpowers/plans/2026-11-23-notes-publishing-curriculum.md). Use the portfolio planning checkout until those documents are merged. Reviewed work may be reused through the new plan.
+
 Status: design approved by the user on 2026-10-24; implementation plans approved 2026-10-25.
 Date: 2026-10-24 (America/Los_Angeles).
 
