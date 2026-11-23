@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "problemId": "leetcode:1",
+  "approachId": "pair-enumeration",
+  "exampleId": "repeated-nonpartner",
+  "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+  "result": [2, 4],
+  "frames": [
+    {
+      "stepId": "compare-0-1",
+      "codeLines": [58],
+      "explanation": "Positions 0 and 1 sum to 6. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "compare-0-2",
+      "codeLines": [58],
+      "explanation": "Positions 0 and 2 sum to -1. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 2
+        }
+      ]
+    },
+    {
+      "stepId": "compare-0-3",
+      "codeLines": [58],
+      "explanation": "Positions 0 and 3 sum to 11. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 3
+        }
+      ]
+    },
+    {
+      "stepId": "compare-0-4",
+      "codeLines": [58],
+      "explanation": "Positions 0 and 4 sum to 9. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 4
+        }
+      ]
+    },
+    {
+      "stepId": "compare-1-2",
+      "codeLines": [58],
+      "explanation": "Positions 1 and 2 sum to -1. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 1
+        },
+        {
+          "index": 2
+        }
+      ]
+    },
+    {
+      "stepId": "compare-1-3",
+      "codeLines": [58],
+      "explanation": "Positions 1 and 3 sum to 11. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 1
+        },
+        {
+          "index": 3
+        }
+      ]
+    },
+    {
+      "stepId": "compare-1-4",
+      "codeLines": [58],
+      "explanation": "Positions 1 and 4 sum to 9. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 1
+        },
+        {
+          "index": 4
+        }
+      ]
+    },
+    {
+      "stepId": "compare-2-3",
+      "codeLines": [58],
+      "explanation": "Positions 2 and 3 sum to 4. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 2
+        },
+        {
+          "index": 3
+        }
+      ]
+    },
+    {
+      "stepId": "compare-2-4",
+      "codeLines": [58],
+      "explanation": "Positions 2 and 4 sum to 2. Target is 2.",
+      "state": {
+        "kind": "array",
+        "items": [3, 3, -4, 8, 6]
+      },
+      "highlights": [
+        {
+          "index": 2
+        },
+        {
+          "index": 4
+        }
+      ]
+    }
+  ]
+}

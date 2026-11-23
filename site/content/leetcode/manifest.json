@@ -9,7 +9,7 @@
       "officialUrl": "https://leetcode.com/problems/two-sum/",
       "domain": "algorithm",
       "difficulty": "easy",
-      "topics": [],
+      "topics": ["array", "hash-table", "sorting", "two-pointers"],
       "evidence": {
         "officialQuestion": {
           "frontendNumber": 1,
@@ -19,7 +19,7 @@
         },
         "companies": []
       },
-      "status": "planned"
+      "status": "draft"
     },
     {
       "number": 2,
@@ -30042,6 +30042,6 @@
       "status": "planned"
     }
   ],
-  "lessons": [],
+  "lessons": ["leetcode:1"],
   "paths": ["all-problems"]
 }

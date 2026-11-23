@@ -1,0 +1,137 @@
+{
+  "problemId": "leetcode:1",
+  "prose": {
+    "path": "lesson.md",
+    "sha256": "f58a1f79c132d1b41cedae0c0b2cd9fcd7d2b1335c3eb69de36296805cbbef67"
+  },
+  "examples": {
+    "path": "examples.json",
+    "sha256": "e45cc52064b0091659655f72af529a4a55af2c448091c21171c260bf60b2d19a"
+  },
+  "approaches": [
+    {
+      "id": "pair-enumeration",
+      "title": "Pair enumeration",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+        "entryPoint": "pair_enumeration"
+      },
+      "traces": [
+        {
+          "path": "traces/pair-enumeration/distinct-duplicates.json",
+          "sha256": "b5d480ee576d14ff2e2843099d90783076d47d3da9e34fc8bdafd6570e76bbdb",
+          "exampleId": "distinct-duplicates",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        },
+        {
+          "path": "traces/pair-enumeration/negative-value.json",
+          "sha256": "759e08582751a9d39c73f0c902eef5840eeddba854b89efd3564631ecd51697a",
+          "exampleId": "negative-value",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        },
+        {
+          "path": "traces/pair-enumeration/repeated-nonpartner.json",
+          "sha256": "fe593815824f4440bbe191878fa84b65d8a86b5b6c58337d16e943cd790ad413",
+          "exampleId": "repeated-nonpartner",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+        "entryPoint": "pair_enumeration",
+        "examplesSha256": "e45cc52064b0091659655f72af529a4a55af2c448091c21171c260bf60b2d19a",
+        "passedExampleIds": [
+          "distinct-duplicates",
+          "negative-value",
+          "repeated-nonpartner"
+        ],
+        "checkedOn": "2026-11-23"
+      }
+    },
+    {
+      "id": "sorted-two-pointers",
+      "title": "Sorted two pointers",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+        "entryPoint": "sorted_two_pointers"
+      },
+      "traces": [
+        {
+          "path": "traces/sorted-two-pointers/distinct-duplicates.json",
+          "sha256": "d741b790536d5c45ed9fd8edfea053326d846d25ed2aae759d4099bd3c36da21",
+          "exampleId": "distinct-duplicates",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        },
+        {
+          "path": "traces/sorted-two-pointers/negative-value.json",
+          "sha256": "4203351331046dee9b921ef0cb8aab5216fe3fefe6e08e62029c5d39e7e6c47f",
+          "exampleId": "negative-value",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        },
+        {
+          "path": "traces/sorted-two-pointers/repeated-nonpartner.json",
+          "sha256": "e0f0ddfbb4400d1454efb33c31db28556b5f5f0cf96ba334a4ef408f5adc3ffe",
+          "exampleId": "repeated-nonpartner",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+        "entryPoint": "sorted_two_pointers",
+        "examplesSha256": "e45cc52064b0091659655f72af529a4a55af2c448091c21171c260bf60b2d19a",
+        "passedExampleIds": [
+          "distinct-duplicates",
+          "negative-value",
+          "repeated-nonpartner"
+        ],
+        "checkedOn": "2026-11-23"
+      }
+    },
+    {
+      "id": "complement-hash",
+      "title": "Complement hash map",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+        "entryPoint": "complement_hash"
+      },
+      "traces": [
+        {
+          "path": "traces/complement-hash/distinct-duplicates.json",
+          "sha256": "49fc1e3a5c80586ee6fa0eca609688618ce46e09612f9071618a7c0152f50df1",
+          "exampleId": "distinct-duplicates",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        },
+        {
+          "path": "traces/complement-hash/negative-value.json",
+          "sha256": "0fbe39f33e41c7f0c04c4a4341fb57c27b2eca4c3be65ee362e5ccee5702d046",
+          "exampleId": "negative-value",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        },
+        {
+          "path": "traces/complement-hash/repeated-nonpartner.json",
+          "sha256": "dbd0f309572b4bf833142214d05faa6f0b10253e9a620d8f84054465d2e18a75",
+          "exampleId": "repeated-nonpartner",
+          "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+        "entryPoint": "complement_hash",
+        "examplesSha256": "e45cc52064b0091659655f72af529a4a55af2c448091c21171c260bf60b2d19a",
+        "passedExampleIds": [
+          "distinct-duplicates",
+          "negative-value",
+          "repeated-nonpartner"
+        ],
+        "checkedOn": "2026-11-23"
+      }
+    }
+  ],
+  "review": null
+}

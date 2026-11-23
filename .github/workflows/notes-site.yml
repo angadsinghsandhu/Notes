@@ -46,9 +46,9 @@ jobs:
           echo "$GITHUB_WORKSPACE/.superpowers/polars-venv/bin" >> "$GITHUB_PATH"
       - name: Check curriculum Python tools
         run: |
-          ruff check scripts/curriculum*.py tests/scripts/test_curriculum*.py
-          ruff format --check scripts/curriculum*.py tests/scripts/test_curriculum*.py
-          pyright --pythonversion 3.12 scripts/curriculum*.py tests/scripts/test_curriculum*.py
+          ruff check scripts/curriculum*.py tests/scripts/test_curriculum*.py content/leetcode/problems/*/solutions.py tests/content/leetcode/problems/*/test_problem_*_solutions.py
+          ruff format --check scripts/curriculum*.py tests/scripts/test_curriculum*.py content/leetcode/problems/*/solutions.py tests/content/leetcode/problems/*/test_problem_*_solutions.py
+          pyright --pythonversion 3.12 scripts/curriculum*.py tests/scripts/test_curriculum*.py content/leetcode/problems/*/solutions.py tests/content/leetcode/problems/*/test_problem_*_solutions.py
       - run: npm run verify
       - id: artifact
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

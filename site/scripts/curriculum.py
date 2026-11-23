@@ -44,6 +44,7 @@ from scripts.curriculum_trace import (
     TraceRunError,
     run_enrolled,
 )
+from scripts.curriculum_two_sum import verify_hash, verify_pairs, verify_sorted
 
 _SITE = Path(__file__).resolve().parents[1]
 _LAST_PROBLEM = 2000
@@ -61,7 +62,21 @@ class Enrollment:
 
 type Registry = Mapping[tuple[int, str], Enrollment]
 # Add exact source pins and independent checks only after reviewing the implementation.
-_ENROLLED: Registry = {}
+_TWO_SUM_SHA256 = "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+_ENROLLED: Registry = {
+    (1, "pair-enumeration"): Enrollment(
+        "solutions.py", _TWO_SUM_SHA256, PythonAdapter("pair_enumeration"), verify_pairs
+    ),
+    (1, "sorted-two-pointers"): Enrollment(
+        "solutions.py",
+        _TWO_SUM_SHA256,
+        PythonAdapter("sorted_two_pointers"),
+        verify_sorted,
+    ),
+    (1, "complement-hash"): Enrollment(
+        "solutions.py", _TWO_SUM_SHA256, PythonAdapter("complement_hash"), verify_hash
+    ),
+}
 
 
 @dataclass(frozen=True)

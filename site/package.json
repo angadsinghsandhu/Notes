@@ -17,7 +17,7 @@
     "preview": "astro preview --host 127.0.0.1",
     "test:unit": "vitest run --coverage --coverage.thresholds.perFile --coverage.thresholds.lines 90 --coverage.thresholds.functions 90 --coverage.thresholds.statements 90 --coverage.thresholds.branches 90",
     "test:polars": "python3 -B scripts/check_polars.py",
-    "test:curriculum": "python3 -B -m unittest discover -s tests/scripts -p 'test_curriculum*.py' && python3 -B scripts/curriculum.py check",
+    "test:curriculum": "python3 -B -m unittest discover -s tests/scripts -p 'test_curriculum*.py' && python3 -B -m unittest tests/content/leetcode/problems/*/test_problem_*_solutions.py && python3 -B scripts/curriculum.py check",
     "test:e2e": "playwright test",
     "verify": "npm run build && npm run check && npm run test:e2e && npm run check:output",
     "content:check": "tsx scripts/content.ts",

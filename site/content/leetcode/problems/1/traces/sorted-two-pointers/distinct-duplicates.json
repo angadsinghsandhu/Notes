@@ -1,0 +1,106 @@
+{
+  "version": 1,
+  "problemId": "leetcode:1",
+  "approachId": "sorted-two-pointers",
+  "exampleId": "distinct-duplicates",
+  "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+  "result": [0, 2],
+  "frames": [
+    {
+      "stepId": "sort",
+      "codeLines": [76],
+      "explanation": "Sort by value and keep each original index.",
+      "state": {
+        "kind": "table",
+        "columns": ["Value", "Original index"],
+        "rows": [
+          [1, 1],
+          [6, 0],
+          [6, 2]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 0
+        },
+        {
+          "row": 2,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "compare-0",
+      "codeLines": [94],
+      "explanation": "Endpoint values 1 and 6 sum to 7. Target is 12.",
+      "state": {
+        "kind": "table",
+        "columns": ["Value", "Original index"],
+        "rows": [
+          [1, 1],
+          [6, 0],
+          [6, 2]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 0
+        },
+        {
+          "row": 2,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "move-0",
+      "codeLines": [110],
+      "explanation": "Sum is too small. Drop the left endpoint.",
+      "state": {
+        "kind": "table",
+        "columns": ["Value", "Original index"],
+        "rows": [
+          [1, 1],
+          [6, 0],
+          [6, 2]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 1,
+          "column": 0
+        },
+        {
+          "row": 2,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "compare-1",
+      "codeLines": [94],
+      "explanation": "Endpoint values 6 and 6 sum to 12. Target is 12.",
+      "state": {
+        "kind": "table",
+        "columns": ["Value", "Original index"],
+        "rows": [
+          [1, 1],
+          [6, 0],
+          [6, 2]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 1,
+          "column": 0
+        },
+        {
+          "row": 2,
+          "column": 0
+        }
+      ]
+    }
+  ]
+}

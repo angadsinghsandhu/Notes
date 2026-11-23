@@ -165,6 +165,8 @@ it('runs archive parity and curriculum verification in check and stops at a fail
   const parity = '-B scripts/check_polars.py';
   const discovery =
     '-B -m unittest discover -s tests/scripts -p test_curriculum*.py';
+  const problems =
+    '-B -m unittest tests/content/leetcode/problems/*/test_problem_*_solutions.py';
   const evidence = '-B scripts/curriculum.py check';
   expect(scripts['test:polars']).toBe(`python3 ${parity}`);
   const order = [
@@ -206,14 +208,16 @@ if [ "$*" = "$TASK_CHECK_FAIL_COMMAND" ]; then exit 31; fi
     `python3 ${parity}`,
     order[5],
     `python3 ${discovery}`,
+    `python3 ${problems}`,
     `python3 ${evidence}`,
     order[6],
   ];
-  for (const failingCommand of ['', parity, discovery, evidence]) {
+  for (const failingCommand of ['', parity, discovery, problems, evidence]) {
     await writeFile(log, '');
     let code = 0;
     try {
       await promisify(execFile)('sh', ['-c', scripts.check!], {
+        cwd: root,
         env: {
           ...process.env,
           PATH: `${root}${delimiter}${process.env['PATH'] ?? ''}`,
