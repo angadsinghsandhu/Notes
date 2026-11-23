@@ -226,6 +226,9 @@ async function realCurriculum(root: string) {
   const input = resolve('content/leetcode');
   const target = join(root, 'site/content/leetcode');
   await cp(join(input, 'manifest.json'), join(target, 'manifest.json'));
+  await cp(join(input, 'manifest'), join(target, 'manifest'), {
+    recursive: true,
+  });
   await cp(join(input, 'paths'), join(target, 'paths'), { recursive: true });
   await cp(join(input, 'problems'), join(target, 'problems'), {
     recursive: true,
@@ -260,11 +263,15 @@ async function realCurriculum(root: string) {
 async function promotePreview(target: string) {
   const registryPath = join(target, 'manifest.json');
   const registry = JSON.parse(await readFile(registryPath, 'utf8')) as {
-    problems: ProblemRecord[];
+    problems: { shards: string[] };
   };
-  const problem = registry.problems[0]!;
+  const shardPath = join(target, 'manifest', registry.problems.shards[0]!);
+  const problems = JSON.parse(
+    await readFile(shardPath, 'utf8'),
+  ) as ProblemRecord[];
+  const problem = problems.find(({ id }) => id === 'leetcode:1')!;
   problem.status = 'verified';
-  await writeFile(registryPath, JSON.stringify(registry));
+  await writeFile(shardPath, JSON.stringify(problems));
   const lessonPath = join(target, 'problems/1/metadata.json');
   const { review, ...content } = JSON.parse(
     await readFile(lessonPath, 'utf8'),

@@ -35,15 +35,26 @@ function digest(input: string | Buffer): string {
 }
 
 it('preserves the frozen originals and records the approved archive provenance', async () => {
-  const raw = await readFile(
-    new URL('site/content/leetcode/source-map.json', root),
-    'utf8',
-  );
-  const map = JSON.parse(raw) as { version: number; records: RecordBase[] };
+  const curriculum = new URL('site/content/leetcode/', root);
+  const raw = await readFile(new URL('source-map.json', curriculum), 'utf8');
+  const map = JSON.parse(raw) as {
+    version: number;
+    records: { shards: string[] };
+  };
   expect(Object.keys(map).sort()).toEqual(['records', 'version']);
   expect(map.version).toBe(1);
 
-  const records = map.records;
+  const records = (
+    await Promise.all(
+      map.records.shards.map(async (shard) => {
+        const raw = await readFile(
+          new URL(`source-map/${shard}`, curriculum),
+          'utf8',
+        );
+        return JSON.parse(raw) as RecordBase[];
+      }),
+    )
+  ).flat();
   const paths = records.map(({ sourcePath }) => sourcePath);
   expect(paths).toHaveLength(366);
   expect(paths).toEqual([...new Set(paths)].sort());
@@ -326,8 +337,10 @@ async function sourceMapFixture(
     options,
     mapPath,
     prepare: () => prepareContent(options),
-    writeMap: (records: unknown[], version = 1) =>
+    writeMap: (records: unknown, version = 1) =>
       json(mapPath, { version, records }),
+    writeShard: (name: string, records: unknown) =>
+      json(join(curriculumDir, 'source-map', name), records),
     snapshot: (generation: string) =>
       readPublishedCurriculum(outputDir, generation),
     manifest: () => readFile(join(outputDir, 'current/manifest.json')),
@@ -345,7 +358,7 @@ it('loads each map from disk and only links published code to a matching lesson'
       .sourceVariants,
   ).toEqual([]);
 
-  await fixture.writeMap([
+  const records = [
     solver,
     { ...solver, sourcePath: archivePrefix + '1_Notes.md' },
     { ...solver, sourcePath: archivePrefix + '1_Missing.py' },
@@ -372,7 +385,8 @@ it('loads each map from disk and only links published code to a matching lesson'
       problemId: undefined,
       officialSource: undefined,
     },
-  ]);
+  ];
+  await fixture.writeMap(records);
   const mapped = await fixture.prepare();
   expect(mapped.diagnostics).toEqual([]);
   const generation = mapped.manifest.curriculumGeneration!;
@@ -395,6 +409,13 @@ it('loads each map from disk and only links published code to a matching lesson'
     },
   ]);
 
+  await fixture.writeMap({ shards: ['first.json', 'rest.json'] });
+  await fixture.writeShard('first.json', records.slice(0, 1));
+  await fixture.writeShard('rest.json', records.slice(1));
+  const sharded = await fixture.prepare();
+  expect(sharded.diagnostics).toEqual([]);
+  expect(sharded.manifest.curriculumGeneration).toBe(generation);
+
   await fixture.writeMap([{ ...solver, disposition: 'statement_only' }]);
   const reference = await fixture.prepare();
   expect(reference.diagnostics).toEqual([]);
@@ -408,6 +429,38 @@ it('loads each map from disk and only links published code to a matching lesson'
   expect(removed.manifest.curriculumGeneration).toBe(
     legacy.manifest.curriculumGeneration,
   );
+});
+
+it('rejects wrong and repeated source map shards without changing publication', async ({
+  onTestFinished,
+}) => {
+  const fixture = await sourceMapFixture(onTestFinished);
+  const initial = await fixture.prepare();
+  expect(initial.diagnostics).toEqual([]);
+  const previous = await fixture.manifest();
+  await fixture.writeShard('first.json', [solver]);
+  await fixture.writeShard('second.json', [
+    {
+      ...solver,
+      problemId: 'leetcode:3',
+      officialSource: {
+        ...solver.officialSource,
+        url: 'https://leetcode.com/problems/longest-substring-without-repeating-characters/',
+      },
+    },
+  ]);
+  await fixture.writeShard('invalid.json', [{ ...solver, sha256: 'invalid' }]);
+  for (const [shards, error] of [
+    [['first.json', 'missing.json'], 'missing.json'],
+    [['first.json', 'first.json'], 'Duplicate shard'],
+    [['first.json', 'second.json'], 'Duplicate source path'],
+    [['invalid.json'], 'invalid.json'],
+  ] as const) {
+    await fixture.writeMap({ shards });
+    const invalid = await fixture.prepare();
+    expect(invalid.diagnostics[0]?.message).toContain(error);
+    expect(await fixture.manifest()).toEqual(previous);
+  }
 });
 
 it('retains the selected generation when mapped bytes or official identity disagree', async ({

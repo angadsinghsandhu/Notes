@@ -1,0 +1,17 @@
+[
+  {
+    "id": "pending-classification",
+    "kind": "stage",
+    "title": "Pending classification",
+    "childIds": {
+      "shards": [
+        "pending-children-0002-0408.json",
+        "pending-children-0409-0808.json",
+        "pending-children-0809-1208.json",
+        "pending-children-1209-1608.json",
+        "pending-children-1609-2000.json"
+      ]
+    },
+    "prerequisiteIds": []
+  }
+]

@@ -97,6 +97,31 @@ def _distinct[T](items: list[T], label: str) -> list[T]:
     return items
 
 
+def _manifest_problems(root: int, value: JsonValue) -> list[JsonValue]:
+    if isinstance(value, list):
+        return value
+
+    index = fields(value, "manifest problem shard index", "shards")
+    shards = _distinct(
+        [text(item, "shard filename") for item in array(index["shards"], "shards")],
+        "shard reference",
+    )
+    if not shards:
+        raise EvidenceError("manifest problem shard index must list at least one shard")
+    problems: list[JsonValue] = []
+    for shard in shards:
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*\.json", shard):
+            raise EvidenceError(f"invalid shard filename {shard!r}")
+        filename = f"manifest/{shard}"
+        records = array(
+            parse_json(read_bytes(root, filename, EVIDENCE_BYTES)), filename
+        )
+        if not records:
+            raise EvidenceError(f"{filename} must contain at least one problem")
+        problems.extend(records)
+    return problems
+
+
 def _manifest(root: int) -> Manifest:
     value = fields(
         parse_json(read_bytes(root, "manifest.json", EVIDENCE_BYTES)),
@@ -109,7 +134,7 @@ def _manifest(root: int) -> Manifest:
     integer(value["version"], 1, 1, "manifest version")
     statuses: dict[str, list[int]] = {status: [] for status in _STATUSES}
     seen: set[int] = set()
-    for item in array(value["problems"], "manifest problems"):
+    for item in _manifest_problems(root, value["problems"]):
         problem = obj(item, "manifest problem")
         number = integer(problem.get("number"), 1, _LAST_PROBLEM, "problem number")
         if number in seen or problem.get("id") != f"leetcode:{number}":
