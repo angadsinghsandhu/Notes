@@ -1,5 +1,7 @@
 # LeetCode 1–2000 Curriculum Implementation Plan
 
+> **Superseded on 2026-11-23.** This document is a historical record. Do not resume its task list. The active sequence is the [Portfolio and Notes Master Plan](https://github.com/angadsinghsandhu/angadsinghsandhu/blob/main/docs/superpowers/plans/2026-11-23-portfolio-notes-master.md). Notes work is defined in the [Notes Publishing and LeetCode Curriculum Plan](https://github.com/angadsinghsandhu/angadsinghsandhu/blob/main/docs/superpowers/plans/2026-11-23-notes-publishing-curriculum.md). Use the portfolio planning checkout until those documents are merged. Reviewed work may be reused through the new plan.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Deliver exactly 2000 deep, independently checked lessons, each with every meaningful approach tested and visualized.
