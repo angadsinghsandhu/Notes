@@ -287,9 +287,12 @@ function assertReferences(data: PortfolioSnapshotV1, context: z.RefinementCtx) {
     normalizeRoute,
     'public route',
   );
-  for (const { publicPath, exportPath } of assets) {
-    if (exportPath !== `assets/${publicPath.slice('/content-assets/'.length)}`)
+  for (const { publicPath, exportPath, sha256 } of assets) {
+    const filename = publicPath.slice('/content-assets/'.length);
+    if (exportPath !== `assets/${filename}`)
       issue(`Pages asset export path differs from ${publicPath}`);
+    if (filename.split('.')[0] !== sha256)
+      issue(`Pages asset digest differs from ${publicPath}`);
   }
   for (const entry of entries) {
     const resource = entry.kind === 'pdf' || entry.kind === 'slides';
@@ -315,6 +318,23 @@ function assertReferences(data: PortfolioSnapshotV1, context: z.RefinementCtx) {
     [...membership.keys()].some((id) => !entryIndex.has(id))
   )
     issue('Organization membership IDs differ from archive entry IDs');
+
+  const documentUids = new Set<string>();
+  for (const { entryId, uid } of organization.memberships) {
+    if (uid === undefined) continue;
+    if (uid !== entryId)
+      issue(`Organization document UID differs from entry ID ${entryId}`);
+    else documentUids.add(uid);
+  }
+  for (const { relatedUids } of organization.memberships)
+    for (const uid of relatedUids)
+      if (!documentUids.has(uid))
+        issue(`Unregistered related document UID ${uid}`);
+  for (const { steps } of organization.paths)
+    for (const { entryUids } of steps)
+      for (const uid of entryUids)
+        if (!documentUids.has(uid))
+          issue(`Unregistered path step document UID ${uid}`);
 
   const { problems, lessons, paths, pendingPathLabels, sourceVariants } =
     curriculum;

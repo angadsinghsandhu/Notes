@@ -1018,3 +1018,26 @@ it('rejects public path and related references to an organizational draft, filte
     ).diagnostics[0]?.message,
   ).toContain('collections.json');
 });
+
+it('returns opt-in prepared body bytes only when the publication commits', async () => {
+  const options = await archive();
+  await put(options.rootDir, 'Books/Export.md', '# Export\n\n**Prepared**');
+  const ordinary = await prepareContent(options);
+  expect(ordinary.preparedBodies).toBeUndefined();
+  const exported = await prepareContent({
+    ...options,
+    includePreparedBodies: true,
+  });
+  expect(exported.diagnostics).toEqual([]);
+  const entry = exported.manifest.entries[0]!;
+  expect(exported.preparedBodies?.get(entry.bodyFile!)).toContain(
+    '<strong>Prepared</strong>',
+  );
+  await put(options.rootDir, 'Books/Export.md', '[Broken](missing.pdf)');
+  const failed = await prepareContent({
+    ...options,
+    includePreparedBodies: true,
+  });
+  expect(failed.diagnostics[0]?.message).toContain('missing.pdf');
+  expect(failed.preparedBodies).toBeUndefined();
+});

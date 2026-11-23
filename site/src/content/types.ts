@@ -95,4 +95,5 @@ export type RenderResult = { html: string; headings: Heading[] };
 export type PreparationResult = {
   manifest: Manifest;
   diagnostics: Diagnostic[];
+  preparedBodies?: ReadonlyMap<string, string>;
 };

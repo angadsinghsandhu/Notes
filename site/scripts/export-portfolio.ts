@@ -21,6 +21,7 @@ import {
   verifyCurriculumArtifacts,
   type ContentEntry,
   type Manifest,
+  type PreparationResult,
 } from '../src/content/index.js';
 import {
   isMissing,
@@ -93,7 +94,7 @@ async function materialize(
 function projectEntry(
   entry: ContentEntry,
   id: string,
-  bodies: Record<string, string>,
+  bodies: ReadonlyMap<string, string>,
 ) {
   const {
     title,
@@ -113,7 +114,7 @@ function projectEntry(
     assetUrl,
     sourceUrl,
   } = entry;
-  const bodyHtml = bodyFile ? bodies[bodyFile] : undefined;
+  const bodyHtml = bodyFile ? bodies.get(bodyFile) : undefined;
   if (
     bodyFile &&
     (bodyFile !== `bodies/${entry.id}.html` || typeof bodyHtml !== 'string')
@@ -249,6 +250,7 @@ async function preparationOptions(root: string, revision: string) {
     organizationDir,
     curriculumDir,
     hosted: false,
+    includePreparedBodies: true,
     revision,
   };
   return { base, policy, site };
@@ -258,16 +260,26 @@ async function project(
   site: string,
   generated: string,
   stage: string,
-  snapshot: Manifest,
+  snapshot: PreparationResult,
 ) {
   const current = join(generated, 'current');
   await requireDirectory(current);
   const { preparedBodies, ...manifest } = JSON.parse(
     (await readRegularFile(join(current, 'manifest.json'))).toString('utf8'),
   ) as Manifest & { preparedBodies: Record<string, string> };
-  if (JSON.stringify(manifest) !== JSON.stringify(snapshot) || !preparedBodies)
+  if (JSON.stringify(manifest) !== JSON.stringify(snapshot.manifest))
     throw new Error(
       'Prepared archive no longer matches the selected publication',
+    );
+  const bodies = snapshot.preparedBodies;
+  if (
+    !bodies ||
+    !preparedBodies ||
+    Object.keys(preparedBodies).length !== bodies.size ||
+    [...bodies].some(([file, html]) => preparedBodies[file] !== html)
+  )
+    throw new Error(
+      'Prepared archive bodies no longer match the selected publication',
     );
   const currentOrganization = manifest.organization!;
   const uids = new Map(
@@ -276,7 +288,7 @@ async function project(
   const publicEntries = manifest.entries.filter(({ draft }) => !draft);
   const ids = new Map(publicEntries.map(({ id }) => [id, uids.get(id) ?? id]));
   const entries = publicEntries.map((entry) =>
-    projectEntry(entry, ids.get(entry.id)!, preparedBodies),
+    projectEntry(entry, ids.get(entry.id)!, bodies),
   );
   const organization = {
     ...currentOrganization,
@@ -365,7 +377,8 @@ export async function exportPortfolio(
     });
     const { base, policy, site } = await preparationOptions(root, revision);
     if (mode === 'production') await verifyCheckout(root, revision, policy);
-    const { manifest: prepared, diagnostics } = await prepareContent(base);
+    const prepared = await prepareContent(base);
+    const { diagnostics } = prepared;
     if (diagnostics.length)
       throw new Error(
         diagnostics

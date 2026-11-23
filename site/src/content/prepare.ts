@@ -58,6 +58,7 @@ export type PrepareOptions = {
   revision?: string;
   /** Watcher only: retain exactly the preceding publication’s assets for handoff. */
   development?: boolean;
+  includePreparedBodies?: boolean;
 };
 type Document = {
   entry: ContentEntry;
@@ -143,7 +144,7 @@ export async function prepareContent(
     ledger: [],
   };
   const diagnostics: Diagnostic[] = [];
-  const result = { manifest, diagnostics };
+  const result: PreparationResult = { manifest, diagnostics };
   let stage: string | undefined;
   try {
     const root = await realpath(options.rootDir);
@@ -410,6 +411,7 @@ export async function prepareContent(
       options.development ?? false,
     );
     stage = undefined;
+    if (options.includePreparedBodies) result.preparedBodies = bodies;
   } catch (error) {
     diagnostics.push(diagnostic('publication', error));
   } finally {

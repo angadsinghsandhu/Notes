@@ -50,6 +50,8 @@ async function put(root: string, path: string, bytes: string | Buffer) {
 }
 
 async function fixture() {
+  for (const name of ['SITE_URL', 'SOURCE_REVISION', 'REPOSITORY_URL'])
+    vi.stubEnv(name, undefined);
   const directory = await mkdtemp(
     join(await realpath(tmpdir()), 'notes-portfolio-'),
   );
@@ -481,7 +483,7 @@ it.each([
   ],
   [
     'prepared body',
-    /Invalid prepared body/,
+    /prepared archive bodies/i,
     (manifest: {
       entries: { title: string }[];
       preparedBodies: Record<string, string>;
@@ -536,5 +538,24 @@ it('surfaces unexpected staging filesystem errors without trying to write elsewh
       out: join(options.directory, 'x'.repeat(256)),
     }),
   ).rejects.toMatchObject({ code: 'ENAMETOOLONG' });
+  expect(await readdir(options.directory)).toEqual(['archive']);
+});
+
+it('rejects a replaced HTML body that keeps its original generated key', async () => {
+  const options = await fixture();
+  const { exportPortfolio } = await import('../../scripts/export-portfolio.js');
+  const path = join(options.rootDir, 'site/.generated/current/manifest.json');
+  faults.open = async (file) => {
+    if (file !== path) return;
+    const manifest = JSON.parse(await readFile(file, 'utf8')) as {
+      preparedBodies: Record<string, string>;
+    };
+    const key = Object.keys(manifest.preparedBodies)[0]!;
+    manifest.preparedBodies[key] = '<p>Replacement body</p>';
+    await writeFile(file, JSON.stringify(manifest));
+  };
+  await expect(exportPortfolio(options)).rejects.toThrow(
+    /prepared archive bodies/i,
+  );
   expect(await readdir(options.directory)).toEqual(['archive']);
 });

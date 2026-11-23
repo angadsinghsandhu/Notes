@@ -209,3 +209,38 @@ it('rejects unknown fields and credentials at the snapshot boundary', () => {
   entry.sourceUrl = 'not a URL';
   expect(portfolioSnapshotV1.safeParse(input).success).toBe(false);
 });
+
+it('binds the declared Pages asset digest to its canonical filename', () => {
+  const input = snapshot();
+  input.assets.push({
+    publicPath: `/content-assets/${assetHash}.png`,
+    exportPath: `assets/${assetHash}.png`,
+    bytes: 1,
+    sha256: packageHash,
+  });
+  expect(portfolioSnapshotV1.safeParse(input).error?.message).toContain(
+    'Pages asset digest',
+  );
+});
+
+it('rejects organization links to UIDs outside the exported archive', () => {
+  const input = snapshot();
+  input.organization.memberships[0]!.relatedUids = [`doc-${assetHash}`];
+  input.organization.paths.push({
+    id: 'archive-path',
+    title: 'Archive path',
+    summary: '',
+    steps: [
+      {
+        id: 'first-step',
+        title: 'First step',
+        summary: '',
+        entryUids: [`doc-${packageHash}`],
+        topicIds: [],
+      },
+    ],
+  });
+  const errors = portfolioSnapshotV1.safeParse(input).error?.message;
+  expect(errors).toContain('Unregistered related document UID');
+  expect(errors).toContain('Unregistered path step document UID');
+});
