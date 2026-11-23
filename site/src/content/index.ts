@@ -105,6 +105,7 @@ export type {
   CurriculumSnapshot,
   PreparedLesson,
   PreparedProblem,
+  TracePackageReference,
 } from './leetcode/prepare.js';
 export {
   assertCurriculumRouteOwnership,
