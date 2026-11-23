@@ -13,7 +13,7 @@
     "check:boundaries": "eslint . --config eslint.boundaries.config.mjs --max-warnings 0",
     "typecheck": "astro check && tsc --project tsconfig.tools.json --noEmit",
     "check:lines": "tsx scripts/check-lines.ts",
-    "check": "npm run check:lines && npm run format:check && npm run lint && npm run check:boundaries && npm run typecheck && npm run test:polars && npm run test:curriculum && npm run test:unit",
+    "check": "npm run format:check && npm run check:lines && npm run lint && npm run check:boundaries && npm run typecheck && npm run test:polars && npm run test:curriculum && npm run test:unit",
     "build": "npm run pdf:assets && npm run content:check && astro build && pagefind --site dist && npm run check:output",
     "preview": "astro preview --host 127.0.0.1",
     "test:unit": "vitest run --coverage --coverage.thresholds.perFile --coverage.thresholds.lines 90 --coverage.thresholds.functions 90 --coverage.thresholds.statements 90 --coverage.thresholds.branches 90",

@@ -171,6 +171,7 @@ it('runs archive parity and curriculum verification in check and stops at a fail
   expect(scripts['test:polars']).toBe(`python3 ${parity}`);
   const order = [
     'run format:check',
+    'run check:lines',
     'run lint',
     'run check:boundaries',
     'run typecheck',
@@ -204,13 +205,13 @@ if [ "$*" = "$TASK_CHECK_FAIL_COMMAND" ]; then exit 31; fi
     { mode: 0o755 },
   );
   const executed = [
-    ...order.slice(0, 5),
+    ...order.slice(0, 6),
     `python3 ${parity}`,
-    order[5],
+    order[6],
     `python3 ${discovery}`,
     `python3 ${problems}`,
     `python3 ${evidence}`,
-    order[6],
+    order[7],
   ];
   for (const failingCommand of ['', parity, discovery, problems, evidence]) {
     await writeFile(log, '');
