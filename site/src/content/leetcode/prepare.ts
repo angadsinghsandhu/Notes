@@ -11,6 +11,7 @@ import { assertCurriculumRouteOwnership } from './artifacts.js';
 import { validateLearningPaths } from './paths.js';
 import { validateCurriculum } from './schema.js';
 import { TRACE_BYTE_LIMIT, validateTrace } from './trace.js';
+import type { AlgorithmTrace, TraceFrame } from './trace.js';
 import type {
   CurriculumDefinition,
   LearningPathDefinition,
@@ -56,6 +57,11 @@ export interface TracePackageReference {
   exampleIds: string[];
 }
 
+export interface TraceTranscript {
+  exampleId: string;
+  steps: Pick<TraceFrame, 'stepId' | 'codeLines' | 'explanation'>[];
+}
+
 interface PreparedApproach {
   id: string;
   title: string;
@@ -64,6 +70,7 @@ interface PreparedApproach {
   entryPoint: string | null;
   codeHtml: string;
   trace: TracePackageReference | null;
+  transcripts: TraceTranscript[];
 }
 
 export interface PreparedLesson {
@@ -154,7 +161,7 @@ function checkTrace(
   approachId: string,
   evidence: LessonApproachDefinition['traces'][number],
   lineCount: number,
-): void {
+): AlgorithmTrace {
   let value: unknown;
   try {
     value = JSON.parse(raw);
@@ -180,6 +187,7 @@ function checkTrace(
           throw new Error(
             `Step ${stepId} references source line ${line}, beyond ${lineCount} lines`,
           );
+    return trace;
   } catch (error) {
     throw new Error(`${evidence.path}: ${(error as Error).message}`, {
       cause: error,
@@ -211,15 +219,31 @@ async function prepareApproaches(
     const suffix = ']}\n';
     let byteCount = prefix.length + suffix.length;
     const originals: string[] = [];
+    const transcripts: TraceTranscript[] = [];
     for (const evidence of traces) {
       const raw = await readEvidence(lessonDir, evidence, true);
-      checkTrace(raw, record.problemId, id, evidence, lineCount);
+      const { exampleId, frames } = checkTrace(
+        raw,
+        record.problemId,
+        id,
+        evidence,
+        lineCount,
+      );
       byteCount += Buffer.byteLength(raw) + Number(originals.length > 0);
       if (byteCount > packageByteLimit)
         throw new Error(
           `${record.problemId}/${id} exceeds the 25 MiB trace package limit`,
         );
       originals.push(raw);
+      if (published)
+        transcripts.push({
+          exampleId,
+          steps: frames.map(({ stepId, codeLines, explanation }) => ({
+            stepId,
+            codeLines,
+            explanation,
+          })),
+        });
     }
     if (!published) continue;
 
@@ -251,6 +275,7 @@ async function prepareApproaches(
       implementationSha256: implementation.sha256,
       entryPoint: implementation.entryPoint,
       trace,
+      transcripts,
     });
   }
   return prepared;

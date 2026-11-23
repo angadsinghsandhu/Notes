@@ -18,6 +18,12 @@ import {
   traceFixture,
 } from './prepare-fixtures.js';
 
+const checkComplement = {
+  stepId: 'check-0',
+  codeLines: [1],
+  explanation: 'Look for the complement of 2.',
+};
+
 let directory: string;
 beforeEach(async () => {
   directory = await mkdtemp(join(tmpdir(), 'curriculum-prepare-'));
@@ -27,7 +33,24 @@ afterEach(async () => {
 });
 
 test('publishes sanitized lesson, verified progress and a generation-bound trace package', async () => {
-  const fixture = await prepareFixture(directory);
+  const steps = [
+    checkComplement,
+    {
+      stepId: 'answer',
+      codeLines: [2, 1],
+      explanation: 'Return the pair.',
+    },
+  ];
+  const fixture = await prepareFixture(directory, {
+    trace: (sha) =>
+      traceFixture(sha, {
+        frames: steps.map((step) => ({
+          ...step,
+          state: { kind: 'array', items: [2, 7] },
+          highlights: [{ index: 0 }],
+        })),
+      }),
+  });
   const snapshot = await prepareCurriculum(fixture.definition, fixture);
   expect(snapshot.generation).toMatch(/^[a-f0-9]{64}$/);
   expect(snapshot.routes.map(({ route }) => route)).toEqual([
@@ -42,6 +65,9 @@ test('publishes sanitized lesson, verified progress and a generation-bound trace
   expect(snapshot.lessons[0]?.bodyHtml).toContain('id="invariant"');
   expect(snapshot.lessons[0]?.bodyHtml).not.toContain('bad()');
   expect(snapshot.lessons[0]?.approaches[0]?.codeHtml).toContain('shiki');
+  expect(snapshot.lessons[0]?.approaches[0]?.transcripts).toEqual([
+    { exampleId: 'pair', steps },
+  ]);
   const reference = snapshot.lessons[0]!.approaches[0]!.trace!;
   const bytes = await readFile(
     join(fixture.outputDir, 'worker-assets', reference.url),
@@ -49,10 +75,7 @@ test('publishes sanitized lesson, verified progress and a generation-bound trace
   expect(reference.sha256).toBe(digest(bytes));
   expect(reference.url).toBe(`/practice-traces/${reference.sha256}.json`);
   expect(reference.bytes).toBe(bytes.length);
-  expect(JSON.parse(bytes.toString())).toMatchObject({
-    version: 1,
-    traces: [JSON.parse(fixture.trace)],
-  });
+  expect(bytes.toString()).toBe(`{"version":1,"traces":[${fixture.trace}]}\n`);
   const registry = await readFile(
     join(fixture.outputDir, 'progress-registry.json'),
     'utf8',
@@ -99,6 +122,23 @@ test('draft_body_not_reported_verified', async () => {
     'utf8',
   );
   expect(JSON.parse(registry)).toMatchObject({ problems: [] });
+});
+
+test('a readable draft retains transcripts in trace evidence order', async () => {
+  const fixture = await prepareFixture(directory, {
+    draft: true,
+    traceCount: 2,
+  });
+  fixture.definition.lessons[0]!.approaches[0]!.traces.reverse();
+  const snapshot = await prepareCurriculum(fixture.definition, fixture);
+  const approach = snapshot.lessons[0]?.approaches[0];
+  expect(approach?.transcripts).toEqual(
+    ['pair-1', 'pair'].map((exampleId) => ({
+      exampleId,
+      steps: [checkComplement],
+    })),
+  );
+  expect(approach?.trace?.exampleIds).toEqual(['pair-1', 'pair']);
 });
 
 test('a draft without prose stays pending without publishing a route', async () => {
@@ -228,6 +268,7 @@ test('a draft shows native code without publishing an empty trace package', asyn
     language: 'shell',
     entryPoint: null,
     trace: null,
+    transcripts: [],
   });
   expect(snapshot.sourceVariants).toEqual([]);
 });
