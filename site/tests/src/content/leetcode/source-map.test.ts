@@ -1,8 +1,20 @@
 import { createHash } from 'node:crypto';
-import { readFile } from 'node:fs/promises';
-import { basename, resolve } from 'node:path';
+import {
+  mkdir,
+  mkdtemp,
+  readFile,
+  rm,
+  symlink,
+  writeFile,
+} from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { basename, dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { expect, it } from 'vitest';
+import { prepareContent } from '../../../../src/content/prepare.js';
+import { readPublishedCurriculum } from '../../../../src/content/leetcode/publication.js';
+import { readSourceMap } from '../../../../src/content/leetcode/source-map.js';
+import { curriculum, firstProblem } from './schema-fixtures.js';
 
 interface RecordBase {
   sourcePath: string;
@@ -222,4 +234,312 @@ it('preserves the frozen originals and records the approved archive provenance',
     false,
   );
   expect(raw).not.toMatch(/[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}/);
+  const eligible = await readSourceMap(
+    fileURLToPath(new URL('site/content/leetcode/', root)),
+  );
+  expect([...eligible!.keys()]).toEqual(
+    mapped
+      .filter(({ disposition }) => disposition === 'solver_variant')
+      .map(({ sourcePath }) => sourcePath),
+  );
+});
+
+const sourcePath = archivePrefix + '1_Two_Sum.py';
+const sourceCode = Buffer.concat([
+  Buffer.from('# Two Sum '),
+  Buffer.from([0xff]),
+  Buffer.from('\r\n'),
+]);
+const solver = {
+  sourcePath,
+  sha256: digest(sourceCode),
+  filenameNumber: 1,
+  duplicateFilenameNumber: 1,
+  disposition: 'solver_variant',
+  reason: 'Reviewed original',
+  problemId: 'leetcode:1',
+  officialSource: {
+    url: firstProblem().officialUrl,
+    checkedAt: '2026-11-22T11:00:00Z',
+  },
+};
+
+async function sourceMapFixture(
+  onCleanup: (cleanup: () => Promise<void>) => void,
+) {
+  const rootDir = await mkdtemp(join(tmpdir(), 'notes-curriculum-source-map-'));
+  onCleanup(() => rm(rootDir, { recursive: true, force: true }));
+  const outputDir = join(rootDir, 'site/.generated');
+  const curriculumDir = join(rootDir, 'site/content/leetcode');
+  const policyPath = join(rootDir, 'site/content/publication.json');
+  async function put(path: string, data: string | Buffer) {
+    await mkdir(dirname(path), { recursive: true });
+    await writeFile(path, data);
+  }
+  async function json(path: string, data: unknown) {
+    await put(path, JSON.stringify(data));
+  }
+  const { problems } = curriculum();
+  const prose = '# Two Sum';
+  await Promise.all([
+    json(policyPath, {
+      roots: [
+        'Books',
+        'Classes',
+        'Courses',
+        'Interview',
+        'Languages',
+        'Tutorials',
+      ],
+      exclude: ['**/hidden/**'],
+      repositoryPublic: true,
+      repositoryUrl: 'https://github.com/angadsinghsandhu/Notes',
+      revision: 'a'.repeat(40),
+    }),
+    json(join(curriculumDir, 'manifest.json'), {
+      version: 1,
+      problems: [{ ...firstProblem(), status: 'draft' }, ...problems.slice(1)],
+      lessons: ['leetcode:1'],
+      paths: [],
+    }),
+    json(join(curriculumDir, 'problems/1/metadata.json'), {
+      problemId: 'leetcode:1',
+      prose: { path: 'lesson.md', sha256: digest(prose) },
+      examples: null,
+      approaches: [],
+      review: null,
+    }),
+    put(join(curriculumDir, 'problems/1/lesson.md'), prose),
+    put(join(rootDir, sourcePath), sourceCode),
+    put(join(rootDir, archivePrefix, 'hidden/1_Draft.py'), sourceCode),
+    put(join(rootDir, archivePrefix, '1_Notes.md'), 'Reader notes'),
+  ]);
+  const options = {
+    rootDir,
+    outputDir,
+    curriculumDir,
+    policyPath,
+    hosted: false,
+  };
+  const mapPath = join(curriculumDir, 'source-map.json');
+  return {
+    options,
+    mapPath,
+    prepare: () => prepareContent(options),
+    writeMap: (records: unknown[], version = 1) =>
+      json(mapPath, { version, records }),
+    snapshot: (generation: string) =>
+      readPublishedCurriculum(outputDir, generation),
+    manifest: () => readFile(join(outputDir, 'current/manifest.json')),
+  };
+}
+
+it('loads each map from disk and only links published code to a matching lesson', async ({
+  onTestFinished,
+}) => {
+  const fixture = await sourceMapFixture(onTestFinished);
+  const legacy = await fixture.prepare();
+  expect(legacy.diagnostics).toEqual([]);
+  expect(
+    (await fixture.snapshot(legacy.manifest.curriculumGeneration!))
+      .sourceVariants,
+  ).toEqual([]);
+
+  await fixture.writeMap([
+    solver,
+    { ...solver, sourcePath: archivePrefix + '1_Notes.md' },
+    { ...solver, sourcePath: archivePrefix + '1_Missing.py' },
+    { ...solver, sourcePath: archivePrefix + 'hidden/1_Draft.py' },
+    { ...solver, sourcePath: archivePrefix + '1_two_sum.py' },
+    {
+      ...solver,
+      sourcePath: archivePrefix + '175_Reference.py',
+      filenameNumber: 175,
+      duplicateFilenameNumber: undefined,
+      disposition: 'statement_only',
+      problemId: 'leetcode:175',
+      officialSource: {
+        ...solver.officialSource,
+        url: 'https://leetcode.com/articles/?page=106&tag=linked-list',
+      },
+    },
+    {
+      ...solver,
+      sourcePath: archivePrefix + '2100_Outside.py',
+      filenameNumber: 2100,
+      duplicateFilenameNumber: undefined,
+      disposition: 'out_of_range',
+      problemId: undefined,
+      officialSource: undefined,
+    },
+  ]);
+  const mapped = await fixture.prepare();
+  expect(mapped.diagnostics).toEqual([]);
+  const generation = mapped.manifest.curriculumGeneration!;
+  expect(generation).not.toBe(legacy.manifest.curriculumGeneration);
+  const source = mapped.manifest.entries.find(
+    (entry) => entry.sourcePath === sourcePath,
+  )!;
+  expect(source).toEqual(
+    legacy.manifest.entries.find((entry) => entry.sourcePath === sourcePath),
+  );
+  expect(await readFile(join(fixture.options.rootDir, sourcePath))).toEqual(
+    sourceCode,
+  );
+  expect((await fixture.snapshot(generation)).sourceVariants).toEqual([
+    {
+      sourceId: source.id,
+      sourceRoute: source.route,
+      problemId: 'leetcode:1',
+      lessonRoute: '/practice/leetcode/1/',
+    },
+  ]);
+
+  await fixture.writeMap([{ ...solver, disposition: 'statement_only' }]);
+  const reference = await fixture.prepare();
+  expect(reference.diagnostics).toEqual([]);
+  expect(reference.manifest.curriculumGeneration).toBe(
+    legacy.manifest.curriculumGeneration,
+  );
+
+  await rm(fixture.mapPath);
+  const removed = await fixture.prepare();
+  expect(removed.diagnostics).toEqual([]);
+  expect(removed.manifest.curriculumGeneration).toBe(
+    legacy.manifest.curriculumGeneration,
+  );
+});
+
+it('retains the selected generation when mapped bytes or official identity disagree', async ({
+  onTestFinished,
+}) => {
+  const fixture = await sourceMapFixture(onTestFinished);
+  await fixture.writeMap([solver]);
+  const valid = await fixture.prepare();
+  expect(valid.diagnostics).toEqual([]);
+  const generation = valid.manifest.curriculumGeneration!;
+  const previous = await fixture.manifest();
+  const snapshot = await fixture.snapshot(generation);
+
+  await writeFile(join(fixture.options.rootDir, sourcePath), '# Changed bytes');
+  expect((await fixture.prepare()).diagnostics).toEqual([
+    expect.objectContaining({ message: expect.stringContaining('SHA-256') }),
+  ]);
+  await writeFile(join(fixture.options.rootDir, sourcePath), sourceCode);
+
+  await fixture.writeMap([
+    {
+      ...solver,
+      officialSource: {
+        ...solver.officialSource,
+        url: 'https://leetcode.com/problems/valid-parentheses/',
+      },
+    },
+  ]);
+  expect((await fixture.prepare()).diagnostics).toEqual([
+    expect.objectContaining({
+      message: expect.stringContaining('official curriculum problem'),
+    }),
+  ]);
+  expect(await fixture.manifest()).toEqual(previous);
+  expect(await fixture.snapshot(generation)).toEqual(snapshot);
+});
+
+it('rejects malformed map data and preserves the last good publication', async ({
+  onTestFinished,
+}) => {
+  const fixture = await sourceMapFixture(onTestFinished);
+  const initial = await fixture.prepare();
+  expect(initial.diagnostics).toEqual([]);
+  const previous = await fixture.manifest();
+  const malformed: unknown[][] = [
+    [{ ...solver, sourcePath: archivePrefix + '../escaped.py' }],
+    [{ ...solver, sourcePath: archivePrefix + 'Cafe\u0301.py' }],
+    [{ ...solver, sourcePath: archivePrefix + 'hidden\\escaped.py' }],
+    [solver, solver],
+    [{ ...solver, disposition: 'solved' }],
+    [{ ...solver, sourcePath: archivePrefix + 'file\u0000.py' }],
+    [{ ...solver, sourcePath: archivePrefix + 'file\u007f.py' }],
+    [{ ...solver, filenameNumber: 2 }],
+    [{ ...solver, duplicateFilenameNumber: 2 }],
+    [{ ...solver, unexpected: true }],
+    [{ ...solver, sha256: 'discarded' }],
+    [{ ...solver, problemId: 'leetcode:2001' }],
+    [{ ...solver, officialSource: undefined }],
+    [{ ...solver, disposition: 'link_only', problemId: undefined }],
+    [
+      {
+        ...solver,
+        disposition: 'link_only',
+        officialSource: {
+          ...solver.officialSource,
+          url: 'https://leetcode.com.example/articles/?page=106',
+        },
+      },
+    ],
+    [
+      {
+        ...solver,
+        officialSource: {
+          ...solver.officialSource,
+          url: 'https://leetcode.com/articles/?page=106',
+        },
+      },
+    ],
+    [
+      {
+        ...solver,
+        officialSource: {
+          ...solver.officialSource,
+          checkedAt: '2026-02-30T12:00:00Z',
+        },
+      },
+    ],
+  ];
+  for (const records of malformed) {
+    await fixture.writeMap(records);
+    expect((await fixture.prepare()).diagnostics[0]?.message).toContain(
+      'source-map.json',
+    );
+  }
+  await fixture.writeMap([solver], 2);
+  expect((await fixture.prepare()).diagnostics[0]?.message).toContain(
+    'source-map.json',
+  );
+  await writeFile(fixture.mapPath, '{');
+  expect((await fixture.prepare()).diagnostics[0]?.message).toContain(
+    'source-map.json',
+  );
+  await rm(fixture.mapPath);
+  await mkdir(fixture.mapPath);
+  expect((await fixture.prepare()).diagnostics[0]?.message).toContain(
+    'Expected a regular file',
+  );
+  await rm(fixture.mapPath, { recursive: true });
+  await symlink('missing.json', fixture.mapPath);
+  expect((await fixture.prepare()).diagnostics[0]?.message).toContain(
+    'source-map.json',
+  );
+  expect(await fixture.manifest()).toEqual(previous);
+});
+
+it('preserves injected variants for legacy callers and rejects conflicting sources', async ({
+  onTestFinished,
+}) => {
+  const fixture = await sourceMapFixture(onTestFinished);
+  const prepare = () =>
+    prepareContent({
+      ...fixture.options,
+      sourceVariants: new Map([[sourcePath, 'leetcode:1']]),
+    });
+  const legacy = await prepare();
+  expect(legacy.diagnostics).toEqual([]);
+  expect(
+    (await fixture.snapshot(legacy.manifest.curriculumGeneration!))
+      .sourceVariants,
+  ).toHaveLength(1);
+  const previous = await fixture.manifest();
+  await fixture.writeMap([]);
+  expect((await prepare()).diagnostics[0]?.message).toContain('sourceVariants');
+  expect(await fixture.manifest()).toEqual(previous);
 });

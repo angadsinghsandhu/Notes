@@ -1,4 +1,4 @@
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile, realpath } from 'node:fs/promises';
 import { extname, isAbsolute, join, relative, sep } from 'node:path';
 import {
@@ -11,6 +11,7 @@ import { readMetadata, readPolicy } from './schema.js';
 import { hasCurriculumDirectory } from './leetcode/publication.js';
 import { prepareCurriculum } from './leetcode/prepare.js';
 import { readCurriculum } from './leetcode/schema.js';
+import { readSourceMap, resolveSourceVariants } from './leetcode/source-map.js';
 import type { ProblemId } from './leetcode/types.js';
 import { readOrganization } from './organization-schema.js';
 import { resolveOrganization } from './organization.js';
@@ -180,6 +181,21 @@ export async function prepareContent(
       throw new Error(
         'Hosted preparation requires an HTTPS siteUrl without credentials',
       );
+    const curriculumDir = options.curriculumDir
+      ? await enrolledCurriculumRoot(
+          options.rootDir,
+          root,
+          options.curriculumDir,
+        )
+      : undefined;
+    const sourceMap = curriculumDir
+      ? await readSourceMap(curriculumDir)
+      : undefined;
+    if (sourceMap && options.sourceVariants)
+      throw new Error(
+        'Cannot combine source-map.json with injected sourceVariants',
+      );
+    const sourceDigests = new Map<string, string>();
     const discovery = await discoverEntries(root, policy);
     manifest.ledger = discovery.ledger;
     const definition = options.organizationDir
@@ -204,9 +220,15 @@ export async function prepareContent(
           delete row.destination;
           continue;
         }
-        const text = ['markdown', 'notebook', 'code'].includes(source.kind)
-          ? await readFile(source.absolutePath, 'utf8')
-          : '';
+        const bytes = ['markdown', 'notebook', 'code'].includes(source.kind)
+          ? await readFile(source.absolutePath)
+          : undefined;
+        const text = bytes?.toString('utf8') ?? '';
+        if (bytes && entry.kind === 'code' && sourceMap?.has(entry.sourcePath))
+          sourceDigests.set(
+            entry.sourcePath,
+            createHash('sha256').update(bytes).digest('hex'),
+          );
         const json: unknown =
           source.kind === 'notebook' ? JSON.parse(text) : undefined;
         const markdown =
@@ -365,25 +387,18 @@ export async function prepareContent(
         bytes,
       );
     }
-    const curriculumDir = options.curriculumDir
-      ? await enrolledCurriculumRoot(
-          options.rootDir,
-          root,
-          options.curriculumDir,
-        )
-      : undefined;
     if (curriculumDir) {
-      const { sourceVariants } = options;
-      const snapshot = await prepareCurriculum(
-        await readCurriculum(curriculumDir),
-        {
-          rootDir: curriculumDir,
-          outputDir: join(stage, 'curriculum'),
-          sourceCatalog: catalog,
-          ...(sourceVariants ? { sourceVariants } : {}),
-          additionalPages: publicationPages([], manifest.organization),
-        },
-      );
+      const curriculum = await readCurriculum(curriculumDir);
+      const sourceVariants = sourceMap
+        ? resolveSourceVariants(sourceMap, curriculum.problems, sourceDigests)
+        : options.sourceVariants;
+      const snapshot = await prepareCurriculum(curriculum, {
+        rootDir: curriculumDir,
+        outputDir: join(stage, 'curriculum'),
+        sourceCatalog: catalog,
+        ...(sourceVariants ? { sourceVariants } : {}),
+        additionalPages: publicationPages([], manifest.organization),
+      });
       manifest.curriculumGeneration = snapshot.generation;
     }
     await writeManifest(manifest, stage, bodies);

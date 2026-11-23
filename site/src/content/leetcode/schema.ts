@@ -27,7 +27,7 @@ const status = z.enum([
   'verified',
 ]) satisfies z.ZodType<LessonStatus>;
 const date = z.iso.date();
-const sha256 = z.string().regex(/^[a-f0-9]{64}$/);
+export const sha256 = z.string().regex(/^[a-f0-9]{64}$/);
 const canonicalQuestionUrl = z
   .string()
   .regex(/^https:\/\/leetcode\.com\/problems\/[a-z0-9]+(?:-[a-z0-9]+)*\/$/);
