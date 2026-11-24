@@ -62,8 +62,13 @@
     "sourcePath": "Interview/leetcode/Solutions/977 Squares of a Sorted Array.py",
     "sha256": "5a4c550056594c5c58013f33f0f89cb5b5825609aa8f0b98748c706e8bc98744",
     "filenameNumber": 977,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:977",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/squares-of-a-sorted-array/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/97_Interleaving_String.py",

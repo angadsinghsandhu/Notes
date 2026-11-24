@@ -3,8 +3,13 @@
     "sourcePath": "Interview/leetcode/Solutions/6 Binary Search/367 Valid Perfect Square.py",
     "sha256": "59994896f0884eabee7d72dfb5921d0e1862e1efc9272dd9d1e85b0c03e59e8b",
     "filenameNumber": 367,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:367",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/valid-perfect-square/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/6 Binary Search/704 Binary Search.py",
@@ -320,15 +325,25 @@
     "sourcePath": "Interview/leetcode/Solutions/8 Linked List/83 Remove Duplicates from Sorted List.py",
     "sha256": "8e063041ab7d358f22cc538763b13f84ed97100098bde4d00cf0d07e3802398f",
     "filenameNumber": 83,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:83",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/remove-duplicates-from-sorted-list/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/8 Linked List/876 Middle of the Linked List.py",
     "sha256": "5e0edecc077107f97b6d71d35a1f7357b2df6a9fa491729bf4c7169ed1e5d511",
     "filenameNumber": 876,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:876",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/middle-of-the-linked-list/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/846_Hand_of_Straights.py",
