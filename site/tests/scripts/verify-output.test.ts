@@ -20,11 +20,12 @@ import { verifyOutput } from '../../scripts/verify-output.js';
 import { stagePdfAssets } from '../../scripts/pdf-assets.js';
 import type { ContentEntry, Manifest } from '../../src/content/index.js';
 const roots: string[] = [];
+// The file-count boundary fixture removes more than 20,000 files.
 afterEach(async () => {
   vi.unstubAllEnvs();
   for (const root of roots.splice(0))
     await rm(root, { recursive: true, force: true });
-});
+}, 60_000);
 async function put(path: string, text: string | Buffer) {
   await mkdir(dirname(path), { recursive: true });
   await writeFile(path, text);

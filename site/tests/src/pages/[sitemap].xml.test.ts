@@ -8,7 +8,8 @@ test('sitemap and canonical output require an explicit HTTPS production URL', as
   request,
   page,
 }) => {
-  test.setTimeout(360_000);
+  // Include time to rebuild the shared preview in the original configuration.
+  test.setTimeout(600_000);
   const incoming = { ...process.env };
   const unconfigured = { ...incoming };
   delete unconfigured['SITE_URL'];
