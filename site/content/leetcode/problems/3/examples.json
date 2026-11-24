@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "empty",
+      "input": {
+        "s": ""
+      },
+      "result": 0,
+      "postState": {
+        "s": ""
+      }
+    },
+    {
+      "id": "inside-repeat",
+      "input": {
+        "s": "cabbde"
+      },
+      "result": 3,
+      "postState": {
+        "s": "cabbde"
+      }
+    },
+    {
+      "id": "outside-repeat",
+      "input": {
+        "s": "abba"
+      },
+      "result": 2,
+      "postState": {
+        "s": "abba"
+      }
+    },
+    {
+      "id": "spaces-and-symbols",
+      "input": {
+        "s": " !1! 2"
+      },
+      "result": 4,
+      "postState": {
+        "s": " !1! 2"
+      }
+    }
+  ]
+}

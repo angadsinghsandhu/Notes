@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "problemId": "leetcode:3",
+  "approachId": "set-eviction",
+  "exampleId": "empty",
+  "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f",
+  "result": 0,
+  "frames": [
+    {
+      "stepId": "finish",
+      "codeLines": [60],
+      "explanation": "Return 0.",
+      "state": {
+        "kind": "array",
+        "items": []
+      },
+      "highlights": []
+    }
+  ]
+}

@@ -340,6 +340,25 @@ it('keeps the actual draft packages private and exports them only in an isolated
       ],
     }),
   );
+  expect(prepared.lessons).toContainEqual(
+    expect.objectContaining({
+      problemId: 'leetcode:3',
+      status: 'draft',
+      approaches: ['set-eviction', 'last-seen-jump'].map((id) =>
+        expect.objectContaining({
+          id,
+          trace: expect.objectContaining({
+            exampleIds: [
+              'empty',
+              'inside-repeat',
+              'outside-repeat',
+              'spaces-and-symbols',
+            ],
+          }),
+        }),
+      ),
+    }),
+  );
   const privatePackages = prepared.lessons.flatMap(({ approaches }) =>
     approaches.flatMap(({ trace }) => (trace ? [`${trace.sha256}.json`] : [])),
   );

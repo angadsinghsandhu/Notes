@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "problemId": "leetcode:3",
+  "approachId": "last-seen-jump",
+  "exampleId": "outside-repeat",
+  "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f",
+  "result": 2,
+  "frames": [
+    {
+      "stepId": "accept-0",
+      "codeLines": [84],
+      "explanation": "Include 'a' at index 0. Best length is 1.",
+      "state": {
+        "kind": "array",
+        "items": ["a", "b", "b", "a"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "accept-1",
+      "codeLines": [84],
+      "explanation": "Include 'b' at index 1. Best length is 2.",
+      "state": {
+        "kind": "array",
+        "items": ["a", "b", "b", "a"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "jump-2",
+      "codeLines": [72],
+      "explanation": "The previous 'b' is at index 1. Move the left boundary to 2.",
+      "state": {
+        "kind": "array",
+        "items": ["a", "b", "b", "a"]
+      },
+      "highlights": []
+    },
+    {
+      "stepId": "accept-2",
+      "codeLines": [84],
+      "explanation": "Include 'b' at index 2. Best length is 2.",
+      "state": {
+        "kind": "array",
+        "items": ["a", "b", "b", "a"]
+      },
+      "highlights": [
+        {
+          "index": 2
+        }
+      ]
+    },
+    {
+      "stepId": "accept-3",
+      "codeLines": [84],
+      "explanation": "The previous occurrence at index 0 is outside the window. Include 'a' at index 3. Best length is 2.",
+      "state": {
+        "kind": "array",
+        "items": ["a", "b", "b", "a"]
+      },
+      "highlights": [
+        {
+          "index": 2
+        },
+        {
+          "index": 3
+        }
+      ]
+    },
+    {
+      "stepId": "finish",
+      "codeLines": [92],
+      "explanation": "Return 2.",
+      "state": {
+        "kind": "array",
+        "items": ["a", "b", "b", "a"]
+      },
+      "highlights": [
+        {
+          "index": 2
+        },
+        {
+          "index": 3
+        }
+      ]
+    }
+  ]
+}

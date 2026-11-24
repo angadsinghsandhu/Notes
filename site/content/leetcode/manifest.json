@@ -71,6 +71,6 @@
       "1981-2000.json"
     ]
   },
-  "lessons": ["leetcode:1", "leetcode:20"],
+  "lessons": ["leetcode:1", "leetcode:3", "leetcode:20"],
   "paths": ["all-problems"]
 }

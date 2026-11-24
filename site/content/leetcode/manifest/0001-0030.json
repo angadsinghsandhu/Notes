@@ -42,7 +42,7 @@
     "officialUrl": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
     "domain": "algorithm",
     "difficulty": "medium",
-    "topics": [],
+    "topics": ["sliding-window", "hash-table"],
     "evidence": {
       "officialQuestion": {
         "frontendNumber": 3,
@@ -52,7 +52,7 @@
       },
       "companies": []
     },
-    "status": "planned"
+    "status": "draft"
   },
   {
     "number": 4,
