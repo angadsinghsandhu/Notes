@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "problemId": "leetcode:20",
+  "approachId": "unmatched-openings",
+  "exampleId": "crossed-pairs",
+  "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5",
+  "result": false,
+  "frames": [
+    {
+      "stepId": "push-0",
+      "codeLines": [33],
+      "explanation": "Push '('.",
+      "state": {
+        "kind": "stack",
+        "items": ["("]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "push-1",
+      "codeLines": [33],
+      "explanation": "Push '['.",
+      "state": {
+        "kind": "stack",
+        "items": ["(", "["]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "reject-2",
+      "codeLines": [37],
+      "explanation": "Reject ')'. The top '[' cannot match it.",
+      "state": {
+        "kind": "stack",
+        "items": ["(", "["]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    }
+  ]
+}

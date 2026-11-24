@@ -45,6 +45,7 @@ from scripts.curriculum_trace import (
     run_enrolled,
 )
 from scripts.curriculum_two_sum import verify_hash, verify_pairs, verify_sorted
+from scripts.curriculum_valid_parentheses import verify_stack
 
 _SITE = Path(__file__).resolve().parents[1]
 _LAST_PROBLEM = 2000
@@ -63,6 +64,9 @@ class Enrollment:
 type Registry = Mapping[tuple[int, str], Enrollment]
 # Add exact source pins and independent checks only after reviewing the implementation.
 _TWO_SUM_SHA256 = "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
+_VALID_PARENTHESES_SHA256 = (
+    "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5"
+)
 _ENROLLED: Registry = {
     (1, "pair-enumeration"): Enrollment(
         "solutions.py", _TWO_SUM_SHA256, PythonAdapter("pair_enumeration"), verify_pairs
@@ -75,6 +79,12 @@ _ENROLLED: Registry = {
     ),
     (1, "complement-hash"): Enrollment(
         "solutions.py", _TWO_SUM_SHA256, PythonAdapter("complement_hash"), verify_hash
+    ),
+    (20, "unmatched-openings"): Enrollment(
+        "solutions.py",
+        _VALID_PARENTHESES_SHA256,
+        PythonAdapter("valid_parentheses"),
+        verify_stack,
     ),
 }
 

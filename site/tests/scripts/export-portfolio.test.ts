@@ -15,6 +15,7 @@ import { dirname, join, resolve } from 'node:path';
 import { afterEach, expect, it, vi } from 'vitest';
 import {
   hashLessonForReview,
+  type CurriculumSnapshot,
   type LessonRecord,
   type ProblemRecord,
 } from '../../src/content/index.js';
@@ -313,14 +314,38 @@ it('keeps the actual draft packages private and exports them only in an isolated
   expect(
     await readdir(join(options.out, 'worker-assets/practice-traces')),
   ).toEqual([]);
+  const generation = join(
+    options.rootDir,
+    `site/.generated/curriculum-${draft.curriculum.generation}`,
+  );
+  const prepared = JSON.parse(
+    await readFile(join(generation, 'curriculum.json'), 'utf8'),
+  ) as CurriculumSnapshot;
+  expect(prepared.lessons).toContainEqual(
+    expect.objectContaining({
+      problemId: 'leetcode:20',
+      status: 'draft',
+      approaches: [
+        expect.objectContaining({
+          id: 'unmatched-openings',
+          trace: expect.objectContaining({
+            exampleIds: [
+              'unfinished-stack',
+              'leading-closer',
+              'crossed-pairs',
+              'nested-success',
+            ],
+          }),
+        }),
+      ],
+    }),
+  );
+  const privatePackages = prepared.lessons.flatMap(({ approaches }) =>
+    approaches.flatMap(({ trace }) => (trace ? [`${trace.sha256}.json`] : [])),
+  );
   expect(
-    await readdir(
-      join(
-        options.rootDir,
-        `site/.generated/curriculum-${draft.curriculum.generation}/worker-assets/practice-traces`,
-      ),
-    ),
-  ).toHaveLength(3);
+    (await readdir(join(generation, 'worker-assets/practice-traces'))).sort(),
+  ).toEqual(privatePackages.sort());
 
   await promotePreview(target);
   const output = join(options.directory, 'verified-preview');

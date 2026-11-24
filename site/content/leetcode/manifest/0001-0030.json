@@ -302,7 +302,7 @@
     "officialUrl": "https://leetcode.com/problems/valid-parentheses/",
     "domain": "algorithm",
     "difficulty": "easy",
-    "topics": [],
+    "topics": ["stack"],
     "evidence": {
       "officialQuestion": {
         "frontendNumber": 20,
@@ -312,7 +312,7 @@
       },
       "companies": []
     },
-    "status": "planned"
+    "status": "draft"
   },
   {
     "number": 21,

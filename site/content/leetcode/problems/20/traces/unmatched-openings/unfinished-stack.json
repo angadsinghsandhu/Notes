@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "problemId": "leetcode:20",
+  "approachId": "unmatched-openings",
+  "exampleId": "unfinished-stack",
+  "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5",
+  "result": false,
+  "frames": [
+    {
+      "stepId": "push-0",
+      "codeLines": [33],
+      "explanation": "Push '('.",
+      "state": {
+        "kind": "stack",
+        "items": ["("]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "push-1",
+      "codeLines": [33],
+      "explanation": "Push '('.",
+      "state": {
+        "kind": "stack",
+        "items": ["(", "("]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "pop-2",
+      "codeLines": [46],
+      "explanation": "')' closes '('. Pop it.",
+      "state": {
+        "kind": "stack",
+        "items": ["("]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "finish",
+      "codeLines": [56],
+      "explanation": "Some openings are still unmatched.",
+      "state": {
+        "kind": "stack",
+        "items": ["("]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    }
+  ]
+}
