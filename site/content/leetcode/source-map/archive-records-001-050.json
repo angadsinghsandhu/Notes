@@ -159,8 +159,13 @@
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/1219 Path with Maximum Gold.py",
     "sha256": "ff4b171b4621f2df930a65f5d9b17a1bd6c1f781003a87fdd851bdd6c5b18070",
     "filenameNumber": 1219,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:1219",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/path-with-maximum-gold/description/",
+      "checkedAt": "2026-11-24T00:11:20Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/1254 Number of Closed Islands.py",
@@ -189,8 +194,13 @@
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/1971 Find if Path Exists in Graph.py",
     "sha256": "706e55e5860089b2e546b7e6aba3c446fc2237871a77aa92cb6be184d8f54bea",
     "filenameNumber": 1971,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:1971",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/find-if-path-exists-in-graph/description/",
+      "checkedAt": "2026-11-24T00:11:20Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/2065 Max Path Quality.py",
@@ -219,8 +229,13 @@
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/437 Path Sum III.py",
     "sha256": "d82f2c7da060ba5732daf3d5debf00da1ae0d27e1308a1fd0641c2a311abf488",
     "filenameNumber": 437,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:437",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/path-sum-iii/description/",
+      "checkedAt": "2026-11-24T00:11:20Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/695 Max Area of Island.py",
@@ -242,15 +257,25 @@
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/797 All Paths From Source to Target.py",
     "sha256": "7e021564702c26070d3f91ebd95e036f1e60531d57e3dee95ae52878796aac08",
     "filenameNumber": 797,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:797",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/all-paths-from-source-to-target/description/",
+      "checkedAt": "2026-11-24T00:11:20Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/827 Making A Large Island.py",
     "sha256": "8dc19ff2a3c9dd749c5c87898e6bf4debdcf879d6ed135f9a9b11dca99c635e4",
     "filenameNumber": 827,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:827",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/making-a-large-island/description/",
+      "checkedAt": "2026-11-24T00:11:20Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/11 Graph/Path Sum IV.py",
