@@ -359,6 +359,25 @@ it('keeps the actual draft packages private and exports them only in an isolated
       ),
     }),
   );
+  expect(prepared.lessons).toContainEqual(
+    expect.objectContaining({
+      problemId: 'leetcode:64',
+      status: 'draft',
+      approaches: ['memoized-grid', 'row-storage'].map((id) =>
+        expect.objectContaining({
+          id,
+          trace: expect.objectContaining({
+            exampleIds: [
+              'single-column',
+              'weighted-grid',
+              'single-cell',
+              'ties',
+            ],
+          }),
+        }),
+      ),
+    }),
+  );
   const privatePackages = prepared.lessons.flatMap(({ approaches }) =>
     approaches.flatMap(({ trace }) => (trace ? [`${trace.sha256}.json`] : [])),
   );

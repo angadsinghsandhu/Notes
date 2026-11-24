@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "problemId": "leetcode:64",
+  "approachId": "memoized-grid",
+  "exampleId": "single-cell",
+  "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+  "result": 0,
+  "frames": [
+    {
+      "stepId": "save-0-0",
+      "codeLines": [56],
+      "explanation": "From (0, 0), add weight 0 to the best remaining cost 0. Save 0.",
+      "state": {
+        "kind": "grid",
+        "rows": [[0]]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 0
+        }
+      ]
+    }
+  ]
+}

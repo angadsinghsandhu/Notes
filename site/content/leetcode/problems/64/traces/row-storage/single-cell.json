@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "problemId": "leetcode:64",
+  "approachId": "row-storage",
+  "exampleId": "single-cell",
+  "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+  "result": 0,
+  "frames": [
+    {
+      "stepId": "write-0-0",
+      "codeLines": [83],
+      "explanation": "Reach (0, 0) for 0 plus weight 0. Store 0.",
+      "state": {
+        "kind": "array",
+        "items": [0]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    }
+  ]
+}

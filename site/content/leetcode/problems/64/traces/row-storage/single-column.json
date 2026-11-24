@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "problemId": "leetcode:64",
+  "approachId": "row-storage",
+  "exampleId": "single-column",
+  "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+  "result": 10,
+  "frames": [
+    {
+      "stepId": "write-0-0",
+      "codeLines": [83],
+      "explanation": "Reach (0, 0) for 0 plus weight 2. Store 2.",
+      "state": {
+        "kind": "array",
+        "items": [2]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "write-1-0",
+      "codeLines": [83],
+      "explanation": "Reach (1, 0) for 2 plus weight 0. Store 2.",
+      "state": {
+        "kind": "array",
+        "items": [2]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "write-2-0",
+      "codeLines": [83],
+      "explanation": "Reach (2, 0) for 2 plus weight 7. Store 9.",
+      "state": {
+        "kind": "array",
+        "items": [9]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "write-3-0",
+      "codeLines": [83],
+      "explanation": "Reach (3, 0) for 9 plus weight 1. Store 10.",
+      "state": {
+        "kind": "array",
+        "items": [10]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    }
+  ]
+}

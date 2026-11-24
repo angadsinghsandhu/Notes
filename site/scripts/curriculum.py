@@ -37,6 +37,7 @@ from scripts.curriculum_evidence import (
     validate_trace,
 )
 from scripts.curriculum_longest_substring import verify_eviction, verify_jump
+from scripts.curriculum_minimum_path_sum import verify_memoized_grid, verify_row_storage
 from scripts.curriculum_trace import (
     JsonValue,
     PythonAdapter,
@@ -71,6 +72,9 @@ _LONGEST_SUBSTRING_SHA256 = (
 _VALID_PARENTHESES_SHA256 = (
     "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5"
 )
+_MINIMUM_PATH_SUM_SHA256 = (
+    "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+)
 _ENROLLED: Registry = {
     (1, "pair-enumeration"): Enrollment(
         "solutions.py", _TWO_SUM_SHA256, PythonAdapter("pair_enumeration"), verify_pairs
@@ -101,6 +105,18 @@ _ENROLLED: Registry = {
         _VALID_PARENTHESES_SHA256,
         PythonAdapter("valid_parentheses"),
         verify_stack,
+    ),
+    (64, "memoized-grid"): Enrollment(
+        "solutions.py",
+        _MINIMUM_PATH_SUM_SHA256,
+        PythonAdapter("memoized_grid"),
+        verify_memoized_grid,
+    ),
+    (64, "row-storage"): Enrollment(
+        "solutions.py",
+        _MINIMUM_PATH_SUM_SHA256,
+        PythonAdapter("row_storage"),
+        verify_row_storage,
     ),
 }
 

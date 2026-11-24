@@ -1,0 +1,110 @@
+{
+  "problemId": "leetcode:64",
+  "prose": {
+    "path": "lesson.md",
+    "sha256": "ff6f885393637ac020f5e151519ab2e8e4bdff32c52917ecfa7d9e6cbbfd7c15"
+  },
+  "examples": {
+    "path": "examples.json",
+    "sha256": "a9a98cfcfb23adb266269e01a6e05204705b6039b6c02f9a23fdc3d7cbc0216f"
+  },
+  "approaches": [
+    {
+      "id": "memoized-grid",
+      "title": "Memoized grid of remaining costs",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+        "entryPoint": "memoized_grid"
+      },
+      "traces": [
+        {
+          "path": "traces/memoized-grid/single-column.json",
+          "sha256": "a68f7292f1440155026f7515022d7098dae7c17fc91eff30dd20412ca4e42159",
+          "exampleId": "single-column",
+          "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+        },
+        {
+          "path": "traces/memoized-grid/weighted-grid.json",
+          "sha256": "b0bffe71121718235073af15428e2c1c0994972f8fce08afebcd4c9c90a9d025",
+          "exampleId": "weighted-grid",
+          "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+        },
+        {
+          "path": "traces/memoized-grid/single-cell.json",
+          "sha256": "791103b53539da7ee56b6b646205a0885f7ebbbf5d2f11de6522216daa9ef8e8",
+          "exampleId": "single-cell",
+          "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+        },
+        {
+          "path": "traces/memoized-grid/ties.json",
+          "sha256": "68f0e75ecee4cb08dc68f5de847540cc59e56e8ee25f084c824688a82092a701",
+          "exampleId": "ties",
+          "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+        "entryPoint": "memoized_grid",
+        "examplesSha256": "a9a98cfcfb23adb266269e01a6e05204705b6039b6c02f9a23fdc3d7cbc0216f",
+        "passedExampleIds": [
+          "single-column",
+          "weighted-grid",
+          "single-cell",
+          "ties"
+        ],
+        "checkedOn": "2026-11-24"
+      }
+    },
+    {
+      "id": "row-storage",
+      "title": "Bottom-up DP with one row of costs",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+        "entryPoint": "row_storage"
+      },
+      "traces": [
+        {
+          "path": "traces/row-storage/single-column.json",
+          "sha256": "a1a5d3a87cacba2c66b42c7f49efd0208f32603e52271ad8f872dd16a6528859",
+          "exampleId": "single-column",
+          "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+        },
+        {
+          "path": "traces/row-storage/weighted-grid.json",
+          "sha256": "d631f4504d0d649b017456c35580b08384b7a77f56c33a9e7ece5986854d8b1a",
+          "exampleId": "weighted-grid",
+          "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+        },
+        {
+          "path": "traces/row-storage/single-cell.json",
+          "sha256": "ec50388efd437769aae3ee41f9e5dfbc3142cf3e1a64cd17764316a4c46fac4e",
+          "exampleId": "single-cell",
+          "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+        },
+        {
+          "path": "traces/row-storage/ties.json",
+          "sha256": "c82d485b614e8afb55794c7b91eb0ad05d15bf15f879b5e4b8ab7fcdd2399ceb",
+          "exampleId": "ties",
+          "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+        "entryPoint": "row_storage",
+        "examplesSha256": "a9a98cfcfb23adb266269e01a6e05204705b6039b6c02f9a23fdc3d7cbc0216f",
+        "passedExampleIds": [
+          "single-column",
+          "weighted-grid",
+          "single-cell",
+          "ties"
+        ],
+        "checkedOn": "2026-11-24"
+      }
+    }
+  ],
+  "review": null
+}
