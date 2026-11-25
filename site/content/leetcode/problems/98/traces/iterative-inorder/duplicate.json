@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "problemId": "leetcode:98",
+  "approachId": "iterative-inorder",
+  "exampleId": "duplicate",
+  "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087",
+  "result": false,
+  "frames": [
+    {
+      "stepId": "check-0",
+      "codeLines": [86],
+      "explanation": "Visit 8 first. There is no preceding value.",
+      "state": {
+        "kind": "tree",
+        "nodes": [
+          {
+            "id": "node-0",
+            "value": 8
+          },
+          {
+            "id": "node-1",
+            "value": 8
+          }
+        ],
+        "edges": [
+          {
+            "from": "node-0",
+            "to": "node-1"
+          }
+        ]
+      },
+      "highlights": [
+        {
+          "nodeId": "node-0"
+        }
+      ]
+    },
+    {
+      "stepId": "check-1",
+      "codeLines": [86],
+      "explanation": "8 is not greater than the preceding value 8.",
+      "state": {
+        "kind": "tree",
+        "nodes": [
+          {
+            "id": "node-0",
+            "value": 8
+          },
+          {
+            "id": "node-1",
+            "value": 8
+          }
+        ],
+        "edges": [
+          {
+            "from": "node-0",
+            "to": "node-1"
+          }
+        ]
+      },
+      "highlights": [
+        {
+          "nodeId": "node-1"
+        }
+      ]
+    }
+  ]
+}

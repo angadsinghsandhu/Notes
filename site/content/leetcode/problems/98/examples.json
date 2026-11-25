@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "ancestor-bound",
+      "input": {
+        "tree": [
+          [10, 1, 2],
+          [4, null, 3],
+          [15, null, null],
+          [11, null, null]
+        ]
+      },
+      "result": false,
+      "postState": {
+        "tree": [
+          [10, 1, 2],
+          [4, null, 3],
+          [15, null, null],
+          [11, null, null]
+        ]
+      }
+    },
+    {
+      "id": "duplicate",
+      "input": {
+        "tree": [
+          [8, null, 1],
+          [8, null, null]
+        ]
+      },
+      "result": false,
+      "postState": {
+        "tree": [
+          [8, null, 1],
+          [8, null, null]
+        ]
+      }
+    },
+    {
+      "id": "signed-extremes",
+      "input": {
+        "tree": [
+          [0, 1, 2],
+          [-2147483648, null, null],
+          [2147483647, null, null]
+        ]
+      },
+      "result": true,
+      "postState": {
+        "tree": [
+          [0, 1, 2],
+          [-2147483648, null, null],
+          [2147483647, null, null]
+        ]
+      }
+    },
+    {
+      "id": "left-skewed",
+      "input": {
+        "tree": [
+          [4, 1, null],
+          [3, 2, null],
+          [2, 3, null],
+          [1, null, null]
+        ]
+      },
+      "result": true,
+      "postState": {
+        "tree": [
+          [4, 1, null],
+          [3, 2, null],
+          [2, 3, null],
+          [1, null, null]
+        ]
+      }
+    }
+  ]
+}

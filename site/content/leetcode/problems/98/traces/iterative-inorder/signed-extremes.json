@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "problemId": "leetcode:98",
+  "approachId": "iterative-inorder",
+  "exampleId": "signed-extremes",
+  "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087",
+  "result": true,
+  "frames": [
+    {
+      "stepId": "check-1",
+      "codeLines": [86],
+      "explanation": "Visit -2147483648 first. There is no preceding value.",
+      "state": {
+        "kind": "tree",
+        "nodes": [
+          {
+            "id": "node-0",
+            "value": 0
+          },
+          {
+            "id": "node-1",
+            "value": -2147483648
+          },
+          {
+            "id": "node-2",
+            "value": 2147483647
+          }
+        ],
+        "edges": [
+          {
+            "from": "node-0",
+            "to": "node-1"
+          },
+          {
+            "from": "node-0",
+            "to": "node-2"
+          }
+        ]
+      },
+      "highlights": [
+        {
+          "nodeId": "node-1"
+        }
+      ]
+    },
+    {
+      "stepId": "check-0",
+      "codeLines": [86],
+      "explanation": "0 is greater than the preceding value -2147483648.",
+      "state": {
+        "kind": "tree",
+        "nodes": [
+          {
+            "id": "node-0",
+            "value": 0
+          },
+          {
+            "id": "node-1",
+            "value": -2147483648
+          },
+          {
+            "id": "node-2",
+            "value": 2147483647
+          }
+        ],
+        "edges": [
+          {
+            "from": "node-0",
+            "to": "node-1"
+          },
+          {
+            "from": "node-0",
+            "to": "node-2"
+          }
+        ]
+      },
+      "highlights": [
+        {
+          "nodeId": "node-0"
+        }
+      ]
+    },
+    {
+      "stepId": "check-2",
+      "codeLines": [86],
+      "explanation": "2147483647 is greater than the preceding value 0.",
+      "state": {
+        "kind": "tree",
+        "nodes": [
+          {
+            "id": "node-0",
+            "value": 0
+          },
+          {
+            "id": "node-1",
+            "value": -2147483648
+          },
+          {
+            "id": "node-2",
+            "value": 2147483647
+          }
+        ],
+        "edges": [
+          {
+            "from": "node-0",
+            "to": "node-1"
+          },
+          {
+            "from": "node-0",
+            "to": "node-2"
+          }
+        ]
+      },
+      "highlights": [
+        {
+          "nodeId": "node-2"
+        }
+      ]
+    }
+  ]
+}
