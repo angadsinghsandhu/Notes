@@ -1,0 +1,70 @@
+name: Notify Portfolio of verified Notes
+
+on:
+  workflow_run:
+    workflows: [Notes site]
+    types: [completed]
+    branches: [master]
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  notify:
+    if: >-
+      vars.NOTES_PORTFOLIO_NOTIFY_ENABLED == 'true' &&
+      github.repository == 'angadsinghsandhu/Notes' &&
+      github.repository_id == '590347468' &&
+      github.ref == 'refs/heads/master' &&
+      github.event.workflow_run.workflow_id == 379127533 &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_branch == 'master' &&
+      github.event.workflow_run.head_repository.id == 590347468 &&
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    environment: portfolio-notify
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - name: Check out trusted master workflow revision
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24.18.1
+          package-manager-cache: false
+      - name: Prove exact Notes verification
+        id: proof
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { appendFileSync, readFileSync } from 'node:fs';
+          import { provePortfolioDispatch } from './scripts/portfolio-dispatch.ts';
+
+          const env = process.env;
+          let event;
+          try {
+            event = JSON.parse(readFileSync(env.GITHUB_EVENT_PATH, 'utf8'));
+          } catch {
+            throw new Error('Notes workflow event is unavailable');
+          }
+          const payload = await provePortfolioDispatch(event, env.GH_TOKEN);
+          appendFileSync(env.GITHUB_OUTPUT, `payload=${JSON.stringify(payload)}\n`);
+          NODE
+      - name: Dispatch verified Notes revision
+        if: steps.proof.outcome == 'success' && steps.proof.outputs.payload != ''
+        env:
+          PORTFOLIO_DISPATCH_PAYLOAD: ${{ steps.proof.outputs.payload }}
+          NOTES_PORTFOLIO_DISPATCH_TOKEN: ${{ secrets.NOTES_PORTFOLIO_DISPATCH_TOKEN }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { sendPortfolioDispatch } from './scripts/portfolio-dispatch.ts';
+
+          const env = process.env;
+          await sendPortfolioDispatch(env.PORTFOLIO_DISPATCH_PAYLOAD, env.NOTES_PORTFOLIO_DISPATCH_TOKEN);
+          NODE
