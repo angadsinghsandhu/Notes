@@ -4,6 +4,7 @@ from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 
 from .curriculum_longest_substring import verify_eviction, verify_jump
+from .curriculum_lru_cache import verify_linked_recency
 from .curriculum_minimum_path_sum import verify_memoized_grid, verify_row_storage
 from .curriculum_trace import JsonValue, PythonAdapter, SqlAdapter, TraceRun
 from .curriculum_two_sum import verify_hash, verify_pairs, verify_sorted
@@ -35,6 +36,7 @@ _MINIMUM_PATH_SUM_SHA256 = (
 )
 _VALID_BST_SHA256 = "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
 _WORD_LADDER_SHA256 = "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+_LRU_CACHE_SHA256 = "939e07cafb719c0e7328435e8cc1389cb815d822f819575333f33505197fbe2f"
 ENROLLED: Registry = {
     (1, "pair-enumeration"): Enrollment(
         "solutions.py", _TWO_SUM_SHA256, PythonAdapter("pair_enumeration"), verify_pairs
@@ -101,5 +103,11 @@ ENROLLED: Registry = {
         _WORD_LADDER_SHA256,
         PythonAdapter("two_frontier_bfs"),
         verify_two_frontier_bfs,
+    ),
+    (146, "linked-recency"): Enrollment(
+        "solutions.py",
+        _LRU_CACHE_SHA256,
+        PythonAdapter("linked_recency"),
+        verify_linked_recency,
     ),
 }

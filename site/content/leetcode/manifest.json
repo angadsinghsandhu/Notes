@@ -77,7 +77,8 @@
     "leetcode:20",
     "leetcode:64",
     "leetcode:98",
-    "leetcode:127"
+    "leetcode:127",
+    "leetcode:146"
   ],
   "paths": ["all-problems"]
 }
