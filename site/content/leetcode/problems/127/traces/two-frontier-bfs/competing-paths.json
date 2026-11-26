@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "problemId": "leetcode:127",
+  "approachId": "two-frontier-bfs",
+  "exampleId": "competing-paths",
+  "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+  "result": 4,
+  "frames": [
+    {
+      "stepId": "expand-0",
+      "codeLines": [133],
+      "explanation": "Start frontier at distance 0. Expand the highlighted words.",
+      "state": {
+        "kind": "array",
+        "items": ["aaa", "|", "bbb"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "expand-1",
+      "codeLines": [133],
+      "explanation": "Target frontier at distance 0. Expand the highlighted words.",
+      "state": {
+        "kind": "array",
+        "items": ["bbb", "|", "aab", "aba", "baa"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "expand-2",
+      "codeLines": [133],
+      "explanation": "Target frontier at distance 1. Expand the highlighted words.",
+      "state": {
+        "kind": "array",
+        "items": ["abb", "bba", "|", "aab", "aba", "baa"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "meet",
+      "codeLines": [137],
+      "explanation": "Join abb to aab. The ladder contains 4 words.",
+      "state": {
+        "kind": "array",
+        "items": ["abb", "aab"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 1
+        }
+      ]
+    }
+  ]
+}

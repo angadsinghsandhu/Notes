@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "target-absent",
+      "input": {
+        "beginWord": "mint",
+        "endWord": "mist",
+        "wordList": ["mind", "mild", "mile"]
+      },
+      "result": 0,
+      "postState": {
+        "beginWord": "mint",
+        "endWord": "mist",
+        "wordList": ["mind", "mild", "mile"]
+      }
+    },
+    {
+      "id": "target-unreachable",
+      "input": {
+        "beginWord": "mare",
+        "endWord": "tune",
+        "wordList": ["care", "cane", "tone", "tune", "mare"]
+      },
+      "result": 0,
+      "postState": {
+        "beginWord": "mare",
+        "endWord": "tune",
+        "wordList": ["care", "cane", "tone", "tune", "mare"]
+      }
+    },
+    {
+      "id": "one-change",
+      "input": {
+        "beginWord": "i",
+        "endWord": "a",
+        "wordList": ["a"]
+      },
+      "result": 2,
+      "postState": {
+        "beginWord": "i",
+        "endWord": "a",
+        "wordList": ["a"]
+      }
+    },
+    {
+      "id": "competing-paths",
+      "input": {
+        "beginWord": "aaa",
+        "endWord": "bbb",
+        "wordList": ["aba", "aab", "abb", "baa", "bba", "bbb"]
+      },
+      "result": 4,
+      "postState": {
+        "beginWord": "aaa",
+        "endWord": "bbb",
+        "wordList": ["aba", "aab", "abb", "baa", "bba", "bbb"]
+      }
+    }
+  ]
+}

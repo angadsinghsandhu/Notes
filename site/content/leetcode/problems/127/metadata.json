@@ -1,0 +1,110 @@
+{
+  "problemId": "leetcode:127",
+  "prose": {
+    "path": "lesson.md",
+    "sha256": "1231b1e76a6aeec2dd086927e915a2aaa67befb4576af34ff3788c2bb32c7f05"
+  },
+  "examples": {
+    "path": "examples.json",
+    "sha256": "9136e152b4679797dad84593e67dfdd2c7abf447a9f6c1d7f62bb5e4af239ce4"
+  },
+  "approaches": [
+    {
+      "id": "queue-bfs",
+      "title": "Breadth-first search with a queue",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+        "entryPoint": "queue_bfs"
+      },
+      "traces": [
+        {
+          "path": "traces/queue-bfs/target-absent.json",
+          "sha256": "bc0b0db1b106aa3d8d170b596d74e782e397cb7295a4436b1e4a6c8023b69cd2",
+          "exampleId": "target-absent",
+          "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+        },
+        {
+          "path": "traces/queue-bfs/target-unreachable.json",
+          "sha256": "bc624f0be8b64c0df70edf4676d42875742554fb0d0849738c89c7c1162903a1",
+          "exampleId": "target-unreachable",
+          "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+        },
+        {
+          "path": "traces/queue-bfs/one-change.json",
+          "sha256": "c6bfcbeba601d9e9b17fbb8e66d589dd29686f58e5aff5d18b37a92d1cf7cce5",
+          "exampleId": "one-change",
+          "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+        },
+        {
+          "path": "traces/queue-bfs/competing-paths.json",
+          "sha256": "37b54f847862c5fda37a767d968a50bb7a56bdb6eabd1e6f70a4028a3dd4762a",
+          "exampleId": "competing-paths",
+          "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+        "entryPoint": "queue_bfs",
+        "examplesSha256": "9136e152b4679797dad84593e67dfdd2c7abf447a9f6c1d7f62bb5e4af239ce4",
+        "passedExampleIds": [
+          "target-absent",
+          "target-unreachable",
+          "one-change",
+          "competing-paths"
+        ],
+        "checkedOn": "2026-11-25"
+      }
+    },
+    {
+      "id": "two-frontier-bfs",
+      "title": "Bidirectional search with two frontiers",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+        "entryPoint": "two_frontier_bfs"
+      },
+      "traces": [
+        {
+          "path": "traces/two-frontier-bfs/target-absent.json",
+          "sha256": "7c51413d8716c9d20721d610f38e764cbde4d663ae0221254ac75348797e912a",
+          "exampleId": "target-absent",
+          "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+        },
+        {
+          "path": "traces/two-frontier-bfs/target-unreachable.json",
+          "sha256": "91a4b6c8e52598be9e7ecdf663b562bd0d75587a404c5d63a2cc2886794d01fe",
+          "exampleId": "target-unreachable",
+          "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+        },
+        {
+          "path": "traces/two-frontier-bfs/one-change.json",
+          "sha256": "fc4e2c8c47c407c210fff90944c7215c729dc3da009bab76c36e37217dc4dbc8",
+          "exampleId": "one-change",
+          "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+        },
+        {
+          "path": "traces/two-frontier-bfs/competing-paths.json",
+          "sha256": "05db0f31fe090c6927bc8b5b7cb345b340f8b51dbba400990f71294802bdb3cd",
+          "exampleId": "competing-paths",
+          "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+        "entryPoint": "two_frontier_bfs",
+        "examplesSha256": "9136e152b4679797dad84593e67dfdd2c7abf447a9f6c1d7f62bb5e4af239ce4",
+        "passedExampleIds": [
+          "target-absent",
+          "target-unreachable",
+          "one-change",
+          "competing-paths"
+        ],
+        "checkedOn": "2026-11-25"
+      }
+    }
+  ],
+  "review": null
+}

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "problemId": "leetcode:127",
+  "approachId": "two-frontier-bfs",
+  "exampleId": "one-change",
+  "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+  "result": 2,
+  "frames": [
+    {
+      "stepId": "expand-0",
+      "codeLines": [133],
+      "explanation": "Start frontier at distance 0. Expand the highlighted words.",
+      "state": {
+        "kind": "array",
+        "items": ["i", "|", "a"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "meet",
+      "codeLines": [137],
+      "explanation": "Join i to a. The ladder contains 2 words.",
+      "state": {
+        "kind": "array",
+        "items": ["i", "a"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 1
+        }
+      ]
+    }
+  ]
+}

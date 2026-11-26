@@ -9,6 +9,7 @@ from .curriculum_trace import JsonValue, PythonAdapter, SqlAdapter, TraceRun
 from .curriculum_two_sum import verify_hash, verify_pairs, verify_sorted
 from .curriculum_valid_bst import verify_iterative_inorder, verify_recursive_bounds
 from .curriculum_valid_parentheses import verify_stack
+from .curriculum_word_ladder import verify_queue_bfs, verify_two_frontier_bfs
 
 
 @dataclass(frozen=True)
@@ -33,6 +34,7 @@ _MINIMUM_PATH_SUM_SHA256 = (
     "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842"
 )
 _VALID_BST_SHA256 = "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+_WORD_LADDER_SHA256 = "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
 ENROLLED: Registry = {
     (1, "pair-enumeration"): Enrollment(
         "solutions.py", _TWO_SUM_SHA256, PythonAdapter("pair_enumeration"), verify_pairs
@@ -87,5 +89,17 @@ ENROLLED: Registry = {
         _VALID_BST_SHA256,
         PythonAdapter("iterative_inorder"),
         verify_iterative_inorder,
+    ),
+    (127, "queue-bfs"): Enrollment(
+        "solutions.py",
+        _WORD_LADDER_SHA256,
+        PythonAdapter("queue_bfs"),
+        verify_queue_bfs,
+    ),
+    (127, "two-frontier-bfs"): Enrollment(
+        "solutions.py",
+        _WORD_LADDER_SHA256,
+        PythonAdapter("two_frontier_bfs"),
+        verify_two_frontier_bfs,
     ),
 }

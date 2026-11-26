@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "problemId": "leetcode:127",
+  "approachId": "queue-bfs",
+  "exampleId": "competing-paths",
+  "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+  "result": 4,
+  "frames": [
+    {
+      "stepId": "visit-0",
+      "codeLines": [60],
+      "explanation": "Visit aaa at ladder length 1.",
+      "state": {
+        "kind": "queue",
+        "items": ["aaa"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-1",
+      "codeLines": [60],
+      "explanation": "Visit baa at ladder length 2.",
+      "state": {
+        "kind": "queue",
+        "items": ["baa", "aba", "aab"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-2",
+      "codeLines": [60],
+      "explanation": "Visit aba at ladder length 2.",
+      "state": {
+        "kind": "queue",
+        "items": ["aba", "aab", "bba"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-3",
+      "codeLines": [60],
+      "explanation": "Visit aab at ladder length 2.",
+      "state": {
+        "kind": "queue",
+        "items": ["aab", "bba", "abb"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-4",
+      "codeLines": [60],
+      "explanation": "Visit bba at ladder length 3.",
+      "state": {
+        "kind": "queue",
+        "items": ["bba", "abb"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-5",
+      "codeLines": [60],
+      "explanation": "Visit abb at ladder length 3.",
+      "state": {
+        "kind": "queue",
+        "items": ["abb", "bbb"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-6",
+      "codeLines": [60],
+      "explanation": "Reach bbb. The ladder contains 4 words.",
+      "state": {
+        "kind": "queue",
+        "items": ["bbb"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    }
+  ]
+}

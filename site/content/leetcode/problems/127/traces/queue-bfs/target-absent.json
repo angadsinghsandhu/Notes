@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "problemId": "leetcode:127",
+  "approachId": "queue-bfs",
+  "exampleId": "target-absent",
+  "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+  "result": 0,
+  "frames": [
+    {
+      "stepId": "absent",
+      "codeLines": [51],
+      "explanation": "mist is outside the dictionary.",
+      "state": {
+        "kind": "queue",
+        "items": []
+      },
+      "highlights": []
+    }
+  ]
+}
