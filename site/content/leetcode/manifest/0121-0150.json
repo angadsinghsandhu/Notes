@@ -97,7 +97,7 @@
     "officialUrl": "https://leetcode.com/problems/word-ladder/",
     "domain": "algorithm",
     "difficulty": "hard",
-    "topics": [],
+    "topics": ["breadth-first-search", "graph"],
     "evidence": {
       "officialQuestion": {
         "frontendNumber": 127,
@@ -387,7 +387,7 @@
     "officialUrl": "https://leetcode.com/problems/lru-cache/",
     "domain": "algorithm",
     "difficulty": "medium",
-    "topics": [],
+    "topics": ["design", "hash-table", "linked-list"],
     "evidence": {
       "officialQuestion": {
         "frontendNumber": 146,

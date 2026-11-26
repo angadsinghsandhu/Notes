@@ -112,7 +112,7 @@
     "officialUrl": "https://leetcode.com/problems/validate-binary-search-tree/",
     "domain": "algorithm",
     "difficulty": "medium",
-    "topics": [],
+    "topics": ["binary-search-tree", "depth-first-search"],
     "evidence": {
       "officialQuestion": {
         "frontendNumber": 98,

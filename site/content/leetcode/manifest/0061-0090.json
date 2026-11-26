@@ -52,7 +52,7 @@
     "officialUrl": "https://leetcode.com/problems/minimum-path-sum/",
     "domain": "algorithm",
     "difficulty": "medium",
-    "topics": [],
+    "topics": ["dynamic-programming", "matrix"],
     "evidence": {
       "officialQuestion": {
         "frontendNumber": 64,
