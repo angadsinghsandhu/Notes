@@ -3,6 +3,7 @@
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
 
+from .curriculum_combine_two_tables import LEFT_JOIN_ADAPTER, verify_left_join
 from .curriculum_longest_substring import verify_eviction, verify_jump
 from .curriculum_lru_cache import verify_linked_recency
 from .curriculum_minimum_path_sum import verify_memoized_grid, verify_row_storage
@@ -37,6 +38,9 @@ _MINIMUM_PATH_SUM_SHA256 = (
 _VALID_BST_SHA256 = "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
 _WORD_LADDER_SHA256 = "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de"
 _LRU_CACHE_SHA256 = "939e07cafb719c0e7328435e8cc1389cb815d822f819575333f33505197fbe2f"
+_COMBINE_TWO_TABLES_SHA256 = (
+    "e7eb359f7426f7a2ebafd3826b223c6236285b483bae24075193388874165af3"
+)
 ENROLLED: Registry = {
     (1, "pair-enumeration"): Enrollment(
         "solutions.py", _TWO_SUM_SHA256, PythonAdapter("pair_enumeration"), verify_pairs
@@ -109,5 +113,11 @@ ENROLLED: Registry = {
         _LRU_CACHE_SHA256,
         PythonAdapter("linked_recency"),
         verify_linked_recency,
+    ),
+    (175, "left-join"): Enrollment(
+        "solution.sql",
+        _COMBINE_TWO_TABLES_SHA256,
+        LEFT_JOIN_ADAPTER,
+        verify_left_join,
     ),
 }

@@ -1,0 +1,55 @@
+{
+  "problemId": "leetcode:175",
+  "prose": {
+    "path": "lesson.md",
+    "sha256": "9c4eace6f4da3d537bed86ec6265b0c1989f47d1e792af3e148b44aaea5d6f0e"
+  },
+  "examples": {
+    "path": "examples.json",
+    "sha256": "2d40b5afe2ff4132e6aff57b212512997e9cddf789e18f8e4671c8aeeb504722"
+  },
+  "approaches": [
+    {
+      "id": "left-join",
+      "title": "Preserve Person rows with LEFT JOIN",
+      "language": "sql",
+      "implementation": {
+        "path": "solution.sql",
+        "sha256": "e7eb359f7426f7a2ebafd3826b223c6236285b483bae24075193388874165af3",
+        "entryPoint": null
+      },
+      "traces": [
+        {
+          "path": "traces/left-join/missing-and-orphaned.json",
+          "sha256": "0b13fd995f3418098d0a6a4079c4bf138be6b22cc117ec521994ab7ccb89aa74",
+          "exampleId": "missing-and-orphaned",
+          "implementationSha256": "e7eb359f7426f7a2ebafd3826b223c6236285b483bae24075193388874165af3"
+        },
+        {
+          "path": "traces/left-join/multiple-addresses.json",
+          "sha256": "945608329cffc1fc9f109c84ce9b16e9f498f2c928cf72dfc46f3dc459645157",
+          "exampleId": "multiple-addresses",
+          "implementationSha256": "e7eb359f7426f7a2ebafd3826b223c6236285b483bae24075193388874165af3"
+        },
+        {
+          "path": "traces/left-join/empty-person-table.json",
+          "sha256": "68a448ec2f1434490f8c450fb8151e949c27540970013aaee43d749d1d0e3be1",
+          "exampleId": "empty-person-table",
+          "implementationSha256": "e7eb359f7426f7a2ebafd3826b223c6236285b483bae24075193388874165af3"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "e7eb359f7426f7a2ebafd3826b223c6236285b483bae24075193388874165af3",
+        "entryPoint": null,
+        "examplesSha256": "2d40b5afe2ff4132e6aff57b212512997e9cddf789e18f8e4671c8aeeb504722",
+        "passedExampleIds": [
+          "missing-and-orphaned",
+          "multiple-addresses",
+          "empty-person-table"
+        ],
+        "checkedOn": "2026-11-26"
+      }
+    }
+  ],
+  "review": null
+}

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "problemId": "leetcode:175",
+  "approachId": "left-join",
+  "exampleId": "missing-and-orphaned",
+  "implementationSha256": "e7eb359f7426f7a2ebafd3826b223c6236285b483bae24075193388874165af3",
+  "result": {
+    "columns": ["firstName", "lastName", "city", "state"],
+    "rows": [
+      ["Leo", "Shah", "Eugene", "OR"],
+      ["Nia", "Park", null, null]
+    ]
+  },
+  "frames": [
+    {
+      "stepId": "query-result",
+      "codeLines": [2, 3, 4, 6],
+      "explanation": "The query returns one row per matching address and a NULL-extended row for each person without a match. Source IDs determine the display order.",
+      "state": {
+        "kind": "table",
+        "columns": ["firstName", "lastName", "city", "state"],
+        "rows": [
+          ["Leo", "Shah", "Eugene", "OR"],
+          ["Nia", "Park", null, null]
+        ]
+      },
+      "highlights": []
+    }
+  ]
+}

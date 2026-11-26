@@ -367,7 +367,7 @@
     "officialUrl": "https://leetcode.com/problems/combine-two-tables/",
     "domain": "sql",
     "difficulty": "easy",
-    "topics": [],
+    "topics": ["sql-joins"],
     "evidence": {
       "officialQuestion": {
         "frontendNumber": 175,
@@ -377,7 +377,7 @@
       },
       "companies": []
     },
-    "status": "planned"
+    "status": "draft"
   },
   {
     "number": 176,
