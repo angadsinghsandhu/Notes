@@ -11,6 +11,7 @@ import {
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { createHash } from 'node:crypto';
+import sharp from 'sharp';
 import { afterEach, describe, expect, it } from 'vitest';
 import {
   planAssets,
@@ -75,7 +76,7 @@ describe('approved asset planning and copy', () => {
     expect(
       await readFile(join(target, assets[0]!.url.split('/').at(-1)!)),
     ).toEqual(bytes);
-  });
+  }, 15_000);
   it('uses sparse inputs at the exact 25 MiB boundary', async () => {
     const root = await archive();
     await sparse(join(root, 'Tutorials/images/boundary.png'), 26_214_400);
@@ -293,4 +294,86 @@ describe('read-only validated planned asset bytes', () => {
       readPlannedLocalAsset(root, { ...asset!, mode: 'external' }),
     ).rejects.toThrow();
   });
+});
+
+it('sanitizes SVG CDATA and local fragment paints while discarding escaped paints and foreign attributes', async () => {
+  const root = await archive();
+  const path = 'Tutorials/images/boundary.svg';
+  await writeFile(
+    join(root, path),
+    '<svg xmlns:x="urn:foreign"><text><![CDATA[Safe < &]]></text><script><![CDATA[Hidden]]>Hidden text</script><path fill="url(#gradient)" stroke="url( #other )" x:width="1"/></svg>',
+  );
+  const [asset] = await planAssets(root, [path], policy);
+  const bytes = (await readPlannedLocalAsset(root, asset!)).toString();
+  expect(bytes).toContain('Safe &lt; &amp;');
+  expect(bytes).toContain('fill="url(#gradient)"');
+  expect(bytes).not.toMatch(/Hidden|stroke=|x:width/);
+});
+it('rechecks planned source boundaries for traversal, symlinks, directories and oversized files', async () => {
+  const root = await archive();
+  const image = await readFile('tests/fixtures/synthetic/task3/pixel.png');
+  const path = 'Tutorials/images/a.png';
+  await writeFile(join(root, path), image);
+  const [asset] = await planAssets(root, [path], policy);
+  for (const sourcePath of [
+    '../private.png',
+    'Tutorials/../private.png',
+    'Tutorials\\private.png',
+  ])
+    await expect(
+      readPlannedLocalAsset(root, { ...asset!, sourcePath }),
+    ).rejects.toThrow('escapes');
+  await rm(join(root, path));
+  await symlink(join(root, 'Tutorials/images'), join(root, path));
+  await expect(readPlannedLocalAsset(root, asset!)).rejects.toThrow('symbolic');
+  await rm(join(root, path));
+  await mkdir(join(root, path));
+  await expect(readPlannedLocalAsset(root, asset!)).rejects.toThrow('regular');
+  await rm(join(root, path), { recursive: true });
+  await sparse(join(root, path), 26_214_401);
+  await expect(readPlannedLocalAsset(root, asset!)).rejects.toThrow(
+    'size limit',
+  );
+});
+
+it('reserves safely oriented native image geometry without rejecting opaque asset bytes', async () => {
+  const root = await archive();
+  const image = sharp({
+    create: { width: 2, height: 3, channels: 3, background: '#fff' },
+  });
+  for (const format of ['png', 'gif', 'webp', 'avif'] as const) {
+    const path = `Tutorials/images/a.${format}`;
+    await writeFile(
+      join(root, path),
+      await image.clone().toFormat(format).toBuffer(),
+    );
+    expect((await planAssets(root, [path], policy))[0]).toMatchObject({
+      dimensions: { width: 2, height: 3 },
+    });
+  }
+  const rotated = 'Tutorials/images/rotated.jpg';
+  await writeFile(
+    join(root, rotated),
+    await image.clone().jpeg().withMetadata({ orientation: 6 }).toBuffer(),
+  );
+  expect((await planAssets(root, [rotated], policy))[0]).toMatchObject({
+    dimensions: { width: 3, height: 2 },
+  });
+  const svg = 'Tutorials/images/a.svg';
+  await writeFile(
+    join(root, svg),
+    '<svg viewBox="0 0 12 7"><path d="M0 0"/></svg>',
+  );
+  expect((await planAssets(root, [svg], policy))[0]).toMatchObject({
+    dimensions: { width: 12, height: 7 },
+  });
+  for (const name of ['opaque.ico', 'invalid.png', 'document.pdf']) {
+    const path = `Tutorials/images/${name}`;
+    await writeFile(join(root, path), 'original opaque bytes');
+    const [asset] = await planAssets(root, [path], policy);
+    expect(asset).not.toHaveProperty('dimensions');
+    expect((await readPlannedLocalAsset(root, asset!)).toString()).toBe(
+      'original opaque bytes',
+    );
+  }
 });

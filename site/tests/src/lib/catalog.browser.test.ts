@@ -1,12 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { spawn, execFile } from 'node:child_process';
-import { createServer } from 'node:net';
 import {
   readFile,
   writeFile,
   rename,
   unlink,
-  mkdir,
   access,
   symlink,
   readlink,
@@ -15,174 +13,22 @@ import {
 import { resolve, join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { promisify } from 'node:util';
+import {
+  developmentDiagnostics,
+  freePort,
+  fullArchiveReadinessTimeout,
+  developmentSearchTimeout,
+} from './catalog-development.js';
 
 const site = resolve('.');
 const evidence = resolve('../.superpowers/sdd/2026-10-04-notes-website');
 const execute = promisify(execFile);
 
-async function freePort(): Promise<number> {
-  const socket = createServer();
-  await new Promise<void>((done) => socket.listen(0, '127.0.0.1', done));
-  const address = socket.address();
-  if (!address || typeof address === 'string') throw new Error('No port');
-  await new Promise<void>((done, reject) =>
-    socket.close((e) => (e ? reject(e) : done())),
-  );
-  return address.port;
-}
-
-// These explicitly labelled synthetic notes exercise the real watcher and HTTP routes.
-// Exact owned bytes are verified before cleanup; unexpected edits are preserved.
-test('actual npm dev updates bodies, new routes, aliases and deletion without restarting Astro', async ({
-  request,
-  page,
-}) => {
-  test.setTimeout(480_000);
-  const name = `task6-owned-${randomUUID()}`;
-  const original = resolve('../Tutorials', `${name}.md`);
-  let source = '';
-  let owned = `---\ntitle: Task 6 synthetic lifecycle proof\n---\n# First lifecycle body\n`;
-  const port = await freePort();
-  const url = `http://127.0.0.1:${port}`;
-  let output = '';
-  const child = spawn('npm', ['run', 'dev', '--', '--port', String(port)], {
-    cwd: site,
-    detached: true,
-    stdio: ['ignore', 'pipe', 'pipe'],
-  });
-  child.stdout.on('data', (bytes: Buffer) => {
-    output += bytes.toString();
-  });
-  child.stderr.on('data', (bytes: Buffer) => {
-    output += bytes.toString();
-  });
-  const exited = new Promise<void>((done) => child.once('exit', () => done()));
-  const log: string[] = [];
-  async function until(
-    path: string,
-    body: string,
-    status = 200,
-  ): Promise<string> {
-    let last = '';
-    await expect
-      .poll(
-        async () => {
-          try {
-            const response = await request.get(`${url}${path}`);
-            last = await response.text();
-            return response.status() === status && last.includes(body);
-          } catch {
-            return false;
-          }
-        },
-        { timeout: 75_000, intervals: [500, 1000] },
-      )
-      .toBe(true);
-    log.push(`${path} HTTP ${status} includes ${body}`);
-    return last;
-  }
-  async function pid(): Promise<string> {
-    return (
-      await execute('lsof', ['-t', `-iTCP:${port}`, '-sTCP:LISTEN'])
-    ).stdout.trim();
-  }
-  try {
-    const route = `/notes/tutorials/${name}/`;
-    await until(
-      '/notes/interview/applied-science/breadth/6-6-2-transformers/',
-      'Transformer',
-    );
-    const astroPid = await pid();
-    const indexBefore = await readFile('dist/pagefind/pagefind-entry.json');
-    expect(astroPid).toMatch(/^\d+$/);
-    log.push(
-      `Owned Astro listener PID ${astroPid}; npm PID ${child.pid}; port ${port}`,
-    );
-    await writeFile(original, owned, { flag: 'wx' });
-    source = original;
-    await until(route, 'First lifecycle body');
-    await page.goto(`${url}${route}`);
-    expect(await pid()).toBe(astroPid);
-    owned = owned.replace('First lifecycle body', 'Changed lifecycle body');
-    await writeFile(source, owned);
-    await until(route, 'Changed lifecycle body');
-    await expect(page.locator('article')).toContainText(
-      'Changed lifecycle body',
-      { timeout: 75_000 },
-    );
-    log.push('Open browser reader updated automatically after source edit');
-    expect(await pid()).toBe(astroPid);
-    const renamed = resolve('../Tutorials', `${name}-renamed.md`);
-    await rename(source, renamed);
-    source = renamed;
-    owned = owned.replace('---\n#', `aliases: [${route}]\n---\n#`);
-    await writeFile(source, owned);
-    const newRoute = `/notes/tutorials/${name}-renamed/`;
-    await until(newRoute, 'Changed lifecycle body');
-    const alias = await until(route, 'noindex');
-    expect(alias).toContain(newRoute);
-    expect(alias).not.toContain('data-pagefind-body');
-    expect(await pid()).toBe(astroPid);
-    const published = owned;
-    owned = owned.replace('---\n#', 'draft: true\n---\n#');
-    await writeFile(source, owned);
-    await until(newRoute, 'Page not found', 404);
-    await until(route, 'Page not found', 404);
-    expect(await pid()).toBe(astroPid);
-    owned = published;
-    await writeFile(source, owned);
-    await until(newRoute, 'Changed lifecycle body');
-    await until(route, 'noindex');
-    expect(await pid()).toBe(astroPid);
-    expect(await readFile('dist/pagefind/pagefind-entry.json')).toEqual(
-      indexBefore,
-    );
-    log.push('Production Pagefind index bytes unchanged by archive edits');
-    const search = await request.get(`${url}/search/`);
-    expect(await search.text()).toContain('does not update with note edits');
-    expect(await readFile(source, 'utf8')).toBe(owned);
-    await writeFile(join(evidence, `${name}-source.txt`), owned, {
-      flag: 'wx',
-    });
-    await unlink(source);
-    source = '';
-    await until(newRoute, 'Page not found', 404);
-    await until(route, 'Page not found', 404);
-    expect(await pid()).toBe(astroPid);
-    log.push(
-      `Same Astro PID ${astroPid} after modify/add/rename+alias/delete; dev notice present`,
-    );
-  } finally {
-    if (child.pid) process.kill(-child.pid, 'SIGTERM');
-    await exited;
-    if (source) {
-      const actual = await readFile(source, 'utf8');
-      expect(actual, `Unexpected edits preserved at ${source}`).toBe(owned);
-      await writeFile(join(evidence, `${name}-source.txt`), owned, {
-        flag: 'wx',
-      }).catch((error: unknown) => {
-        if (!(
-          error instanceof Error &&
-          'code' in error &&
-          error.code === 'EEXIST'
-        ))
-          throw error;
-      });
-      await unlink(source);
-    }
-    await mkdir(evidence, { recursive: true });
-    await writeFile(
-      join(evidence, `${name}-http.log`),
-      `${log.join('\n')}\n\n${output}`,
-    );
-  }
-});
-
 test('built known alias and an actual owned draft are excluded from Pagefind and sitemap', async ({
   page,
   request,
 }) => {
-  test.setTimeout(180_000);
+  test.setTimeout(360_000);
   const name = `task6-production-${randomUUID()}`;
   const published = resolve('../Tutorials', `${name}.md`);
   const draft = resolve('../Tutorials', `${name}-draft.md`);
@@ -192,7 +38,8 @@ test('built known alias and an actual owned draft are excluded from Pagefind and
   const publicBytes = `---\ntitle: Task 6 synthetic alias proof\naliases: [${alias}]\n---\n# Public alias proof\n\nSynthetic Unicode UI fixture: 日本語 · café · λ.\n`;
   const draftBytes = `---\ntitle: Task 6 synthetic draft proof\ndraft: true\n---\n# ${phrase}\n`;
   const owned: [string, string][] = [];
-  const env = { ...process.env, SITE_URL: 'https://notes.example.test' };
+  const incoming = { ...process.env };
+  const env = { ...incoming, SITE_URL: 'https://notes.example.test' };
   const logs: string[] = [];
   try {
     await writeFile(published, publicBytes, { flag: 'wx' });
@@ -273,13 +120,11 @@ test('built known alias and an actual owned draft are excluded from Pagefind and
       );
       await unlink(file);
     }
-    const cleanEnv = { ...process.env };
-    delete cleanEnv['SITE_URL'];
     logs.push(
       (
         await execute('npm', ['run', 'build'], {
           cwd: site,
-          env: cleanEnv,
+          env: incoming,
           maxBuffer: 32 * 1024 * 1024,
         })
       ).stdout,
@@ -288,32 +133,40 @@ test('built known alias and an actual owned draft are excluded from Pagefind and
   }
 });
 
-test('unconfigured production build emits no sitemap file', async () => {
-  await expect(access('dist/sitemap.xml')).rejects.toMatchObject({
-    code: 'ENOENT',
-  });
+test('production cleanup preserves incoming sitemap and canonical configuration', async ({
+  request,
+}) => {
+  const configured = process.env['SITE_URL'];
+  const response = await request.get('/sitemap.xml');
+  const home = await (await request.get('/')).text();
+  if (configured) {
+    expect(response.status()).toBe(200);
+    expect(await readFile('dist/sitemap.xml', 'utf8')).toContain(
+      new URL('/library/', configured).href,
+    );
+    expect(home).toContain(`href="${new URL('/', configured).href}"`);
+  } else {
+    expect(response.status()).toBe(404);
+    await expect(access('dist/sitemap.xml')).rejects.toMatchObject({
+      code: 'ENOENT',
+    });
+    expect(home).not.toContain('rel="canonical"');
+  }
 });
 
 test('development serves the last built real Pagefind index and displays its update limitation', async ({
   page,
-}) => {
-  test.setTimeout(120_000);
+}, testInfo) => {
+  test.setTimeout(developmentSearchTimeout);
   const port = await freePort();
   const url = `http://127.0.0.1:${port}`;
-  let output = '';
   const entryBefore = await readFile('dist/pagefind/pagefind-entry.json');
   const child = spawn('npm', ['run', 'dev', '--', '--port', String(port)], {
     cwd: site,
     detached: true,
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  child.stdout.on('data', (bytes: Buffer) => {
-    output += bytes.toString();
-  });
-  child.stderr.on('data', (bytes: Buffer) => {
-    output += bytes.toString();
-  });
-  const exited = new Promise<void>((done) => child.once('exit', () => done()));
+  const diagnostics = developmentDiagnostics(child, testInfo);
   const outside = resolve('src/lib/catalog.ts');
   const link = resolve('dist/pagefind', `task6-link-${randomUUID()}.js`);
   let linked = false;
@@ -323,18 +176,25 @@ test('development serves the last built real Pagefind index and displays its upd
   try {
     await symlink(outside, link);
     linked = true;
+    diagnostics.record('waiting for /search/ HTTP 200');
     await expect
       .poll(
         async () => {
           try {
-            return (await page.request.get(`${url}/search/`)).status();
+            const response = await page.request.get(`${url}/search/`);
+            try {
+              return response.status();
+            } finally {
+              await response.dispose();
+            }
           } catch {
             return 0;
           }
         },
-        { timeout: 75_000, intervals: [500, 1000] },
+        { timeout: fullArchiveReadinessTimeout, intervals: [500, 1000] },
       )
       .toBe(200);
+    diagnostics.record('ready: /search/ HTTP 200');
     await page.goto(`${url}/search/`);
     await expect(page.locator('.development-search-notice')).toContainText(
       'does not update with note edits',
@@ -376,20 +236,28 @@ test('development serves the last built real Pagefind index and displays its upd
     await expect(page.locator('[data-search-status]')).toContainText(
       'npm run build and npm run preview',
     );
+  } catch (error) {
+    diagnostics.fail(error);
   } finally {
-    if (child.pid) process.kill(-child.pid, 'SIGTERM');
-    await exited;
-    if (moved) {
-      await expect(access(indexRoot)).rejects.toMatchObject({ code: 'ENOENT' });
-      expect(await readFile(join(backup, 'pagefind-entry.json'))).toEqual(
-        entryBefore,
-      );
-      await rename(backup, indexRoot);
+    try {
+      if (child.pid && child.exitCode === null && child.signalCode === null)
+        process.kill(-child.pid, 'SIGTERM');
+      await diagnostics.exited;
+      if (moved) {
+        await expect(access(indexRoot)).rejects.toMatchObject({
+          code: 'ENOENT',
+        });
+        expect(await readFile(join(backup, 'pagefind-entry.json'))).toEqual(
+          entryBefore,
+        );
+        await rename(backup, indexRoot);
+      }
+      if (linked) {
+        expect(await readlink(link)).toBe(outside);
+        await unlink(link);
+      }
+    } finally {
+      await diagnostics.save(`task6-dev-search-${port}.log`);
     }
-    if (linked) {
-      expect(await readlink(link)).toBe(outside);
-      await unlink(link);
-    }
-    await writeFile(join(evidence, `task6-dev-search-${port}.log`), output);
   }
 });

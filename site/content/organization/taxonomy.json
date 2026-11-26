@@ -1,0 +1,155 @@
+{
+  "version": 1,
+  "topics": [
+    {
+      "id": "mathematics-statistics",
+      "title": "Mathematics & Statistics",
+      "summary": "Probability and statistical reasoning used in the applied-science interview notes.",
+      "order": 0
+    },
+    {
+      "id": "probability",
+      "title": "Probability",
+      "summary": "Distributions, conditional probability and probabilistic reasoning in the statistics notes.",
+      "parentId": "mathematics-statistics",
+      "order": 0
+    },
+    {
+      "id": "statistics-experimentation",
+      "title": "Statistics & Experimentation",
+      "summary": "Statistical tests, estimation and experimental reasoning in the interview preparation notes.",
+      "parentId": "mathematics-statistics",
+      "order": 1
+    },
+    {
+      "id": "machine-learning",
+      "title": "Machine Learning",
+      "summary": "Learning paradigms, models, data preparation, training and evaluation in the applied-science notes.",
+      "order": 3
+    },
+    {
+      "id": "foundations-data-preparation",
+      "title": "Foundations & Data Preparation",
+      "summary": "Learning paradigms, practical data issues and the applied-science study roadmap.",
+      "parentId": "machine-learning",
+      "order": 0
+    },
+    {
+      "id": "supervised-learning",
+      "title": "Supervised Learning",
+      "summary": "Linear models, tree models and support vector machines from the interview breadth notes.",
+      "parentId": "machine-learning",
+      "order": 1
+    },
+    {
+      "id": "unsupervised-learning",
+      "title": "Unsupervised Learning",
+      "summary": "Clustering and dimensionality reduction from the interview breadth notes.",
+      "parentId": "machine-learning",
+      "order": 2
+    },
+    {
+      "id": "probabilistic-models",
+      "title": "Probabilistic Models",
+      "summary": "Graphical models and probabilistic clustering in the interview notes.",
+      "parentId": "machine-learning",
+      "order": 3
+    },
+    {
+      "id": "training-regularization",
+      "title": "Training & Regularization",
+      "summary": "Bias and variance, regularization, losses and optimization across the interview and PyTorch notes.",
+      "parentId": "machine-learning",
+      "order": 4
+    },
+    {
+      "id": "evaluation-validation",
+      "title": "Evaluation & Validation",
+      "summary": "Dataset splits and model evaluation metrics from the interview breadth notes.",
+      "parentId": "machine-learning",
+      "order": 5
+    },
+    {
+      "id": "deep-learning",
+      "title": "Deep Learning",
+      "summary": "Neural-network material across the applied-science notes and the PyTorch book archive.",
+      "order": 10
+    },
+    {
+      "id": "neural-networks",
+      "title": "Neural Networks",
+      "summary": "Feedforward, recurrent and convolutional networks in the interview notes and PyTorch chapters.",
+      "parentId": "deep-learning",
+      "order": 0
+    },
+    {
+      "id": "computer-vision",
+      "title": "Computer Vision",
+      "summary": "Image classification and convolutional networks across the interview notes and PyTorch chapters.",
+      "parentId": "deep-learning",
+      "order": 1
+    },
+    {
+      "id": "natural-language-processing",
+      "title": "Natural Language Processing",
+      "summary": "Text representations in the interview notes and the book text-classification outline.",
+      "parentId": "deep-learning",
+      "order": 2
+    },
+    {
+      "id": "attention-transformers-language-models",
+      "title": "Attention, Transformers & Language Models",
+      "summary": "Attention mechanisms and transformer architecture in the applied-science interview notes.",
+      "parentId": "deep-learning",
+      "order": 3
+    },
+    {
+      "id": "audio-speech",
+      "title": "Audio & Speech",
+      "summary": "The heading-only sound chapter outline retained in the PyTorch book archive.",
+      "parentId": "deep-learning",
+      "order": 4
+    },
+    {
+      "id": "reinforcement-learning",
+      "title": "Reinforcement Learning",
+      "summary": "Reinforcement-learning concepts in the applied-science interview breadth note.",
+      "parentId": "deep-learning",
+      "order": 5
+    },
+    {
+      "id": "frameworks-gpu-computing",
+      "title": "Frameworks & GPU Computing",
+      "summary": "PyTorch setup, tensor basics and computing context from the book preface and getting-started chapter.",
+      "parentId": "deep-learning",
+      "order": 6
+    },
+    {
+      "id": "web-development",
+      "title": "Web Development",
+      "summary": "Authored course notes and a supplemental styling reference from the React course archive.",
+      "order": 18
+    },
+    {
+      "id": "javascript-typescript",
+      "title": "JavaScript & TypeScript",
+      "summary": "Modern JavaScript syntax and concepts in the authored course refresher note.",
+      "parentId": "web-development",
+      "order": 0
+    },
+    {
+      "id": "react",
+      "title": "React",
+      "summary": "The course overview, introduction and essentials note headings from the React course archive.",
+      "parentId": "web-development",
+      "order": 1
+    },
+    {
+      "id": "css-tailwind",
+      "title": "CSS & Tailwind",
+      "summary": "The supplemental Tailwind class reference associated with the project-management module.",
+      "parentId": "web-development",
+      "order": 2
+    }
+  ]
+}

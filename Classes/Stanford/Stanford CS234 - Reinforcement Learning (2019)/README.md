@@ -1,3 +1,6 @@
+---
+title: "Stanford CS234 - Reinforcement Learning (2019)"
+---
 # Stanford CS234 - Reinforcement Learning (2019)
 
 This course focuses on the basics of Reinforcement Learning from top to bottom

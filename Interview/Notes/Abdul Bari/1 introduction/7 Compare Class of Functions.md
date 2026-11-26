@@ -1,3 +1,6 @@
+---
+title: "1.7 Compare Class of Functions"
+---
 # 1.7 Compare Class of Functions
 
 ## Overview

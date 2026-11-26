@@ -1,3 +1,6 @@
+---
+title: "Tailwind CSS Challenges"
+---
 # Tailwind CSS Challenges
 
 ## Welcome to Tailwind CSS Challenges

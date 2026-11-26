@@ -1,6 +1,10 @@
 {
   "extends": "./tsconfig.json",
-  "compilerOptions": { "module": "NodeNext", "moduleResolution": "NodeNext" },
+  "compilerOptions": {
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "types": ["node", "astro/client"]
+  },
   "include": ["scripts/**/*.ts", "tests/**/*.ts", "*.ts"],
   "exclude": ["dist", "node_modules", ".generated", "public"]
 }

@@ -1,0 +1,68 @@
+---
+import LibraryLayout from '../../../../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../../../../components/Breadcrumbs.astro';
+import OrganizationCards from '../../../../../components/OrganizationCards.astro';
+import { readPreparedCatalog } from '../../../../../lib/catalog.js';
+import {
+  organizationCards,
+  organizationDocuments,
+  organizationTree,
+} from '../../../../../lib/organization-pages.js';
+export async function getStaticPaths() {
+  const catalog = await readPreparedCatalog();
+  const index = catalog.organization;
+  return catalog
+    .organizationRoutes()
+    .filter((route) =>
+      /^\/library\/collections\/[^/]+\/groups\/[^/]+\/$/.test(route),
+    )
+    .map((route) => {
+      const [, , , collectionId, , groupId] = route.split('/');
+      const key = collectionId + '/' + groupId;
+      const node = index.getNode('group', key)!;
+      if (node.type !== 'group') throw new Error('Expected a collection group');
+      const collection = index.getNode('collection', collectionId!)!;
+      return {
+        params: { collectionId, groupId },
+        props: {
+          node,
+          collection,
+          cards: organizationCards(index, index.listNodes('group', key)),
+          documents: organizationDocuments(index, 'group', key),
+          tree: organizationTree(index, 'group', collectionId),
+        },
+      };
+    });
+}
+const { node, collection, cards, documents, tree } = Astro.props;
+---
+
+<LibraryLayout
+  title={node.title}
+  description={node.summary}
+  organizationNav={{
+    title: collection.title,
+    route: collection.route,
+    nodes: tree,
+  }}
+>
+  <div data-pagefind-ignore>
+    <Breadcrumbs title={node.title} />
+    <p>
+      <a href={collection.route}>{collection.title}</a>
+    </p>
+    <h1>{node.title}</h1>
+    <p>{node.summary}</p>
+    <p class="entry-meta">{node.record.type}</p>
+    {cards.length > 0 && (
+      <section class="browse-section">
+        <h2>Groups</h2>
+        <OrganizationCards cards={cards} />
+      </section>
+    )}
+    <OrganizationCards
+      documents={documents}
+      project={node.record.type === 'project'}
+    />
+  </div>
+</LibraryLayout>

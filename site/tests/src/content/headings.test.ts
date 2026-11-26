@@ -112,3 +112,9 @@ it('keeps the first normalized reference definition, matching CommonMark renderi
   expect(html).toContain(`src="${links[1]!.href}"`);
   expect(html).not.toContain('second.md');
 });
+
+it('collects image alternative text in headings without executing author HTML', () => {
+  expect(collectHeadings('# ![Diagram](diagram.png) and `code`')).toEqual([
+    { id: 'diagram-and-code', text: 'Diagram and code', depth: 1 },
+  ]);
+});

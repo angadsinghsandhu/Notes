@@ -1,3 +1,6 @@
+---
+title: "3.0 Greedy Method - Introduction"
+---
 # 3.0 Greedy Method - Introduction
 
 ## Overview

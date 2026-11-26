@@ -1,0 +1,210 @@
+{
+  "version": 1,
+  "paths": [
+    {
+      "id": "applied-scientist-interview-preparation",
+      "title": "Applied Scientist Interview Preparation",
+      "summary": "Follow the existing roadmap, then the numbered breadth notes from learning foundations through models, deep learning, evaluation and statistics. Each step opens the original canonical note.",
+      "steps": [
+        {
+          "id": "orientation",
+          "title": "Orientation and Interview Roadmap",
+          "summary": "Start with the existing interview roadmap and topic checklist.",
+          "entryUids": [
+            "doc-69eef5865b1ca4094a13eb954aaa7aff2ffb680c48c49ec195294445d9881058"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "1-basics",
+          "title": "1. Fundamentals & Learning Paradigms",
+          "summary": "Compare learning paradigms, model families and inductive bias.",
+          "entryUids": [
+            "doc-841e249712513ae53c8d4862682312ce9b16be98092e7776aed0afd8b236031c"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "2-data-fitting",
+          "title": "2. Bias-Variance Tradeoff & Regularization ⭐⭐⭐",
+          "summary": "Study bias, variance and regularization before comparing models.",
+          "entryUids": [
+            "doc-a159afbec0d034aadea1f1c65e1bd520c2268315c668c332a9f9db42b156fc86"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "3-1-linear-models",
+          "title": "3.1 Linear Models",
+          "summary": "Work through linear regression and classification models.",
+          "entryUids": [
+            "doc-cf97be884a87f5f325eece4a8a62cf83ab09c36bfd9e8db7d3db9e052d41814f"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "3-2-tree-models",
+          "title": "3.2 Tree-Based Models",
+          "summary": "Study decision trees and their ensemble extensions.",
+          "entryUids": [
+            "doc-ea3fdf9c65aa0250ba3094328c178f12b918286be75a18467a6636a367dae621"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "3-3-svm",
+          "title": "3.3 Support Vector Machines",
+          "summary": "Study margins, kernels and support vector machines.",
+          "entryUids": [
+            "doc-4cffcb9151616068f03b29457e248434a99a17d42f3a3196ae153312a3219fc3"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "4-1-clustering",
+          "title": "4.1 Clustering",
+          "summary": "Compare clustering methods and probabilistic clustering.",
+          "entryUids": [
+            "doc-bfd1ac643c0b61ebf87e4b1e9bb22e701be3ee4304c96b8f369e0eca255f7d10"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "4-2-dim-reduc",
+          "title": "4.2 Dimensionality Reduction",
+          "summary": "Study dimensionality-reduction methods and their tradeoffs.",
+          "entryUids": [
+            "doc-acd370acfaf755964dc5b7440a26c0c83186696178497f69fc8bc546cc8c6360"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "5-prob-models",
+          "title": "5. Probabilistic Models",
+          "summary": "Study probabilistic graphical models and inference.",
+          "entryUids": [
+            "doc-7f4807a1e2c19563b607e40318b95e906e799d33e7849d2d40825821c51d88f9"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "6-1-nn-basics",
+          "title": "6.1 Neural Network Fundamentals",
+          "summary": "Review feedforward networks, activations and training fundamentals.",
+          "entryUids": [
+            "doc-561e8de8a1caddee99de7a39c9225e41f558fc7bf9c00e8166123d03fbb6f397"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "6-2-cnn",
+          "title": "6.2 Convolutional Neural Networks (CNNs)",
+          "summary": "Study convolutions, pooling and convolutional architectures.",
+          "entryUids": [
+            "doc-3b5583b00322ef2e7bc85811bc0d8a58709211d3e46d84cb8b44d6318e677a83"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "6-3-cv",
+          "title": "6.3 Computer Vision",
+          "summary": "Continue to computer-vision tasks and object detection.",
+          "entryUids": [
+            "doc-bee064b15a419b6f12721c7f5449307ebca7cca3562abbf04bb2b00e3bf62869"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "6-4-nlp",
+          "title": "6.4 NLP Techniques",
+          "summary": "Review text representations and language-processing methods.",
+          "entryUids": [
+            "doc-060bdec0676b4a6742957172f1cfe6a350e1abcf7d4b648cdaeef8bcc531aef2"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "6-5-seq-models",
+          "title": "6.5 Sequential Models (RNNs, LSTMs)",
+          "summary": "Study recurrent networks, LSTMs and GRUs.",
+          "entryUids": [
+            "doc-e563b2565f9577bab7d469700ee3b5890569b39941fbb929c0fbbb6eecc90845"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "6-6-1-attn",
+          "title": "6.6.1 Attention Mechanisms",
+          "summary": "Study attention mechanisms before the transformer architecture.",
+          "entryUids": [
+            "doc-08ea11adf85a450fb5836fa21ea8edffa848a0b49790d002dafea3ed0e694e8b"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "6-6-2-transformers",
+          "title": "6.6.2 Transformer Architecture",
+          "summary": "Continue from attention to transformer architecture.",
+          "entryUids": [
+            "doc-870b3fa3cf7a78d988d6b7ba3abcd2e619b1db37b94feeca0743077156fbd4e5"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "7-rl",
+          "title": "7. Reinforcement Learning",
+          "summary": "Review reinforcement-learning concepts and algorithms.",
+          "entryUids": [
+            "doc-e60dcc4f128c7c36f9840ab7a74944d3f817ec28d8e96e8cee44dff75f992128"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "8-train-optim",
+          "title": "8. Training & Optimization",
+          "summary": "Consolidate losses, optimizers and practical training techniques.",
+          "entryUids": [
+            "doc-62fa8b3ff69bfa427f62dc43a51d4c94f6f577fb49c1642c20ffe67ac3100934"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "9-splits",
+          "title": "9. Model Evaluation & Validation",
+          "summary": "Study the roles of training, validation and test splits.",
+          "entryUids": [
+            "doc-2d687b5ebc2cdae7914a45d24d0af5d6ccb51cdb47831ccc13edf3d2bf93e4a2"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "10-eval",
+          "title": "10. Evaluation Metrics",
+          "summary": "Choose and interpret model evaluation metrics.",
+          "entryUids": [
+            "doc-ae6865e78a15a869d40cb8ae6a188660a46772357a35993871723bef6bb12016"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "11-practical",
+          "title": "11. Practical ML Challenges",
+          "summary": "Review missing data and other practical machine-learning challenges.",
+          "entryUids": [
+            "doc-de42b642bebbfac1c0445c94c1622c6808b13a0b7ad5f6fc3c8301b95916fe47"
+          ],
+          "topicIds": []
+        },
+        {
+          "id": "12-stats",
+          "title": "12. Statistics & Experimentation ⭐⭐",
+          "summary": "Finish with probability, statistical inference and experimentation.",
+          "entryUids": [
+            "doc-143a6342d33dbca2ea00ccda484ff41369dae447edc7ff905b108ddea2ef3f63"
+          ],
+          "topicIds": []
+        }
+      ]
+    }
+  ]
+}

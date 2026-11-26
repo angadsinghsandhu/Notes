@@ -1,3 +1,6 @@
+---
+title: "Essential Coding Patterns for Coding Interviews"
+---
 # Essential Coding Patterns for Coding Interviews
 
 Navigating through coding interviews requires more than just a good grasp of algorithms and data structures; it demands a strategic approach and a keen eye for patterns. Coding patterns are recurring techniques that help break down problems into manageable parts, offering a structured approach to solving complex problems.

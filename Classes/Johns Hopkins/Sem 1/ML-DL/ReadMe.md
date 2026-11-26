@@ -1,3 +1,6 @@
+---
+title: "Machine Learning: Deep Learning (EN.601.682) - Mathias Unberath"
+---
 # Machine Learning: Deep Learning (EN.601.682) - Mathias Unberath
 
 Deep learning (DL) has emerged as a powerful tool for solving data-intensive learning problems such as supervised learning for classification or regression, dimensionality reduction, and control. As such, it has a broad range of applications including speech and text understanding, computer vision, medical imaging, and perception-based robotics. The goal of this course is to introduce the basic concepts of deep learning (DL). The course will include a brief introduction to the basic theoretical and methodological underpinnings of machine learning, commonly used architectures for DL, DL optimization methods, DL programming systems, and specialized applications to computer vision, speech understanding, and robotics. Students will be expected to solve several DL problems on standardized data sets, and will be given the opportunity to pursue team projects on topics of their choice. [Applications]. Required course background: probability and linear algebra, some machine learning; calc III and numerical optimization recommended.

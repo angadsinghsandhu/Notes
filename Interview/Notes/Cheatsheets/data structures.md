@@ -1,3 +1,6 @@
+---
+title: "Guide to Essential Data Structures in Python for Competitive Programming"
+---
 # Guide to Essential Data Structures in Python for Competitive Programming
 
 Below is an extended guide that includes explanations of when to use each structure, key patterns that indicate their use, and the types of LeetCode problems where they are often employed.

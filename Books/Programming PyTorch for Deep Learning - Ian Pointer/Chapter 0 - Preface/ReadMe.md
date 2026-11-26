@@ -1,3 +1,6 @@
+---
+title: "Preface"
+---
 # Preface
 
 This book is an introduction to deep learning via PyTorch, an open-source library released by Facebook in 2017. The book discusses the history of neural networks and deep learning and how they have become ubiquitous in our daily lives.

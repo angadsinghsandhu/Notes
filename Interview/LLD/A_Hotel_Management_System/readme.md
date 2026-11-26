@@ -1,3 +1,6 @@
+---
+title: "Designing a Hotel Management System"
+---
 # Designing a Hotel Management System
 
 ## Requirements

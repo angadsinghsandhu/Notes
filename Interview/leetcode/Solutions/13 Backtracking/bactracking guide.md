@@ -1,3 +1,6 @@
+---
+title: "Backtracking Problem Solving Guide"
+---
 # Backtracking Problem Solving Guide
 
 Welcome to this guide on solving backtracking problems, a common topic in coding interviews and challenges. We will explore a versatile backtracking template that can be applied to various problems, such as the N-Queens problem and Sudoku solver.

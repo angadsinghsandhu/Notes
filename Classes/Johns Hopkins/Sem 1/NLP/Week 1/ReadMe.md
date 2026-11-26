@@ -1,3 +1,6 @@
+---
+title: "Week 1: Lecture 1-3"
+---
 # Week 1: Lecture 1-3
 
 ## Lecture 1

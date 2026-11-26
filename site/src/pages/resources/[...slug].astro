@@ -1,4 +1,8 @@
 ---
+import {
+  readerOrganization,
+  type ReaderOrganization,
+} from '../../lib/organization-pages.js';
 import ReaderLayout from '../../layouts/ReaderLayout.astro';
 import { readPreparedBody, readPreparedCatalog } from '../../lib/catalog.js';
 import type { ContentEntry } from '../../content/index.js';
@@ -17,6 +21,7 @@ export async function getStaticPaths() {
         },
         props: {
           entry,
+          organization: readerOrganization(catalog, entry),
           html: await readPreparedBody(entry),
           navItems: notes.filter(
             (item) =>
@@ -28,6 +33,7 @@ export async function getStaticPaths() {
   );
 }
 interface Props {
+  organization: ReaderOrganization;
   entry: ContentEntry;
   html: string;
   navItems: ContentEntry[];

@@ -1,3 +1,6 @@
+---
+title: "7. Reinforcement Learning"
+---
 # 7. Reinforcement Learning
 
 ---

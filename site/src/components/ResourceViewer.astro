@@ -1,5 +1,6 @@
 ---
 import type { ContentEntry } from '../content/index.js';
+import PdfViewer from './PdfViewer.astro';
 interface Props {
   entry: ContentEntry;
 }
@@ -37,17 +38,12 @@ const size =
           Open PDF
         </a>
       </div>
-      <p class="muted">
-        Desktop preview below. If the preview is unavailable, use Open PDF.
-      </p>
-      {/* Only prepared local PDFs reach this browser-native viewer; iframe sandbox blocks it. */}
-      <iframe
-        class="pdf-preview"
-        title="PDF preview"
-        src={entry.assetUrl}
-        loading="lazy"
-        data-pagefind-ignore
-      />
+      <div class="actions">
+        <a class="action" href={entry.assetUrl} download>
+          Download PDF
+        </a>
+      </div>
+      <PdfViewer url={entry.assetUrl!} />
     </>
   )}
   {local && entry.kind === 'slides' && (

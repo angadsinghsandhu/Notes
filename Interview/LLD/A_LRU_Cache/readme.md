@@ -1,3 +1,6 @@
+---
+title: "LRU Cache"
+---
 # LRU Cache
 
 # Designing a LRU Cache

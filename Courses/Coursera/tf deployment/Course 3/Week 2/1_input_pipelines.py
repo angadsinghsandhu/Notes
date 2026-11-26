@@ -1,39 +1,41 @@
 
 import numpy as np
-import pandas as pd
+import polars as pl
 import tensorflow as tf
 import tensorflow.keras as k
 
-# creating dataframe from pandas
-URL = 'https://storage.googleapis.com/applied-dl/heart.csv'
-df = pd.read_csv(URL)
+# creating dataframe from Polars (pip install polars)
+# The historical applied-dl/heart.csv is unavailable; equality to that file is unknown.
+URL = 'https://storage.googleapis.com/download.tensorflow.org/data/heart.csv'
+df = pl.read_csv(URL)
 df.head()
 
 # spliting data
-data_len = df.shape[0]
+data_len = df.height
 split_ratio = 0.8
 validation_split_ratio = 0.8
 
 train_len = int(round(data_len * split_ratio))
 val_len = int(round(train_len * validation_split_ratio))
 
-train, test = df.iloc[:train_len], df.iloc[train_len:]
-train, val = train.iloc[:val_len], train.iloc[val_len:]
+train, test = df[:train_len], df[train_len:]
+train, val = train[:val_len], train[val_len:]
 
 print("\n\n\ntrain shape : {}".format(train.shape))
 print("test shape : {}".format(test.shape))
 print("val shape : {}\n\n\n".format(val.shape))
 
 # creating input pipeline
-# A utility method to create a tf.data dataset from a Pandas Dataframe
+# A utility method to create a tf.data dataset from a Polars DataFrame
 # not taking into account if dataset dosent fit into memory,
 # then we directly load it from memory
 
 
 def df_to_dataset(dataframe, shuffle=True, batch_size=32):
-    dataframe = dataframe.copy()
-    labels = dataframe.pop('target')
-    ds = tf.data.Dataset.from_tensor_slices((dict(dataframe), labels))
+    labels = dataframe['target'].to_numpy()
+    features = dataframe.drop('target')
+    ds = tf.data.Dataset.from_tensor_slices(
+        ({name: features[name].to_numpy() for name in features.columns}, labels))
     if shuffle:
         ds = ds.shuffle(buffer_size=len(dataframe))
     ds = ds.batch(batch_size)

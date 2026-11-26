@@ -68,6 +68,7 @@ export function initSearch(document: Document, load = loadPagefind): void {
     const token = ++generation;
     list!.replaceChildren();
     more!.hidden = true;
+    more!.disabled = false;
     const query = form!
       .querySelector<HTMLInputElement>('[name="q"]')!
       .value.trim();
@@ -77,7 +78,7 @@ export function initSearch(document: Document, load = loadPagefind): void {
     }
     status!.textContent = 'Searching…';
     const filters: Record<string, string> = {};
-    for (const name of ['section', 'kind']) {
+    for (const name of ['scope', 'section', 'kind', 'topic', 'collection']) {
       const value = form!.querySelector<HTMLSelectElement>(
         `[name="${name}"]`,
       )!.value;
@@ -101,14 +102,22 @@ export function initSearch(document: Document, load = loadPagefind): void {
     event.preventDefault();
     void search();
   });
+  form.addEventListener('change', (event) => {
+    if ((event.target as HTMLElement).matches('select')) void search();
+  });
+  form.addEventListener('reset', () => {
+    setTimeout(() => void search(), 0);
+  });
   more.addEventListener('click', async () => {
+    const token = generation;
     more.disabled = true;
     try {
-      await append(generation);
+      await append(token);
     } catch {
+      if (token !== generation) return;
       status.textContent = 'More results could not load. Retry the search.';
     } finally {
-      more.disabled = false;
+      if (token === generation) more.disabled = false;
     }
   });
 }

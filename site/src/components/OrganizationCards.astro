@@ -1,0 +1,87 @@
+---
+import type {
+  organizationCards,
+  organizationDocuments,
+} from '../lib/organization-pages.js';
+import { projectFileTree } from '../lib/organization-pages.js';
+import OrganizationTree from './OrganizationTree.astro';
+interface Props {
+  cards?: ReturnType<typeof organizationCards>;
+  documents?: ReturnType<typeof organizationDocuments>;
+  project?: boolean;
+  showCounts?: boolean;
+  context?: 'group' | 'collection' | 'topic';
+}
+const {
+  cards = [],
+  documents,
+  project = false,
+  showCounts = true,
+  context = 'group',
+} = Astro.props;
+---
+
+{cards.length > 0 && (
+  <div class="section-cards organization-cards">
+    {cards.map((card) => (
+      <a class="section-card organization-card" href={card.route}>
+        <h3>{card.title}</h3>
+        <p>{card.summary}</p>
+        {showCounts && (
+          <p class="organization-counts">
+            {card.learningCount} learning{' '}
+            {card.learningCount === 1 ? 'item' : 'items'} · {card.resourceCount}{' '}
+            {card.resourceCount === 1 ? 'resource' : 'resources'}
+            {card.projectCount > 0 &&
+              ` · ${card.projectCount} ${card.projectCount === 1 ? 'project' : 'projects'}`}
+          </p>
+        )}
+      </a>
+    ))}
+  </div>
+)}
+{documents && (
+  <div data-organization-documents>
+    {(['notes', 'exercises', 'resources'] as const).map((bucket) => (
+      <section
+        class="browse-section"
+        data-organization-resources={bucket === 'resources' ? '' : undefined}
+        aria-labelledby={`${bucket}-title`}
+      >
+        <h2 id={`${bucket}-title`}>
+          {bucket[0]!.toUpperCase() + bucket.slice(1)}
+        </h2>
+        {documents[bucket].length === 0 ? (
+          <p>
+            No {bucket}{' '}
+            {context === 'topic'
+              ? 'in this topic or its descendants'
+              : `directly in this ${context}`}
+            .
+          </p>
+        ) : project && bucket === 'resources' ? (
+          <div data-project-files>
+            <OrganizationTree nodes={projectFileTree(documents.resources)} />
+          </div>
+        ) : (
+          <ul class="entry-list">
+            {documents[bucket].map((document) => (
+              <li>
+                <a href={document.route}>{document.title}</a>
+                <p class="entry-meta">
+                  {document.kind} ·{' '}
+                  {document.status === 'outline'
+                    ? 'Outline'
+                    : document.status === 'reviewed'
+                      ? 'Reviewed'
+                      : 'Unreviewed'}
+                </p>
+                {document.summary && <p>{document.summary}</p>}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))}
+  </div>
+)}

@@ -1,3 +1,6 @@
+---
+title: "2.5 Root Function (Recurrence Relation)"
+---
 # 2.5 Root Function (Recurrence Relation)
 
 ## Overview

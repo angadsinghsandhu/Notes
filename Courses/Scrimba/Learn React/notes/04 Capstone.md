@@ -1,3 +1,6 @@
+---
+title: "Final Lecture & Capstone"
+---
 # Final Lecture & Capstone
 
 ## Side Effects

@@ -1,3 +1,6 @@
+---
+title: "Machine Learning: Artificial Intelligence System Design and Development (EN.601.486/686) - Professor Mark Dredze"
+---
 # Machine Learning: Artificial Intelligence System Design and Development (EN.601.486/686) - Professor Mark Dredze
 
 This course focuses on designing and developing AI systems for the public good. It emphasizes a hands-on, project-based learning approach, where students work in teams to create AI solutions that address real-world challenges. The course will cover topics such as the impact of AI on daily life, machine learning capabilities, human-AI interaction, and ethical considerations.

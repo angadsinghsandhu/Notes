@@ -29,3 +29,15 @@ describe('author HTML allowlist', () => {
     expect(html).toContain('href="../note.md#ok"');
   });
 });
+
+it('rejects malformed network URLs and invalid image dimensions but retains disabled task checkboxes', () => {
+  const html = sanitizeAuthorHtml(
+    '<a href="http://[">bad</a><img src="https://example.test/a.png" width="0" height="40000001"><input type="checkbox" checked><input type="text">',
+  );
+  expect(html).not.toContain('href=');
+  expect(html).not.toContain('width=');
+  expect(html).not.toContain('height=');
+  expect(html).toContain('type="checkbox"');
+  expect(html).toContain('disabled');
+  expect(html).not.toContain('type="text"');
+});

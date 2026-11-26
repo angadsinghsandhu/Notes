@@ -1,6 +1,20 @@
+import { createCurriculumCatalog, type CurriculumCatalog } from './leetcode.js';
+import { buildOrganizationIndex, publicEntry } from './organization.js';
+import type { OrganizationIndex } from './organization.js';
+export type {
+  OrganizationIndex,
+  LibraryNode,
+  LibraryLink,
+  ResolvedPathStep,
+} from './organization.js';
 import { lstat, readFile } from 'node:fs/promises';
 import { basename, dirname, join, resolve } from 'node:path';
-import { assertUniqueRoutes, compareSourcePaths } from '../content/index.js';
+import {
+  assertUniqueRoutes,
+  compareSourcePaths,
+  organizationPageRoutes,
+  readPublishedCurriculum,
+} from '../content/index.js';
 import type {
   ContentEntry,
   ContentKind,
@@ -17,7 +31,17 @@ export const sectionLabels = {
   tutorials: 'Tutorials',
 } satisfies Record<Section, string>;
 
+export function isLearningNote(entry: ContentEntry): boolean {
+  return (
+    ['markdown', 'notebook'].includes(entry.kind) &&
+    entry.role !== 'supplemental'
+  );
+}
+
 export type Catalog = {
+  curriculum: CurriculumCatalog;
+  organization: OrganizationIndex;
+  organizationRoutes(): string[];
   getEntry(route: string): ContentEntry | undefined;
   listEntries(filters?: {
     section?: Section;
@@ -29,61 +53,6 @@ export type Catalog = {
   };
 };
 
-/** The internal ledger/assets never become page props. Select public fields explicitly. */
-function publicEntry(entry: ContentEntry): ContentEntry {
-  const {
-    id,
-    title,
-    description,
-    tags,
-    draft,
-    slug,
-    order,
-    updated,
-    aliases,
-    sourcePath,
-    section,
-    kind,
-    bytes,
-    groupSegments,
-    route,
-    headings,
-    anchors,
-    bodyFile,
-    assetUrl,
-    sourceUrl,
-  } = entry;
-  if (
-    sourcePath.startsWith('/') ||
-    sourcePath.includes('\\') ||
-    bodyFile?.startsWith('/') ||
-    bodyFile?.split('/').includes('..')
-  )
-    throw new Error('Catalog entries must contain repository-relative paths');
-  return {
-    id,
-    title,
-    description,
-    tags: [...tags],
-    draft,
-    aliases: [...aliases],
-    sourcePath,
-    section,
-    kind,
-    bytes,
-    groupSegments: [...groupSegments],
-    route,
-    headings: headings.map((heading) => ({ ...heading })),
-    ...(slug !== undefined ? { slug } : {}),
-    ...(order !== undefined ? { order } : {}),
-    ...(updated !== undefined ? { updated } : {}),
-    ...(anchors ? { anchors: [...anchors] } : {}),
-    ...(bodyFile ? { bodyFile } : {}),
-    ...(assetUrl ? { assetUrl } : {}),
-    ...(sourceUrl ? { sourceUrl } : {}),
-  };
-}
-
 const preparedBodies = new WeakMap<
   ContentEntry,
   { snapshot: string; id: string; bodyFile: string; html: string }
@@ -93,7 +62,11 @@ export function loadCatalog(manifest: Manifest): Catalog {
   return createCatalog(manifest);
 }
 
-function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
+function createCatalog(
+  manifest: Manifest,
+  select = publicEntry,
+  curriculum = createCurriculumCatalog(),
+): Catalog {
   const entries = manifest.entries
     .filter((entry) => !entry.draft)
     .map(publicEntry)
@@ -112,7 +85,20 @@ function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
   for (const entry of entries)
     for (const route of [entry.route, ...entry.aliases])
       routes.set(route, entry);
+  const index = buildOrganizationIndex(entries, manifest.organization);
+  const emittedRoutes = organizationPageRoutes(entries, manifest.organization);
   return {
+    curriculum,
+    organizationRoutes: () => [...emittedRoutes],
+    organization: {
+      ...index,
+      getEntryByUid: (uid) => {
+        const entry = index.getEntryByUid(uid);
+        return entry ? select(entry) : undefined;
+      },
+      listNodeEntries: (type, key, options) =>
+        index.listNodeEntries(type, key, options).map(select),
+    },
     getEntry: (route) => {
       const entry = routes.get(route);
       return entry ? select(entry) : undefined;
@@ -127,12 +113,12 @@ function createCatalog(manifest: Manifest, select = publicEntry): Catalog {
         .map(select),
     getAdjacentNotes: (id) => {
       const entry = entries.find((item) => item.id === id);
-      if (!entry || !['markdown', 'notebook'].includes(entry.kind)) return {};
+      if (!entry || !isLearningNote(entry)) return {};
       const notes = entries.filter(
         (item) =>
           item.section === entry.section &&
           item.groupSegments.join('/') === entry.groupSegments.join('/') &&
-          ['markdown', 'notebook'].includes(item.kind),
+          isLearningNote(item),
       );
       const index = notes.findIndex((item) => item.id === id);
       const previous = notes[index - 1];
@@ -174,10 +160,29 @@ export async function readPreparedCatalog(
 ): Promise<Catalog> {
   const snapshot = await snapshotPath(snapshotDir);
   const file = join(snapshot, 'manifest.json');
+  const generation = await manifestGeneration(file);
+  try {
+    return await catalogForGeneration(file, snapshot, generation);
+  } catch (error) {
+    // A winning commit may retire the generation this read just selected.
+    const latest = await manifestGeneration(file);
+    if (latest === generation) throw error;
+    return catalogForGeneration(file, snapshot, latest);
+  }
+}
+
+async function manifestGeneration(file: string): Promise<string> {
   const stat = await lstat(file);
   if (!stat.isFile() || stat.isSymbolicLink())
     throw new Error('Unsafe generated manifest');
-  const generation = `${stat.ino}:${stat.mtimeMs}:${stat.ctimeMs}:${stat.size}`;
+  return `${stat.ino}:${stat.mtimeMs}:${stat.ctimeMs}:${stat.size}`;
+}
+
+async function catalogForGeneration(
+  file: string,
+  snapshot: string,
+  generation: string,
+): Promise<Catalog> {
   if (cached?.snapshot === snapshot && cached.generation === generation)
     return cached.catalog;
   const catalog = readCatalogFile(file, snapshot);
@@ -185,7 +190,7 @@ export async function readPreparedCatalog(
   try {
     return await catalog;
   } catch (error) {
-    if (cached.catalog === catalog) cached = undefined;
+    if (cached?.catalog === catalog) cached = undefined;
     throw error;
   }
 }
@@ -197,6 +202,14 @@ async function readCatalogFile(
   const manifest = JSON.parse(await readFile(file, 'utf8')) as Manifest & {
     preparedBodies?: Record<string, string>;
   };
+  const curriculum = createCurriculumCatalog(
+    manifest.curriculumGeneration === undefined
+      ? undefined
+      : await readPublishedCurriculum(
+          dirname(snapshot),
+          manifest.curriculumGeneration,
+        ),
+  );
   const bodies = new Map<string, string>();
   for (const entry of manifest.entries) {
     if (entry.draft || !entry.bodyFile) continue;
@@ -207,17 +220,21 @@ async function readCatalogFile(
     if (typeof html !== 'string') throw new Error('Missing generated body');
     bodies.set(entry.bodyFile, html);
   }
-  return createCatalog(manifest, (entry) => {
-    const selected = publicEntry(entry);
-    if (selected.bodyFile)
-      preparedBodies.set(selected, {
-        snapshot,
-        id: selected.id,
-        bodyFile: selected.bodyFile,
-        html: bodies.get(selected.bodyFile)!,
-      });
-    return selected;
-  });
+  return createCatalog(
+    manifest,
+    (entry) => {
+      const selected = publicEntry(entry);
+      if (selected.bodyFile)
+        preparedBodies.set(selected, {
+          snapshot,
+          id: selected.id,
+          bodyFile: selected.bodyFile,
+          html: bodies.get(selected.bodyFile)!,
+        });
+      return selected;
+    },
+    curriculum,
+  );
 }
 
 function assertBodyPath(entry: ContentEntry): void {

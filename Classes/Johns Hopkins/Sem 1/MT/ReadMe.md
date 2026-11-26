@@ -1,3 +1,6 @@
+---
+title: "Machine Translation (EN.601.668) - Philipp Koehn"
+---
 # Machine Translation (EN.601.668) - Philipp Koehn
 
 Description

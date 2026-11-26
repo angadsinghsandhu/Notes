@@ -1,3 +1,6 @@
+---
+title: "1.6 Classes of Functions"
+---
 # 1.6 Classes of Functions
 
 ## Overview

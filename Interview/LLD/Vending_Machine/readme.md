@@ -1,3 +1,6 @@
+---
+title: "Designing a Vending Machine"
+---
 # Designing a Vending Machine
 
 ## Requirements

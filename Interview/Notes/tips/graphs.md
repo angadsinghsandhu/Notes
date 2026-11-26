@@ -1,3 +1,6 @@
+---
+title: "Graph Problem Solving Tips"
+---
 # Graph Problem Solving Tips
 
 Graph problems are a critical part of technical interviews. Here are three essential tips to help you tackle these problems effectively.

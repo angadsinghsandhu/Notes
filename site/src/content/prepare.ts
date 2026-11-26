@@ -1,6 +1,6 @@
-import { randomUUID } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile, realpath } from 'node:fs/promises';
-import { extname, join } from 'node:path';
+import { extname, isAbsolute, join, relative, sep } from 'node:path';
 import {
   commitPublication,
   discardPublication,
@@ -8,7 +8,19 @@ import {
 } from './publication.js';
 import { discoverEntries } from './discover.js';
 import { readMetadata, readPolicy } from './schema.js';
-import { compareSourcePaths, createEntry } from './identifiers.js';
+import { hasCurriculumDirectory } from './leetcode/publication.js';
+import { prepareCurriculum } from './leetcode/prepare.js';
+import { readCurriculum } from './leetcode/schema.js';
+import { readSourceMap, resolveSourceVariants } from './leetcode/source-map.js';
+import type { ProblemId } from './leetcode/types.js';
+import { readOrganization } from './organization-schema.js';
+import { resolveOrganization } from './organization.js';
+import {
+  assertUniqueRoutes,
+  publicationPages,
+  compareSourcePaths,
+  createEntry,
+} from './identifiers.js';
 import {
   collectExplicitAnchors,
   collectHeadings,
@@ -39,10 +51,14 @@ export type PrepareOptions = {
   rootDir: string;
   outputDir: string;
   policyPath: string;
+  organizationDir?: string;
+  curriculumDir?: string;
+  sourceVariants?: ReadonlyMap<string, ProblemId>;
   hosted: boolean;
   revision?: string;
   /** Watcher only: retain exactly the preceding publication’s assets for handoff. */
   development?: boolean;
+  includePreparedBodies?: boolean;
 };
 type Document = {
   entry: ContentEntry;
@@ -101,6 +117,23 @@ function notebookExtraction(entry: ContentEntry, link: MarkdownLink): boolean {
   );
 }
 
+async function enrolledCurriculumRoot(
+  projectRoot: string,
+  canonicalRoot: string,
+  source: string,
+): Promise<string | undefined> {
+  const path = relative(projectRoot, source);
+  const segments = path.split(sep);
+  if (!path || segments[0] === '..' || isAbsolute(path))
+    throw new Error('Curriculum directory must be inside the project');
+  let directory = canonicalRoot;
+  for (const segment of segments) {
+    directory = join(directory, segment);
+    if (!(await hasCurriculumDirectory(directory))) return undefined;
+  }
+  return directory;
+}
+
 export async function prepareContent(
   options: PrepareOptions,
 ): Promise<PreparationResult> {
@@ -111,7 +144,7 @@ export async function prepareContent(
     ledger: [],
   };
   const diagnostics: Diagnostic[] = [];
-  const result = { manifest, diagnostics };
+  const result: PreparationResult = { manifest, diagnostics };
   let stage: string | undefined;
   try {
     const root = await realpath(options.rootDir);
@@ -149,15 +182,54 @@ export async function prepareContent(
       throw new Error(
         'Hosted preparation requires an HTTPS siteUrl without credentials',
       );
+    const curriculumDir = options.curriculumDir
+      ? await enrolledCurriculumRoot(
+          options.rootDir,
+          root,
+          options.curriculumDir,
+        )
+      : undefined;
+    const sourceMap = curriculumDir
+      ? await readSourceMap(curriculumDir)
+      : undefined;
+    if (sourceMap && options.sourceVariants)
+      throw new Error(
+        'Cannot combine source-map.json with injected sourceVariants',
+      );
+    const sourceDigests = new Map<string, string>();
     const discovery = await discoverEntries(root, policy);
     manifest.ledger = discovery.ledger;
+    const definition = options.organizationDir
+      ? await readOrganization(options.organizationDir)
+      : undefined;
+    const records = new Map(
+      definition?.entries.entries.map((record) => [record.sourcePath, record]),
+    );
+    const organizationEntries: ContentEntry[] = [];
     const documents: Document[] = [];
     for (const source of discovery.sources) {
       try {
         const entry = createEntry(source, await readMetadata(source, policy));
-        const text = ['markdown', 'notebook', 'code'].includes(source.kind)
-          ? await readFile(source.absolutePath, 'utf8')
-          : '';
+        organizationEntries.push(entry);
+        if (records.get(entry.sourcePath)?.status === 'draft') {
+          entry.draft = true;
+          const row = manifest.ledger.find(
+            (row) => row.sourcePath === entry.sourcePath,
+          )!;
+          row.disposition = 'excluded';
+          row.reason = 'Excluded organizational draft content';
+          delete row.destination;
+          continue;
+        }
+        const bytes = ['markdown', 'notebook', 'code'].includes(source.kind)
+          ? await readFile(source.absolutePath)
+          : undefined;
+        const text = bytes?.toString('utf8') ?? '';
+        if (bytes && entry.kind === 'code' && sourceMap?.has(entry.sourcePath))
+          sourceDigests.set(
+            entry.sourcePath,
+            createHash('sha256').update(bytes).digest('hex'),
+          );
         const json: unknown =
           source.kind === 'notebook' ? JSON.parse(text) : undefined;
         const markdown =
@@ -183,6 +255,31 @@ export async function prepareContent(
       }
     }
     if (diagnostics.length) return result;
+    if (definition) {
+      // Discovery already removed policy/frontmatter drafts. Keep missing records strict.
+      const excluded = new Set(
+        discovery.ledger
+          .filter((row) => row.disposition === 'excluded')
+          .map((row) => row.sourcePath),
+      );
+      manifest.organization = resolveOrganization(organizationEntries, {
+        ...definition,
+        entries: {
+          version: 1,
+          entries: definition.entries.entries.filter(
+            (record) =>
+              !excluded.has(record.sourcePath) ||
+              organizationEntries.some(
+                (entry) => entry.sourcePath === record.sourcePath,
+              ),
+          ),
+        },
+      });
+    }
+    assertUniqueRoutes(
+      manifest.entries,
+      publicationPages(manifest.entries, manifest.organization),
+    );
     const candidates: AssetRecord[] = manifest.ledger
       .filter((row) => row.disposition === 'supporting-asset')
       .map((row, index) => ({
@@ -291,6 +388,20 @@ export async function prepareContent(
         bytes,
       );
     }
+    if (curriculumDir) {
+      const curriculum = await readCurriculum(curriculumDir);
+      const sourceVariants = sourceMap
+        ? resolveSourceVariants(sourceMap, curriculum.problems, sourceDigests)
+        : options.sourceVariants;
+      const snapshot = await prepareCurriculum(curriculum, {
+        rootDir: curriculumDir,
+        outputDir: join(stage, 'curriculum'),
+        sourceCatalog: catalog,
+        ...(sourceVariants ? { sourceVariants } : {}),
+        additionalPages: publicationPages([], manifest.organization),
+      });
+      manifest.curriculumGeneration = snapshot.generation;
+    }
     await writeManifest(manifest, stage, bodies);
     await commitPublication(
       generated,
@@ -300,6 +411,7 @@ export async function prepareContent(
       options.development ?? false,
     );
     stage = undefined;
+    if (options.includePreparedBodies) result.preparedBodies = bodies;
   } catch (error) {
     diagnostics.push(diagnostic('publication', error));
   } finally {

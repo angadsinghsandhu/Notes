@@ -1,4 +1,14 @@
-import { readFile } from 'node:fs/promises';
+import {
+  readFile,
+  mkdtemp,
+  mkdir,
+  writeFile,
+  open,
+  rm,
+} from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { planAssets } from '../../../../src/content/assets.js';
 import { describe, expect, it } from 'vitest';
 import { fromHtml } from 'hast-util-from-html';
 import type { Nodes } from 'hast';
@@ -141,4 +151,147 @@ describe('safe shared Markdown rendering', () => {
     expect(displayed).toContain('\\[raw\\] $raw$ ==raw==');
     expect((result.html.match(/class="katex"/g) ?? []).length).toBe(3);
   });
+});
+
+it('resolves labeled wiki text through the shared catalog and rejects missing attachment maps', async () => {
+  const markdown = '[[Note|Readable label]]';
+  expect((await renderMarkdown(markdown, context(markdown))).html).toContain(
+    'Readable label</a>',
+  );
+  await expect(
+    renderMarkdown(
+      '![plot](attachment:missing.png)',
+      context(''),
+      undefined,
+      new Map(),
+    ),
+  ).rejects.toThrow('Missing notebook attachment');
+});
+
+it('rejects missing, ambiguous and draft wiki targets through the actual renderer', async () => {
+  const ctx = context('');
+  await expect(renderMarkdown('[[Missing|Label]]', ctx)).rejects.toThrow(
+    /Missing|Unresolved/,
+  );
+  const existing = [...ctx.catalog.sources.values()][0]!;
+  for (const [draft, title] of [
+    [true, 'Private'],
+    [false, 'Note'],
+  ] as const) {
+    const entry = {
+      ...existing,
+      id: `other-${title}`,
+      sourcePath: `Interview/${title}.md`,
+      route: `/notes/interview/other-${title.toLowerCase()}/`,
+      draft,
+      title,
+    };
+    const catalog = createRouteCatalog([existing, entry], []);
+    await expect(
+      renderMarkdown(`[[${title}|Readable label]]`, { ...ctx, catalog }),
+    ).rejects.toThrow(draft ? /unresolved|unpublished|Missing/i : /ambiguous/i);
+  }
+});
+
+it('renders real planned local geometry and oversized image source actions without nested anchors', async () => {
+  const root = await mkdtemp(join(tmpdir(), 'notes-image-render-'));
+  const markdown =
+    '![Local](pic.jpg) <img src="pic.jpg" width="12"> <img src="pic.jpg" height="8"> <img src="pic.jpg" width="9" height="7"> ![Remote](https://example.test/remote.png) ![Large diagram](large.png?download=1#preview) [![Linked diagram](large.png?download=2#linked)![Second linked diagram](large.png?download=3#second)](https://example.test/context) ![](large.png)';
+  try {
+    await mkdir(join(root, 'Interview'));
+    await writeFile(
+      join(root, 'Interview/pic.jpg'),
+      await readFile('tests/fixtures/real/task3/Ubuntu-Reference.jpg'),
+    );
+    const file = await open(join(root, 'Interview/large.png'), 'w');
+    await file.truncate(26_214_401);
+    await file.close();
+    const policy = {
+      roots: [
+        'Books',
+        'Classes',
+        'Courses',
+        'Interview',
+        'Languages',
+        'Tutorials',
+      ],
+      exclude: [],
+      overrides: {},
+      repositoryPublic: true,
+      repositoryUrl: 'https://github.com/owner/repo',
+      revision: 'b'.repeat(40),
+    };
+    const assets = await planAssets(
+      root,
+      ['Interview/pic.jpg', 'Interview/large.png'],
+      policy,
+    );
+    const ctx = context(markdown);
+    ctx.catalog = createRouteCatalog(
+      [...ctx.catalog.sources.values()],
+      assets,
+      policy,
+    );
+    const result = await renderMarkdown(markdown, ctx);
+    const tree = fromHtml(result.html, { fragment: true });
+    const images: Nodes[] = [];
+    const links: Nodes[] = [];
+    function walk(node: Nodes, inAnchor = false): void {
+      if (node.type === 'element') {
+        if (node.tagName === 'a') {
+          expect(inAnchor).toBe(false);
+          links.push(node);
+        }
+        if (node.tagName === 'img') images.push(node);
+        inAnchor ||= node.tagName === 'a';
+      }
+      if ('children' in node)
+        for (const child of node.children) walk(child, inAnchor);
+    }
+    walk(tree);
+    expect(images).toHaveLength(5);
+    const properties = images.map((node) =>
+      node.type === 'element' ? node.properties : {},
+    );
+    expect(properties.slice(0, 4)).toMatchObject([
+      { width: 1700, height: 2200 },
+      { width: 12, height: 16 },
+      { width: 6, height: 8 },
+      { width: 9, height: 7 },
+    ]);
+    for (const image of properties)
+      expect(image).toMatchObject({ loading: 'lazy', decoding: 'async' });
+    expect(properties[4]).not.toHaveProperty('width');
+    const source = `https://github.com/owner/repo/blob/${'b'.repeat(40)}/Interview/large.png`;
+    expect(
+      links.filter((node) => text(node).includes('View image source')),
+    ).toMatchObject([
+      { properties: { href: `${source}?download=1#preview` } },
+      { properties: { href: `${source}?download=2#linked` } },
+      { properties: { href: `${source}?download=3#second` } },
+      { properties: { href: source } },
+    ]);
+    expect(result.html).toContain('Large diagram');
+    expect(result.html).toContain('Linked diagram');
+    expect(result.html).toContain('Second linked diagram');
+    expect(result.html).toContain('View image source: Image');
+    expect(result.html).toContain('href="https://example.test/context"');
+    expect(result.html).not.toContain(`<img src="${source}`);
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+});
+
+it('never creates zero or overflowing image geometry from an author presentation size', async () => {
+  const markdown =
+    '<img src="pic.png" width="40000000"><img src="pic.png" height="1">';
+  const ctx = context(markdown);
+  ctx.catalog.assets.get('Interview/pic.png')!.dimensions = {
+    width: 1,
+    height: 40_000_000,
+  };
+  const result = await renderMarkdown(markdown, ctx);
+  expect(result.html).not.toMatch(/(?:width|height)="(?:0|1600000000000000)"/);
+  expect(result.html).toContain('width="40000000"');
+  expect(result.html).toContain('height="1"');
 });

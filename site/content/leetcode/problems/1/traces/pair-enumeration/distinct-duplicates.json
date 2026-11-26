@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "problemId": "leetcode:1",
+  "approachId": "pair-enumeration",
+  "exampleId": "distinct-duplicates",
+  "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+  "result": [0, 2],
+  "frames": [
+    {
+      "stepId": "compare-0-1",
+      "codeLines": [58],
+      "explanation": "Positions 0 and 1 sum to 7. Target is 12.",
+      "state": {
+        "kind": "array",
+        "items": [6, 1, 6]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "compare-0-2",
+      "codeLines": [58],
+      "explanation": "Positions 0 and 2 sum to 12. Target is 12.",
+      "state": {
+        "kind": "array",
+        "items": [6, 1, 6]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 2
+        }
+      ]
+    }
+  ]
+}

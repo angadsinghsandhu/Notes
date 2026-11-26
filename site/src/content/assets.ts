@@ -259,11 +259,32 @@ export async function planAssets(
       });
     } else {
       const content = await localBytes(root, sourcePath);
+      let dimensions: AssetRecord['dimensions'];
+      if (/\.(?:png|jpe?g|gif|webp|avif|svg|ico)$/i.test(sourcePath)) {
+        try {
+          const metadata = await sharp(content.bytes, {
+            limitInputPixels: 40_000_000,
+            failOn: 'warning',
+          }).metadata();
+          const { width, height } = metadata.autoOrient;
+          if (
+            Number.isSafeInteger(width) &&
+            width > 0 &&
+            Number.isSafeInteger(height) &&
+            height > 0 &&
+            width * height <= 40_000_000
+          )
+            dimensions = { width, height };
+        } catch {
+          // Geometry is optional: unsupported or opaque legacy bytes still publish unchanged.
+        }
+      }
       assets.push({
         sourcePath,
         bytes: content.originalSize,
         mode: 'local',
         url: assetUrl(sourcePath, content.bytes),
+        ...(dimensions ? { dimensions } : {}),
       });
     }
   }

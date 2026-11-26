@@ -1,3 +1,6 @@
+---
+title: "Artificial Agents (EN.601.470/670) - Professor Benjamin Van Durme"
+---
 # Artificial Agents (EN.601.470/670) - Professor Benjamin Van Durme
 
 This course focuses on advanced topics in Artificial Intelligence, specifically in building and interacting with artificial agents using transformer-based neural architectures. It will cover topics like knowledge representation, reasoning, natural language understanding, and building models to interact with users. The course will involve programming, presentations on research papers, and written assignments.

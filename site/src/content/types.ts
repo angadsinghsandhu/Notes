@@ -1,3 +1,5 @@
+import type { OrganizationSnapshot } from './organization-types.js';
+
 export type Section =
   'books' | 'classes' | 'courses' | 'interview' | 'languages' | 'tutorials';
 export type ContentKind = 'markdown' | 'notebook' | 'code' | 'pdf' | 'slides';
@@ -10,6 +12,7 @@ export type SourceEntry = {
   bytes: number;
 };
 export type Metadata = {
+  role?: 'supplemental';
   title: string;
   description: string;
   tags: string[];
@@ -55,9 +58,12 @@ export type AssetRecord = {
   bytes: number;
   url: string;
   mode: 'local' | 'external';
+  dimensions?: { width: number; height: number };
 };
 export type Manifest = {
   version: 1;
+  organization?: OrganizationSnapshot;
+  curriculumGeneration?: string;
   entries: ContentEntry[];
   assets: AssetRecord[];
   ledger: MigrationRow[];
@@ -89,4 +95,5 @@ export type RenderResult = { html: string; headings: Heading[] };
 export type PreparationResult = {
   manifest: Manifest;
   diagnostics: Diagnostic[];
+  preparedBodies?: ReadonlyMap<string, string>;
 };

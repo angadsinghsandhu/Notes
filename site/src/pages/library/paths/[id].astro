@@ -1,0 +1,45 @@
+---
+import LibraryLayout from '../../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import { readPreparedCatalog } from '../../../lib/catalog.js';
+export async function getStaticPaths() {
+  const catalog = await readPreparedCatalog();
+  return catalog
+    .organizationRoutes()
+    .filter((route) => /^\/library\/paths\/[^/]+\/$/.test(route))
+    .map((route) => {
+      const id = route.split('/')[3]!;
+      const node = catalog.organization.getNode('path', id)!;
+      if (node.type !== 'path') throw new Error('Expected a learning path');
+      return {
+        params: { id },
+        props: { title: node.title, summary: node.summary, steps: node.steps },
+      };
+    });
+}
+const { title, summary, steps } = Astro.props;
+---
+
+<LibraryLayout title={title} description={summary}>
+  <div data-pagefind-ignore>
+    <Breadcrumbs title={title} />
+    <h1>{title}</h1>
+    <p>{summary}</p>
+    <h2>Study sequence</h2>
+    <ol class="path-steps">
+      {steps.map((step) => (
+        <li id={step.id}>
+          <h3>{step.title}</h3>
+          <p>{step.summary}</p>
+          <ul class="entry-list">
+            {[...step.entries, ...step.topics].map((link) => (
+              <li>
+                <a href={link.route}>{link.title}</a>
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ol>
+  </div>
+</LibraryLayout>

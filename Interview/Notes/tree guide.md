@@ -1,3 +1,6 @@
+---
+title: "🌳 Tree Cheatsheet for Coding Interviews"
+---
 # 🌳 Tree Cheatsheet for Coding Interviews
 
 ## Introduction

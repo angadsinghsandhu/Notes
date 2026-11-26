@@ -1,3 +1,6 @@
+---
+title: "Guide to Graph Problem Solving Tips"
+---
 # Guide to Graph Problem Solving Tips
 
 ## Introduction to Graphs

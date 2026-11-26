@@ -1,0 +1,3624 @@
+{
+  "version": 1,
+  "collections": [
+    {
+      "id": "programming-pytorch-deep-learning",
+      "title": "Programming PyTorch for Deep Learning",
+      "summary": "Ian Pointer’s book archive: notes for chapters 0–6, three associated notebooks, a chapter 2 download script and the whole-book PDF. Chapters 4–6 are heading-only outlines.",
+      "type": "book",
+      "provider": "Ian Pointer"
+    },
+    {
+      "id": "react-complete-guide",
+      "title": "React - The Complete Guide 2025 (incl. Next.js, Redux)",
+      "summary": "Udemy course archive with authored section notes, lecture resources and 363 distinct source snapshots organized under 34 modules. Starting, intermediate and completed versions keep their own file trees.",
+      "type": "online-course",
+      "provider": "Udemy"
+    }
+  ],
+  "groups": [
+    {
+      "id": "chapter-0",
+      "title": "Chapter 0: Preface",
+      "summary": "Book preface introducing PyTorch, deep learning and GPU computing.",
+      "collectionId": "programming-pytorch-deep-learning",
+      "type": "chapter",
+      "order": 0
+    },
+    {
+      "id": "chapter-1",
+      "title": "Chapter 1: Getting Started with PyTorch",
+      "summary": "Getting-started notes on computing environments, PyTorch setup and tensors, with the PyTorch Basics notebook.",
+      "collectionId": "programming-pytorch-deep-learning",
+      "type": "chapter",
+      "order": 1
+    },
+    {
+      "id": "chapter-2",
+      "title": "Chapter 2: Image Classification with PyTorch",
+      "summary": "Image-classification notes with the associated notebook and supporting image-download script.",
+      "collectionId": "programming-pytorch-deep-learning",
+      "type": "chapter",
+      "order": 2
+    },
+    {
+      "id": "chapter-3",
+      "title": "Chapter 3: Convolutional Neural Networks",
+      "summary": "Convolutional-network notes and the associated notebook covering convolutional and pretrained models.",
+      "collectionId": "programming-pytorch-deep-learning",
+      "type": "chapter",
+      "order": 3
+    },
+    {
+      "id": "chapter-4",
+      "title": "Chapter 4: Transfer Learning and Other Tricks",
+      "summary": "Heading-only outline for transfer learning, learning rates, augmentation and ensembles.",
+      "collectionId": "programming-pytorch-deep-learning",
+      "type": "chapter",
+      "order": 4
+    },
+    {
+      "id": "chapter-5",
+      "title": "Chapter 5: Text Classification",
+      "summary": "Heading-only outline for recurrent networks, embeddings and text classification.",
+      "collectionId": "programming-pytorch-deep-learning",
+      "type": "chapter",
+      "order": 5
+    },
+    {
+      "id": "chapter-6",
+      "title": "Chapter 6: A Journey into Sound",
+      "summary": "Heading-only outline for sound data, spectrograms and audio classification.",
+      "collectionId": "programming-pytorch-deep-learning",
+      "type": "chapter",
+      "order": 6
+    },
+    {
+      "id": "module-01-getting-started",
+      "title": "01 Getting Started",
+      "summary": "Course module 01 Getting Started, with 3 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 0
+    },
+    {
+      "id": "module-02-js-refresher",
+      "title": "02 JS Refresher",
+      "summary": "Course module 02 JS Refresher, with 1 distinct source snapshot and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 1
+    },
+    {
+      "id": "module-03-react-essentials",
+      "title": "03 React Essentials",
+      "summary": "Course module 03 React Essentials, with 18 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 2
+    },
+    {
+      "id": "module-04-essentials-deep-dive",
+      "title": "04 Essentials Deep Dive",
+      "summary": "Course module 04 Essentials Deep Dive, with 18 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 3
+    },
+    {
+      "id": "module-05-essentials-practice",
+      "title": "05 Essentials Practice",
+      "summary": "Course module 05 Essentials Practice, with 6 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 4
+    },
+    {
+      "id": "module-06-debugging",
+      "title": "06 Debugging",
+      "summary": "Course module 06 Debugging, with 3 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 5
+    },
+    {
+      "id": "module-07-styling",
+      "title": "07 Styling",
+      "summary": "Course module 07 Styling, with 6 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 6
+    },
+    {
+      "id": "module-08-refs-portals",
+      "title": "08 Refs Portals",
+      "summary": "Course module 08 Refs Portals, with 10 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 7
+    },
+    {
+      "id": "module-09-practice-project-project-management",
+      "title": "09 Practice Project - Project Management",
+      "summary": "Course module 09 Practice Project - Project Management, with 10 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 8
+    },
+    {
+      "id": "module-10-advanced-state-management-with-context-usereducer",
+      "title": "10 Advanced State Management with Context useReducer",
+      "summary": "Course module 10 Advanced State Management with Context useReducer, with 9 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 9
+    },
+    {
+      "id": "module-11-side-effects-useeffect",
+      "title": "11 Side Effects useEffect",
+      "summary": "Course module 11 Side Effects useEffect, with 8 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 10
+    },
+    {
+      "id": "module-12-behind-the-scenes",
+      "title": "12 Behind the Scenes",
+      "summary": "Course module 12 Behind the Scenes, with 5 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 11
+    },
+    {
+      "id": "module-13-demo-project-react-quiz",
+      "title": "13 Demo Project - React Quiz",
+      "summary": "Course module 13 Demo Project - React Quiz, with 8 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 12
+    },
+    {
+      "id": "module-14-class-based-components",
+      "title": "14 Class-based Components",
+      "summary": "Course module 14 Class-based Components, with 8 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 13
+    },
+    {
+      "id": "module-15-http-requests",
+      "title": "15 HTTP Requests",
+      "summary": "Course module 15 HTTP Requests, with 8 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 14
+    },
+    {
+      "id": "module-16-custom-hooks",
+      "title": "16 Custom Hooks",
+      "summary": "Course module 16 Custom Hooks, with 3 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 15
+    },
+    {
+      "id": "module-17-forms-user-input",
+      "title": "17 Forms User Input",
+      "summary": "Course module 17 Forms User Input, with 12 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 16
+    },
+    {
+      "id": "module-17b-form-actions",
+      "title": "17b Form Actions",
+      "summary": "Course module 17b Form Actions, with 12 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 17
+    },
+    {
+      "id": "module-18-practice-project-food-order",
+      "title": "18 Practice Project - Food Order",
+      "summary": "Course module 18 Practice Project - Food Order, with 13 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 18
+    },
+    {
+      "id": "module-19-redux-basics",
+      "title": "19 Redux Basics",
+      "summary": "Course module 19 Redux Basics, with 12 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 19
+    },
+    {
+      "id": "module-20-advanced-redux",
+      "title": "20 Advanced Redux",
+      "summary": "Course module 20 Advanced Redux, with 7 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 20
+    },
+    {
+      "id": "module-21-routing",
+      "title": "21 Routing",
+      "summary": "Course module 21 Routing, with 32 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 21
+    },
+    {
+      "id": "module-22-authentication",
+      "title": "22 Authentication",
+      "summary": "Course module 22 Authentication, with 9 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 22
+    },
+    {
+      "id": "module-23-deployment",
+      "title": "23 Deployment",
+      "summary": "Course module 23 Deployment, with 2 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 23
+    },
+    {
+      "id": "module-24-react-query",
+      "title": "24 React Query",
+      "summary": "Course module 24 React Query, with 11 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 24
+    },
+    {
+      "id": "module-25-nextjs-app-router-introduction",
+      "title": "25 NextJS App Router Introduction",
+      "summary": "Course module 25 NextJS App Router Introduction, with 32 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 25
+    },
+    {
+      "id": "module-25-nextjs-introduction",
+      "title": "25 NextJS Introduction",
+      "summary": "Course module 25 NextJS Introduction, with 19 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 26
+    },
+    {
+      "id": "module-25b-rsc-suspense-server-actions",
+      "title": "25b RSC, Suspense, Server Actions",
+      "summary": "Course module 25b RSC, Suspense, Server Actions, with 6 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 27
+    },
+    {
+      "id": "module-26-animations",
+      "title": "26 Animations",
+      "summary": "Course module 26 Animations, with 14 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 28
+    },
+    {
+      "id": "module-27-patterns",
+      "title": "27 Patterns",
+      "summary": "Course module 27 Patterns, with 8 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 29
+    },
+    {
+      "id": "module-27-replacing-redux-with-hooks",
+      "title": "27 Replacing Redux with Hooks",
+      "summary": "Course module 27 Replacing Redux with Hooks, with 6 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 30
+    },
+    {
+      "id": "module-28-testing",
+      "title": "28 Testing",
+      "summary": "Course module 28 Testing, with 7 distinct source snapshots.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 31
+    },
+    {
+      "id": "module-29-react-typescript",
+      "title": "29 React TypeScript",
+      "summary": "Course module 29 React TypeScript, with 16 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 32
+    },
+    {
+      "id": "module-30-react-summary",
+      "title": "30 React Summary",
+      "summary": "Course module 30 React Summary, with 21 distinct source snapshots and associated lecture notes or resources.",
+      "collectionId": "react-complete-guide",
+      "type": "module",
+      "order": 33
+    },
+    {
+      "id": "project-01-getting-started-edited-first-app",
+      "title": "edited-first-app",
+      "summary": "Source snapshot edited-first-app from 01 Getting Started. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-01-getting-started",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-01-getting-started-react-vs-vanilla-js-example-just-js",
+      "title": "react-vs-vanilla-js-example/just-js",
+      "summary": "Source snapshot react-vs-vanilla-js-example/just-js from 01 Getting Started. Its 3 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-01-getting-started",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-01-getting-started-react-vs-vanilla-js-example-react",
+      "title": "react-vs-vanilla-js-example/react",
+      "summary": "Source snapshot react-vs-vanilla-js-example/react from 01 Getting Started. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-01-getting-started",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-02-js-refresher-code-finished",
+      "title": "code/finished",
+      "summary": "Source snapshot code/finished from 02 JS Refresher. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-02-js-refresher",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-03-react-essentials-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 03 React Essentials. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-03-react-essentials-02-creating-using-first-component",
+      "title": "02-creating-using-first-component",
+      "summary": "Source snapshot 02-creating-using-first-component from 03 React Essentials. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-03-react-essentials-03-using-outputting-dynamic-values",
+      "title": "03-using-outputting-dynamic-values",
+      "summary": "Source snapshot 03-using-outputting-dynamic-values from 03 React Essentials. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-03-react-essentials-04-html-attributes-dynamically-image-files",
+      "title": "04-html-attributes-dynamically-image-files",
+      "summary": "Source snapshot 04-html-attributes-dynamically-image-files from 03 React Essentials. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-03-react-essentials-05-cmp-props",
+      "title": "05-cmp-props",
+      "summary": "Source snapshot 05-cmp-props from 03 React Essentials. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-03-react-essentials-06-alternative-props-syntax",
+      "title": "06-alternative-props-syntax",
+      "summary": "Source snapshot 06-alternative-props-syntax from 03 React Essentials. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-03-react-essentials-07-storing-cmp-in-files",
+      "title": "07-storing-cmp-in-files",
+      "summary": "Source snapshot 07-storing-cmp-in-files from 03 React Essentials. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-03-react-essentials-08-styles-next-to-cmp",
+      "title": "08-styles-next-to-cmp",
+      "summary": "Source snapshot 08-styles-next-to-cmp from 03 React Essentials. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-03-react-essentials-09-composition-children-prop",
+      "title": "09-composition-children-prop",
+      "summary": "Source snapshot 09-composition-children-prop from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-03-react-essentials-10-reacting-to-events",
+      "title": "10-reacting-to-events",
+      "summary": "Source snapshot 10-reacting-to-events from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-03-react-essentials-11-passing-functions-as-values",
+      "title": "11-passing-functions-as-values",
+      "summary": "Source snapshot 11-passing-functions-as-values from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-03-react-essentials-12-passing-custom-arguments-to-event-fn",
+      "title": "12-passing-custom-arguments-to-event-fn",
+      "summary": "Source snapshot 12-passing-custom-arguments-to-event-fn from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-03-react-essentials-13-how-not-to-update-ui",
+      "title": "13-how-not-to-update-ui",
+      "summary": "Source snapshot 13-how-not-to-update-ui from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-03-react-essentials-14-managing-state",
+      "title": "14-managing-state",
+      "summary": "Source snapshot 14-managing-state from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 13
+    },
+    {
+      "id": "project-03-react-essentials-15-deriving-computing-values",
+      "title": "15-deriving-computing-values",
+      "summary": "Source snapshot 15-deriving-computing-values from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 14
+    },
+    {
+      "id": "project-03-react-essentials-16-rendering-content-conditionally",
+      "title": "16-rendering-content-conditionally",
+      "summary": "Source snapshot 16-rendering-content-conditionally from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 15
+    },
+    {
+      "id": "project-03-react-essentials-17-css-styling-dynamic-styles",
+      "title": "17-css-styling-dynamic-styles",
+      "summary": "Source snapshot 17-css-styling-dynamic-styles from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 16
+    },
+    {
+      "id": "project-03-react-essentials-18-outputting-list-data",
+      "title": "18-outputting-list-data",
+      "summary": "Source snapshot 18-outputting-list-data from 03 React Essentials. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-03-react-essentials",
+      "type": "project",
+      "order": 17
+    },
+    {
+      "id": "project-04-essentials-deep-dive-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 04 Essentials Deep Dive. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-04-essentials-deep-dive-02-fragments",
+      "title": "02-fragments",
+      "summary": "Source snapshot 02-fragments from 04 Essentials Deep Dive. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-04-essentials-deep-dive-03-splitting-components",
+      "title": "03-splitting-components",
+      "summary": "Source snapshot 03-splitting-components from 04 Essentials Deep Dive. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-04-essentials-deep-dive-04-forwarding-props",
+      "title": "04-forwarding-props",
+      "summary": "Source snapshot 04-forwarding-props from 04 Essentials Deep Dive. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-04-essentials-deep-dive-05-multiple-jsx-slots",
+      "title": "05-multiple-jsx-slots",
+      "summary": "Source snapshot 05-multiple-jsx-slots from 04 Essentials Deep Dive. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-04-essentials-deep-dive-06-dynamic-component-types",
+      "title": "06-dynamic-component-types",
+      "summary": "Source snapshot 06-dynamic-component-types from 04 Essentials Deep Dive. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-04-essentials-deep-dive-07-tic-tac-toe-starting-project",
+      "title": "07-tic-tac-toe-starting-project",
+      "summary": "Source snapshot 07-tic-tac-toe-starting-project from 04 Essentials Deep Dive. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-04-essentials-deep-dive-08-working-with-state",
+      "title": "08-working-with-state",
+      "summary": "Source snapshot 08-working-with-state from 04 Essentials Deep Dive. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-04-essentials-deep-dive-09-updating-state-based-on-old-state",
+      "title": "09-updating-state-based-on-old-state",
+      "summary": "Source snapshot 09-updating-state-based-on-old-state from 04 Essentials Deep Dive. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-04-essentials-deep-dive-10-two-way-binding",
+      "title": "10-two-way-binding",
+      "summary": "Source snapshot 10-two-way-binding from 04 Essentials Deep Dive. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-04-essentials-deep-dive-11-multi-dimensional-lists",
+      "title": "11-multi-dimensional-lists",
+      "summary": "Source snapshot 11-multi-dimensional-lists from 04 Essentials Deep Dive. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-04-essentials-deep-dive-12-updating-state-immutably",
+      "title": "12-updating-state-immutably",
+      "summary": "Source snapshot 12-updating-state-immutably from 04 Essentials Deep Dive. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-04-essentials-deep-dive-13-lifiting-state-up",
+      "title": "13-lifiting-state-up",
+      "summary": "Source snapshot 13-lifiting-state-up from 04 Essentials Deep Dive. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-04-essentials-deep-dive-14-avoid-intersecting-state",
+      "title": "14-avoid-intersecting-state",
+      "summary": "Source snapshot 14-avoid-intersecting-state from 04 Essentials Deep Dive. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 13
+    },
+    {
+      "id": "project-04-essentials-deep-dive-15-prefer-computed-values",
+      "title": "15-prefer-computed-values",
+      "summary": "Source snapshot 15-prefer-computed-values from 04 Essentials Deep Dive. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 14
+    },
+    {
+      "id": "project-04-essentials-deep-dive-16-disabling-buttons",
+      "title": "16-disabling-buttons",
+      "summary": "Source snapshot 16-disabling-buttons from 04 Essentials Deep Dive. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 15
+    },
+    {
+      "id": "project-04-essentials-deep-dive-17-game-over-checking-for-draw",
+      "title": "17-game-over-checking-for-draw",
+      "summary": "Source snapshot 17-game-over-checking-for-draw from 04 Essentials Deep Dive. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 16
+    },
+    {
+      "id": "project-04-essentials-deep-dive-18-finished",
+      "title": "18-finished",
+      "summary": "Source snapshot 18-finished from 04 Essentials Deep Dive. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-04-essentials-deep-dive",
+      "type": "project",
+      "order": 17
+    },
+    {
+      "id": "project-05-essentials-practice-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 05 Essentials Practice. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-05-essentials-practice",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-05-essentials-practice-02-user-input-two-way-binding",
+      "title": "02-user-input-two-way-binding",
+      "summary": "Source snapshot 02-user-input-two-way-binding from 05 Essentials Practice. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-05-essentials-practice",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-05-essentials-practice-03-lifting-state-up",
+      "title": "03-lifting-state-up",
+      "summary": "Source snapshot 03-lifting-state-up from 05 Essentials Practice. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-05-essentials-practice",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-05-essentials-practice-04-computing-values",
+      "title": "04-computing-values",
+      "summary": "Source snapshot 04-computing-values from 05 Essentials Practice. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-05-essentials-practice",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-05-essentials-practice-05-outputting-results-in-a-list",
+      "title": "05-outputting-results-in-a-list",
+      "summary": "Source snapshot 05-outputting-results-in-a-list from 05 Essentials Practice. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-05-essentials-practice",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-05-essentials-practice-06-finished",
+      "title": "06-finished",
+      "summary": "Source snapshot 06-finished from 05 Essentials Practice. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-05-essentials-practice",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-06-debugging-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 06 Debugging. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-06-debugging",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-06-debugging-02-error-messages",
+      "title": "02-error-messages",
+      "summary": "Source snapshot 02-error-messages from 06 Debugging. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-06-debugging",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-06-debugging-03-finished",
+      "title": "03-finished",
+      "summary": "Source snapshot 03-finished from 06 Debugging. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-06-debugging",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-07-styling-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 07 Styling. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-07-styling",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-07-styling-02-dynamic-conditional-inline-styles",
+      "title": "02-dynamic-conditional-inline-styles",
+      "summary": "Source snapshot 02-dynamic-conditional-inline-styles from 07 Styling. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-07-styling",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-07-styling-03-dynamic-conditional-css-classes",
+      "title": "03-dynamic-conditional-css-classes",
+      "summary": "Source snapshot 03-dynamic-conditional-css-classes from 07 Styling. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-07-styling",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-07-styling-04-scoping-css-modules",
+      "title": "04-scoping-css-modules",
+      "summary": "Source snapshot 04-scoping-css-modules from 07 Styling. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-07-styling",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-07-styling-05-styled-cmp-creating-reusable-cmp",
+      "title": "05-styled-cmp-creating-reusable-cmp",
+      "summary": "Source snapshot 05-styled-cmp-creating-reusable-cmp from 07 Styling. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-07-styling",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-07-styling-06-tailwind-finished",
+      "title": "06-tailwind-finished",
+      "summary": "Source snapshot 06-tailwind-finished from 07 Styling. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-07-styling",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-08-refs-portals-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 08 Refs Portals. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-08-refs-portals-02-user-input-with-state",
+      "title": "02-user-input-with-state",
+      "summary": "Source snapshot 02-user-input-with-state from 08 Refs Portals. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-08-refs-portals-03-introducing-refs-connecting-elements",
+      "title": "03-introducing-refs-connecting-elements",
+      "summary": "Source snapshot 03-introducing-refs-connecting-elements from 08 Refs Portals. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-08-refs-portals-04-manipulating-dom-with-refs",
+      "title": "04-manipulating-dom-with-refs",
+      "summary": "Source snapshot 04-manipulating-dom-with-refs from 08 Refs Portals. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-08-refs-portals-05-setting-timers-managing-state",
+      "title": "05-setting-timers-managing-state",
+      "summary": "Source snapshot 05-setting-timers-managing-state from 08 Refs Portals. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-08-refs-portals-06-refs-for-more-than-dom-elements",
+      "title": "06-refs-for-more-than-dom-elements",
+      "summary": "Source snapshot 06-refs-for-more-than-dom-elements from 08 Refs Portals. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-08-refs-portals-07-adding-a-modal-cmp",
+      "title": "07-adding-a-modal-cmp",
+      "summary": "Source snapshot 07-adding-a-modal-cmp from 08 Refs Portals. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-08-refs-portals-08-forwarding-refs",
+      "title": "08-forwarding-refs",
+      "summary": "Source snapshot 08-forwarding-refs from 08 Refs Portals. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-08-refs-portals-09-exposing-cmp-apis-useimperative-handle",
+      "title": "09-exposing-cmp-apis-useimperative-handle",
+      "summary": "Source snapshot 09-exposing-cmp-apis-useimperative-handle from 08 Refs Portals. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-08-refs-portals-10-portals-finished",
+      "title": "10-portals-finished",
+      "summary": "Source snapshot 10-portals-finished from 08 Refs Portals. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-08-refs-portals",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-09-practice-project-project-management-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 09 Practice Project - Project Management. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-09-practice-project-project-management-02-styling-sidebar",
+      "title": "02-styling-sidebar",
+      "summary": "Source snapshot 02-styling-sidebar from 09 Practice Project - Project Management. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-09-practice-project-project-management-03-styling-buttons-inputs",
+      "title": "03-styling-buttons-inputs",
+      "summary": "Source snapshot 03-styling-buttons-inputs from 09 Practice Project - Project Management. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-09-practice-project-project-management-04-managing-state-to-switch-cmp",
+      "title": "04-managing-state-to-switch-cmp",
+      "summary": "Source snapshot 04-managing-state-to-switch-cmp from 09 Practice Project - Project Management. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-09-practice-project-project-management-05-handling-project-creation-updating-ui",
+      "title": "05-handling-project-creation-updating-ui",
+      "summary": "Source snapshot 05-handling-project-creation-updating-ui from 09 Practice Project - Project Management. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-09-practice-project-project-management-06-styling-modal",
+      "title": "06-styling-modal",
+      "summary": "Source snapshot 06-styling-modal from 09 Practice Project - Project Management. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-09-practice-project-project-management-07-making-projects-selectable",
+      "title": "07-making-projects-selectable",
+      "summary": "Source snapshot 07-making-projects-selectable from 09 Practice Project - Project Management. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-09-practice-project-project-management-08-handling-project-deletion",
+      "title": "08-handling-project-deletion",
+      "summary": "Source snapshot 08-handling-project-deletion from 09 Practice Project - Project Management. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-09-practice-project-project-management-09-managing-tasks",
+      "title": "09-managing-tasks",
+      "summary": "Source snapshot 09-managing-tasks from 09 Practice Project - Project Management. Its 16 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-09-practice-project-project-management-10-finished",
+      "title": "10-finished",
+      "summary": "Source snapshot 10-finished from 09 Practice Project - Project Management. Its 16 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-09-practice-project-project-management",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 10 Advanced State Management with Context useReducer. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-02-prop-drilling-cmp-composition",
+      "title": "02-prop-drilling-cmp-composition",
+      "summary": "Source snapshot 02-prop-drilling-cmp-composition from 10 Advanced State Management with Context useReducer. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-03-creating-providing-context",
+      "title": "03-creating-providing-context",
+      "summary": "Source snapshot 03-creating-providing-context from 10 Advanced State Management with Context useReducer. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-04-consuming-context",
+      "title": "04-consuming-context",
+      "summary": "Source snapshot 04-consuming-context from 10 Advanced State Management with Context useReducer. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-05-linking-context-to-state",
+      "title": "05-linking-context-to-state",
+      "summary": "Source snapshot 05-linking-context-to-state from 10 Advanced State Management with Context useReducer. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-06-migrating-entire-project",
+      "title": "06-migrating-entire-project",
+      "summary": "Source snapshot 06-migrating-entire-project from 10 Advanced State Management with Context useReducer. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-07-outsourcing-context-provider-cmp",
+      "title": "07-outsourcing-context-provider-cmp",
+      "summary": "Source snapshot 07-outsourcing-context-provider-cmp from 10 Advanced State Management with Context useReducer. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-08-introducing-usereducer",
+      "title": "08-introducing-usereducer",
+      "summary": "Source snapshot 08-introducing-usereducer from 10 Advanced State Management with Context useReducer. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-10-advanced-state-management-with-context-usereducer-09-dispatching-actions-finished",
+      "title": "09-dispatching-actions-finished",
+      "summary": "Source snapshot 09-dispatching-actions-finished from 10 Advanced State Management with Context useReducer. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-10-advanced-state-management-with-context-usereducer",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-11-side-effects-useeffect-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 11 Side Effects useEffect. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-11-side-effects-useeffect",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-11-side-effects-useeffect-02-using-useeffect",
+      "title": "02-using-useeffect",
+      "summary": "Source snapshot 02-using-useeffect from 11 Side Effects useEffect. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-11-side-effects-useeffect",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-11-side-effects-useeffect-03-useeffect-not-needed",
+      "title": "03-useeffect-not-needed",
+      "summary": "Source snapshot 03-useeffect-not-needed from 11 Side Effects useEffect. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-11-side-effects-useeffect",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-11-side-effects-useeffect-04-understanding-effect-dependencies",
+      "title": "04-understanding-effect-dependencies",
+      "summary": "Source snapshot 04-understanding-effect-dependencies from 11 Side Effects useEffect. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-11-side-effects-useeffect",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-11-side-effects-useeffect-05-introducing-cleanup-fn",
+      "title": "05-introducing-cleanup-fn",
+      "summary": "Source snapshot 05-introducing-cleanup-fn from 11 Side Effects useEffect. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-11-side-effects-useeffect",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-11-side-effects-useeffect-06-the-usecallback-hook",
+      "title": "06-the-usecallback-hook",
+      "summary": "Source snapshot 06-the-usecallback-hook from 11 Side Effects useEffect. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-11-side-effects-useeffect",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-11-side-effects-useeffect-07-cleanup-another-example",
+      "title": "07-cleanup-another-example",
+      "summary": "Source snapshot 07-cleanup-another-example from 11 Side Effects useEffect. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-11-side-effects-useeffect",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-11-side-effects-useeffect-08-optimizing-state-updates",
+      "title": "08-optimizing-state-updates",
+      "summary": "Source snapshot 08-optimizing-state-updates from 11 Side Effects useEffect. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-11-side-effects-useeffect",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-12-behind-the-scenes-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 12 Behind the Scenes. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-12-behind-the-scenes",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-12-behind-the-scenes-02-avoiding-cmp-execution-with-memo",
+      "title": "02-avoiding-cmp-execution-with-memo",
+      "summary": "Source snapshot 02-avoiding-cmp-execution-with-memo from 12 Behind the Scenes. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-12-behind-the-scenes",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-12-behind-the-scenes-03-usememo",
+      "title": "03-usememo",
+      "summary": "Source snapshot 03-usememo from 12 Behind the Scenes. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-12-behind-the-scenes",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-12-behind-the-scenes-04-using-keys-for-cmp-resetting",
+      "title": "04-using-keys-for-cmp-resetting",
+      "summary": "Source snapshot 04-using-keys-for-cmp-resetting from 12 Behind the Scenes. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-12-behind-the-scenes",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-12-behind-the-scenes-05-millionjs",
+      "title": "05-millionjs",
+      "summary": "Source snapshot 05-millionjs from 12 Behind the Scenes. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-12-behind-the-scenes",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-13-demo-project-react-quiz-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 13 Demo Project - React Quiz. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-13-demo-project-react-quiz",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-13-demo-project-react-quiz-02-first-cmp-some-state",
+      "title": "02-first-cmp-some-state",
+      "summary": "Source snapshot 02-first-cmp-some-state from 13 Demo Project - React Quiz. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-13-demo-project-react-quiz",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-13-demo-project-react-quiz-03-deriving-values-outputting-questions",
+      "title": "03-deriving-values-outputting-questions",
+      "summary": "Source snapshot 03-deriving-values-outputting-questions from 13 Demo Project - React Quiz. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-13-demo-project-react-quiz",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-13-demo-project-react-quiz-04-shuffling-answers",
+      "title": "04-shuffling-answers",
+      "summary": "Source snapshot 04-shuffling-answers from 13 Demo Project - React Quiz. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-13-demo-project-react-quiz",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-13-demo-project-react-quiz-05-working-with-effect-deps",
+      "title": "05-working-with-effect-deps",
+      "summary": "Source snapshot 05-working-with-effect-deps from 13 Demo Project - React Quiz. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-13-demo-project-react-quiz",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-13-demo-project-react-quiz-06-using-effect-cleanup-fn",
+      "title": "06-using-effect-cleanup-fn",
+      "summary": "Source snapshot 06-using-effect-cleanup-fn from 13 Demo Project - React Quiz. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-13-demo-project-react-quiz",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-13-demo-project-react-quiz-07-moving-logic-to-cmp-that-need-it",
+      "title": "07-moving-logic-to-cmp-that-need-it",
+      "summary": "Source snapshot 07-moving-logic-to-cmp-that-need-it from 13 Demo Project - React Quiz. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-13-demo-project-react-quiz",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-13-demo-project-react-quiz-08-finished",
+      "title": "08-finished",
+      "summary": "Source snapshot 08-finished from 13 Demo Project - React Quiz. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-13-demo-project-react-quiz",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-14-class-based-components-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 14 Class-based Components. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-14-class-based-components",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-14-class-based-components-02-adding-a-first-class-based-cmp",
+      "title": "02-adding-a-first-class-based-cmp",
+      "summary": "Source snapshot 02-adding-a-first-class-based-cmp from 14 Class-based Components. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-14-class-based-components",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-14-class-based-components-03-working-with-state",
+      "title": "03-working-with-state",
+      "summary": "Source snapshot 03-working-with-state from 14 Class-based Components. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-14-class-based-components",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-14-class-based-components-04-cmp-lifecycle-starting-state",
+      "title": "04-cmp-lifecycle-starting-state",
+      "summary": "Source snapshot 04-cmp-lifecycle-starting-state from 14 Class-based Components. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-14-class-based-components",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-14-class-based-components-05-lifecycle-methods-in-action",
+      "title": "05-lifecycle-methods-in-action",
+      "summary": "Source snapshot 05-lifecycle-methods-in-action from 14 Class-based Components. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-14-class-based-components",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-14-class-based-components-06-class-based-cmp-context-starting-setup",
+      "title": "06-class-based-cmp-context-starting-setup",
+      "summary": "Source snapshot 06-class-based-cmp-context-starting-setup from 14 Class-based Components. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-14-class-based-components",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-14-class-based-components-07-class-based-cmp-and-context",
+      "title": "07-class-based-cmp-and-context",
+      "summary": "Source snapshot 07-class-based-cmp-and-context from 14 Class-based Components. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-14-class-based-components",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-14-class-based-components-08-finished",
+      "title": "08-finished",
+      "summary": "Source snapshot 08-finished from 14 Class-based Components. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-14-class-based-components",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-15-http-requests-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 15 HTTP Requests. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-15-http-requests",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-15-http-requests-02-using-async-await",
+      "title": "02-using-async-await",
+      "summary": "Source snapshot 02-using-async-await from 15 HTTP Requests. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-15-http-requests",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-15-http-requests-03-handling-errors",
+      "title": "03-handling-errors",
+      "summary": "Source snapshot 03-handling-errors from 15 HTTP Requests. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-15-http-requests",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-15-http-requests-04-extracting-code",
+      "title": "04-extracting-code",
+      "summary": "Source snapshot 04-extracting-code from 15 HTTP Requests. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-15-http-requests",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-15-http-requests-05-sending-data",
+      "title": "05-sending-data",
+      "summary": "Source snapshot 05-sending-data from 15 HTTP Requests. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-15-http-requests",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-15-http-requests-06-optimistic-updating",
+      "title": "06-optimistic-updating",
+      "summary": "Source snapshot 06-optimistic-updating from 15 HTTP Requests. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-15-http-requests",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-15-http-requests-07-deleting",
+      "title": "07-deleting",
+      "summary": "Source snapshot 07-deleting from 15 HTTP Requests. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-15-http-requests",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-15-http-requests-08-practice-finished",
+      "title": "08-practice-finished",
+      "summary": "Source snapshot 08-practice-finished from 15 HTTP Requests. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-15-http-requests",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-16-custom-hooks-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 16 Custom Hooks. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-16-custom-hooks",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-16-custom-hooks-02-creating-a-custom-hook",
+      "title": "02-creating-a-custom-hook",
+      "summary": "Source snapshot 02-creating-a-custom-hook from 16 Custom Hooks. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-16-custom-hooks",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-16-custom-hooks-03-finished",
+      "title": "03-finished",
+      "summary": "Source snapshot 03-finished from 16 Custom Hooks. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-16-custom-hooks",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-17-forms-user-input-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 17 Forms User Input. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-17-forms-user-input-02-handling-form-submission",
+      "title": "02-handling-form-submission",
+      "summary": "Source snapshot 02-handling-form-submission from 17 Forms User Input. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-17-forms-user-input-03-managing-getting-user-input-generic-handlers",
+      "title": "03-managing-getting-user-input-generic-handlers",
+      "summary": "Source snapshot 03-managing-getting-user-input-generic-handlers from 17 Forms User Input. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-17-forms-user-input-04-getting-input-refs",
+      "title": "04-getting-input-refs",
+      "summary": "Source snapshot 04-getting-input-refs from 17 Forms User Input. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-17-forms-user-input-05-getting-values-formdata",
+      "title": "05-getting-values-formdata",
+      "summary": "Source snapshot 05-getting-values-formdata from 17 Forms User Input. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-17-forms-user-input-06-validate-keystroke",
+      "title": "06-validate-keystroke",
+      "summary": "Source snapshot 06-validate-keystroke from 17 Forms User Input. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-17-forms-user-input-07-validate-blur",
+      "title": "07-validate-blur",
+      "summary": "Source snapshot 07-validate-blur from 17 Forms User Input. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-17-forms-user-input-08-validate-submission",
+      "title": "08-validate-submission",
+      "summary": "Source snapshot 08-validate-submission from 17 Forms User Input. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-17-forms-user-input-09-validate-built-in-validation-props",
+      "title": "09-validate-built-in-validation-props",
+      "summary": "Source snapshot 09-validate-built-in-validation-props from 17 Forms User Input. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-17-forms-user-input-10-building-using-reusable-input-cmp",
+      "title": "10-building-using-reusable-input-cmp",
+      "summary": "Source snapshot 10-building-using-reusable-input-cmp from 17 Forms User Input. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-17-forms-user-input-11-outsourcing-validation-logic",
+      "title": "11-outsourcing-validation-logic",
+      "summary": "Source snapshot 11-outsourcing-validation-logic from 17 Forms User Input. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-17-forms-user-input-12-creating-a-custom-useinput-hook",
+      "title": "12-creating-a-custom-useinput-hook",
+      "summary": "Source snapshot 12-creating-a-custom-useinput-hook from 17 Forms User Input. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17-forms-user-input",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-17b-form-actions-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 17b Form Actions. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-17b-form-actions-02-first-action-added",
+      "title": "02-first-action-added",
+      "summary": "Source snapshot 02-first-action-added from 17b Form Actions. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-17b-form-actions-03-validation-checks",
+      "title": "03-validation-checks",
+      "summary": "Source snapshot 03-validation-checks from 17b Form Actions. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-17b-form-actions-04-useactionstate",
+      "title": "04-useactionstate",
+      "summary": "Source snapshot 04-useactionstate from 17b Form Actions. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-17b-form-actions-05-basics-finished",
+      "title": "05-basics-finished",
+      "summary": "Source snapshot 05-basics-finished from 17b Form Actions. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-17b-form-actions-06-adv-starting-project",
+      "title": "06-adv-starting-project",
+      "summary": "Source snapshot 06-adv-starting-project from 17b Form Actions. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-17b-form-actions-07-practice-solution",
+      "title": "07-practice-solution",
+      "summary": "Source snapshot 07-practice-solution from 17b Form Actions. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-17b-form-actions-08-async-form-action",
+      "title": "08-async-form-action",
+      "summary": "Source snapshot 08-async-form-action from 17b Form Actions. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-17b-form-actions-09-useformstatus",
+      "title": "09-useformstatus",
+      "summary": "Source snapshot 09-useformstatus from 17b Form Actions. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-17b-form-actions-10-multiple-actions",
+      "title": "10-multiple-actions",
+      "summary": "Source snapshot 10-multiple-actions from 17b Form Actions. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-17b-form-actions-11-useactionstate-pending",
+      "title": "11-useactionstate-pending",
+      "summary": "Source snapshot 11-useactionstate-pending from 17b Form Actions. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-17b-form-actions-12-optimistic-updating",
+      "title": "12-optimistic-updating",
+      "summary": "Source snapshot 12-optimistic-updating from 17b Form Actions. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-17b-form-actions",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-18-practice-project-food-order-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 18 Practice Project - Food Order. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-18-practice-project-food-order-02-planning-and-first-cmp",
+      "title": "02-planning-and-first-cmp",
+      "summary": "Source snapshot 02-planning-and-first-cmp from 18 Practice Project - Food Order. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-18-practice-project-food-order-03-fetching-meals-data",
+      "title": "03-fetching-meals-data",
+      "summary": "Source snapshot 03-fetching-meals-data from 18 Practice Project - Food Order. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-18-practice-project-food-order-04-adding-mealitem-cmp",
+      "title": "04-adding-mealitem-cmp",
+      "summary": "Source snapshot 04-adding-mealitem-cmp from 18 Practice Project - Food Order. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-18-practice-project-food-order-05-creating-configurable-button",
+      "title": "05-creating-configurable-button",
+      "summary": "Source snapshot 05-creating-configurable-button from 18 Practice Project - Food Order. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-18-practice-project-food-order-06-finishing-using-cart-context",
+      "title": "06-finishing-using-cart-context",
+      "summary": "Source snapshot 06-finishing-using-cart-context from 18 Practice Project - Food Order. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-18-practice-project-food-order-07-adding-reusable-modal",
+      "title": "07-adding-reusable-modal",
+      "summary": "Source snapshot 07-adding-reusable-modal from 18 Practice Project - Food Order. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-18-practice-project-food-order-08-working-on-cart-items",
+      "title": "08-working-on-cart-items",
+      "summary": "Source snapshot 08-working-on-cart-items from 18 Practice Project - Food Order. Its 16 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-18-practice-project-food-order-09-handling-form-submission",
+      "title": "09-handling-form-submission",
+      "summary": "Source snapshot 09-handling-form-submission from 18 Practice Project - Food Order. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-18-practice-project-food-order-10-sending-a-post-request",
+      "title": "10-sending-a-post-request",
+      "summary": "Source snapshot 10-sending-a-post-request from 18 Practice Project - Food Order. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-18-practice-project-food-order-11-adding-a-custom-http-hook",
+      "title": "11-adding-a-custom-http-hook",
+      "summary": "Source snapshot 11-adding-a-custom-http-hook from 18 Practice Project - Food Order. Its 19 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-18-practice-project-food-order-12-finishing-touches",
+      "title": "12-finishing-touches",
+      "summary": "Source snapshot 12-finishing-touches from 18 Practice Project - Food Order. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-18-practice-project-food-order-13-managing-form-status-actions",
+      "title": "13-managing-form-status-actions",
+      "summary": "Source snapshot 13-managing-form-status-actions from 18 Practice Project - Food Order. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-18-practice-project-food-order",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-19-redux-basics-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 19 Redux Basics. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-19-redux-basics-02-providing-the-store",
+      "title": "02-providing-the-store",
+      "summary": "Source snapshot 02-providing-the-store from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-19-redux-basics-03-using-redux-data-in-react-cmp",
+      "title": "03-using-redux-data-in-react-cmp",
+      "summary": "Source snapshot 03-using-redux-data-in-react-cmp from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-19-redux-basics-04-dispatching-actions",
+      "title": "04-dispatching-actions",
+      "summary": "Source snapshot 04-dispatching-actions from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-19-redux-basics-05-redux-with-class-based-cmp",
+      "title": "05-redux-with-class-based-cmp",
+      "summary": "Source snapshot 05-redux-with-class-based-cmp from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-19-redux-basics-06-attaching-payloads-to-actions",
+      "title": "06-attaching-payloads-to-actions",
+      "summary": "Source snapshot 06-attaching-payloads-to-actions from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-19-redux-basics-07-working-with-mutiple-state-properties",
+      "title": "07-working-with-mutiple-state-properties",
+      "summary": "Source snapshot 07-working-with-mutiple-state-properties from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-19-redux-basics-08-how-to-work-with-redux-state-correctly",
+      "title": "08-how-to-work-with-redux-state-correctly",
+      "summary": "Source snapshot 08-how-to-work-with-redux-state-correctly from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-19-redux-basics-09-introducing-redux-toolkit",
+      "title": "09-introducing-redux-toolkit",
+      "summary": "Source snapshot 09-introducing-redux-toolkit from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-19-redux-basics-10-working-with-multiple-slices",
+      "title": "10-working-with-multiple-slices",
+      "summary": "Source snapshot 10-working-with-multiple-slices from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-19-redux-basics-11-reading-and-dispatching",
+      "title": "11-reading-and-dispatching",
+      "summary": "Source snapshot 11-reading-and-dispatching from 19 Redux Basics. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-19-redux-basics-12-finished",
+      "title": "12-finished",
+      "summary": "Source snapshot 12-finished from 19 Redux Basics. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-19-redux-basics",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-20-advanced-redux-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 20 Advanced Redux. Its 19 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-20-advanced-redux",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-20-advanced-redux-02-refresher-practice-finished",
+      "title": "02-refresher-practice-finished",
+      "summary": "Source snapshot 02-refresher-practice-finished from 20 Advanced Redux. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-20-advanced-redux",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-20-advanced-redux-03-using-useeffect-with-redux",
+      "title": "03-using-useeffect-with-redux",
+      "summary": "Source snapshot 03-using-useeffect-with-redux from 20 Advanced Redux. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-20-advanced-redux",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-20-advanced-redux-04-handling-http-states-feedback-with-redux",
+      "title": "04-handling-http-states-feedback-with-redux",
+      "summary": "Source snapshot 04-handling-http-states-feedback-with-redux from 20 Advanced Redux. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-20-advanced-redux",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-20-advanced-redux-05-using-an-action-creator-thunk",
+      "title": "05-using-an-action-creator-thunk",
+      "summary": "Source snapshot 05-using-an-action-creator-thunk from 20 Advanced Redux. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-20-advanced-redux",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-20-advanced-redux-06-finished",
+      "title": "06-finished",
+      "summary": "Source snapshot 06-finished from 20 Advanced Redux. Its 25 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-20-advanced-redux",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-20-advanced-redux-zz-suboptimal-example-code",
+      "title": "zz-suboptimal-example-code",
+      "summary": "Source snapshot zz-suboptimal-example-code from 20 Advanced Redux. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-20-advanced-redux",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-21-routing-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 21 Routing. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-21-routing-02-route-setup",
+      "title": "02-route-setup",
+      "summary": "Source snapshot 02-route-setup from 21 Routing. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-21-routing-03-alternative-route-definitions",
+      "title": "03-alternative-route-definitions",
+      "summary": "Source snapshot 03-alternative-route-definitions from 21 Routing. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-21-routing-04-adding-links",
+      "title": "04-adding-links",
+      "summary": "Source snapshot 04-adding-links from 21 Routing. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-21-routing-05-layout-wrapper-route",
+      "title": "05-layout-wrapper-route",
+      "summary": "Source snapshot 05-layout-wrapper-route from 21 Routing. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-21-routing-06-error-route-404",
+      "title": "06-error-route-404",
+      "summary": "Source snapshot 06-error-route-404 from 21 Routing. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-21-routing-07-using-navlinks",
+      "title": "07-using-navlinks",
+      "summary": "Source snapshot 07-using-navlinks from 21 Routing. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-21-routing-08-navigating-programmatically",
+      "title": "08-navigating-programmatically",
+      "summary": "Source snapshot 08-navigating-programmatically from 21 Routing. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-21-routing-09-dynamic-routes",
+      "title": "09-dynamic-routes",
+      "summary": "Source snapshot 09-dynamic-routes from 21 Routing. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-21-routing-10-absolute-relative-paths",
+      "title": "10-absolute-relative-paths",
+      "summary": "Source snapshot 10-absolute-relative-paths from 21 Routing. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-21-routing-11-index-routes",
+      "title": "11-index-routes",
+      "summary": "Source snapshot 11-index-routes from 21 Routing. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-21-routing-12-adv-starting-project",
+      "title": "12-adv-starting-project",
+      "summary": "Source snapshot 12-adv-starting-project from 21 Routing. Its 19 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-21-routing-13-challenge-problem",
+      "title": "13-challenge-problem",
+      "summary": "Source snapshot 13-challenge-problem from 21 Routing. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-21-routing-14-challenge-solution",
+      "title": "14-challenge-solution",
+      "summary": "Source snapshot 14-challenge-solution from 21 Routing. Its 21 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 13
+    },
+    {
+      "id": "project-21-routing-15-data-fetching-example",
+      "title": "15-data-fetching-example",
+      "summary": "Source snapshot 15-data-fetching-example from 21 Routing. Its 21 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 14
+    },
+    {
+      "id": "project-21-routing-16-added-loader",
+      "title": "16-added-loader",
+      "summary": "Source snapshot 16-added-loader from 21 Routing. Its 21 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 15
+    },
+    {
+      "id": "project-21-routing-17-loader-in-separate-file",
+      "title": "17-loader-in-separate-file",
+      "summary": "Source snapshot 17-loader-in-separate-file from 21 Routing. Its 21 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 16
+    },
+    {
+      "id": "project-21-routing-18-user-feedback-usenavigation",
+      "title": "18-user-feedback-usenavigation",
+      "summary": "Source snapshot 18-user-feedback-usenavigation from 21 Routing. Its 21 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 17
+    },
+    {
+      "id": "project-21-routing-19-returning-responses",
+      "title": "19-returning-responses",
+      "summary": "Source snapshot 19-returning-responses from 21 Routing. Its 21 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 18
+    },
+    {
+      "id": "project-21-routing-20-error-handling",
+      "title": "20-error-handling",
+      "summary": "Source snapshot 20-error-handling from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 19
+    },
+    {
+      "id": "project-21-routing-21-json-helper-function",
+      "title": "21-json-helper-function",
+      "summary": "Source snapshot 21-json-helper-function from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 20
+    },
+    {
+      "id": "project-21-routing-22-dynamic-routes-loader",
+      "title": "22-dynamic-routes-loader",
+      "summary": "Source snapshot 22-dynamic-routes-loader from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 21
+    },
+    {
+      "id": "project-21-routing-23-userouteloaderdata",
+      "title": "23-userouteloaderdata",
+      "summary": "Source snapshot 23-userouteloaderdata from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 22
+    },
+    {
+      "id": "project-21-routing-24-action-data-submission",
+      "title": "24-action-data-submission",
+      "summary": "Source snapshot 24-action-data-submission from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 23
+    },
+    {
+      "id": "project-21-routing-25-deleting",
+      "title": "25-deleting",
+      "summary": "Source snapshot 25-deleting from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 24
+    },
+    {
+      "id": "project-21-routing-26-form-submission-usenavigation",
+      "title": "26-form-submission-usenavigation",
+      "summary": "Source snapshot 26-form-submission-usenavigation from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 25
+    },
+    {
+      "id": "project-21-routing-27-validation-returning-data",
+      "title": "27-validation-returning-data",
+      "summary": "Source snapshot 27-validation-returning-data from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 26
+    },
+    {
+      "id": "project-21-routing-28-reusing-action",
+      "title": "28-reusing-action",
+      "summary": "Source snapshot 28-reusing-action from 21 Routing. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 27
+    },
+    {
+      "id": "project-21-routing-29-prepared-newsletter-code",
+      "title": "29-prepared-newsletter-code",
+      "summary": "Source snapshot 29-prepared-newsletter-code from 21 Routing. Its 27 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 28
+    },
+    {
+      "id": "project-21-routing-30-usefetcher",
+      "title": "30-usefetcher",
+      "summary": "Source snapshot 30-usefetcher from 21 Routing. Its 27 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 29
+    },
+    {
+      "id": "project-21-routing-31-defer-introduction",
+      "title": "31-defer-introduction",
+      "summary": "Source snapshot 31-defer-introduction from 21 Routing. Its 27 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 30
+    },
+    {
+      "id": "project-21-routing-32-finished",
+      "title": "32-finished",
+      "summary": "Source snapshot 32-finished from 21 Routing. Its 32 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-21-routing",
+      "type": "project",
+      "order": 31
+    },
+    {
+      "id": "project-22-authentication-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 22 Authentication. Its 39 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-22-authentication-02-project-setup",
+      "title": "02-project-setup",
+      "summary": "Source snapshot 02-project-setup from 22 Authentication. Its 30 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-22-authentication-03-query-parameters",
+      "title": "03-query-parameters",
+      "summary": "Source snapshot 03-query-parameters from 22 Authentication. Its 30 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-22-authentication-04-signup",
+      "title": "04-signup",
+      "summary": "Source snapshot 04-signup from 22 Authentication. Its 30 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-22-authentication-05-storing-using-token",
+      "title": "05-storing-using-token",
+      "summary": "Source snapshot 05-storing-using-token from 22 Authentication. Its 31 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-22-authentication-06-logout",
+      "title": "06-logout",
+      "summary": "Source snapshot 06-logout from 22 Authentication. Its 32 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-22-authentication-07-update-ui",
+      "title": "07-update-ui",
+      "summary": "Source snapshot 07-update-ui from 22 Authentication. Its 32 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-22-authentication-08-route-protection",
+      "title": "08-route-protection",
+      "summary": "Source snapshot 08-route-protection from 22 Authentication. Its 32 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-22-authentication-09-finished",
+      "title": "09-finished",
+      "summary": "Source snapshot 09-finished from 22 Authentication. Its 41 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-22-authentication",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-23-deployment-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 23 Deployment. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-23-deployment",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-23-deployment-02-finished",
+      "title": "02-finished",
+      "summary": "Source snapshot 02-finished from 23 Deployment. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-23-deployment",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-24-react-query-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 24 React Query. Its 21 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-24-react-query-02-installing-using-react-query",
+      "title": "02-installing-using-react-query",
+      "summary": "Source snapshot 02-installing-using-react-query from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-24-react-query-03-query-config-object",
+      "title": "03-query-config-object",
+      "summary": "Source snapshot 03-query-config-object from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-24-react-query-04-enabling-disabling-queries",
+      "title": "04-enabling-disabling-queries",
+      "summary": "Source snapshot 04-enabling-disabling-queries from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-24-react-query-05-changing-data-with-mutations",
+      "title": "05-changing-data-with-mutations",
+      "summary": "Source snapshot 05-changing-data-with-mutations from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-24-react-query-06-fetching-more-data-and-testing-mutation",
+      "title": "06-fetching-more-data-and-testing-mutation",
+      "summary": "Source snapshot 06-fetching-more-data-and-testing-mutation from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-24-react-query-07-acting-on-mutation-success-and-invalidating-queries",
+      "title": "07-acting-on-mutation-success-and-invalidating-queries",
+      "summary": "Source snapshot 07-acting-on-mutation-success-and-invalidating-queries from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-24-react-query-08-challenge-problem",
+      "title": "08-challenge-problem",
+      "summary": "Source snapshot 08-challenge-problem from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-24-react-query-09-disabling-automatic-refetching",
+      "title": "09-disabling-automatic-refetching",
+      "summary": "Source snapshot 09-disabling-automatic-refetching from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-24-react-query-10-optimistic-updating",
+      "title": "10-optimistic-updating",
+      "summary": "Source snapshot 10-optimistic-updating from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-24-react-query-11-finished",
+      "title": "11-finished",
+      "summary": "Source snapshot 11-finished from 24 React Query. Its 22 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-24-react-query",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 25 NextJS App Router Introduction. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-02-adding-another-route",
+      "title": "02-adding-another-route",
+      "summary": "Source snapshot 02-adding-another-route from 25 NextJS App Router Introduction. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-03-navigating-between-pages",
+      "title": "03-navigating-between-pages",
+      "summary": "Source snapshot 03-navigating-between-pages from 25 NextJS App Router Introduction. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-04-configuring-dynamic-routes",
+      "title": "04-configuring-dynamic-routes",
+      "summary": "Source snapshot 04-configuring-dynamic-routes from 25 NextJS App Router Introduction. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-05-onwards-foodies-starting-project",
+      "title": "05-onwards-foodies-starting-project",
+      "summary": "Source snapshot 05-onwards-foodies-starting-project from 25 NextJS App Router Introduction. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-06-exercise-solution",
+      "title": "06-exercise-solution",
+      "summary": "Source snapshot 06-exercise-solution from 25 NextJS App Router Introduction. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-07-adding-a-custom-component-to-layout",
+      "title": "07-adding-a-custom-component-to-layout",
+      "summary": "Source snapshot 07-adding-a-custom-component-to-layout from 25 NextJS App Router Introduction. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-08-styling-css-modules",
+      "title": "08-styling-css-modules",
+      "summary": "Source snapshot 08-styling-css-modules from 25 NextJS App Router Introduction. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-09-optimizing-images-with-image-cmp",
+      "title": "09-optimizing-images-with-image-cmp",
+      "summary": "Source snapshot 09-optimizing-images-with-image-cmp from 25 NextJS App Router Introduction. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-10-using-more-custom-cmp",
+      "title": "10-using-more-custom-cmp",
+      "summary": "Source snapshot 10-using-more-custom-cmp from 25 NextJS App Router Introduction. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-11-populating-starting-page",
+      "title": "11-populating-starting-page",
+      "summary": "Source snapshot 11-populating-starting-page from 25 NextJS App Router Introduction. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-12-react-server-cmp-vs-client-cmp",
+      "title": "12-react-server-cmp-vs-client-cmp",
+      "summary": "Source snapshot 12-react-server-cmp-vs-client-cmp from 25 NextJS App Router Introduction. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-13-using-client-cmp-efficiently",
+      "title": "13-using-client-cmp-efficiently",
+      "summary": "Source snapshot 13-using-client-cmp-efficiently from 25 NextJS App Router Introduction. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-14-outputting-meals-data-images-with-unknown-dimensions",
+      "title": "14-outputting-meals-data-images-with-unknown-dimensions",
+      "summary": "Source snapshot 14-outputting-meals-data-images-with-unknown-dimensions from 25 NextJS App Router Introduction. Its 23 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 13
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-15-setting-up-a-sqlite-database",
+      "title": "15-setting-up-a-sqlite-database",
+      "summary": "Source snapshot 15-setting-up-a-sqlite-database from 25 NextJS App Router Introduction. Its 24 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 14
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-16-fetching-data-by-leveraging-nextjs",
+      "title": "16-fetching-data-by-leveraging-nextjs",
+      "summary": "Source snapshot 16-fetching-data-by-leveraging-nextjs from 25 NextJS App Router Introduction. Its 25 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 15
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-17-using-suspense",
+      "title": "17-using-suspense",
+      "summary": "Source snapshot 17-using-suspense from 25 NextJS App Router Introduction. Its 27 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 16
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-18-handling-errors",
+      "title": "18-handling-errors",
+      "summary": "Source snapshot 18-handling-errors from 25 NextJS App Router Introduction. Its 28 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 17
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-19-handling-not-found",
+      "title": "19-handling-not-found",
+      "summary": "Source snapshot 19-handling-not-found from 25 NextJS App Router Introduction. Its 29 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 18
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-20-throwing-not-found-for-individual-meal",
+      "title": "20-throwing-not-found-for-individual-meal",
+      "summary": "Source snapshot 20-throwing-not-found-for-individual-meal from 25 NextJS App Router Introduction. Its 31 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 19
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-21-getting-started-with-share-meal-form",
+      "title": "21-getting-started-with-share-meal-form",
+      "summary": "Source snapshot 21-getting-started-with-share-meal-form from 25 NextJS App Router Introduction. Its 32 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 20
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-22-getting-started-with-custom-image-picker",
+      "title": "22-getting-started-with-custom-image-picker",
+      "summary": "Source snapshot 22-getting-started-with-custom-image-picker from 25 NextJS App Router Introduction. Its 34 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 21
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-23-adding-an-image-preview",
+      "title": "23-adding-an-image-preview",
+      "summary": "Source snapshot 23-adding-an-image-preview from 25 NextJS App Router Introduction. Its 34 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 22
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-24-introducing-using-server-actions",
+      "title": "24-introducing-using-server-actions",
+      "summary": "Source snapshot 24-introducing-using-server-actions from 25 NextJS App Router Introduction. Its 34 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 23
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-25-storing-server-actions-in-separate-file",
+      "title": "25-storing-server-actions-in-separate-file",
+      "summary": "Source snapshot 25-storing-server-actions-in-separate-file from 25 NextJS App Router Introduction. Its 35 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 24
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-26-storing-uploaded-images-and-data",
+      "title": "26-storing-uploaded-images-and-data",
+      "summary": "Source snapshot 26-storing-uploaded-images-and-data from 25 NextJS App Router Introduction. Its 35 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 25
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-27-managing-form-submission-useformstatus",
+      "title": "27-managing-form-submission-useformstatus",
+      "summary": "Source snapshot 27-managing-form-submission-useformstatus from 25 NextJS App Router Introduction. Its 36 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 26
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-28-adding-server-side-input-validation",
+      "title": "28-adding-server-side-input-validation",
+      "summary": "Source snapshot 28-adding-server-side-input-validation from 25 NextJS App Router Introduction. Its 37 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 27
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-29-working-with-server-action-responses-useformstate",
+      "title": "29-working-with-server-action-responses-useformstate",
+      "summary": "Source snapshot 29-working-with-server-action-responses-useformstate from 25 NextJS App Router Introduction. Its 37 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 28
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-30-triggering-cache-revalidations",
+      "title": "30-triggering-cache-revalidations",
+      "summary": "Source snapshot 30-triggering-cache-revalidations from 25 NextJS App Router Introduction. Its 37 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 29
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-31-adding-dynamic-metadata",
+      "title": "31-adding-dynamic-metadata",
+      "summary": "Source snapshot 31-adding-dynamic-metadata from 25 NextJS App Router Introduction. Its 37 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 30
+    },
+    {
+      "id": "project-25-nextjs-app-router-introduction-32-s3-file-storage",
+      "title": "32-s3-file-storage",
+      "summary": "Source snapshot 32-s3-file-storage from 25 NextJS App Router Introduction. Its 37 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-app-router-introduction",
+      "type": "project",
+      "order": 31
+    },
+    {
+      "id": "project-25-nextjs-introduction-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 25 NextJS Introduction. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-25-nextjs-introduction-02-adding-first-pages",
+      "title": "02-adding-first-pages",
+      "summary": "Source snapshot 02-adding-first-pages from 25 NextJS Introduction. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-25-nextjs-introduction-03-creating-dynamic-pages",
+      "title": "03-creating-dynamic-pages",
+      "summary": "Source snapshot 03-creating-dynamic-pages from 25 NextJS Introduction. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-25-nextjs-introduction-04-extracting-dynamic-parameter-values",
+      "title": "04-extracting-dynamic-parameter-values",
+      "summary": "Source snapshot 04-extracting-dynamic-parameter-values from 25 NextJS Introduction. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-25-nextjs-introduction-05-linking-between-pages",
+      "title": "05-linking-between-pages",
+      "summary": "Source snapshot 05-linking-between-pages from 25 NextJS Introduction. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-25-nextjs-introduction-06-onwards-to-a-bigger-project-starting-project",
+      "title": "06-onwards-to-a-bigger-project-starting-project",
+      "summary": "Source snapshot 06-onwards-to-a-bigger-project-starting-project from 25 NextJS Introduction. Its 14 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-25-nextjs-introduction-07-outputting-a-list-of-meetups",
+      "title": "07-outputting-a-list-of-meetups",
+      "summary": "Source snapshot 07-outputting-a-list-of-meetups from 25 NextJS Introduction. Its 17 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-25-nextjs-introduction-08-adding-the-new-meetup-form",
+      "title": "08-adding-the-new-meetup-form",
+      "summary": "Source snapshot 08-adding-the-new-meetup-form from 25 NextJS Introduction. Its 17 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-25-nextjs-introduction-09-the-appjs-file-layout-wrapper",
+      "title": "09-the-appjs-file-layout-wrapper",
+      "summary": "Source snapshot 09-the-appjs-file-layout-wrapper from 25 NextJS Introduction. Its 17 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-25-nextjs-introduction-10-adding-custom-components-css-modules",
+      "title": "10-adding-custom-components-css-modules",
+      "summary": "Source snapshot 10-adding-custom-components-css-modules from 25 NextJS Introduction. Its 19 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-25-nextjs-introduction-11-data-fetching-for-static-pages",
+      "title": "11-data-fetching-for-static-pages",
+      "summary": "Source snapshot 11-data-fetching-for-static-pages from 25 NextJS Introduction. Its 19 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-25-nextjs-introduction-12-more-on-ssg",
+      "title": "12-more-on-ssg",
+      "summary": "Source snapshot 12-more-on-ssg from 25 NextJS Introduction. Its 19 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-25-nextjs-introduction-13-exploring-server-side-rendering",
+      "title": "13-exploring-server-side-rendering",
+      "summary": "Source snapshot 13-exploring-server-side-rendering from 25 NextJS Introduction. Its 19 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-25-nextjs-introduction-14-preparing-paths-getstaticpaths",
+      "title": "14-preparing-paths-getstaticpaths",
+      "summary": "Source snapshot 14-preparing-paths-getstaticpaths from 25 NextJS Introduction. Its 19 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 13
+    },
+    {
+      "id": "project-25-nextjs-introduction-15-working-with-mongodb",
+      "title": "15-working-with-mongodb",
+      "summary": "Source snapshot 15-working-with-mongodb from 25 NextJS Introduction. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 14
+    },
+    {
+      "id": "project-25-nextjs-introduction-16-sending-http-request-to-our-api-routes",
+      "title": "16-sending-http-request-to-our-api-routes",
+      "summary": "Source snapshot 16-sending-http-request-to-our-api-routes from 25 NextJS Introduction. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 15
+    },
+    {
+      "id": "project-25-nextjs-introduction-17-getting-data-from-database",
+      "title": "17-getting-data-from-database",
+      "summary": "Source snapshot 17-getting-data-from-database from 25 NextJS Introduction. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 16
+    },
+    {
+      "id": "project-25-nextjs-introduction-18-getting-meetup-details-data",
+      "title": "18-getting-meetup-details-data",
+      "summary": "Source snapshot 18-getting-meetup-details-data from 25 NextJS Introduction. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 17
+    },
+    {
+      "id": "project-25-nextjs-introduction-19-finished",
+      "title": "19-finished",
+      "summary": "Source snapshot 19-finished from 25 NextJS Introduction. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25-nextjs-introduction",
+      "type": "project",
+      "order": 18
+    },
+    {
+      "id": "project-25b-rsc-suspense-server-actions-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 25b RSC, Suspense, Server Actions. Its 3 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25b-rsc-suspense-server-actions",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-25b-rsc-suspense-server-actions-02-rsc-client-cmp",
+      "title": "02-rsc-client-cmp",
+      "summary": "Source snapshot 02-rsc-client-cmp from 25b RSC, Suspense, Server Actions. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25b-rsc-suspense-server-actions",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-25b-rsc-suspense-server-actions-03-data-fetching",
+      "title": "03-data-fetching",
+      "summary": "Source snapshot 03-data-fetching from 25b RSC, Suspense, Server Actions. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25b-rsc-suspense-server-actions",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-25b-rsc-suspense-server-actions-04-server-actions",
+      "title": "04-server-actions",
+      "summary": "Source snapshot 04-server-actions from 25b RSC, Suspense, Server Actions. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25b-rsc-suspense-server-actions",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-25b-rsc-suspense-server-actions-05-use-hook",
+      "title": "05-use-hook",
+      "summary": "Source snapshot 05-use-hook from 25b RSC, Suspense, Server Actions. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25b-rsc-suspense-server-actions",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-25b-rsc-suspense-server-actions-06-error-handling",
+      "title": "06-error-handling",
+      "summary": "Source snapshot 06-error-handling from 25b RSC, Suspense, Server Actions. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-25b-rsc-suspense-server-actions",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-26-animations-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 26 Animations. Its 17 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-26-animations-02-css-animations",
+      "title": "02-css-animations",
+      "summary": "Source snapshot 02-css-animations from 26 Animations. Its 17 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-26-animations-03-animating-disappearence",
+      "title": "03-animating-disappearence",
+      "summary": "Source snapshot 03-animating-disappearence from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-26-animations-04-making-elements-pop",
+      "title": "04-making-elements-pop",
+      "summary": "Source snapshot 04-making-elements-pop from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-26-animations-05-nested-animations-and-variants",
+      "title": "05-nested-animations-and-variants",
+      "summary": "Source snapshot 05-nested-animations-and-variants from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-26-animations-06-animating-staggered-lists",
+      "title": "06-animating-staggered-lists",
+      "summary": "Source snapshot 06-animating-staggered-lists from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-26-animations-07-animating-colors-and-keyframes",
+      "title": "07-animating-colors-and-keyframes",
+      "summary": "Source snapshot 07-animating-colors-and-keyframes from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-26-animations-08-imperative-animations",
+      "title": "08-imperative-animations",
+      "summary": "Source snapshot 08-imperative-animations from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-26-animations-09-animating-layout-changes",
+      "title": "09-animating-layout-changes",
+      "summary": "Source snapshot 09-animating-layout-changes from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-26-animations-10-orchestrating-multi-element-animations",
+      "title": "10-orchestrating-multi-element-animations",
+      "summary": "Source snapshot 10-orchestrating-multi-element-animations from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-26-animations-11-animating-shared-elements",
+      "title": "11-animating-shared-elements",
+      "summary": "Source snapshot 11-animating-shared-elements from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-26-animations-12-finished",
+      "title": "12-finished",
+      "summary": "Source snapshot 12-finished from 26 Animations. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-26-animations-zz-playground",
+      "title": "zz-playground",
+      "summary": "Source snapshot zz-playground from 26 Animations. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-26-animations-zz-playground-finished",
+      "title": "zz-playground-finished",
+      "summary": "Source snapshot zz-playground-finished from 26 Animations. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-26-animations",
+      "type": "project",
+      "order": 13
+    },
+    {
+      "id": "project-27-patterns-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 27 Patterns. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-patterns",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-27-patterns-02-introducing-compound-cmp",
+      "title": "02-introducing-compound-cmp",
+      "summary": "Source snapshot 02-introducing-compound-cmp from 27 Patterns. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-patterns",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-27-patterns-03-grouping-compound-cmp",
+      "title": "03-grouping-compound-cmp",
+      "summary": "Source snapshot 03-grouping-compound-cmp from 27 Patterns. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-patterns",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-27-patterns-04-adding-extra-components",
+      "title": "04-adding-extra-components",
+      "summary": "Source snapshot 04-adding-extra-components from 27 Patterns. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-patterns",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-27-patterns-05-sharing-cross-cmp-state",
+      "title": "05-sharing-cross-cmp-state",
+      "summary": "Source snapshot 05-sharing-cross-cmp-state from 27 Patterns. Its 10 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-patterns",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-27-patterns-06-adding-search",
+      "title": "06-adding-search",
+      "summary": "Source snapshot 06-adding-search from 27 Patterns. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-patterns",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-27-patterns-07-handling-keys",
+      "title": "07-handling-keys",
+      "summary": "Source snapshot 07-handling-keys from 27 Patterns. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-patterns",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-27-patterns-08-debouncing",
+      "title": "08-debouncing",
+      "summary": "Source snapshot 08-debouncing from 27 Patterns. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-patterns",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-27-replacing-redux-with-hooks-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 27 Replacing Redux with Hooks. Its 17 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-replacing-redux-with-hooks",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-27-replacing-redux-with-hooks-02-context-api-summary",
+      "title": "02-context-api-summary",
+      "summary": "Source snapshot 02-context-api-summary from 27 Replacing Redux with Hooks. Its 18 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-replacing-redux-with-hooks",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-27-replacing-redux-with-hooks-03-getting-started-with-a-custom-hook",
+      "title": "03-getting-started-with-a-custom-hook",
+      "summary": "Source snapshot 03-getting-started-with-a-custom-hook from 27 Replacing Redux with Hooks. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-replacing-redux-with-hooks",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-27-replacing-redux-with-hooks-04-finishing-the-store-hook",
+      "title": "04-finishing-the-store-hook",
+      "summary": "Source snapshot 04-finishing-the-store-hook from 27 Replacing Redux with Hooks. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-replacing-redux-with-hooks",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-27-replacing-redux-with-hooks-05-finished",
+      "title": "05-finished",
+      "summary": "Source snapshot 05-finished from 27 Replacing Redux with Hooks. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-replacing-redux-with-hooks",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-27-replacing-redux-with-hooks-06-bonus-multiple-slices",
+      "title": "06-bonus-multiple-slices",
+      "summary": "Source snapshot 06-bonus-multiple-slices from 27 Replacing Redux with Hooks. Its 23 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-27-replacing-redux-with-hooks",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-28-testing-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 28 Testing. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-28-testing",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-28-testing-01-starting-project-vite",
+      "title": "01-starting-project-vite",
+      "summary": "Source snapshot 01-starting-project-vite from 28 Testing. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-28-testing",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-28-testing-02-writing-our-first-test",
+      "title": "02-writing-our-first-test",
+      "summary": "Source snapshot 02-writing-our-first-test from 28 Testing. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-28-testing",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-28-testing-03-test-suites",
+      "title": "03-test-suites",
+      "summary": "Source snapshot 03-test-suites from 28 Testing. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-28-testing",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-28-testing-04-testing-user-interaction-and-state",
+      "title": "04-testing-user-interaction-and-state",
+      "summary": "Source snapshot 04-testing-user-interaction-and-state from 28 Testing. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-28-testing",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-28-testing-05-testing-async-code",
+      "title": "05-testing-async-code",
+      "summary": "Source snapshot 05-testing-async-code from 28 Testing. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-28-testing",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-28-testing-07-working-with-mocks",
+      "title": "07-working-with-mocks",
+      "summary": "Source snapshot 07-working-with-mocks from 28 Testing. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-28-testing",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-29-react-typescript-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 29 React TypeScript. Its 2 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-29-react-typescript-02-a-basic-typescript-example",
+      "title": "02-a-basic-typescript-example",
+      "summary": "Source snapshot 02-a-basic-typescript-example from 29 React TypeScript. Its 3 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-29-react-typescript-03-introducing-base-types",
+      "title": "03-introducing-base-types",
+      "summary": "Source snapshot 03-introducing-base-types from 29 React TypeScript. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-29-react-typescript-04-using-union-types",
+      "title": "04-using-union-types",
+      "summary": "Source snapshot 04-using-union-types from 29 React TypeScript. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-29-react-typescript-05-type-aliases",
+      "title": "05-type-aliases",
+      "summary": "Source snapshot 05-type-aliases from 29 React TypeScript. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-29-react-typescript-06-understanding-generics",
+      "title": "06-understanding-generics",
+      "summary": "Source snapshot 06-understanding-generics from 29 React TypeScript. Its 4 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-29-react-typescript-07-react-ts-starting-project",
+      "title": "07-react-ts-starting-project",
+      "summary": "Source snapshot 07-react-ts-starting-project from 29 React TypeScript. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-29-react-typescript-08-working-with-props",
+      "title": "08-working-with-props",
+      "summary": "Source snapshot 08-working-with-props from 29 React TypeScript. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-29-react-typescript-09-added-a-data-model-class",
+      "title": "09-added-a-data-model-class",
+      "summary": "Source snapshot 09-added-a-data-model-class from 29 React TypeScript. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-29-react-typescript-10-exercise",
+      "title": "10-exercise",
+      "summary": "Source snapshot 10-exercise from 29 React TypeScript. Its 8 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-29-react-typescript-11-working-with-refs",
+      "title": "11-working-with-refs",
+      "summary": "Source snapshot 11-working-with-refs from 29 React TypeScript. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-29-react-typescript-12-working-with-function-props",
+      "title": "12-working-with-function-props",
+      "summary": "Source snapshot 12-working-with-function-props from 29 React TypeScript. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-29-react-typescript-13-using-state",
+      "title": "13-using-state",
+      "summary": "Source snapshot 13-using-state from 29 React TypeScript. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-29-react-typescript-14-adding-styling",
+      "title": "14-adding-styling",
+      "summary": "Source snapshot 14-adding-styling from 29 React TypeScript. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 13
+    },
+    {
+      "id": "project-29-react-typescript-15-exercise-removing-todos",
+      "title": "15-exercise-removing-todos",
+      "summary": "Source snapshot 15-exercise-removing-todos from 29 React TypeScript. Its 12 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 14
+    },
+    {
+      "id": "project-29-react-typescript-16-finished",
+      "title": "16-finished",
+      "summary": "Source snapshot 16-finished from 29 React TypeScript. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-29-react-typescript",
+      "type": "project",
+      "order": 15
+    },
+    {
+      "id": "project-30-react-summary-01-starting-project",
+      "title": "01-starting-project",
+      "summary": "Source snapshot 01-starting-project from 30 React Summary. Its 5 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 0
+    },
+    {
+      "id": "project-30-react-summary-02-first-component",
+      "title": "02-first-component",
+      "summary": "Source snapshot 02-first-component from 30 React Summary. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 1
+    },
+    {
+      "id": "project-30-react-summary-03-dynamic-values",
+      "title": "03-dynamic-values",
+      "summary": "Source snapshot 03-dynamic-values from 30 React Summary. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 2
+    },
+    {
+      "id": "project-30-react-summary-04-props",
+      "title": "04-props",
+      "summary": "Source snapshot 04-props from 30 React Summary. Its 6 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 3
+    },
+    {
+      "id": "project-30-react-summary-05-styling-css-modules",
+      "title": "05-styling-css-modules",
+      "summary": "Source snapshot 05-styling-css-modules from 30 React Summary. Its 7 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 4
+    },
+    {
+      "id": "project-30-react-summary-06-exercise-solution-postlist-cmp",
+      "title": "06-exercise-solution-postlist-cmp",
+      "summary": "Source snapshot 06-exercise-solution-postlist-cmp from 30 React Summary. Its 9 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 5
+    },
+    {
+      "id": "project-30-react-summary-07-event-listener",
+      "title": "07-event-listener",
+      "summary": "Source snapshot 07-event-listener from 30 React Summary. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 6
+    },
+    {
+      "id": "project-30-react-summary-08-state",
+      "title": "08-state",
+      "summary": "Source snapshot 08-state from 30 React Summary. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 7
+    },
+    {
+      "id": "project-30-react-summary-09-lifting-state-up",
+      "title": "09-lifting-state-up",
+      "summary": "Source snapshot 09-lifting-state-up from 30 React Summary. Its 11 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 8
+    },
+    {
+      "id": "project-30-react-summary-10-children-prop",
+      "title": "10-children-prop",
+      "summary": "Source snapshot 10-children-prop from 30 React Summary. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 9
+    },
+    {
+      "id": "project-30-react-summary-11-conditional-content",
+      "title": "11-conditional-content",
+      "summary": "Source snapshot 11-conditional-content from 30 React Summary. Its 13 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 10
+    },
+    {
+      "id": "project-30-react-summary-12-form-submission",
+      "title": "12-form-submission",
+      "summary": "Source snapshot 12-form-submission from 30 React Summary. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 11
+    },
+    {
+      "id": "project-30-react-summary-13-outputting-a-list-of-posts",
+      "title": "13-outputting-a-list-of-posts",
+      "summary": "Source snapshot 13-outputting-a-list-of-posts from 30 React Summary. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 12
+    },
+    {
+      "id": "project-30-react-summary-14-data-fetching-useeffect",
+      "title": "14-data-fetching-useeffect",
+      "summary": "Source snapshot 14-data-fetching-useeffect from 30 React Summary. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 13
+    },
+    {
+      "id": "project-30-react-summary-15-loading-state",
+      "title": "15-loading-state",
+      "summary": "Source snapshot 15-loading-state from 30 React Summary. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 14
+    },
+    {
+      "id": "project-30-react-summary-16-added-routing",
+      "title": "16-added-routing",
+      "summary": "Source snapshot 16-added-routing from 30 React Summary. Its 15 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 15
+    },
+    {
+      "id": "project-30-react-summary-17-refactored-routes",
+      "title": "17-refactored-routes",
+      "summary": "Source snapshot 17-refactored-routes from 30 React Summary. Its 16 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 16
+    },
+    {
+      "id": "project-30-react-summary-18-links-navigation",
+      "title": "18-links-navigation",
+      "summary": "Source snapshot 18-links-navigation from 30 React Summary. Its 16 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 17
+    },
+    {
+      "id": "project-30-react-summary-19-loader",
+      "title": "19-loader",
+      "summary": "Source snapshot 19-loader from 30 React Summary. Its 16 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 18
+    },
+    {
+      "id": "project-30-react-summary-20-action",
+      "title": "20-action",
+      "summary": "Source snapshot 20-action from 30 React Summary. Its 16 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 19
+    },
+    {
+      "id": "project-30-react-summary-21-finished",
+      "title": "21-finished",
+      "summary": "Source snapshot 21-finished from 30 React Summary. Its 20 published files preserve this version’s source tree.",
+      "collectionId": "react-complete-guide",
+      "parentId": "module-30-react-summary",
+      "type": "project",
+      "order": 20
+    },
+    {
+      "id": "course-references",
+      "title": "Course References",
+      "summary": "Course updates and slide PDFs from the archive’s other directory.",
+      "collectionId": "react-complete-guide",
+      "type": "reference",
+      "order": 34
+    }
+  ]
+}

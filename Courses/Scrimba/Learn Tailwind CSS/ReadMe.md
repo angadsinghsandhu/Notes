@@ -1,3 +1,6 @@
+---
+title: "Learn Tailwind CSS"
+---
 # Learn Tailwind CSS
 
 This is a repository for learning Tailwind CSS. I will be using this repository to learn Tailwind CSS and create a project using it. I will be documenting my learning process in this repository.

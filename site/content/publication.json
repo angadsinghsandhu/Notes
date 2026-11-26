@@ -20,7 +20,155 @@
     "**/.env*",
     "**/env.json"
   ],
-  "overrides": {},
+  "overrides": {
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 1 - TensorFlow-JS/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 4/Examples/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 4/Examples/hyperparameter_tuning/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 4/Examples/image_classification/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 4/Examples/object_detection/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 2 - TensorFlow Lite/Week 4/Examples/transfer_learning/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 3 - TensorFlow Datasets/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Coursera/Deep Learning AI course/TensorFlow Deployment/Course 4 - TensorFlow Serving/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Scrimba/Learn React/src/projects/01-first-react/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Scrimba/Learn React/src/projects/02-ReactFacts/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Scrimba/Learn React/src/projects/03-TravelJournal/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/notes/09 Practice Project - Project Management/tailwind-css-classes-used.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/other/course-update-guide-academind-pro.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/other/course-update-guide-udemy.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/01-starting-project/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/02-installing-using-react-query/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/03-query-config-object/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/04-enabling-disabling-queries/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/05-changing-data-with-mutations/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/06-fetching-more-data-and-testing-mutation/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/07-acting-on-mutation-success-and-invalidating-queries/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/08-challenge-problem/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/09-disabling-automatic-refetching/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/10-optimistic-updating/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/24 React Query/11-finished/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/01-starting-project/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/02-css-animations/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/03-animating-disappearence/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/04-making-elements-pop/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/05-nested-animations-and-variants/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/06-animating-staggered-lists/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/07-animating-colors-and-keyframes/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/08-imperative-animations/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/09-animating-layout-changes/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/10-orchestrating-multi-element-animations/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/11-animating-shared-elements/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/12-finished/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/zz-playground-finished/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/26 Animations/zz-playground/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/27 Patterns/01-starting-project/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/27 Patterns/02-introducing-compound-cmp/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/27 Patterns/03-grouping-compound-cmp/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/27 Patterns/04-adding-extra-components/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/27 Patterns/05-sharing-cross-cmp-state/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/27 Patterns/06-adding-search/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/27 Patterns/07-handling-keys/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/27 Patterns/08-debouncing/README.md": {
+      "role": "supplemental"
+    },
+    "Courses/Udemy/React/src/28 Testing/01-starting-project-vite/README.md": {
+      "role": "supplemental"
+    }
+  },
   "repositoryPublic": true,
   "repositoryUrl": "https://github.com/angadsinghsandhu/Notes"
 }

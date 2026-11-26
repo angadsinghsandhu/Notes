@@ -14,10 +14,10 @@
 
 ## Implementation and verification
 
-- [ ] Implement the approved pipeline and website with appropriate tests and quality gates.
-- [ ] Adapt existing content and verify internal links and artifact rendering.
-- [ ] Verify local development, production output, mobile and desktop layouts, and deployment configuration.
-- [ ] Document authoring, local startup, and deployment.
+- [x] Implement the approved pipeline and website with appropriate tests and quality gates.
+- [x] Adapt existing content and verify internal links and artifact rendering.
+- [x] Verify local development, production output, mobile and desktop layouts, and deployment configuration.
+- [x] Document authoring, local startup, and deployment.
 
 ## Review
 
@@ -35,6 +35,76 @@ Review assumptions are public readership, rendered notebooks/code with PDF/slide
 - [x] Task 4: safe Markdown/notebook/code rendering (reviewed; commits 681bf6b, 80e4759).
 - [x] Task 5: content pipeline and development watcher (reviewed; commits 99c9718, 0272436; 188 units and all gates pass).
 - [x] Task 6: responsive reader and search (reviewed; commit 1fb53b5; 270 units/all gates/52 browsers; 2 minor follow-ups recorded).
-- [ ] Task 7: full archive migration and output verification.
-- [ ] Task 8: deployment and operating documentation.
-- [ ] Task 9: approved archived Pandas → Polars conversion (15 files; isolated real-data parity).
+- [x] Task 7: full archive migration and output verification (reviewed; commits bef12de, 992e0f6; 398 units/all gates/56 browsers).
+- [x] Task 8: deployment and operating documentation.
+- [x] Task 9: approved archived Pandas → Polars conversion (15 files; isolated real-data parity).
+
+Task 7 migrated 171 authored titles without changing source bodies, classified 49 upstream supplemental documents, and accounted for all 10,031 archive files. Production validation checks routes, assets, source actions, exclusions and native Pagefind output. Source polling and serialized watcher readiness passed the original live HTTP lifecycle. Fresh controller verification passed 398 units, all four per-file coverage floors of at least 90%, all static/build/output gates and 56 browser tests. Independent review and scoped re-review resolved all three P2 findings; two Zod deprecation hints remain deferred for final review. No deployment was performed.
+
+## Approved folder navigation correction (2026-10-19)
+
+- [x] Implement aligned clickable breadcrumbs, folder pages/cards and full-tree navigation.
+- [x] Verify real archive, mobile/desktop, keyboard/no-JS and existing quality gates.
+- [x] Independently review and commit verified navigation; refresh the local preview.
+
+User approved the short design in chat. Folder cards show immediate children; the complete 2,300-folder tree is a shared page linked from the desktop sidebar and mobile drawer. Generated navigation routes participate in existing alias and case-insensitive output ownership checks.
+
+Review: independent review and scoped re-review approved. Final checks passed 75 Python tests, 463 unit tests, all per-file coverage floors, format/lint/boundaries/typecheck/build/output validation, and 69 production browser tests after the final guard. The earlier full 73-browser run also passed the four real development/publication fixtures. All non-Pagefind output is byte-identical to that full browser artifact; native Pagefind metadata/filter semantics are unchanged, and fresh search/response-policy browser checks passed on the final configured build. Archive files remain unchanged. Local preview runs at http://127.0.0.1:4330/library/books/. No merge or deployment was performed.
+
+## Approved responsive PDF viewer (2026-10-19)
+
+- [x] Implement self-hosted PDF.js pages, zoom/fit-width, selectable text and fallbacks.
+- [x] Verify real PDFs, mobile/desktop, keyboard, lazy loading and response policy.
+- [x] Independently review and commit verified viewer; refresh local preview.
+
+User approved the short design in chat.
+
+Review: the PDF reader passed independent task review, scoped re-review and final integration review. Fresh complete verification passed 75 archive parity checks, 482 unit tests, all four per-file coverage floors, format/lint/boundaries/typecheck/build/output checks, and 77 browser tests. Actual seven-page and 220-page documents cover pixels, selectable text, page controls, zoom, keyboard scrolling, mobile layouts and response policy. New pages reset reading offsets while same-page zoom preserves position. The reviewed immutable preview is available at http://127.0.0.1:4330/. Tasks 8 and 9 were already independently completed before these navigation/PDF follow-ups; their checkboxes now reflect that recorded completion. No merge or deployment was performed. Live Cloudflare hosting, real encrypted PDF browser fixtures, physical mobile browsers and full model training remain unverified.
+
+## Proposed library information architecture (2026-10-21)
+
+- [x] Inventory published paths and metadata; sample document content and identify structural problems.
+- [x] Write the requested refactor specification and implementation plan.
+- [x] Self-review contracts, compatibility, pilot scope and verification coverage.
+- [x] Obtain user review of both documents before implementation (user requested implementing all tasks on 2026-10-21).
+- [x] Execute the reviewed plan with the established subagent-driven method.
+
+Review: the proposal adds Topics, Collections and Learning Paths over the existing six-root archive. It preserves canonical readers, source bodies, prepared body IDs, PDF functionality and the complete source tree. A separate persistent UID registry supports curated references. The initial curation pilots are Applied Science, the PyTorch book and the Udemy React course; full-corpus editorial rewriting, duplicate deletion and physical moves are deferred. The plan defines eight testable milestones, strict metadata/reference validation, learning/file search scopes, live-update acceptance and route/hash preservation. Both artifacts are proposals for joint review as explicitly requested; no product code, archive material or running preview changed.
+
+### Organization implementation milestones
+
+- [x] Task 1: strict organization schema and persistent identity (8325343; independent review approved).
+- [x] Task 2: atomic preparation, draft/route safety and sidecar watcher (9fa6fb0; independent review approved).
+- [x] Task 3: indexed public catalog selectors (540dfa4; independent review approved).
+- [x] Task 4: reviewed metadata migration and three pilots (targeted checks/build and independent review approved; final full gate remains for delivery).
+- [x] Task 5: responsive curated pages, trees and reader links (independent spec/quality review clean; 100 targeted units, 29 curated and 17 directly affected browser tests).
+- [x] Task 6: learning/file search scopes and metadata filters (independent review clean; 32 targeted units, 10 real browser tests and exact native membership audit of all 6,279 readers).
+- [x] Task 7: full output preservation and live development acceptance (independent review and fixes verified, 6,279 original routes and 10,031 original source hashes preserved).
+- [x] Task 8: authoring guide, whole-branch review and feature delivery. Full verification passed on `69c04c2`: 675 unit, 119 browser and 75 archive parity tests. The local preview serves the verified artifact.
+
+Execution: isolated notes-website worktree; ledger `.superpowers/sdd/2026-10-21-library-information-architecture/progress.md`. Source/body identities and the reviewed port-4330 snapshot remain preserved. Main alone handles Git/remote writes; no merge or deployment is authorized.
+
+## LeetCode interactive curriculum (2026-10-24)
+
+- [x] Inspect current solutions and the source-reader pipeline; inventory numbered coverage and duplicates.
+- [x] Create clickable library/lesson mockups in ignored brainstorming space.
+- [x] Confirm deep lessons for problems 1–2000, every distinct approach visualized, curated inputs and future custom-input compatibility.
+- [x] Confirm Cloudflare-only hosting, owner-only cross-device studied progress, official links, sourced company information and reusable learning trees.
+- [x] Write the full design, obtain independent builder check and user approval.
+- [x] Write and self-review separate platform and complete-curriculum implementation plans.
+- [x] Obtain user review of the implementation plans before execution; retain the established subagent-driven method (approved 2026-10-25).
+- [x] Reconcile and complete the prerequisite organization refactor without discarding its partial files (platform Task 0).
+- [x] Platform Task 1: define and independently review strict curriculum contracts.
+- [x] Platform Task 2: validate path graphs and progress; focused checks and independent review passed.
+- [x] Platform Task 3: prepare and publish generation-bound curriculum snapshots and verify Worker assets.
+- [ ] Implement and independently review platform Tasks 4–14 and curriculum inventory/pilot C1–C2.
+- [ ] Complete all 40 coverage waves in C3 with exact IDs, bounded sub-batches and independent per-lesson review.
+- [ ] Complete final integration/coverage review and the applicable serialized full gate; update PRs without merging or deploying.
+
+Review: approved specification `docs/superpowers/specs/2026-10-24-leetcode-learning-library-design.md`; plans `docs/superpowers/plans/2026-10-24-leetcode-learning-platform.md` and `docs/superpowers/plans/2026-10-24-leetcode-curriculum.md`. Initial filename inventory found 360 Python files, 250 distinct numbered problems, 240 in range and 79 duplicate numbers; identity/correctness reconciliation remains implementation work. The plans distinguish software/pilot readiness from all 2000 verified lessons, preserve original archive URLs/bytes and private progress, and defer actual deployment authorization. This milestone changes documentation only; no curriculum lessons, progress backend or production UI have been implemented.
+
+Platform Task 1 review: 21 focused tests and all four schema coverage metrics at 100%, scoped format/lint/boundaries and project typechecking passed, and independent re-review confirmed the three contract corrections. The production build and output validation passed with a byte-identical Task 0 publication manifest. This milestone validates curriculum records. Actual curriculum authoring, file evidence verification and site integration follow in later tasks.
+
+Platform Task 2 review: 44 curriculum tests passed with 100% coverage on the path and schema modules. Scoped formatting, lint, boundaries, project typechecking, the configured production build and output validation passed independently of the implementation run. The frozen publication manifest is byte-identical and Pagefind still indexes 6,279 archive readers. Path advice follows editorial order and prerequisite edges, keeps pending targets in the denominator and counts repeated appearances once.
+
+Platform Task 3 review: 406 direct-dependent tests across 20 suites passed with all measured per-file coverage floors, scoped formatting, lint, boundaries, project typecheck and the configured production build and output checks. Independent review and scoped re-review passed. The archive-only preparation manifest remains byte-identical to the frozen Task 0 baseline, and Pagefind indexes all 6,279 archive readers. Prepared curriculum data, trace packages and progress registry are bound to one publication generation. Curriculum page election is empty until Task 6 adds renderers.

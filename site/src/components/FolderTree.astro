@@ -1,0 +1,36 @@
+---
+import type { Folder } from '../lib/folders.js';
+interface Props {
+  folders: Folder[];
+}
+const { folders } = Astro.props;
+---
+
+<ul class="folder-tree">
+  {folders.map((folder) => (
+    <li>
+      {folder.children.length > 0 ? (
+        <details>
+          <summary>
+            <a
+              id={`folder-${folder.route}`}
+              data-folder-route={folder.route}
+              href={folder.route}
+            >
+              {folder.label}
+            </a>
+          </summary>
+          <Astro.self folders={folder.children} />
+        </details>
+      ) : (
+        <a
+          id={`folder-${folder.route}`}
+          data-folder-route={folder.route}
+          href={folder.route}
+        >
+          {folder.label}
+        </a>
+      )}
+    </li>
+  ))}
+</ul>

@@ -1,3 +1,6 @@
+---
+title: "Important Algos"
+---
 # Important Algos
 
 Sorting Algorithms

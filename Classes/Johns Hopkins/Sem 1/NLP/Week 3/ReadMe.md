@@ -1,3 +1,6 @@
+---
+title: "Week 3: Lecture 6-13"
+---
 # Week 3: Lecture 6-13
 
 ## Lecture 6 : Syntax (Syntactic Attribtes)

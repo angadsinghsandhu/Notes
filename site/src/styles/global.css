@@ -203,9 +203,14 @@ dialog::backdrop {
   color: var(--color-muted);
 }
 .breadcrumbs li {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
   min-width: 0;
+  max-width: 100%;
 }
 .breadcrumbs li + li::before {
+  flex-shrink: 0;
   content: '/';
   margin-right: 0.5rem;
 }

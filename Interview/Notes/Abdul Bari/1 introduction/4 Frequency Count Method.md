@@ -1,3 +1,6 @@
+---
+title: "1.4 Frequency Count Method"
+---
 # 1.4 Frequency Count Method
 
 ## Overview

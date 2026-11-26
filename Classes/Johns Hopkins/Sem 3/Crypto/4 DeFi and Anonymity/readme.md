@@ -1,3 +1,6 @@
+---
+title: "DeFi and Anonymity"
+---
 # DeFi and Anonymity
 
 This chapter covers Decentralized Finance (DeFi) and Anonymity, two important concepts in the world of cryptocurrencies. It introduces the concept of DeFi, its history, and how it is used in decentralized systems.

@@ -1,3 +1,6 @@
+---
+title: "1.2 Characteristics of Algorithm"
+---
 # 1.2 Characteristics of Algorithm
 
 ## Overview

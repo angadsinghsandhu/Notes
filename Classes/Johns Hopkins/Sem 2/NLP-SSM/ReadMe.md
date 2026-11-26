@@ -1,3 +1,6 @@
+---
+title: "NLP : Self-Supervised Model (EN.601.671) - Daniel Khashabi"
+---
 # NLP : Self-Supervised Model (EN.601.671) - Daniel Khashabi
 
 This is an advanced class for attenbased, self-supervided models for NLP. The course will cover the following topics:

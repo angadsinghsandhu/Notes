@@ -1,0 +1,97 @@
+.pdf-viewer {
+  min-width: 0;
+  margin-block: 1rem;
+}
+.pdf-toolbar,
+.pdf-page-form,
+.pdf-page-form label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.pdf-toolbar button,
+.pdf-page-form input {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 0.5rem;
+  font: inherit;
+  color: inherit;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.3rem;
+}
+.pdf-toolbar button {
+  cursor: pointer;
+}
+.pdf-toolbar button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+.pdf-toolbar [hidden] {
+  display: none;
+}
+.pdf-page-form {
+  margin: 0;
+}
+.pdf-page-form input {
+  width: 4.5rem;
+}
+.pdf-viewport {
+  width: 100%;
+  max-height: 80vh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  background: var(--color-surface);
+}
+.pdf-page {
+  --scale-round-x: 1px;
+  --scale-round-y: 1px;
+  position: relative;
+  margin-inline: auto;
+  background: white;
+  color-scheme: only light;
+}
+.pdf-page canvas {
+  display: block;
+}
+/* PDF.js 6 text geometry; upstream distribution license is available at /pdfjs/LICENSE. */
+.pdf-page .textLayer {
+  position: absolute;
+  inset: 0;
+  overflow: clip;
+  line-height: 1;
+  text-align: initial;
+  letter-spacing: normal;
+  word-spacing: normal;
+  text-size-adjust: none;
+  forced-color-adjust: none;
+  transform-origin: 0 0;
+  --min-font-size: 1;
+  --text-scale-factor: calc(var(--total-scale-factor) * var(--min-font-size));
+  --min-font-size-inv: calc(1 / var(--min-font-size));
+}
+.pdf-page .textLayer :is(span, br) {
+  color: transparent;
+  position: absolute;
+  white-space: pre;
+  cursor: text;
+  transform-origin: 0 0;
+  user-select: text;
+}
+.pdf-page .textLayer > :not(.markedContent),
+.pdf-page .textLayer .markedContent span:not(.markedContent) {
+  z-index: 1;
+  --font-height: 0;
+  font-size: calc(var(--text-scale-factor) * var(--font-height));
+  --scale-x: 1;
+  --rotate: 0deg;
+  transform: rotate(var(--rotate)) scaleX(var(--scale-x))
+    scale(var(--min-font-size-inv));
+}
+.pdf-page .textLayer .markedContent {
+  display: contents;
+}
+.pdf-page .textLayer ::selection {
+  background: rgb(30 100 220 / 35%);
+}

@@ -1,3 +1,6 @@
+---
+title: "Transfer Learning and Other Tricks"
+---
 # Transfer Learning and Other Tricks
 
 ## Transfer Learning with ResNet

@@ -1,3 +1,6 @@
+---
+title: "Learn Tailwind CSS"
+---
 # Learn Tailwind CSS
 
 ## What is Tailwind CSS?

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "negative-value",
+      "input": {
+        "nums": [-4, 8, 1, 6],
+        "target": 2
+      },
+      "result": [0, 3],
+      "postState": {
+        "nums": [-4, 8, 1, 6],
+        "target": 2
+      }
+    },
+    {
+      "id": "distinct-duplicates",
+      "input": {
+        "nums": [6, 1, 6],
+        "target": 12
+      },
+      "result": [0, 2],
+      "postState": {
+        "nums": [6, 1, 6],
+        "target": 12
+      }
+    },
+    {
+      "id": "repeated-nonpartner",
+      "input": {
+        "nums": [3, 3, -4, 8, 6],
+        "target": 2
+      },
+      "result": [2, 4],
+      "postState": {
+        "nums": [3, 3, -4, 8, 6],
+        "target": 2
+      }
+    }
+  ]
+}

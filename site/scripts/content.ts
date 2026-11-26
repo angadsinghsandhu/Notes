@@ -26,6 +26,8 @@ export async function contentOptions(
     rootDir,
     outputDir: join(siteDir, '.generated'),
     policyPath,
+    organizationDir: join(siteDir, 'content/organization'),
+    curriculumDir: join(siteDir, 'content/leetcode'),
     hosted: process.env.HOSTED === 'true',
     revision,
   };

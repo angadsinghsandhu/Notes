@@ -1,5 +1,19 @@
 ---
-import { sectionLabels } from '../lib/catalog.js';
+import {
+  readPreparedCatalog,
+  sectionLabels,
+  type LibraryNode,
+} from '../lib/catalog.js';
+const catalog = await readPreparedCatalog();
+const topics: LibraryNode[] = [];
+function collectTopics(parent?: string): void {
+  for (const node of catalog.organization.listNodes('topic', parent)) {
+    topics.push(node);
+    collectTopics(node.id);
+  }
+}
+collectTopics();
+const collections = catalog.organization.listNodes('collection');
 const development = import.meta.env.DEV;
 ---
 
@@ -23,6 +37,33 @@ const development = import.meta.env.DEV;
   </label>
   <div class="search-filters">
     <label>
+      Scope
+      <select name="scope">
+        <option value="learning" selected>
+          Learning material
+        </option>
+        <option value="files">All files</option>
+      </select>
+    </label>
+    <label>
+      Topic
+      <select name="topic">
+        <option value="">All topics</option>
+        {topics.map((topic) => (
+          <option value={topic.id}>{topic.title}</option>
+        ))}
+      </select>
+    </label>
+    <label>
+      Collection
+      <select name="collection">
+        <option value="">All collections</option>
+        {collections.map((collection) => (
+          <option value={collection.id}>{collection.title}</option>
+        ))}
+      </select>
+    </label>
+    <label>
       Section
       <select name="section">
         <option value="">All sections</option>
@@ -42,6 +83,7 @@ const development = import.meta.env.DEV;
     </label>
   </div>
   <button type="submit">Search</button>
+  <button type="reset">Reset filters</button>
 </form>
 <p role="status" aria-live="polite" data-search-status>
   Enter a phrase to search notes and resources.

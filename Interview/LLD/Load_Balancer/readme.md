@@ -1,3 +1,6 @@
+---
+title: "Load Balancer"
+---
 # Load Balancer
 
 Below is an example Low Level Design (LLD) for a **Load Balancer System** written in Python. This design follows the SOLID principles and is organized into several files. In our design, we provide a common abstract base class `LoadBalancer` and several concrete implementations that use different load balancing algorithms (e.g., least connections, round-robin, routed). We also include supporting classes such as `Service`, `Request`, `Destination`, and an enumeration for `RequestType`. A factory class is also provided to instantiate the appropriate load balancer.

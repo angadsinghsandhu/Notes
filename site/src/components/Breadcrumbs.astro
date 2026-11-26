@@ -1,11 +1,15 @@
 ---
 import type { ContentEntry } from '../content/index.js';
 import { sectionLabels } from '../lib/catalog.js';
+import { folderRoute, type Folder } from '../lib/folders.js';
 interface Props {
   entry?: ContentEntry;
+  folder?: Folder;
   title?: string;
 }
-const { entry, title } = Astro.props;
+const { entry, folder, title } = Astro.props;
+const section = entry?.section ?? folder?.section;
+const segments = entry?.groupSegments ?? folder?.segments ?? [];
 ---
 
 <nav aria-label="Breadcrumbs" class="breadcrumbs" data-pagefind-ignore>
@@ -16,19 +20,29 @@ const { entry, title } = Astro.props;
     <li>
       <a href="/library/">Library</a>
     </li>
-    {entry && (
+    {section && (
       <>
         <li>
-          <a href={`/library/${entry.section}/`}>
-            {sectionLabels[entry.section]}
-          </a>
+          {folder && segments.length === 0 ? (
+            <span aria-current="page">{sectionLabels[section]}</span>
+          ) : (
+            <a href={folderRoute(section, [])}>{sectionLabels[section]}</a>
+          )}
         </li>
-        {entry.groupSegments.map((segment) => (
-          <li>{segment}</li>
+        {segments.map((segment, index) => (
+          <li>
+            {folder && index === segments.length - 1 ? (
+              <span aria-current="page">{segment}</span>
+            ) : (
+              <a href={folderRoute(section, segments.slice(0, index + 1))}>
+                {segment}
+              </a>
+            )}
+          </li>
         ))}
-        <li aria-current="page">{entry.title}</li>
       </>
     )}
-    {!entry && title && <li aria-current="page">{title}</li>}
+    {entry && <li aria-current="page">{entry.title}</li>}
+    {!entry && !folder && title && <li aria-current="page">{title}</li>}
   </ol>
 </nav>

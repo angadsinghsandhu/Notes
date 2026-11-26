@@ -1,0 +1,38 @@
+---
+import LibraryLayout from '../../layouts/LibraryLayout.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FolderContents from '../../components/FolderContents.astro';
+import { readPreparedCatalog } from '../../lib/catalog.js';
+import {
+  buildFolders,
+  flattenFolders,
+  type Folder,
+} from '../../lib/folders.js';
+export async function getStaticPaths() {
+  const roots = buildFolders((await readPreparedCatalog()).listEntries());
+  return flattenFolders(roots)
+    .filter((folder) => folder.segments.length > 0)
+    .map((folder) => ({
+      params: { folder: folder.route.slice('/library/'.length, -1) },
+      props: { folder },
+    }));
+}
+interface Props {
+  folder: Folder;
+}
+const { folder } = Astro.props;
+---
+
+<LibraryLayout
+  title={folder.label}
+  description={`Browse ${folder.label} learning notes and resources.`}
+  folder={folder}
+>
+  <Breadcrumbs folder={folder} />
+  <h1>{folder.label}</h1>
+  <p>
+    {folder.noteCount} learning notes · {folder.resourceCount} resources in this
+    folder and its subfolders
+  </p>
+  <FolderContents folder={folder} />
+</LibraryLayout>

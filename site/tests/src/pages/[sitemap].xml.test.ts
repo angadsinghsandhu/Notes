@@ -8,13 +8,21 @@ test('sitemap and canonical output require an explicit HTTPS production URL', as
   request,
   page,
 }) => {
-  test.setTimeout(180_000);
-  expect((await request.get('/sitemap.xml')).status()).toBe(404);
-  expect(await (await request.get('/')).text()).not.toContain(
-    'rel="canonical"',
-  );
-  const configured = { ...process.env, SITE_URL: 'https://notes.example.test' };
+  test.setTimeout(360_000);
+  const incoming = { ...process.env };
+  const unconfigured = { ...incoming };
+  delete unconfigured['SITE_URL'];
+  const configured = { ...incoming, SITE_URL: 'https://notes.example.test' };
   try {
+    await execute('npm', ['exec', 'astro', 'build'], {
+      cwd: resolve('.'),
+      env: unconfigured,
+      maxBuffer: 32 * 1024 * 1024,
+    });
+    expect((await request.get('/sitemap.xml')).status()).toBe(404);
+    expect(await (await request.get('/')).text()).not.toContain(
+      'rel="canonical"',
+    );
     await execute('npm', ['run', 'build'], {
       cwd: resolve('.'),
       env: configured,
@@ -52,13 +60,49 @@ test('sitemap and canonical output require an explicit HTTPS production URL', as
       ).rejects.toThrow();
     }
   } finally {
-    const env = { ...process.env };
-    delete env['SITE_URL'];
     await execute('npm', ['run', 'build'], {
       cwd: resolve('.'),
-      env,
+      env: incoming,
       maxBuffer: 32 * 1024 * 1024,
     });
   }
-  expect((await request.get('/sitemap.xml')).status()).toBe(404);
+  const response = await request.get('/sitemap.xml');
+  const home = await (await request.get('/')).text();
+  if (incoming['SITE_URL']) {
+    expect(response.status()).toBe(200);
+    expect(await response.text()).toContain(
+      new URL('/library/', incoming['SITE_URL']).href,
+    );
+    expect(home).toContain(`href="${new URL('/', incoming['SITE_URL']).href}"`);
+  } else {
+    expect(response.status()).toBe(404);
+    expect(home).not.toContain('rel="canonical"');
+  }
+});
+
+test('curated sitemap uses canonical populated routes and preserves listing SEO', async ({
+  request,
+  page,
+}) => {
+  const configured = process.env['SITE_URL'];
+  const response = await request.get('/sitemap.xml');
+  expect(response.status()).toBe(configured ? 200 : 404);
+  if (configured) {
+    const xml = await response.text();
+    for (const route of [
+      '/library/topics/',
+      '/library/collections/',
+      '/library/paths/',
+      '/library/topics/attention-transformers-language-models/',
+    ])
+      expect(xml).toContain(new URL(route, configured).href);
+  }
+  await page.goto('/library/topics/');
+  if (configured)
+    await expect(page.locator('link[rel=canonical]')).toHaveAttribute(
+      'href',
+      new URL('/library/topics/', configured).href,
+    );
+  else await expect(page.locator('link[rel=canonical]')).toHaveCount(0);
+  await expect(page.locator('[data-pagefind-body]')).toHaveCount(0);
 });

@@ -103,3 +103,34 @@ test('theme selector and visible keyboard focus meet the 44px contract', async (
     path: '../.superpowers/sdd/2026-10-04-notes-website/screenshots/keyboard-focus-dark-320.png',
   });
 });
+
+test('real supplemental template does not appear as a primary group-navigation note', async ({
+  page,
+}) => {
+  await page.goto(
+    '/notes/courses/scrimba/learn-react/src/projects/01-first-react/',
+  );
+  await expect(page.locator('.group-navigation')).toHaveCount(0);
+  await expect(page.locator('article')).toContainText(
+    'This template provides a minimal setup',
+  );
+});
+
+test('reader collection navigation includes only its active branch and a full-tree link', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto(
+    '/notes/books/programming-pytorch-for-deep-learning-ian-pointer/chapter-2-image-clasification-with-pytorch/',
+  );
+  const nav = page.locator('.sidebar .collection-navigation');
+  await expect(nav).toContainText('Programming PyTorch');
+  await expect(nav).not.toContainText('React');
+  await expect(nav.locator('a[aria-current=page]')).toContainText('Chapter 2');
+  await expect(
+    nav.getByRole('link', { name: 'Collection overview & full tree' }),
+  ).toHaveAttribute(
+    'href',
+    '/library/collections/programming-pytorch-deep-learning/',
+  );
+});

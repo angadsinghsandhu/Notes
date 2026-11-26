@@ -1,3 +1,6 @@
+---
+title: "Introduction to Algorithms - Class 1"
+---
 # Introduction to Algorithms - Class 1
 
 ## Overview

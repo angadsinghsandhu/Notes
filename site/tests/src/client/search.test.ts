@@ -4,7 +4,7 @@ import { initSearch, type SearchIndex } from '../../../src/client/search.js';
 
 beforeEach(() => {
   document.body.innerHTML =
-    '<form data-search-form><input name="q"><select name="section"><option value="">All</option><option value="interview">Interview</option></select><select name="kind"><option value="">All</option><option>markdown</option></select><button>Search</button></form><p data-search-status role="status"></p><ol data-search-results></ol><button data-search-more hidden>Load more results</button>';
+    '<form data-search-form><input name="q"><select name="scope"><option value="learning">Learning</option><option value="files">Files</option></select><select name="topic"><option value="">All</option><option value="deep-learning">Deep learning</option></select><select name="collection"><option value="">All</option><option value="book">Book</option></select><select name="section"><option value="">All</option><option value="interview">Interview</option></select><select name="kind"><option value="">All</option><option>markdown</option></select><button>Search</button></form><p data-search-status role="status"></p><ol data-search-results></ol><button data-search-more hidden>Load more results</button>';
 });
 function submit(query = 'attention') {
   document.querySelector('input')!.value = query;
@@ -48,7 +48,7 @@ it('empty query stays local; initialized once, loading/results and filters are c
   );
   expect(document.querySelector('script')).toBeNull();
   expect(search).toHaveBeenCalledWith('attention', {
-    filters: { section: 'interview', kind: 'markdown' },
+    filters: { scope: 'learning', section: 'interview', kind: 'markdown' },
   });
   expect(load).toHaveBeenCalledTimes(1);
 });
@@ -149,3 +149,242 @@ it.each(['/\\external.test/', '/\n/external.test/', '/\t/external.test/'])(
     ).toEqual([data.url]);
   },
 );
+
+it('uses the native default index importer and reports unavailable local output', async () => {
+  initSearch(document);
+  submit();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('Search is unavailable'),
+  );
+});
+it('renders absent metadata with readable defaults and reports a failed next page', async () => {
+  const results = Array.from({ length: 21 }, (_, i) => ({
+    data: async () => {
+      if (i === 20) throw new Error('Missing fragment');
+      return { url: '/notes/test/', meta: {}, plain_excerpt: 'Excerpt' };
+    },
+  }));
+  initSearch(document, async () => ({ search: async () => ({ results }) }));
+  submit();
+  await vi.waitFor(() =>
+    expect(document.querySelectorAll('li')).toHaveLength(20),
+  );
+  expect(document.querySelector('a')!.textContent).toBe('Untitled');
+  document.querySelector<HTMLButtonElement>('[data-search-more]')!.click();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('More results could not load'),
+  );
+  expect(
+    document.querySelector<HTMLButtonElement>('[data-search-more]')!.disabled,
+  ).toBe(false);
+});
+it('discards a superseded result body and a superseded loader rejection', async () => {
+  let reject!: (reason: Error) => void;
+  const pending = new Promise<SearchIndex>((_, fail) => {
+    reject = fail;
+  });
+  initSearch(document, () => pending);
+  submit();
+  submit('');
+  reject(new Error('Old index failure'));
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('Enter a phrase'),
+  );
+  document.querySelector('form')!.removeAttribute('data-ready');
+  let resolve!: (value: typeof data) => void;
+  const body = new Promise<typeof data>((done) => {
+    resolve = done;
+  });
+  initSearch(document, async () => ({
+    search: async () => ({ results: [{ data: () => body }] }),
+  }));
+  submit();
+  await Promise.resolve();
+  await Promise.resolve();
+  submit('');
+  resolve(data);
+  await Promise.resolve();
+  await Promise.resolve();
+  expect(document.querySelectorAll('li')).toHaveLength(0);
+});
+
+it.each(['success', 'failure'])(
+  'old pagination %s cannot mutate a newer query or its pending button',
+  async (outcome) => {
+    const old = Promise.withResolvers<typeof data>();
+    const current = Promise.withResolvers<typeof data>();
+    const oldData = vi.fn(() => old.promise);
+    const currentData = vi.fn(() => current.promise);
+    const results = (last: () => Promise<typeof data>) =>
+      Array.from({ length: 21 }, (_, i) => ({
+        data: i === 20 ? last : async () => data,
+      }));
+    const search = vi
+      .fn()
+      .mockResolvedValueOnce({ results: results(oldData) })
+      .mockResolvedValueOnce({ results: results(currentData) })
+      .mockResolvedValue({ results: [] });
+    initSearch(document, async () => ({ search }));
+    const more =
+      document.querySelector<HTMLButtonElement>('[data-search-more]')!;
+    const status = document.querySelector('[data-search-status]')!;
+    submit('old');
+    await vi.waitFor(() => expect(more.hidden).toBe(false));
+    more.click();
+    await vi.waitFor(() => expect(oldData).toHaveBeenCalledOnce());
+    expect(more.disabled).toBe(true);
+    submit('current');
+    await vi.waitFor(() =>
+      expect(document.querySelectorAll('li')).toHaveLength(20),
+    );
+    expect(more.disabled).toBe(false);
+    more.click();
+    await vi.waitFor(() => expect(currentData).toHaveBeenCalledOnce());
+    const message = status.textContent;
+    if (outcome === 'success') old.resolve(data);
+    else old.reject(new Error('Old fragment failure'));
+    await vi.waitFor(() =>
+      expect(oldData.mock.settledResults[0]?.type).toBe(
+        outcome === 'success' ? 'fulfilled' : 'rejected',
+      ),
+    );
+    expect(status.textContent).toBe(message);
+    expect(more.disabled).toBe(true);
+    expect(document.querySelectorAll('li')).toHaveLength(20);
+    submit('empty');
+    await vi.waitFor(() => expect(status.textContent).toContain('No results'));
+    current.reject(new Error('Superseded current fragment'));
+    await vi.waitFor(() =>
+      expect(currentData.mock.settledResults[0]?.type).toBe('rejected'),
+    );
+    expect(status.textContent).toContain('No results');
+    expect(more.hidden).toBe(true);
+    expect(more.disabled).toBe(false);
+  },
+);
+
+it('current pagination can retry after a fragment failure', async () => {
+  const last = vi
+    .fn()
+    .mockRejectedValueOnce(new Error('Missing fragment'))
+    .mockResolvedValue(data);
+  const results = Array.from({ length: 21 }, (_, i) => ({
+    data: i === 20 ? last : async () => data,
+  }));
+  initSearch(document, async () => ({ search: async () => ({ results }) }));
+  const more = document.querySelector<HTMLButtonElement>('[data-search-more]')!;
+  submit();
+  await vi.waitFor(() => expect(more.hidden).toBe(false));
+  more.click();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('More results could not load'),
+  );
+  expect(more.disabled).toBe(false);
+  more.click();
+  await vi.waitFor(() =>
+    expect(document.querySelectorAll('li')).toHaveLength(21),
+  );
+  expect(more.hidden).toBe(true);
+  expect(more.disabled).toBe(false);
+});
+
+it('a superseded pagination rejection preserves newer empty-query feedback', async () => {
+  const pending = Promise.withResolvers<typeof data>();
+  const last = vi.fn(() => pending.promise);
+  const search = vi
+    .fn()
+    .mockResolvedValueOnce({
+      results: Array.from({ length: 21 }, (_, i) => ({
+        data: i === 20 ? last : async () => data,
+      })),
+    })
+    .mockResolvedValue({ results: [] });
+  initSearch(document, async () => ({ search }));
+  const more = document.querySelector<HTMLButtonElement>('[data-search-more]')!;
+  submit('old');
+  await vi.waitFor(() => expect(more.hidden).toBe(false));
+  more.click();
+  await vi.waitFor(() => expect(last).toHaveBeenCalledOnce());
+  submit('new');
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('No results'),
+  );
+  pending.reject(new Error('Old fragment failure'));
+  await vi.waitFor(() =>
+    expect(last.mock.settledResults[0]?.type).toBe('rejected'),
+  );
+  expect(document.querySelector('[data-search-status]')!.textContent).toContain(
+    'No results',
+  );
+});
+
+it('changing scope topic and collection resets pagination; reset restores learning and an empty query', async () => {
+  const results = Array.from({ length: 41 }, () => ({
+    data: async () => data,
+  }));
+  const search = vi.fn().mockResolvedValue({ results });
+  initSearch(document, async () => ({ search }));
+  submit();
+  const more = document.querySelector<HTMLButtonElement>('[data-search-more]')!;
+  await vi.waitFor(() =>
+    expect(document.querySelectorAll('li')).toHaveLength(20),
+  );
+  more.click();
+  await vi.waitFor(() =>
+    expect(document.querySelectorAll('li')).toHaveLength(40),
+  );
+  for (const [name, value] of [
+    ['scope', 'files'],
+    ['topic', 'deep-learning'],
+    ['collection', 'book'],
+  ]) {
+    const select = document.querySelector<HTMLSelectElement>(
+      `[name="${name}"]`,
+    )!;
+    select.value = value!;
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    await vi.waitFor(() =>
+      expect(document.querySelectorAll('li')).toHaveLength(20),
+    );
+  }
+  expect(search).toHaveBeenLastCalledWith('attention', {
+    filters: { scope: 'files', topic: 'deep-learning', collection: 'book' },
+  });
+  search.mockResolvedValue({ results: [] });
+  document.querySelector<HTMLSelectElement>('[name="scope"]')!.value =
+    'learning';
+  document
+    .querySelector('[name="scope"]')!
+    .dispatchEvent(new Event('change', { bubbles: true }));
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('No results'),
+  );
+  expect(more.hidden).toBe(true);
+  document.querySelector('form')!.reset();
+  await vi.waitFor(() =>
+    expect(
+      document.querySelector('[data-search-status]')!.textContent,
+    ).toContain('Enter a phrase'),
+  );
+  expect(
+    document.querySelector<HTMLSelectElement>('[name="scope"]')!.value,
+  ).toBe('learning');
+  expect(
+    document.querySelector<HTMLSelectElement>('[name="topic"]')!.value,
+  ).toBe('');
+  expect(
+    document.querySelector<HTMLSelectElement>('[name="collection"]')!.value,
+  ).toBe('');
+});

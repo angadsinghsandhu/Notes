@@ -1,3 +1,6 @@
+---
+title: "Docker Architecture"
+---
 # Docker Architecture
 
 docker uses a `client-server` architecture so it has a client component that talks to a server component (aka `docker engine`) using a restful api the server. Docker Engine sits in the background and takes care of building and running docker containers.

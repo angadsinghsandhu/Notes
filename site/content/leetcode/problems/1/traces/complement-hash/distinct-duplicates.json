@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "problemId": "leetcode:1",
+  "approachId": "complement-hash",
+  "exampleId": "distinct-duplicates",
+  "implementationSha256": "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825",
+  "result": [0, 2],
+  "frames": [
+    {
+      "stepId": "lookup-0",
+      "codeLines": [140],
+      "explanation": "Index 0 has 6 and needs 6. No earlier match.",
+      "state": {
+        "kind": "table",
+        "columns": ["Seen value", "Latest original index"],
+        "rows": []
+      },
+      "highlights": []
+    },
+    {
+      "stepId": "record-0",
+      "codeLines": [160],
+      "explanation": "Record 6 at index 0 for later lookups.",
+      "state": {
+        "kind": "table",
+        "columns": ["Seen value", "Latest original index"],
+        "rows": [[6, 0]]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "lookup-1",
+      "codeLines": [140],
+      "explanation": "Index 1 has 1 and needs 11. No earlier match.",
+      "state": {
+        "kind": "table",
+        "columns": ["Seen value", "Latest original index"],
+        "rows": [[6, 0]]
+      },
+      "highlights": []
+    },
+    {
+      "stepId": "record-1",
+      "codeLines": [160],
+      "explanation": "Record 1 at index 1 for later lookups.",
+      "state": {
+        "kind": "table",
+        "columns": ["Seen value", "Latest original index"],
+        "rows": [
+          [6, 0],
+          [1, 1]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 1,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "lookup-2",
+      "codeLines": [140],
+      "explanation": "Index 2 has 6 and needs 6. Found index 0.",
+      "state": {
+        "kind": "table",
+        "columns": ["Seen value", "Latest original index"],
+        "rows": [
+          [6, 0],
+          [1, 1]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 0
+        }
+      ]
+    }
+  ]
+}

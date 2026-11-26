@@ -1,3 +1,6 @@
+---
+title: "Stack and Heap Memory: An Overview"
+---
 # Stack and Heap Memory: An Overview
 
 Looking at **stack** and **heap** memory and see how your code and your variables are stored in memory when your application is running. Understanding what your code is doing in memory can be really helpful to figure out why things have different scopes.
