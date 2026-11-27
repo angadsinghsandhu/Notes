@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { readFile, realpath, stat } from 'node:fs/promises';
 import { isAbsolute, join, relative, sep } from 'node:path';
 import { z } from 'zod';
+import { readShards, shardIndex } from './catalog-shards.js';
 import type {
   CurriculumDefinition,
   LessonRecord,
@@ -136,10 +137,13 @@ const nodeFields = {
   childIds: z.array(slug),
   prerequisiteIds: z.array(slug),
 };
-export const pathNode = z.discriminatedUnion('kind', [
-  z.strictObject({ ...nodeFields, kind: z.literal('stage') }),
-  z.strictObject({ ...nodeFields, kind: z.literal('problem'), problemId }),
-]);
+const stageNode = z.strictObject({ ...nodeFields, kind: z.literal('stage') });
+const problemNode = z.strictObject({
+  ...nodeFields,
+  kind: z.literal('problem'),
+  problemId,
+});
+export const pathNode = z.discriminatedUnion('kind', [stageNode, problemNode]);
 export const learningPath = z.strictObject({
   id: slug,
   title: label,
@@ -147,12 +151,24 @@ export const learningPath = z.strictObject({
   rootIds: z.array(slug),
   nodes: z.array(pathNode),
 });
+const pathCatalog = learningPath.extend({
+  nodes: z.union([learningPath.shape.nodes, shardIndex]),
+});
+const authoredPathNode = z.discriminatedUnion('kind', [
+  stageNode.extend({
+    childIds: z.union([nodeFields.childIds, shardIndex]),
+  }),
+  problemNode,
+]);
 
 const manifest = z.strictObject({
   version: z.literal(1),
   problems: z.array(problem),
   lessons: z.array(problemId),
   paths: z.array(slug),
+});
+const manifestCatalog = manifest.extend({
+  problems: z.union([manifest.shape.problems, shardIndex]),
 });
 
 export const curriculum = manifest.extend({
@@ -404,16 +420,43 @@ async function readJson<Schema extends z.ZodType>(
   }
 }
 
+async function readPathNodes(
+  root: string,
+  filename: string,
+  nodes: z.infer<typeof pathCatalog>['nodes'],
+): Promise<z.infer<typeof learningPath>['nodes']> {
+  if (Array.isArray(nodes)) return nodes;
+  const resolved: z.infer<typeof pathNode>[] = [];
+  for (const node of await readShards(
+    root,
+    filename,
+    nodes,
+    authoredPathNode,
+  )) {
+    const { childIds } = node;
+    resolved.push({
+      ...node,
+      childIds: Array.isArray(childIds)
+        ? childIds
+        : await readShards(root, filename, childIds, slug),
+    });
+  }
+  return resolved;
+}
+
 export async function readCurriculum(
   rootDir: string,
 ): Promise<CurriculumDefinition> {
   const root = await realpath(rootDir);
   const {
     version,
-    problems,
+    problems: authoredProblems,
     lessons: lessonIds,
     paths: pathIds,
-  } = await readJson(root, 'manifest.json', manifest);
+  } = await readJson(root, 'manifest.json', manifestCatalog);
+  const problems = Array.isArray(authoredProblems)
+    ? authoredProblems
+    : await readShards(root, 'manifest.json', authoredProblems, problem);
   const lessons = [];
   for (const id of lessonIds) {
     const filename = `problems/${id.slice('leetcode:'.length)}/metadata.json`;
@@ -428,12 +471,15 @@ export async function readCurriculum(
   const paths = [];
   for (const id of pathIds) {
     const filename = `paths/${id}.json`;
-    const record = await readJson(root, filename, learningPath);
+    const record = await readJson(root, filename, pathCatalog);
     if (record.id !== id)
       throw new Error(
         `${filename}: expected path ID ${id}, found ${record.id}`,
       );
-    paths.push(record);
+    paths.push({
+      ...record,
+      nodes: await readPathNodes(root, filename, record.nodes),
+    });
   }
 
   return validateCurriculum({ version, problems, lessons, paths });

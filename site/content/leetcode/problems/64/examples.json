@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "single-column",
+      "input": {
+        "grid": [[2], [0], [7], [1]]
+      },
+      "result": 10,
+      "postState": {
+        "grid": [[2], [0], [7], [1]]
+      }
+    },
+    {
+      "id": "weighted-grid",
+      "input": {
+        "grid": [
+          [1, 9, 1, 1],
+          [2, 2, 8, 1],
+          [9, 1, 1, 1]
+        ]
+      },
+      "result": 8,
+      "postState": {
+        "grid": [
+          [1, 9, 1, 1],
+          [2, 2, 8, 1],
+          [9, 1, 1, 1]
+        ]
+      }
+    },
+    {
+      "id": "single-cell",
+      "input": {
+        "grid": [[0]]
+      },
+      "result": 0,
+      "postState": {
+        "grid": [[0]]
+      }
+    },
+    {
+      "id": "ties",
+      "input": {
+        "grid": [
+          [1, 1, 1],
+          [1, 1, 1]
+        ]
+      },
+      "result": 4,
+      "postState": {
+        "grid": [
+          [1, 1, 1],
+          [1, 1, 1]
+        ]
+      }
+    }
+  ]
+}

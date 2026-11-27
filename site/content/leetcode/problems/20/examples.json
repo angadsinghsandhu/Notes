@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "unfinished-stack",
+      "input": {
+        "s": "(()"
+      },
+      "result": false,
+      "postState": {
+        "s": "(()"
+      }
+    },
+    {
+      "id": "leading-closer",
+      "input": {
+        "s": "]()"
+      },
+      "result": false,
+      "postState": {
+        "s": "]()"
+      }
+    },
+    {
+      "id": "crossed-pairs",
+      "input": {
+        "s": "([)]"
+      },
+      "result": false,
+      "postState": {
+        "s": "([)]"
+      }
+    },
+    {
+      "id": "nested-success",
+      "input": {
+        "s": "{[()]}"
+      },
+      "result": true,
+      "postState": {
+        "s": "{[()]}"
+      }
+    }
+  ]
+}

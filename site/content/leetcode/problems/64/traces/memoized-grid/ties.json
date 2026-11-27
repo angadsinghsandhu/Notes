@@ -1,0 +1,118 @@
+{
+  "version": 1,
+  "problemId": "leetcode:64",
+  "approachId": "memoized-grid",
+  "exampleId": "ties",
+  "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+  "result": 4,
+  "frames": [
+    {
+      "stepId": "save-1-2",
+      "codeLines": [56],
+      "explanation": "From (1, 2), add weight 1 to the best remaining cost 0. Save 1.",
+      "state": {
+        "kind": "grid",
+        "rows": [
+          [null, null, null],
+          [null, null, 1]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 1,
+          "column": 2
+        }
+      ]
+    },
+    {
+      "stepId": "save-1-1",
+      "codeLines": [56],
+      "explanation": "From (1, 1), add weight 1 to the best remaining cost 1. Save 2.",
+      "state": {
+        "kind": "grid",
+        "rows": [
+          [null, null, null],
+          [null, 2, 1]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 1,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "stepId": "save-1-0",
+      "codeLines": [56],
+      "explanation": "From (1, 0), add weight 1 to the best remaining cost 2. Save 3.",
+      "state": {
+        "kind": "grid",
+        "rows": [
+          [null, null, null],
+          [3, 2, 1]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 1,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "save-0-2",
+      "codeLines": [56],
+      "explanation": "From (0, 2), add weight 1 to the best remaining cost 1. Save 2.",
+      "state": {
+        "kind": "grid",
+        "rows": [
+          [null, null, 2],
+          [3, 2, 1]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 2
+        }
+      ]
+    },
+    {
+      "stepId": "save-0-1",
+      "codeLines": [56],
+      "explanation": "From (0, 1), add weight 1 to the best remaining cost 2. Save 3.",
+      "state": {
+        "kind": "grid",
+        "rows": [
+          [null, 3, 2],
+          [3, 2, 1]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 1
+        }
+      ]
+    },
+    {
+      "stepId": "save-0-0",
+      "codeLines": [56],
+      "explanation": "From (0, 0), add weight 1 to the best remaining cost 3. Save 4.",
+      "state": {
+        "kind": "grid",
+        "rows": [
+          [4, 3, 2],
+          [3, 2, 1]
+        ]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 0
+        }
+      ]
+    }
+  ]
+}

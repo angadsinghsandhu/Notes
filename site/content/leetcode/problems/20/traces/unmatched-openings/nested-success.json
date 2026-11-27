@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "problemId": "leetcode:20",
+  "approachId": "unmatched-openings",
+  "exampleId": "nested-success",
+  "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5",
+  "result": true,
+  "frames": [
+    {
+      "stepId": "push-0",
+      "codeLines": [33],
+      "explanation": "Push '{'.",
+      "state": {
+        "kind": "stack",
+        "items": ["{"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "push-1",
+      "codeLines": [33],
+      "explanation": "Push '['.",
+      "state": {
+        "kind": "stack",
+        "items": ["{", "["]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "push-2",
+      "codeLines": [33],
+      "explanation": "Push '('.",
+      "state": {
+        "kind": "stack",
+        "items": ["{", "[", "("]
+      },
+      "highlights": [
+        {
+          "index": 2
+        }
+      ]
+    },
+    {
+      "stepId": "pop-3",
+      "codeLines": [46],
+      "explanation": "')' closes '('. Pop it.",
+      "state": {
+        "kind": "stack",
+        "items": ["{", "["]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "pop-4",
+      "codeLines": [46],
+      "explanation": "']' closes '['. Pop it.",
+      "state": {
+        "kind": "stack",
+        "items": ["{"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "pop-5",
+      "codeLines": [46],
+      "explanation": "'}' closes '{'. Pop it.",
+      "state": {
+        "kind": "stack",
+        "items": []
+      },
+      "highlights": []
+    },
+    {
+      "stepId": "finish",
+      "codeLines": [56],
+      "explanation": "The stack is empty.",
+      "state": {
+        "kind": "stack",
+        "items": []
+      },
+      "highlights": []
+    }
+  ]
+}

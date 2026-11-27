@@ -1,0 +1,94 @@
+{
+  "version": 1,
+  "problemId": "leetcode:64",
+  "approachId": "row-storage",
+  "exampleId": "ties",
+  "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+  "result": 4,
+  "frames": [
+    {
+      "stepId": "write-0-0",
+      "codeLines": [83],
+      "explanation": "Reach (0, 0) for 0 plus weight 1. Store 1.",
+      "state": {
+        "kind": "array",
+        "items": [1, null, null]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "write-0-1",
+      "codeLines": [83],
+      "explanation": "Reach (0, 1) for 1 plus weight 1. Store 2.",
+      "state": {
+        "kind": "array",
+        "items": [1, 2, null]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "write-0-2",
+      "codeLines": [83],
+      "explanation": "Reach (0, 2) for 2 plus weight 1. Store 3.",
+      "state": {
+        "kind": "array",
+        "items": [1, 2, 3]
+      },
+      "highlights": [
+        {
+          "index": 2
+        }
+      ]
+    },
+    {
+      "stepId": "write-1-0",
+      "codeLines": [83],
+      "explanation": "Reach (1, 0) for 1 plus weight 1. Store 2.",
+      "state": {
+        "kind": "array",
+        "items": [2, 2, 3]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "write-1-1",
+      "codeLines": [83],
+      "explanation": "Reach (1, 1) for 2 plus weight 1. Store 3.",
+      "state": {
+        "kind": "array",
+        "items": [2, 3, 3]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "write-1-2",
+      "codeLines": [83],
+      "explanation": "Reach (1, 2) for 3 plus weight 1. Store 4.",
+      "state": {
+        "kind": "array",
+        "items": [2, 3, 4]
+      },
+      "highlights": [
+        {
+          "index": 2
+        }
+      ]
+    }
+  ]
+}

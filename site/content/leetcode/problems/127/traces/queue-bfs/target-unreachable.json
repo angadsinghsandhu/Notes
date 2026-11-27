@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "problemId": "leetcode:127",
+  "approachId": "queue-bfs",
+  "exampleId": "target-unreachable",
+  "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+  "result": 0,
+  "frames": [
+    {
+      "stepId": "visit-0",
+      "codeLines": [60],
+      "explanation": "Visit mare at ladder length 1.",
+      "state": {
+        "kind": "queue",
+        "items": ["mare"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-1",
+      "codeLines": [60],
+      "explanation": "Visit care at ladder length 2.",
+      "state": {
+        "kind": "queue",
+        "items": ["care"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-2",
+      "codeLines": [60],
+      "explanation": "Visit cane at ladder length 3.",
+      "state": {
+        "kind": "queue",
+        "items": ["cane"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "exhausted",
+      "codeLines": [94],
+      "explanation": "The queue emptied before reaching tune.",
+      "state": {
+        "kind": "queue",
+        "items": []
+      },
+      "highlights": []
+    }
+  ]
+}

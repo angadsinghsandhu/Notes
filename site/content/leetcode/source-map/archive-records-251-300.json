@@ -1,0 +1,391 @@
+[
+  {
+    "sourcePath": "Interview/leetcode/Solutions/329_Longest_Increasing_Path_in_a_Matrix.py",
+    "sha256": "ff980a4a53f561bb902c3a9165946f15d2a1dac091370b5759aaaeb950393a8b",
+    "filenameNumber": 329,
+    "duplicateFilenameNumber": 329,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/332_Reconstruct_Itinerary.py",
+    "sha256": "601b4f5180cda872c199213b37d8c334d5fb1895236643641b4e81ae425f6957",
+    "filenameNumber": 332,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/338_Counting_Bits.py",
+    "sha256": "eef391371673f26adf0de1202c845da65bb4af1bdbf49713e1bd566a59b868b0",
+    "filenameNumber": 338,
+    "duplicateFilenameNumber": 338,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/33_Search_In_Rotated_Sorted_Array.py",
+    "sha256": "67de97539727b776a91e590fdfc6f4ba783ecf614845d52187e43e5dceac648f",
+    "filenameNumber": 33,
+    "duplicateFilenameNumber": 33,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/344_Reverse_String.py",
+    "sha256": "add9bb0ba10f04961283f74477d0aaf24defc316cb1679c4e1e36f691fab6fa4",
+    "filenameNumber": 344,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/347_Top_K_Frequent_Elements.py",
+    "sha256": "f135cb7ae08bcffebc3b48b4176483295669a5e5a5ba649b3bd7ac231442e73b",
+    "filenameNumber": 347,
+    "duplicateFilenameNumber": 347,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/348_Design_Tic_Tac_Toe.py",
+    "sha256": "409aa851537aeed3a3e71b07db7fa9e82788f6ab0e2f51af4179bf4ef1c11636",
+    "filenameNumber": 348,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/349_Intersection_of_Two_Arrays.py",
+    "sha256": "82ed1fa6fb3b67eb70aebf7d11b0e4e6836344e1cf628484ccdfff65de621729",
+    "filenameNumber": 349,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/354_Russian_Doll_Envelopes.py",
+    "sha256": "5f4fe2a10ce60ac1532c050ffd0722d810e23eae7ba4a2fae9b5258f266acc7e",
+    "filenameNumber": 354,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/355_Design_Twitter.py",
+    "sha256": "c0e8605515169697161a0266dc2f1bf470a2eafe7ebed193e740cf76e1e41cec",
+    "filenameNumber": 355,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/36_Valid_Sudoku.py",
+    "sha256": "97349e788855d9fe854051754c69f6f84cb5317e640616d9974b30d83fa8e29d",
+    "filenameNumber": 36,
+    "duplicateFilenameNumber": 36,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/371_Sum_of_Two_Integers.py",
+    "sha256": "28f35af6293461d30963673f205267e5cb9de54dfc29e12436da782e0771c426",
+    "filenameNumber": 371,
+    "duplicateFilenameNumber": 371,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/39_Combination_Sum.py",
+    "sha256": "efcd49a34dd234f037ed02b842df1d714e1fb40e446cd6b0c08408e6b8a627c0",
+    "filenameNumber": 39,
+    "duplicateFilenameNumber": 39,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/3_Longest_Substring_Without_Repeating_Characters.py",
+    "sha256": "7a568f1dcb6c1692ff8a5337e054f7eac9cdb9efb5cb3c93bf4cce8719645d30",
+    "filenameNumber": 3,
+    "duplicateFilenameNumber": 3,
+    "disposition": "solver_variant",
+    "reason": "Static inspection corroborated the solver source against the official problem identity.",
+    "problemId": "leetcode:3",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/longest-substring-without-repeating-characters/",
+      "checkedAt": "2026-11-21T02:10:43Z"
+    }
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/40_Combination_Sum_II.py",
+    "sha256": "ded5ba6bfe66d2060fe3151f7d72aab0f7d09c51b19293854b67f0b706fef385",
+    "filenameNumber": 40,
+    "duplicateFilenameNumber": 40,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/416_Partition_Equal_Subset_Sum.py",
+    "sha256": "ffbf08198fc1ded5ba537d73784e0866a0c6e7bbb1d6c0ff7e82434d8e284a3d",
+    "filenameNumber": 416,
+    "duplicateFilenameNumber": 416,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/417_Pacific_Atlantic_Water_Flow.py",
+    "sha256": "81436c09a4d0a6888122d4ef1d4e4cd7a47a9bbc331cf77e8ecd388b2b662397",
+    "filenameNumber": 417,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/424_Longest_Repeating_Character_Replacement.py",
+    "sha256": "c4633b29cc06f268db978e2fe3b3f3cf9aa6d8dc4d40982dfaf91d1ebf509f37",
+    "filenameNumber": 424,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/426_Convert_Binary_Search_Tree_to_Sorted_Doubly_Linked_List.py",
+    "sha256": "6e599b25cc0418967da856873cb8802964078f71ec1f6e86c791a0ebdc5eaf33",
+    "filenameNumber": 426,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/42_Trapping_Rain_Water.py",
+    "sha256": "9504c689a1179d9aa9d2ad131416b637ade627ca548b4f1c151eb2745e5f7f16",
+    "filenameNumber": 42,
+    "duplicateFilenameNumber": 42,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/435_Non_Overlapping_Intervals.py",
+    "sha256": "0d5054619f838d94a51cadeb4a7f518be13d944f6024e3d9b66c823c1c58c708",
+    "filenameNumber": 435,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/43_Multiply_Strings.py",
+    "sha256": "5784ef6ee6978b4dd93dc0566dbe2a1adcddc152dc166820390c6f3e2ac7b612",
+    "filenameNumber": 43,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/450_Count_Good_Nodes_in_Binary_Tree.py",
+    "sha256": "46ef361d4cd007847ad62da3350503e159ecd4207252d7e1d61eeb868aa61b62",
+    "filenameNumber": 450,
+    "disposition": "statement_only",
+    "reason": "The archived statement identifies Count Good Nodes in Binary Tree despite the filename number 450.",
+    "problemId": "leetcode:1448",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/count-good-nodes-in-binary-tree/description/",
+      "checkedAt": "2026-11-22T11:08:45Z"
+    }
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/45_Jump_Game_II.py",
+    "sha256": "7712e2a63faacdb99562ca2d705645864ed11187edbfc14f2994dd852b158624",
+    "filenameNumber": 45,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/46_Permutations.py",
+    "sha256": "9f89da6f1f3f972a21c112035f8242aff2d505a5f1eac7ef2c3063ecd7bdfa22",
+    "filenameNumber": 46,
+    "duplicateFilenameNumber": 46,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/48 Rotate Image.py",
+    "sha256": "7fae64b8bb968515a44c4b34a4418024d780643d30db0a1f30e4503c37b18da1",
+    "filenameNumber": 48,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/494_Target_Sum.py",
+    "sha256": "e4ee0fd8005e5d8e8e79ca8bb259dd756e5e72827bf761710fb05687bb6d2aaa",
+    "filenameNumber": 494,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/49_Group_Anagrams.py",
+    "sha256": "7c65bd554dd284bc2e8e970cff8da1c130a9926a7b2d12611130825383469a41",
+    "filenameNumber": 49,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/4_Median_of_Two_Sorted_Arrays.py",
+    "sha256": "cede74361573b4556f836d271285b1643cc33c148430dd49bb3febb7fb6dc073",
+    "filenameNumber": 4,
+    "duplicateFilenameNumber": 4,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/5 String/125 Valid Palindrome.py",
+    "sha256": "cc612d9930656be90eff1370c3b32eb78cda59d9f56c38dc404e3eee33f8047e",
+    "filenameNumber": 125,
+    "duplicateFilenameNumber": 125,
+    "disposition": "link_only",
+    "reason": "Duplicate reconciliation identified a link reference in comments."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/5 String/1768 Merge Strings Alternately.py",
+    "sha256": "17a728584f191588132276e632e85cb5595d59807960d379f27dfcf7427dc0d7",
+    "filenameNumber": 1768,
+    "disposition": "pending_reconciliation",
+    "reason": "Static inspection found comments only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/5 String/271 Encode and Decode Strings.py",
+    "sha256": "589d07de1e61085839e98ead3065dfc672b67b395e93d6c8ed0b4a1729cc8c8e",
+    "filenameNumber": 271,
+    "duplicateFilenameNumber": 271,
+    "disposition": "link_only",
+    "reason": "The archive contains a third-party link only. The public LeetCode articles index corroborates the number.",
+    "problemId": "leetcode:271",
+    "officialSource": {
+      "url": "https://leetcode.com/articles/?page=106",
+      "checkedAt": "2026-11-21T02:27:34Z"
+    }
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/50_Pow_x_n.py",
+    "sha256": "e703b2e21a2721bad98d03b594b1e7c9d24de01a0d17de84ebb82aaf5413d281",
+    "filenameNumber": 50,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/518_Coin_Change_II.py",
+    "sha256": "5d8611ce5d87bd5df4c764e9a36a2f7f445bd5ba4b66ec3ff08e921f4059c5ad",
+    "filenameNumber": 518,
+    "duplicateFilenameNumber": 518,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/51_N_Queens.py",
+    "sha256": "2338f5dfddac4ce2b3e4badd87a1a8ff34bbd81e5f0d515b6ab2caa53befa45f",
+    "filenameNumber": 51,
+    "duplicateFilenameNumber": 51,
+    "disposition": "statement_only",
+    "reason": "Duplicate reconciliation found statement or other literal text."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/538_Convert_BST_to_Greater_Tree.py",
+    "sha256": "596ac87ae1aca12075d5a460c1ad8d486f57bd33596531e48405d65e52c01ea8",
+    "filenameNumber": 538,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/53_Maximum_Subarray.py",
+    "sha256": "e437c4eb66f6d235aca0c688bd1eba1c444f2e390ec10b51ec1d68af84ae7717",
+    "filenameNumber": 53,
+    "duplicateFilenameNumber": 53,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/54 Spiral Matrix.py",
+    "sha256": "50545a802b333d4845a0b5ee29842b97ddcb6b92f787e2b44f8f64db1c0bb179",
+    "filenameNumber": 54,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/543_Diameter_of_Binary_Tree.py",
+    "sha256": "c91ee8a180ad2214c1bec7d9c3dd22fd08e88eca6133bf6352de4759751604f5",
+    "filenameNumber": 543,
+    "duplicateFilenameNumber": 543,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/545_Boundary_of_Binary_Tree.py",
+    "sha256": "c734c8a86f9225f23b550e4092e3fa390c7ae384eff26b091f0f6ec01b869455",
+    "filenameNumber": 545,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/55_Jump_Game.py",
+    "sha256": "03e4e5b60306385332be43e5522113577cb9b04966408e42c3817e54b8715f07",
+    "filenameNumber": 55,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/567_Permutation_in_String.py",
+    "sha256": "17feb2cf67bb5201edf76c92be3c4b39c003d5870175370c42f8ee5d6d8ebf1d",
+    "filenameNumber": 567,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/56_Merge_Intervals.py",
+    "sha256": "1c5a6ed3168f0d12d705767b3644ca2fc512d5a6a5dcc62a8e1c927a2efbf270",
+    "filenameNumber": 56,
+    "duplicateFilenameNumber": 56,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/572_Subtree_of_Another_Tree.py",
+    "sha256": "cce8279effd59d375f5d57a3163ed6d94e460821ab580364006166e9ce048822",
+    "filenameNumber": 572,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/57_Insert_Interval.py",
+    "sha256": "d08fd495f680d84c5edb9e5846b0ba8784933dff256e23086ae032e287f38229",
+    "filenameNumber": 57,
+    "disposition": "statement_only",
+    "reason": "Static inspection found literal text only. The official identity is pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/5_Longest_Palindromic_Substring.py",
+    "sha256": "abd5197de9692e17e799bba15eba08f0b46ccdf11ecd79724b519d11eed779f8",
+    "filenameNumber": 5,
+    "duplicateFilenameNumber": 5,
+    "disposition": "pending_reconciliation",
+    "reason": "The official identity and solver eligibility are pending."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/6 Binary Search/153 Find Minimum in Rotated Sorted Array.py",
+    "sha256": "df81add5d8b85ded879907788326fcc39cd647fce478e55999799273fd291109",
+    "filenameNumber": 153,
+    "duplicateFilenameNumber": 153,
+    "disposition": "link_only",
+    "reason": "Duplicate reconciliation identified a link reference in comments."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/6 Binary Search/278 First Bad Version.py",
+    "sha256": "82f16822916a3dc3363a52e6f6e0d4dec8489fd36df9604c9c91bcaf9e03e209",
+    "filenameNumber": 278,
+    "duplicateFilenameNumber": 278,
+    "disposition": "link_only",
+    "reason": "Duplicate reconciliation identified a link reference in comments."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/6 Binary Search/33 Search in Rotated Sorted Array.py",
+    "sha256": "70cf66545055cd74f1571dab3d1e9970dad208d5b4d46bbbe1706f42955b9489",
+    "filenameNumber": 33,
+    "duplicateFilenameNumber": 33,
+    "disposition": "link_only",
+    "reason": "Duplicate reconciliation identified a link reference in comments."
+  },
+  {
+    "sourcePath": "Interview/leetcode/Solutions/6 Binary Search/35 Search Insert Position.py",
+    "sha256": "2bde28e9146e5d2cc9f3a3385709655a5cab68991719f63a055ac622c2f1139b",
+    "filenameNumber": 35,
+    "disposition": "pending_reconciliation",
+    "reason": "Static inspection found comments only. The official identity is pending."
+  }
+]

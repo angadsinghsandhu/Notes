@@ -1,0 +1,62 @@
+{
+  "problemId": "leetcode:20",
+  "prose": {
+    "path": "lesson.md",
+    "sha256": "18d68e49891e5827319c585df2142172be28c82f6726a244adb04987006c2978"
+  },
+  "examples": {
+    "path": "examples.json",
+    "sha256": "0c64951a72a0a7ed73b10bff19c2f8b3db85bf295b364452525d2551dc305c29"
+  },
+  "approaches": [
+    {
+      "id": "unmatched-openings",
+      "title": "Stack of unmatched openings",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5",
+        "entryPoint": "valid_parentheses"
+      },
+      "traces": [
+        {
+          "path": "traces/unmatched-openings/unfinished-stack.json",
+          "sha256": "ca6cb19f7fd098f823d1b5d6a08b2fcc8c49174cab5861d947251e82e29996ce",
+          "exampleId": "unfinished-stack",
+          "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5"
+        },
+        {
+          "path": "traces/unmatched-openings/leading-closer.json",
+          "sha256": "fd908205a8df18c1d074bc007401b68147ca47bd2eee2c0928ab33b8ecf8d8ea",
+          "exampleId": "leading-closer",
+          "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5"
+        },
+        {
+          "path": "traces/unmatched-openings/crossed-pairs.json",
+          "sha256": "53f7d7b82f393dc195dc787e51158e57a0f146e2b3f57eb92564b6f27b8274e7",
+          "exampleId": "crossed-pairs",
+          "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5"
+        },
+        {
+          "path": "traces/unmatched-openings/nested-success.json",
+          "sha256": "a9eb674c80bfdee6d5ae3bc216312b4cd9b09680456bc1e617f6cd3d87f728e1",
+          "exampleId": "nested-success",
+          "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5",
+        "entryPoint": "valid_parentheses",
+        "examplesSha256": "0c64951a72a0a7ed73b10bff19c2f8b3db85bf295b364452525d2551dc305c29",
+        "passedExampleIds": [
+          "unfinished-stack",
+          "leading-closer",
+          "crossed-pairs",
+          "nested-success"
+        ],
+        "checkedOn": "2026-11-24"
+      }
+    }
+  ],
+  "review": null
+}

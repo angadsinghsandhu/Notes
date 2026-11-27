@@ -204,6 +204,44 @@ class CurriculumTests(unittest.TestCase):
         with self.assertRaisesRegex(EvidenceError, "leetcode:65"):
             check(self.site, (65,))
 
+    def test_indexed_manifest_preserves_inventory_and_authoring(self) -> None:
+        registry = self.lesson()
+        expected = inventory(self.site)
+        manifest = json.loads((self.root / "manifest.json").read_bytes())
+        problems = manifest["problems"]
+        manifest["problems"] = {"shards": ["later.json", "early.json"]}
+        put(self.root, "manifest.json", manifest)
+        put(self.root, "manifest/later.json", problems[100:])
+        put(self.root, "manifest/early.json", problems[:100])
+        self.assertEqual(inventory(self.site), expected)
+        self.assertEqual(check(self.site, (64,), registry), 1)
+
+    def test_indexed_manifest_rejects_invalid_or_escaping_shards(self) -> None:
+        manifest = json.loads(json.dumps(self.manifest()))
+        problems = manifest["problems"]
+        put(self.root, "manifest/part.json", problems)
+        put(self.root, "manifest/empty.json", [])
+        put(self.root, "manifest/wrong-type.json", {"number": 1})
+        put(self.site, "external.json", problems)
+        (self.root / "manifest/link.json").symlink_to(self.site / "external.json")
+        for index, error in (
+            ({"shards": ["missing.json"]}, r"missing\.json"),
+            ({"shards": ["part.json", "part.json"]}, "duplicate shard"),
+            ({"shards": ["../external.json"]}, "shard"),
+            ({"shards": ["/tmp/external.json"]}, "shard"),
+            ({"shards": ["nested\\part.json"]}, "shard"),
+            ({"shards": ["link.json"]}, r"link\.json"),
+            ({"shards": []}, "shard"),
+            ({"shards": ["part.json"], "unexpected": True}, "invalid fields"),
+            ({"shards": ["empty.json"]}, r"empty\.json"),
+            ({"shards": ["wrong-type.json"]}, r"wrong-type\.json"),
+        ):
+            with self.subTest(index=index):
+                manifest["problems"] = index
+                put(self.root, "manifest.json", manifest)
+                with self.assertRaisesRegex(EvidenceError, error):
+                    inventory(self.site)
+
     def test_valid_foreign_and_dangling_content_symlinks_fail(self) -> None:
         site = self.site
         foreign = site.parent / "foreign"

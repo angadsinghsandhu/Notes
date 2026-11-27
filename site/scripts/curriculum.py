@@ -10,7 +10,7 @@ import argparse
 import json
 import re
 import sys
-from collections.abc import Callable, Mapping, Sequence
+from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -36,47 +36,18 @@ from scripts.curriculum_evidence import (
     text,
     validate_trace,
 )
+from scripts.curriculum_registry import ENROLLED as _ENROLLED
+from scripts.curriculum_registry import Enrollment, Registry
 from scripts.curriculum_trace import (
     JsonValue,
     PythonAdapter,
-    SqlAdapter,
-    TraceRun,
     TraceRunError,
     run_enrolled,
 )
-from scripts.curriculum_two_sum import verify_hash, verify_pairs, verify_sorted
 
 _SITE = Path(__file__).resolve().parents[1]
 _LAST_PROBLEM = 2000
 _STATUSES = ("planned", "draft", "verified")
-
-
-@dataclass(frozen=True)
-class Enrollment:
-    path: str
-    sha256: str
-    adapter: PythonAdapter | SqlAdapter
-    # Receives the unmodified input and actual run, never the declared answers.
-    verify: Callable[[JsonValue, TraceRun], None]
-
-
-type Registry = Mapping[tuple[int, str], Enrollment]
-# Add exact source pins and independent checks only after reviewing the implementation.
-_TWO_SUM_SHA256 = "b1fde0a1e87d41e1bf480d836c111ccc22b743d53e7dce8a1e0e2b901253f825"
-_ENROLLED: Registry = {
-    (1, "pair-enumeration"): Enrollment(
-        "solutions.py", _TWO_SUM_SHA256, PythonAdapter("pair_enumeration"), verify_pairs
-    ),
-    (1, "sorted-two-pointers"): Enrollment(
-        "solutions.py",
-        _TWO_SUM_SHA256,
-        PythonAdapter("sorted_two_pointers"),
-        verify_sorted,
-    ),
-    (1, "complement-hash"): Enrollment(
-        "solutions.py", _TWO_SUM_SHA256, PythonAdapter("complement_hash"), verify_hash
-    ),
-}
 
 
 @dataclass(frozen=True)
@@ -97,6 +68,31 @@ def _distinct[T](items: list[T], label: str) -> list[T]:
     return items
 
 
+def _manifest_problems(root: int, value: JsonValue) -> list[JsonValue]:
+    if isinstance(value, list):
+        return value
+
+    index = fields(value, "manifest problem shard index", "shards")
+    shards = _distinct(
+        [text(item, "shard filename") for item in array(index["shards"], "shards")],
+        "shard reference",
+    )
+    if not shards:
+        raise EvidenceError("manifest problem shard index must list at least one shard")
+    problems: list[JsonValue] = []
+    for shard in shards:
+        if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*\.json", shard):
+            raise EvidenceError(f"invalid shard filename {shard!r}")
+        filename = f"manifest/{shard}"
+        records = array(
+            parse_json(read_bytes(root, filename, EVIDENCE_BYTES)), filename
+        )
+        if not records:
+            raise EvidenceError(f"{filename} must contain at least one problem")
+        problems.extend(records)
+    return problems
+
+
 def _manifest(root: int) -> Manifest:
     value = fields(
         parse_json(read_bytes(root, "manifest.json", EVIDENCE_BYTES)),
@@ -109,7 +105,7 @@ def _manifest(root: int) -> Manifest:
     integer(value["version"], 1, 1, "manifest version")
     statuses: dict[str, list[int]] = {status: [] for status in _STATUSES}
     seen: set[int] = set()
-    for item in array(value["problems"], "manifest problems"):
+    for item in _manifest_problems(root, value["problems"]):
         problem = obj(item, "manifest problem")
         number = integer(problem.get("number"), 1, _LAST_PROBLEM, "problem number")
         if number in seen or problem.get("id") != f"leetcode:{number}":

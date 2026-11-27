@@ -2,6 +2,7 @@ import { constants } from 'node:fs';
 import { open } from 'node:fs/promises';
 import { join, posix } from 'node:path';
 import { z } from 'zod';
+import { readShards, shardIndex } from './catalog-shards.js';
 import { problem, sha256 } from './schema.js';
 import type { ProblemId, ProblemRecord } from './types.js';
 
@@ -52,7 +53,7 @@ const sourceRecord = z.strictObject({
 });
 const sourceMap = z.strictObject({
   version: z.literal(1),
-  records: z.array(sourceRecord),
+  records: z.union([z.array(sourceRecord), shardIndex]),
 });
 
 type SolverSource = {
@@ -83,7 +84,15 @@ export async function readSourceMap(
     } finally {
       await file.close();
     }
-    const { records } = sourceMap.parse(JSON.parse(text));
+    const { records: authoredRecords } = sourceMap.parse(JSON.parse(text));
+    const records = Array.isArray(authoredRecords)
+      ? authoredRecords
+      : await readShards(
+          root,
+          'source-map.json',
+          authoredRecords,
+          sourceRecord,
+        );
     const seen = new Set<string>();
     const solvers = new Map<string, SolverSource>();
     for (const record of records) {

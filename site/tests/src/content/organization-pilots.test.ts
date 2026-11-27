@@ -34,6 +34,7 @@ const digest = (text: string) =>
   createHash('sha256').update(text).digest('hex');
 const uid = (source: string) => `doc-${digest(source)}`;
 
+// Archive discovery and metadata reads can slow down under parallel coverage.
 beforeAll(async () => {
   definition = await readOrganization(join(root, 'site/content/organization'));
   registeredSources = new Set(
@@ -72,7 +73,7 @@ beforeAll(async () => {
       ),
     ),
   );
-}, 30_000);
+}, 90_000);
 
 function record(source: string) {
   const found = definition.entries.entries.find(

@@ -1,0 +1,142 @@
+{
+  "version": 1,
+  "problemId": "leetcode:3",
+  "approachId": "last-seen-jump",
+  "exampleId": "inside-repeat",
+  "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f",
+  "result": 3,
+  "frames": [
+    {
+      "stepId": "accept-0",
+      "codeLines": [84],
+      "explanation": "Include 'c' at index 0. Best length is 1.",
+      "state": {
+        "kind": "array",
+        "items": ["c", "a", "b", "b", "d", "e"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "accept-1",
+      "codeLines": [84],
+      "explanation": "Include 'a' at index 1. Best length is 2.",
+      "state": {
+        "kind": "array",
+        "items": ["c", "a", "b", "b", "d", "e"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "accept-2",
+      "codeLines": [84],
+      "explanation": "Include 'b' at index 2. Best length is 3.",
+      "state": {
+        "kind": "array",
+        "items": ["c", "a", "b", "b", "d", "e"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        },
+        {
+          "index": 1
+        },
+        {
+          "index": 2
+        }
+      ]
+    },
+    {
+      "stepId": "jump-3",
+      "codeLines": [72],
+      "explanation": "The previous 'b' is at index 2. Move the left boundary to 3.",
+      "state": {
+        "kind": "array",
+        "items": ["c", "a", "b", "b", "d", "e"]
+      },
+      "highlights": []
+    },
+    {
+      "stepId": "accept-3",
+      "codeLines": [84],
+      "explanation": "Include 'b' at index 3. Best length is 3.",
+      "state": {
+        "kind": "array",
+        "items": ["c", "a", "b", "b", "d", "e"]
+      },
+      "highlights": [
+        {
+          "index": 3
+        }
+      ]
+    },
+    {
+      "stepId": "accept-4",
+      "codeLines": [84],
+      "explanation": "Include 'd' at index 4. Best length is 3.",
+      "state": {
+        "kind": "array",
+        "items": ["c", "a", "b", "b", "d", "e"]
+      },
+      "highlights": [
+        {
+          "index": 3
+        },
+        {
+          "index": 4
+        }
+      ]
+    },
+    {
+      "stepId": "accept-5",
+      "codeLines": [84],
+      "explanation": "Include 'e' at index 5. Best length is 3.",
+      "state": {
+        "kind": "array",
+        "items": ["c", "a", "b", "b", "d", "e"]
+      },
+      "highlights": [
+        {
+          "index": 3
+        },
+        {
+          "index": 4
+        },
+        {
+          "index": 5
+        }
+      ]
+    },
+    {
+      "stepId": "finish",
+      "codeLines": [92],
+      "explanation": "Return 3.",
+      "state": {
+        "kind": "array",
+        "items": ["c", "a", "b", "b", "d", "e"]
+      },
+      "highlights": [
+        {
+          "index": 3
+        },
+        {
+          "index": 4
+        },
+        {
+          "index": 5
+        }
+      ]
+    }
+  ]
+}

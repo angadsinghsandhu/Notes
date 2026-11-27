@@ -43,6 +43,7 @@ test('publishes sanitized lesson, verified progress and a generation-bound trace
   ];
   const fixture = await prepareFixture(directory, {
     trace: (sha) =>
+      '\n'.repeat(500) +
       traceFixture(sha, {
         frames: steps.map((step) => ({
           ...step,
@@ -75,7 +76,9 @@ test('publishes sanitized lesson, verified progress and a generation-bound trace
   expect(reference.sha256).toBe(digest(bytes));
   expect(reference.url).toBe(`/practice-traces/${reference.sha256}.json`);
   expect(reference.bytes).toBe(bytes.length);
-  expect(bytes.toString()).toBe(`{"version":1,"traces":[${fixture.trace}]}\n`);
+  expect(bytes.toString()).toBe(
+    `{"version":1,"traces":[${JSON.stringify(JSON.parse(fixture.trace))}]}\n`,
+  );
   const registry = await readFile(
     join(fixture.outputDir, 'progress-registry.json'),
     'utf8',
@@ -341,7 +344,7 @@ test.each([
   );
 });
 
-test('preparation binds exact trace bytes and keeps prior generation assets intact', async () => {
+test('preparation ignores source formatting for package identity and binds the new review', async () => {
   const fixture = await prepareFixture(directory);
   const initial = await prepareCurriculum(fixture.definition, fixture);
   const same = await prepareCurriculum(fixture.definition, {
@@ -359,7 +362,7 @@ test('preparation binds exact trace bytes and keeps prior generation assets inta
   });
   const oldRef = initial.lessons[0]!.approaches[0]!.trace!;
   const newRef = next.lessons[0]!.approaches[0]!.trace!;
-  expect(newRef.url).not.toBe(oldRef.url);
+  expect(newRef.url).toBe(oldRef.url);
   expect(next.generation).not.toBe(initial.generation);
   for (const [outputDir, reference] of [
     [fixture.outputDir, oldRef],

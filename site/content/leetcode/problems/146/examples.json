@@ -1,0 +1,211 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "overwrite-before-eviction",
+      "input": {
+        "capacity": 2,
+        "operations": [
+          {
+            "op": "put",
+            "key": 1,
+            "value": 10
+          },
+          {
+            "op": "put",
+            "key": 2,
+            "value": 20
+          },
+          {
+            "op": "put",
+            "key": 1,
+            "value": 11
+          },
+          {
+            "op": "put",
+            "key": 3,
+            "value": 30
+          },
+          {
+            "op": "get",
+            "key": 2
+          },
+          {
+            "op": "get",
+            "key": 1
+          }
+        ]
+      },
+      "result": [null, null, null, null, -1, 11],
+      "postState": {
+        "capacity": 2,
+        "operations": [
+          {
+            "op": "put",
+            "key": 1,
+            "value": 10
+          },
+          {
+            "op": "put",
+            "key": 2,
+            "value": 20
+          },
+          {
+            "op": "put",
+            "key": 1,
+            "value": 11
+          },
+          {
+            "op": "put",
+            "key": 3,
+            "value": 30
+          },
+          {
+            "op": "get",
+            "key": 2
+          },
+          {
+            "op": "get",
+            "key": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "hit-refreshes-order",
+      "input": {
+        "capacity": 2,
+        "operations": [
+          {
+            "op": "put",
+            "key": 0,
+            "value": 0
+          },
+          {
+            "op": "put",
+            "key": 1,
+            "value": 5
+          },
+          {
+            "op": "get",
+            "key": 0
+          },
+          {
+            "op": "put",
+            "key": 2,
+            "value": 6
+          },
+          {
+            "op": "get",
+            "key": 1
+          },
+          {
+            "op": "get",
+            "key": 0
+          }
+        ]
+      },
+      "result": [null, null, 0, null, -1, 0],
+      "postState": {
+        "capacity": 2,
+        "operations": [
+          {
+            "op": "put",
+            "key": 0,
+            "value": 0
+          },
+          {
+            "op": "put",
+            "key": 1,
+            "value": 5
+          },
+          {
+            "op": "get",
+            "key": 0
+          },
+          {
+            "op": "put",
+            "key": 2,
+            "value": 6
+          },
+          {
+            "op": "get",
+            "key": 1
+          },
+          {
+            "op": "get",
+            "key": 0
+          }
+        ]
+      }
+    },
+    {
+      "id": "single-slot",
+      "input": {
+        "capacity": 1,
+        "operations": [
+          {
+            "op": "get",
+            "key": 4
+          },
+          {
+            "op": "put",
+            "key": 4,
+            "value": 40
+          },
+          {
+            "op": "put",
+            "key": 4,
+            "value": 41
+          },
+          {
+            "op": "put",
+            "key": 5,
+            "value": 50
+          },
+          {
+            "op": "get",
+            "key": 4
+          },
+          {
+            "op": "get",
+            "key": 5
+          }
+        ]
+      },
+      "result": [-1, null, null, null, -1, 50],
+      "postState": {
+        "capacity": 1,
+        "operations": [
+          {
+            "op": "get",
+            "key": 4
+          },
+          {
+            "op": "put",
+            "key": 4,
+            "value": 40
+          },
+          {
+            "op": "put",
+            "key": 4,
+            "value": 41
+          },
+          {
+            "op": "put",
+            "key": 5,
+            "value": 50
+          },
+          {
+            "op": "get",
+            "key": 4
+          },
+          {
+            "op": "get",
+            "key": 5
+          }
+        ]
+      }
+    }
+  ]
+}

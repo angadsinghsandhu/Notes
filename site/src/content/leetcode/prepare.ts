@@ -161,7 +161,7 @@ function checkTrace(
   approachId: string,
   evidence: LessonApproachDefinition['traces'][number],
   lineCount: number,
-): AlgorithmTrace {
+): { trace: AlgorithmTrace; compact: string } {
   let value: unknown;
   try {
     value = JSON.parse(raw);
@@ -187,7 +187,7 @@ function checkTrace(
           throw new Error(
             `Step ${stepId} references source line ${line}, beyond ${lineCount} lines`,
           );
-    return trace;
+    return { trace, compact: JSON.stringify(value) };
   } catch (error) {
     throw new Error(`${evidence.path}: ${(error as Error).message}`, {
       cause: error,
@@ -218,23 +218,22 @@ async function prepareApproaches(
     const prefix = '{"version":1,"traces":[';
     const suffix = ']}\n';
     let byteCount = prefix.length + suffix.length;
-    const originals: string[] = [];
+    const packaged: string[] = [];
     const transcripts: TraceTranscript[] = [];
     for (const evidence of traces) {
       const raw = await readEvidence(lessonDir, evidence, true);
-      const { exampleId, frames } = checkTrace(
-        raw,
-        record.problemId,
-        id,
-        evidence,
-        lineCount,
-      );
-      byteCount += Buffer.byteLength(raw) + Number(originals.length > 0);
+      const {
+        trace: { exampleId, frames },
+        compact,
+      } = checkTrace(raw, record.problemId, id, evidence, lineCount);
+      byteCount +=
+        Math.max(Buffer.byteLength(raw), Buffer.byteLength(compact)) +
+        Number(packaged.length > 0);
       if (byteCount > packageByteLimit)
         throw new Error(
           `${record.problemId}/${id} exceeds the 25 MiB trace package limit`,
         );
-      originals.push(raw);
+      packaged.push(compact);
       if (published)
         transcripts.push({
           exampleId,
@@ -248,8 +247,8 @@ async function prepareApproaches(
     if (!published) continue;
 
     let trace: TracePackageReference | null = null;
-    if (originals.length) {
-      const bytes = Buffer.from(prefix + originals.join(',') + suffix);
+    if (packaged.length) {
+      const bytes = Buffer.from(prefix + packaged.join(',') + suffix);
       const sha256 = digest(bytes);
       const url = `${traceNamespace}${sha256}.json`;
       trace = {

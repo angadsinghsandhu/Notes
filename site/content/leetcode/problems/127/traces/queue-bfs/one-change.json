@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "problemId": "leetcode:127",
+  "approachId": "queue-bfs",
+  "exampleId": "one-change",
+  "implementationSha256": "2bba01baa54d2093fd86aee8fe97fbb65d3f2ab1584252cdac287500a22593de",
+  "result": 2,
+  "frames": [
+    {
+      "stepId": "visit-0",
+      "codeLines": [60],
+      "explanation": "Visit i at ladder length 1.",
+      "state": {
+        "kind": "queue",
+        "items": ["i"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "visit-1",
+      "codeLines": [60],
+      "explanation": "Reach a. The ladder contains 2 words.",
+      "state": {
+        "kind": "queue",
+        "items": ["a"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    }
+  ]
+}

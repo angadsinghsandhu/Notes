@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "examples": [
+    {
+      "id": "missing-and-orphaned",
+      "input": [
+        [
+          [7, "Park", "Nia"],
+          [3, "Shah", "Leo"]
+        ],
+        [
+          [6, 99, "Reno", "NV"],
+          [2, 3, "Eugene", "OR"]
+        ]
+      ],
+      "result": {
+        "columns": ["firstName", "lastName", "city", "state"],
+        "rows": [
+          ["Leo", "Shah", "Eugene", "OR"],
+          ["Nia", "Park", null, null]
+        ]
+      },
+      "postState": [
+        [
+          [7, "Park", "Nia"],
+          [3, "Shah", "Leo"]
+        ],
+        [
+          [6, 99, "Reno", "NV"],
+          [2, 3, "Eugene", "OR"]
+        ]
+      ]
+    },
+    {
+      "id": "multiple-addresses",
+      "input": [
+        [[4, "Reed", "Sam"]],
+        [
+          [8, 4, "Austin", "TX"],
+          [5, 4, "Austin", "TX"],
+          [7, 4, null, "NM"],
+          [6, null, "Boise", "ID"]
+        ]
+      ],
+      "result": {
+        "columns": ["firstName", "lastName", "city", "state"],
+        "rows": [
+          ["Sam", "Reed", "Austin", "TX"],
+          ["Sam", "Reed", null, "NM"],
+          ["Sam", "Reed", "Austin", "TX"]
+        ]
+      },
+      "postState": [
+        [[4, "Reed", "Sam"]],
+        [
+          [8, 4, "Austin", "TX"],
+          [5, 4, "Austin", "TX"],
+          [7, 4, null, "NM"],
+          [6, null, "Boise", "ID"]
+        ]
+      ]
+    },
+    {
+      "id": "empty-person-table",
+      "input": [[], [[12, 4, "Boise", "ID"]]],
+      "result": {
+        "columns": ["firstName", "lastName", "city", "state"],
+        "rows": []
+      },
+      "postState": [[], [[12, 4, "Boise", "ID"]]]
+    }
+  ]
+}

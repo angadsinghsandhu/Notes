@@ -1,0 +1,110 @@
+{
+  "problemId": "leetcode:3",
+  "prose": {
+    "path": "lesson.md",
+    "sha256": "fd41384c5b64c7d28a88d89deeaedb2868a3043b0c87c234e92333e84998cde2"
+  },
+  "examples": {
+    "path": "examples.json",
+    "sha256": "2cc84cb0a7b6e1426fda315b689105868d226b231987d7636f8724ae2d5e07be"
+  },
+  "approaches": [
+    {
+      "id": "set-eviction",
+      "title": "Evict one character at a time",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f",
+        "entryPoint": "set_eviction"
+      },
+      "traces": [
+        {
+          "path": "traces/set-eviction/empty.json",
+          "sha256": "177676c68cfdc62924ea82008c1f99a38965e162646fc3f23257f516f7e6f7e7",
+          "exampleId": "empty",
+          "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f"
+        },
+        {
+          "path": "traces/set-eviction/inside-repeat.json",
+          "sha256": "7e3af547409349febc3bf79e6d84bffb99f1a7bc99f658ef945f388ce9e9c38c",
+          "exampleId": "inside-repeat",
+          "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f"
+        },
+        {
+          "path": "traces/set-eviction/outside-repeat.json",
+          "sha256": "024fc364643c6bed0e4cedc4dce36ec198030dbca1877b972cbd527b82409dca",
+          "exampleId": "outside-repeat",
+          "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f"
+        },
+        {
+          "path": "traces/set-eviction/spaces-and-symbols.json",
+          "sha256": "cb558937135f788d9173b5cf5beaaae1154122426fd762a0386265f830f17086",
+          "exampleId": "spaces-and-symbols",
+          "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f",
+        "entryPoint": "set_eviction",
+        "examplesSha256": "2cc84cb0a7b6e1426fda315b689105868d226b231987d7636f8724ae2d5e07be",
+        "passedExampleIds": [
+          "empty",
+          "inside-repeat",
+          "outside-repeat",
+          "spaces-and-symbols"
+        ],
+        "checkedOn": "2026-11-24"
+      }
+    },
+    {
+      "id": "last-seen-jump",
+      "title": "Jump past the last occurrence",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f",
+        "entryPoint": "last_seen_jump"
+      },
+      "traces": [
+        {
+          "path": "traces/last-seen-jump/empty.json",
+          "sha256": "0aa341f0b62e049cadb31874696202cdd474a80777fa117e84f2784fd37b5e60",
+          "exampleId": "empty",
+          "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f"
+        },
+        {
+          "path": "traces/last-seen-jump/inside-repeat.json",
+          "sha256": "a1cdfc168ae0cf54d82ce83a99f61e536973272c18c1de344a0e16ee0bd8e11e",
+          "exampleId": "inside-repeat",
+          "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f"
+        },
+        {
+          "path": "traces/last-seen-jump/outside-repeat.json",
+          "sha256": "892f71afe5875f2db647cbc886e75cb04435c25ead3653f76f0fdd6323010d8c",
+          "exampleId": "outside-repeat",
+          "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f"
+        },
+        {
+          "path": "traces/last-seen-jump/spaces-and-symbols.json",
+          "sha256": "a6dab1ac814f9a3dd790279bb088fe0094fd5d1d460def7d0455e1e11c125240",
+          "exampleId": "spaces-and-symbols",
+          "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "4a3b2845d0216c2226eb0f3face3b88e431a01d400090ec849098ab2d6aeea7f",
+        "entryPoint": "last_seen_jump",
+        "examplesSha256": "2cc84cb0a7b6e1426fda315b689105868d226b231987d7636f8724ae2d5e07be",
+        "passedExampleIds": [
+          "empty",
+          "inside-repeat",
+          "outside-repeat",
+          "spaces-and-symbols"
+        ],
+        "checkedOn": "2026-11-24"
+      }
+    }
+  ],
+  "review": null
+}

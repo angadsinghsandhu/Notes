@@ -1,0 +1,115 @@
+[
+  {
+    "id": "hash-maps-and-windows",
+    "kind": "stage",
+    "title": "Hash maps and sliding windows",
+    "childIds": ["problem-1", "problem-3"],
+    "prerequisiteIds": []
+  },
+  {
+    "id": "problem-1",
+    "kind": "problem",
+    "title": "Two Sum",
+    "childIds": [],
+    "prerequisiteIds": [],
+    "problemId": "leetcode:1"
+  },
+  {
+    "id": "problem-3",
+    "kind": "problem",
+    "title": "Longest Substring Without Repeating Characters",
+    "childIds": [],
+    "prerequisiteIds": ["problem-1"],
+    "problemId": "leetcode:3"
+  },
+  {
+    "id": "stacks",
+    "kind": "stage",
+    "title": "Stacks",
+    "childIds": ["problem-20"],
+    "prerequisiteIds": []
+  },
+  {
+    "id": "problem-20",
+    "kind": "problem",
+    "title": "Valid Parentheses",
+    "childIds": [],
+    "prerequisiteIds": [],
+    "problemId": "leetcode:20"
+  },
+  {
+    "id": "grid-dynamic-programming",
+    "kind": "stage",
+    "title": "Grid dynamic programming",
+    "childIds": ["problem-64"],
+    "prerequisiteIds": []
+  },
+  {
+    "id": "problem-64",
+    "kind": "problem",
+    "title": "Minimum Path Sum",
+    "childIds": [],
+    "prerequisiteIds": [],
+    "problemId": "leetcode:64"
+  },
+  {
+    "id": "binary-search-trees",
+    "kind": "stage",
+    "title": "Binary search trees",
+    "childIds": ["problem-98"],
+    "prerequisiteIds": []
+  },
+  {
+    "id": "problem-98",
+    "kind": "problem",
+    "title": "Validate Binary Search Tree",
+    "childIds": [],
+    "prerequisiteIds": [],
+    "problemId": "leetcode:98"
+  },
+  {
+    "id": "graph-search",
+    "kind": "stage",
+    "title": "Graph search",
+    "childIds": ["problem-127"],
+    "prerequisiteIds": []
+  },
+  {
+    "id": "problem-127",
+    "kind": "problem",
+    "title": "Word Ladder",
+    "childIds": [],
+    "prerequisiteIds": [],
+    "problemId": "leetcode:127"
+  },
+  {
+    "id": "cache-design",
+    "kind": "stage",
+    "title": "Cache design",
+    "childIds": ["problem-146"],
+    "prerequisiteIds": []
+  },
+  {
+    "id": "problem-146",
+    "kind": "problem",
+    "title": "LRU Cache",
+    "childIds": [],
+    "prerequisiteIds": ["problem-1"],
+    "problemId": "leetcode:146"
+  },
+  {
+    "id": "sql-joins",
+    "kind": "stage",
+    "title": "SQL joins",
+    "childIds": ["problem-175"],
+    "prerequisiteIds": []
+  },
+  {
+    "id": "problem-175",
+    "kind": "problem",
+    "title": "Combine Two Tables",
+    "childIds": [],
+    "prerequisiteIds": [],
+    "problemId": "leetcode:175"
+  }
+]

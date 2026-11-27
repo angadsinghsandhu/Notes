@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "problemId": "leetcode:146",
+  "approachId": "linked-recency",
+  "exampleId": "hit-refreshes-order",
+  "implementationSha256": "939e07cafb719c0e7328435e8cc1389cb815d822f819575333f33505197fbe2f",
+  "result": [null, null, 0, null, -1, 0],
+  "frames": [
+    {
+      "stepId": "put-0",
+      "codeLines": [105],
+      "explanation": "Store 0=0 at the newest end.",
+      "state": {
+        "kind": "array",
+        "items": ["0=0"]
+      },
+      "highlights": [
+        {
+          "index": 0
+        }
+      ]
+    },
+    {
+      "stepId": "put-1",
+      "codeLines": [105],
+      "explanation": "Store 1=5 at the newest end.",
+      "state": {
+        "kind": "array",
+        "items": ["0=0", "1=5"]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "get-2",
+      "codeLines": [93],
+      "explanation": "Read 0=0 and move it to the newest end.",
+      "state": {
+        "kind": "array",
+        "items": ["1=5", "0=0"]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "put-3",
+      "codeLines": [105],
+      "explanation": "Store 2=6 at the newest end. Evict 1, the oldest key.",
+      "state": {
+        "kind": "array",
+        "items": ["0=0", "2=6"]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    },
+    {
+      "stepId": "get-4",
+      "codeLines": [93],
+      "explanation": "Miss 1. Recency stays the same.",
+      "state": {
+        "kind": "array",
+        "items": ["0=0", "2=6"]
+      },
+      "highlights": []
+    },
+    {
+      "stepId": "get-5",
+      "codeLines": [93],
+      "explanation": "Read 0=0 and move it to the newest end.",
+      "state": {
+        "kind": "array",
+        "items": ["2=6", "0=0"]
+      },
+      "highlights": [
+        {
+          "index": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "problemId": "leetcode:146",
+  "prose": {
+    "path": "lesson.md",
+    "sha256": "fc4f46bc5ab3185b7801def522ebd8854748e7554987bf92ada6fe467ab30b33"
+  },
+  "examples": {
+    "path": "examples.json",
+    "sha256": "2a8263dae685f34ad726dba2ad07fa6a5e750141a33ea4b16af9620ac8404221"
+  },
+  "approaches": [
+    {
+      "id": "linked-recency",
+      "title": "Hash map and doubly linked recency list",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "939e07cafb719c0e7328435e8cc1389cb815d822f819575333f33505197fbe2f",
+        "entryPoint": "linked_recency"
+      },
+      "traces": [
+        {
+          "path": "traces/linked-recency/overwrite-before-eviction.json",
+          "sha256": "fab167f6ab6abf9cf2b294d0afb3a2c45f7173ff27cd06592b9db532cf1f13db",
+          "exampleId": "overwrite-before-eviction",
+          "implementationSha256": "939e07cafb719c0e7328435e8cc1389cb815d822f819575333f33505197fbe2f"
+        },
+        {
+          "path": "traces/linked-recency/hit-refreshes-order.json",
+          "sha256": "a5cb19fbfec8518a09c0a8a4058203f7549230c79f04470250897d558a2f4c4b",
+          "exampleId": "hit-refreshes-order",
+          "implementationSha256": "939e07cafb719c0e7328435e8cc1389cb815d822f819575333f33505197fbe2f"
+        },
+        {
+          "path": "traces/linked-recency/single-slot.json",
+          "sha256": "a59e2caff0d23370a0f4f3d48030603842a870dae71584b4a295faf98951fdcb",
+          "exampleId": "single-slot",
+          "implementationSha256": "939e07cafb719c0e7328435e8cc1389cb815d822f819575333f33505197fbe2f"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "939e07cafb719c0e7328435e8cc1389cb815d822f819575333f33505197fbe2f",
+        "entryPoint": "linked_recency",
+        "examplesSha256": "2a8263dae685f34ad726dba2ad07fa6a5e750141a33ea4b16af9620ac8404221",
+        "passedExampleIds": [
+          "overwrite-before-eviction",
+          "hit-refreshes-order",
+          "single-slot"
+        ],
+        "checkedOn": "2026-11-26"
+      }
+    }
+  ],
+  "review": null
+}

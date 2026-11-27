@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "problemId": "leetcode:64",
+  "approachId": "memoized-grid",
+  "exampleId": "single-column",
+  "implementationSha256": "8f11ee992b9ae3158008046c2ce8ca7cf093df5a152030940b63243a41883842",
+  "result": 10,
+  "frames": [
+    {
+      "stepId": "save-3-0",
+      "codeLines": [56],
+      "explanation": "From (3, 0), add weight 1 to the best remaining cost 0. Save 1.",
+      "state": {
+        "kind": "grid",
+        "rows": [[null], [null], [null], [1]]
+      },
+      "highlights": [
+        {
+          "row": 3,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "save-2-0",
+      "codeLines": [56],
+      "explanation": "From (2, 0), add weight 7 to the best remaining cost 1. Save 8.",
+      "state": {
+        "kind": "grid",
+        "rows": [[null], [null], [8], [1]]
+      },
+      "highlights": [
+        {
+          "row": 2,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "save-1-0",
+      "codeLines": [56],
+      "explanation": "From (1, 0), add weight 0 to the best remaining cost 8. Save 8.",
+      "state": {
+        "kind": "grid",
+        "rows": [[null], [8], [8], [1]]
+      },
+      "highlights": [
+        {
+          "row": 1,
+          "column": 0
+        }
+      ]
+    },
+    {
+      "stepId": "save-0-0",
+      "codeLines": [56],
+      "explanation": "From (0, 0), add weight 2 to the best remaining cost 8. Save 10.",
+      "state": {
+        "kind": "grid",
+        "rows": [[10], [8], [8], [1]]
+      },
+      "highlights": [
+        {
+          "row": 0,
+          "column": 0
+        }
+      ]
+    }
+  ]
+}

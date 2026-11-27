@@ -211,6 +211,58 @@ describe('readCurriculum', () => {
     });
   });
 
+  test('assembles manifest, path nodes and stage children in declared order', async () => {
+    const { root } = await createTree();
+    const { problems, ...header } = manifest();
+    const stage = {
+      id: 'stage',
+      kind: 'stage',
+      title: 'Study order',
+      childIds: ['problem-2', 'problem-1'],
+      prerequisiteIds: [],
+    };
+    const targets = [1, 2].map((number) => ({
+      id: `problem-${number}`,
+      kind: 'problem',
+      title: `Problem ${number}`,
+      childIds: [],
+      prerequisiteIds: [],
+      problemId: `leetcode:${number}`,
+    }));
+    await writeJson(root, 'manifest.json', {
+      ...header,
+      problems: { shards: ['later.json', 'early.json'] },
+    });
+    await writeJson(root, 'manifest/later.json', problems.slice(1));
+    await writeJson(root, 'manifest/early.json', problems.slice(0, 1));
+    await writeJson(root, 'problems/1/metadata.json', draft);
+    await writeJson(root, 'paths/all-problems.json', {
+      ...path,
+      rootIds: ['stage'],
+      nodes: { shards: ['stages.json', 'problems.json'] },
+    });
+    await writeJson(root, 'paths/all-problems/stages.json', [
+      { ...stage, childIds: { shards: ['second.json', 'first.json'] } },
+    ]);
+    await writeJson(root, 'paths/all-problems/problems.json', targets);
+    await writeJson(root, 'paths/all-problems/second.json', ['problem-2']);
+    await writeJson(root, 'paths/all-problems/first.json', ['problem-1']);
+
+    expect(await readCurriculum(root)).toEqual({
+      ...header,
+      problems: [...problems.slice(1), problems[0]],
+      lessons: [draft],
+      paths: [{ ...path, rootIds: ['stage'], nodes: [stage, ...targets] }],
+    });
+
+    await rm(join(root, 'paths/all-problems/second.json'));
+    await expect(readCurriculum(root)).rejects.toThrow(/second\.json/);
+    await writeJson(root, 'paths/all-problems/stages.json', [
+      { ...stage, childIds: { shards: ['first.json', 'first.json'] } },
+    ]);
+    await expect(readCurriculum(root)).rejects.toThrow(/duplicate shard/i);
+  });
+
   test('rejects malformed or missing files with the failing file in the error', async () => {
     const { root } = await createTree();
     await expect(readCurriculum(root)).rejects.toThrow(/manifest.json/);

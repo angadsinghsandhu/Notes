@@ -1,0 +1,110 @@
+{
+  "problemId": "leetcode:98",
+  "prose": {
+    "path": "lesson.md",
+    "sha256": "f3c4321c5bccd4bfd16e10c6db45fa9a60a03ecafd5afc79dc889eda7c722bcf"
+  },
+  "examples": {
+    "path": "examples.json",
+    "sha256": "6f10a5ea4934805eead2d5bf4365621922a830ba39390a71cae26a44f451591b"
+  },
+  "approaches": [
+    {
+      "id": "recursive-bounds",
+      "title": "Recursive propagation of open bounds",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087",
+        "entryPoint": "recursive_bounds"
+      },
+      "traces": [
+        {
+          "path": "traces/recursive-bounds/ancestor-bound.json",
+          "sha256": "16c5d00d07a004af8c0b1e4e3da08f1226efc008964c953f5e5b4b68586dac89",
+          "exampleId": "ancestor-bound",
+          "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+        },
+        {
+          "path": "traces/recursive-bounds/duplicate.json",
+          "sha256": "1d61e0f8c2c6e8318dde25cef7e5abd937ab9e7ba3e21dba39420e0a9496e958",
+          "exampleId": "duplicate",
+          "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+        },
+        {
+          "path": "traces/recursive-bounds/signed-extremes.json",
+          "sha256": "890e1aae195ab3528e4b3179f25444de32f689009161fa0b45f1e12bb971e376",
+          "exampleId": "signed-extremes",
+          "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+        },
+        {
+          "path": "traces/recursive-bounds/left-skewed.json",
+          "sha256": "fa2df8354707d696416aead635ea9b9556754e996609da4a18d37aa062c000e4",
+          "exampleId": "left-skewed",
+          "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087",
+        "entryPoint": "recursive_bounds",
+        "examplesSha256": "6f10a5ea4934805eead2d5bf4365621922a830ba39390a71cae26a44f451591b",
+        "passedExampleIds": [
+          "ancestor-bound",
+          "duplicate",
+          "signed-extremes",
+          "left-skewed"
+        ],
+        "checkedOn": "2026-11-25"
+      }
+    },
+    {
+      "id": "iterative-inorder",
+      "title": "Iterative inorder with an explicit stack",
+      "language": "python",
+      "implementation": {
+        "path": "solutions.py",
+        "sha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087",
+        "entryPoint": "iterative_inorder"
+      },
+      "traces": [
+        {
+          "path": "traces/iterative-inorder/ancestor-bound.json",
+          "sha256": "de269bc22151549fea097756ddeced274912efe5ffc5282922e935621c06ae8f",
+          "exampleId": "ancestor-bound",
+          "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+        },
+        {
+          "path": "traces/iterative-inorder/duplicate.json",
+          "sha256": "2b228c18b0752e2faabb11b14ac8daf42e2008523106afc94ebdbdd88924ac98",
+          "exampleId": "duplicate",
+          "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+        },
+        {
+          "path": "traces/iterative-inorder/signed-extremes.json",
+          "sha256": "185fa81604c9a9b7a879c89b1d7a381d4c525343ef5382afbb0e0ce208d016c2",
+          "exampleId": "signed-extremes",
+          "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+        },
+        {
+          "path": "traces/iterative-inorder/left-skewed.json",
+          "sha256": "45f1154b9139e3f67edc0aaeab1cdc1360d8f61bf2873217aef90d12b4c331e8",
+          "exampleId": "left-skewed",
+          "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087"
+        }
+      ],
+      "verification": {
+        "implementationSha256": "584775de9e0f2a5e24a57379aeb83877f4685b66e8ca19249c6dd2e657fa3087",
+        "entryPoint": "iterative_inorder",
+        "examplesSha256": "6f10a5ea4934805eead2d5bf4365621922a830ba39390a71cae26a44f451591b",
+        "passedExampleIds": [
+          "ancestor-bound",
+          "duplicate",
+          "signed-extremes",
+          "left-skewed"
+        ],
+        "checkedOn": "2026-11-25"
+      }
+    }
+  ],
+  "review": null
+}

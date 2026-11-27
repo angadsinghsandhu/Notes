@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "problemId": "leetcode:20",
+  "approachId": "unmatched-openings",
+  "exampleId": "leading-closer",
+  "implementationSha256": "94ad0b3c9cb1d078a4140fabe87182f785dafab9e7fed62b61d444da69b2a0a5",
+  "result": false,
+  "frames": [
+    {
+      "stepId": "reject-0",
+      "codeLines": [37],
+      "explanation": "Reject ']' with no opening to match.",
+      "state": {
+        "kind": "stack",
+        "items": []
+      },
+      "highlights": []
+    }
+  ]
+}
