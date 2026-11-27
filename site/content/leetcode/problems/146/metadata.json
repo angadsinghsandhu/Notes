@@ -51,5 +51,9 @@
       }
     }
   ],
-  "review": null
+  "review": {
+    "reviewer": "Independent Portfolio and Notes pilot review",
+    "reviewedOn": "2026-11-27",
+    "contentSha256": "117291ac0d57fdb934fbb9b498d7204e7d2ea63ff7f16b5f9e6cf9d8d7153882"
+  }
 }
