@@ -39,8 +39,8 @@ class CombineTwoTablesEvidenceTest(TestCase):
         with self.assertRaisesRegex(EvidenceError, "input"):
             enrollment.verify(_CASE, replace(run, post_state=[]))
 
-    def test_pilot_is_private(self) -> None:
+    def test_pilot_is_verified(self) -> None:
         statuses = inventory(Path("."))
         assert statuses is not None
-        self.assertIn(175, statuses["draft"])
-        self.assertNotIn(175, statuses["verified"])
+        self.assertIn(175, statuses["verified"])
+        self.assertNotIn(175, statuses["draft"])
