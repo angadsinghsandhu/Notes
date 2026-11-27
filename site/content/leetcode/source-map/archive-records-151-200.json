@@ -277,15 +277,25 @@
     "sourcePath": "Interview/leetcode/Solutions/2 Hasinng & Sets/1189 Maximum Number of Balloons.py",
     "sha256": "ce5f6e627ed6f9bab5ac7d58c686d327345099076ac737d6dd88f3a09a7d0a1e",
     "filenameNumber": 1189,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:1189",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/maximum-number-of-balloons/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/2 Hasinng & Sets/13 Roman to Integer.py",
     "sha256": "c5e41d18c420f4be1012aacea5ceef5c9336f6a441f4c573719f9f51b88613a0",
     "filenameNumber": 13,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:13",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/roman-to-integer/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/2 Hasinng & Sets/217 Contains Duplicate.py",
@@ -315,15 +325,25 @@
     "sourcePath": "Interview/leetcode/Solutions/2 Hasinng & Sets/383. Ransom Note.py",
     "sha256": "3f7dba797cda84132d959050269728c38486ea40ddd1d1cf21ccd9979e76f596",
     "filenameNumber": 383,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:383",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/ransom-note/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/2 Hasinng & Sets/771 Jewels and Stones.py",
     "sha256": "c59bfe2525fbeeb12d0bec2d0811f1379092bacacd780ada9af187ed23fb6174",
     "filenameNumber": 771,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:771",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/jewels-and-stones/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/200_Number_of_Islands.py",

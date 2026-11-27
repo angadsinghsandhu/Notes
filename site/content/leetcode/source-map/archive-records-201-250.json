@@ -117,8 +117,13 @@
     "sourcePath": "Interview/leetcode/Solutions/228 Summary Ranges.py",
     "sha256": "d4633e3702a4fefc386241cc6532be5e5e98629cc7f41c24b2ee97c92faddcfb",
     "filenameNumber": 228,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:228",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/summary-ranges/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/229_Majority_Element_II.py",
@@ -293,15 +298,25 @@
     "sourcePath": "Interview/leetcode/Solutions/3 Stacks/445 Add Two Numbers II.py",
     "sha256": "4790bdc2210514f69fd12ba05abe4de2d47710656099d3432147114bebe1b33d",
     "filenameNumber": 445,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:445",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/add-two-numbers-ii/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/3 Stacks/682 Baseball Game.py",
     "sha256": "ee437e796a0929f3d7d547f8254d132afcbe1f69fa8525ccc54a8adb4516558a",
     "filenameNumber": 682,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:682",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/baseball-game/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/3 Stacks/739 Daily Temperatures.py",

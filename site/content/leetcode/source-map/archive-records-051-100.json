@@ -160,8 +160,13 @@
     "sourcePath": "Interview/leetcode/Solutions/13 Backtracking/47 Permutations II.py",
     "sha256": "c9131642f28bde425cb7631b622ef2fb6e0bf9c065878d3072eb81d16eeb7136",
     "filenameNumber": 47,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:47",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/permutations-ii/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/13 Backtracking/51 N-Queens.py",
@@ -272,8 +277,13 @@
     "sourcePath": "Interview/leetcode/Solutions/14 DP/118 Pascal's Triangle.py",
     "sha256": "2df15841ff66a97d2bd879c2906fd616864a3c576d19d8cc2f425077322f4c30",
     "filenameNumber": 118,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:118",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/pascals-triangle/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/14 DP/121 Best Time to Buy and Sell Stock.py",
@@ -334,8 +344,13 @@
     "sourcePath": "Interview/leetcode/Solutions/14 DP/392 Is Subsequence.py",
     "sha256": "a113e98108b4221a57f9647292d302a2d7cd273428a60bf7c8b3895125c3ce4b",
     "filenameNumber": 392,
-    "disposition": "pending_reconciliation",
-    "reason": "Static inspection found comments only. The official identity is pending."
+    "disposition": "link_only",
+    "reason": "The archived file contains only an official problem link.",
+    "problemId": "leetcode:392",
+    "officialSource": {
+      "url": "https://leetcode.com/problems/is-subsequence/description/",
+      "checkedAt": "2026-11-24T06:35:19Z"
+    }
   },
   {
     "sourcePath": "Interview/leetcode/Solutions/14 DP/416 Partition Equal Subset Sum.py",
