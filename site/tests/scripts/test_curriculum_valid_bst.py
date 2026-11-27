@@ -68,9 +68,9 @@ class ValidateBinarySearchTreeEvidenceTest(TestCase):
             ):
                 enrollment.verify({"tree": tree}, run)
 
-    def test_pilot_is_a_private_draft(self) -> None:
+    def test_pilot_is_verified(self) -> None:
         statuses = inventory(Path("."))
         self.assertIsNotNone(statuses)
         assert statuses is not None
-        self.assertIn(98, statuses["draft"])
-        self.assertNotIn(98, statuses["verified"])
+        self.assertIn(98, statuses["verified"])
+        self.assertNotIn(98, statuses["draft"])

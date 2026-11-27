@@ -73,9 +73,9 @@ class WordLadderEvidenceTest(TestCase):
             ):
                 enrollment.verify({**_CASE, field: value}, run)
 
-    def test_pilot_is_a_private_draft(self) -> None:
+    def test_pilot_is_verified(self) -> None:
         statuses = inventory(Path("."))
         self.assertIsNotNone(statuses)
         assert statuses is not None
-        self.assertIn(127, statuses["draft"])
-        self.assertNotIn(127, statuses["verified"])
+        self.assertIn(127, statuses["verified"])
+        self.assertNotIn(127, statuses["draft"])

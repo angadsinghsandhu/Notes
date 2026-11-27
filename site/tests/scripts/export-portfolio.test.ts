@@ -234,6 +234,31 @@ async function realCurriculum(root: string) {
   await cp(join(input, 'problems'), join(target, 'problems'), {
     recursive: true,
   });
+  const registry = JSON.parse(
+    await readFile(join(target, 'manifest.json'), 'utf8'),
+  ) as { problems: { shards: string[] } };
+  for (const shard of registry.problems.shards) {
+    const shardPath = join(target, 'manifest', shard);
+    const problems = JSON.parse(
+      await readFile(shardPath, 'utf8'),
+    ) as ProblemRecord[];
+    const verified = problems.filter(({ status }) => status === 'verified');
+    if (verified.length === 0) continue;
+    for (const problem of verified) {
+      problem.status = 'draft';
+      const lessonPath = join(
+        target,
+        'problems',
+        String(problem.number),
+        'metadata.json',
+      );
+      const lesson = JSON.parse(
+        await readFile(lessonPath, 'utf8'),
+      ) as LessonRecord;
+      await writeFile(lessonPath, JSON.stringify({ ...lesson, review: null }));
+    }
+    await writeFile(shardPath, JSON.stringify(problems));
+  }
   const bytes = 'def archived_solver():\n    return [0, 1]\n';
   await put(root, solver, bytes);
   await organization(root, solver);

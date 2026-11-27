@@ -109,6 +109,9 @@ test('loads the checked-in curriculum inventory with all 2,000 targets accounted
   const report: unknown = JSON.parse(
     await readFile(new URL('coverage-report.json', root), 'utf8'),
   );
+  const evidence: unknown = JSON.parse(
+    await readFile(new URL('coverage-evidence.json', root), 'utf8'),
+  );
   const plannedIds = sortedProblems
     .filter(({ status }) => status === 'planned')
     .map(({ number }) => number);
@@ -124,10 +127,6 @@ test('loads the checked-in curriculum inventory with all 2,000 targets accounted
     plannedIds,
     draftIds,
     verifiedIds: verified.map(({ number }) => number),
-    evidence: verified.map(({ number, id }) => ({
-      id: number,
-      contentSha256: reviewByProblem.get(id)!.contentSha256,
-    })),
     unresolved: [
       {
         reason: 'official-metadata-pending',
@@ -141,6 +140,12 @@ test('loads the checked-in curriculum inventory with all 2,000 targets accounted
       },
     ].filter(({ ids }) => ids.length > 0),
   });
+  expect(evidence).toEqual(
+    verified.map(({ number, id }) => ({
+      id: number,
+      contentSha256: reviewByProblem.get(id)!.contentSha256,
+    })),
+  );
 });
 
 const draft = {
